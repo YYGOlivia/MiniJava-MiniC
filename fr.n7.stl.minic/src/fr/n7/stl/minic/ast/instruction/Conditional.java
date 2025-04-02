@@ -3,14 +3,13 @@
  */
 package fr.n7.stl.minic.ast.instruction;
 
-import java.util.Optional;
-
 import fr.n7.stl.minic.ast.Block;
 import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
+import fr.n7.stl.minic.ast.scope.SymbolTable;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
@@ -51,7 +50,12 @@ public class Conditional implements Instruction {
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "Semantics collect is undefined in Conditional.");
+		SymbolTable thenScope = new SymbolTable(_scope);
+		SymbolTable elseScope = new SymbolTable(_scope);
+		boolean okCond = condition.collectAndPartialResolve(_scope);
+		boolean okThen = thenBranch.collectAndPartialResolve(thenScope);
+		boolean okElse = (elseBranch == null) ? true : elseBranch.collectAndPartialResolve(elseScope);
+		return okCond && okThen & okElse;
 	}
 	
 	/* (non-Javadoc)
@@ -59,7 +63,12 @@ public class Conditional implements Instruction {
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
-		throw new SemanticsUndefinedException( "Semantics collect is undefined in Conditional.");
+		SymbolTable thenScope = new SymbolTable(_scope);
+		SymbolTable elseScope = new SymbolTable(_scope);
+		boolean okCond = condition.collectAndPartialResolve(_scope);
+		boolean okThen = thenBranch.collectAndPartialResolve(thenScope, _container);
+		boolean okElse = (elseBranch == null) ? true : elseBranch.collectAndPartialResolve(elseScope, _container);
+		return okCond && okThen & okElse;
 	}
 	
 	/* (non-Javadoc)
@@ -67,7 +76,12 @@ public class Conditional implements Instruction {
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "Semantics resolve is undefined in Conditional.");
+		SymbolTable thenScope = new SymbolTable(_scope);
+		SymbolTable elseScope = new SymbolTable(_scope);
+		boolean okCond = condition.completeResolve(_scope);
+		boolean okThen = thenBranch.completeResolve(thenScope);
+		boolean okElse = (elseBranch == null) ? true : elseBranch.completeResolve(elseScope);
+		return okCond && okThen & okElse;
 	}
 
 	/* (non-Javadoc)

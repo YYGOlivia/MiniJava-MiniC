@@ -3,9 +3,6 @@
  */
 package fr.n7.stl.minic.ast.instruction.declaration;
 
-import java.util.Iterator;
-import java.util.List;
-
 import fr.n7.stl.minic.ast.Block;
 import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.instruction.Instruction;
@@ -15,6 +12,8 @@ import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Abstract Syntax Tree node for a function declaration.
@@ -114,7 +113,9 @@ public class FunctionDeclaration implements Instruction, Declaration {
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "Semantics resolve is undefined in FunctionDeclaration.");
+		boolean okBody = body.completeResolve(_scope);
+		boolean okType = type.completeResolve(_scope);
+		return okBody && okType;
 	}
 
 	/* (non-Javadoc)

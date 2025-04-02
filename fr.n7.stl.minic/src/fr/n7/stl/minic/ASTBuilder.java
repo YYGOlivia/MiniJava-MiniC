@@ -42,38 +42,38 @@ public class ASTBuilder extends MiniCParserBaseListener {
      */
     public void startCompilation() {
         System.out.println(this.name + " " + this.mainBlock);
-        /* SymbolTable tds = new SymbolTable();
-        if (this.mainBlock.collect(tds)) {
+        SymbolTable tds = new SymbolTable();
+        if (this.mainBlock.collectAndPartialResolve(tds)) {
             System.out.println("collect succeeded");
-            if (this.mainBlock.resolve(tds)) {
+            if (this.mainBlock.completeResolve(tds)) {
                 System.out.println("Resolve succeeded.");
-                if (this.mainBlock.checkType()) {
-                    System.out.println("Type verification succeeded.");
+                // if (this.mainBlock.checkType()) {
+                //     System.out.println("Type verification succeeded.");
 
-                    System.out.println("Code generation ...");
-                    this.mainBlock.allocateMemory(Register.SB, 0);
-                    try {
-                        PrintWriter writer = new PrintWriter(output_path);
-                        TAMFactory factory = new TAMFactoryImpl();
-                        Fragment f = this.mainBlock.getCode(factory);
-                        f.add(factory.createHalt());
-                        f.append(this.mainBlock.getFunctions(factory));
-                        writer.println(f);
-                        writer.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    System.out.println("Code generation finished");
+                //     System.out.println("Code generation ...");
+                //     this.mainBlock.allocateMemory(Register.SB, 0);
+                //     try {
+                //         PrintWriter writer = new PrintWriter(output_path);
+                //         TAMFactory factory = new TAMFactoryImpl();
+                //         Fragment f = this.mainBlock.getCode(factory);
+                //         f.add(factory.createHalt());
+                //         f.append(this.mainBlock.getFunctions(factory));
+                //         writer.println(f);
+                //         writer.close();
+                //     } catch (IOException e) {
+                //         e.printStackTrace();
+                //     }
+                //     System.out.println("Code generation finished");
 
-                } else {
-                    System.out.println("Type verification failed.");
-                }
+                // } else {
+                //     System.out.println("Type verification failed.");
+                // }
             } else {
                 System.out.println("Resolve failed." + tds);
             }
         } else {
             System.out.println("Collect failed : " + tds);
-        } */
+        }
     }
 
     @Override

@@ -43,7 +43,7 @@ public class First implements AccessibleExpression {
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException("Semantics collect undefined in First.");
+		return target.collectAndPartialResolve(_scope);
 	}
 
 	/* (non-Javadoc)
@@ -51,7 +51,7 @@ public class First implements AccessibleExpression {
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException("Semantics resolve undefined in First.");
+		return target.completeResolve(_scope);
 	}
 	
 	/* (non-Javadoc)

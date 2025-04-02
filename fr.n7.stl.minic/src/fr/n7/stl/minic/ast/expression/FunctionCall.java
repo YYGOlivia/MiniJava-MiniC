@@ -3,9 +3,6 @@
  */
 package fr.n7.stl.minic.ast.expression;
 
-import java.util.Iterator;
-import java.util.List;
-
 import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
@@ -14,6 +11,8 @@ import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Abstract Syntax Tree node for a function call expression.
@@ -70,7 +69,11 @@ public class FunctionCall implements AccessibleExpression {
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "Semantics collect is undefined in FunctionCall.");
+		boolean ok = true;
+		for (AccessibleExpression arg : arguments){
+			ok = ok && arg.collectAndPartialResolve(_scope);
+		}
+		return ok && (function != null);
 	}
 
 	/* (non-Javadoc)
@@ -78,7 +81,11 @@ public class FunctionCall implements AccessibleExpression {
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "Semantics resolve is undefined in FunctionCall.");
+		boolean ok = true;
+		for (AccessibleExpression arg : arguments){
+			ok = ok && arg.completeResolve(_scope);
+		}
+		return ok && (function != null);
 	}
 	
 	/* (non-Javadoc)

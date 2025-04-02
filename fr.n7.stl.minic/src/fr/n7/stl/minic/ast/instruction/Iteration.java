@@ -9,6 +9,7 @@ import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
+import fr.n7.stl.minic.ast.scope.SymbolTable;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
@@ -41,12 +42,18 @@ public class Iteration implements Instruction {
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "Semantics collect is undefined in Iteration.");
+		SymbolTable bodyScope = new SymbolTable(_scope);
+		boolean okCond = condition.collectAndPartialResolve(_scope);
+		boolean okBody = body.collectAndPartialResolve(bodyScope);
+		return okCond && okBody;
 	}
 	
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
-		throw new SemanticsUndefinedException( "Semantics collect is undefined in Iteration.");
+		SymbolTable bodyScope = new SymbolTable(_scope);
+		boolean okCond = condition.collectAndPartialResolve(_scope);
+		boolean okBody = body.collectAndPartialResolve(bodyScope, _container);
+		return okCond && okBody;
 	}
 	
 	/* (non-Javadoc)
@@ -54,7 +61,10 @@ public class Iteration implements Instruction {
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "Semantics resolve is undefined in Iteration.");
+		SymbolTable bodyScope = new SymbolTable(_scope);
+		boolean okCond = condition.completeResolve(_scope);
+		boolean okBody = body.completeResolve(bodyScope);
+		return okCond && okBody;
 	}
 
 	/* (non-Javadoc)

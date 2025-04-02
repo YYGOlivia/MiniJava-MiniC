@@ -49,12 +49,16 @@ public class Assignment implements Instruction, Expression {
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "Semantics collect is undefined in Assignment.");
+		boolean valueOK = value.collectAndPartialResolve(_scope);
+		boolean assignableOK = assignable.collectAndPartialResolve(_scope);
+		return valueOK && assignableOK;
 	}
 	
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
-		return this.collectAndPartialResolve(_scope);
+		boolean valueOK = value.collectAndPartialResolve(_scope);
+		boolean assignableOK = assignable.collectAndPartialResolve(_scope);
+		return valueOK && assignableOK;
 	}
 
 	/* (non-Javadoc)
@@ -62,7 +66,9 @@ public class Assignment implements Instruction, Expression {
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "Semantics resolve is undefined in Assignment.");
+		boolean valueOK = value.completeResolve(_scope);
+		boolean assignableOK = assignable.completeResolve(_scope);
+		return valueOK && assignableOK;
 	}
 
 	/* (non-Javadoc)

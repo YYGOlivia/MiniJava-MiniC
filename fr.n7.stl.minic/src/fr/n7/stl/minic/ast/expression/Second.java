@@ -51,7 +51,7 @@ public class Second implements AccessibleExpression {
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException("Semantics collect undefined in Second.");
+		return target.collectAndPartialResolve(_scope);
 
 	}
 
@@ -60,7 +60,7 @@ public class Second implements AccessibleExpression {
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException("Semantics resolve undefined in Second.");
+		return target.completeResolve(_scope);
 	}
 
 	/* (non-Javadoc)

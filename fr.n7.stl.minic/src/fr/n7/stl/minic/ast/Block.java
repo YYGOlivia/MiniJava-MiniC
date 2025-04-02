@@ -3,15 +3,15 @@
  */
 package fr.n7.stl.minic.ast;
 
-import java.util.List;
-
 import fr.n7.stl.minic.ast.instruction.Instruction;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
+import fr.n7.stl.minic.ast.scope.SymbolTable;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
+import java.util.List;
 
 /**
  * Represents a Block node in the Abstract Syntax Tree node for the Bloc language.
@@ -58,7 +58,12 @@ public class Block {
 	 * allowed.
 	 */
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException("Semantics collect is undefined in Block.");
+		boolean ok = true;
+		SymbolTable newScope = new SymbolTable(_scope);
+		for(Instruction i : instructions){
+			ok = ok && i.collectAndPartialResolve(newScope);
+		}
+		return ok;
 	}
 	
 	/**
@@ -72,7 +77,12 @@ public class Block {
 	 * allowed.
 	 */
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
-		throw new SemanticsUndefinedException( "Semantics collect is undefined in Iteration.");
+		boolean ok = true;
+		SymbolTable newScope = new SymbolTable(_scope);
+		for(Instruction i : instructions){
+			ok = ok && i.collectAndPartialResolve(newScope, _container);
+		}
+		return ok;
 	}
 	
 	/**
@@ -83,7 +93,12 @@ public class Block {
 	 * block have been previously defined.
 	 */
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException("Semantics resolve is undefined in Block.");
+		boolean ok = true;
+		SymbolTable newScope = new SymbolTable(_scope);
+		for(Instruction i : instructions){
+			ok = ok && i.completeResolve(newScope);
+		}
+		return ok;
 	}
 
 	/**
