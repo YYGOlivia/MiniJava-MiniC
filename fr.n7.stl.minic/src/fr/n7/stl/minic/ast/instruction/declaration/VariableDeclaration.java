@@ -104,8 +104,8 @@ public class VariableDeclaration implements Declaration, Instruction {
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		boolean res = value.collectAndPartialResolve(_scope);
 		if (_scope.accepts(this)){
+			boolean res = value.collectAndPartialResolve(_scope);
 			_scope.register(this);
 			return res;
 		} else {
@@ -116,8 +116,8 @@ public class VariableDeclaration implements Declaration, Instruction {
 	
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
-		boolean res = value.collectAndPartialResolve(_scope);
 		if (_scope.accepts(this)){
+			boolean res = value.collectAndPartialResolve(_scope);
 			_scope.register(this);
 			return res;
 		} else {
@@ -147,7 +147,12 @@ public class VariableDeclaration implements Declaration, Instruction {
 	 */
 	@Override
 	public boolean checkType() {
-		throw new SemanticsUndefinedException("Semantics checkType is undefined in VariableDeclaration.");
+		if (this.value.getType().compatibleWith(type)){
+			return true;
+		}
+		Logger.error("the " + name + " variable type is not compatible");
+		return false;
+		
 	}
 
 	/* (non-Javadoc)

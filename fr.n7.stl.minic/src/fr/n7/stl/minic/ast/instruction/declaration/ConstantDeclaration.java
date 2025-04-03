@@ -12,6 +12,7 @@ import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
+import fr.n7.stl.util.Logger;
 
 /**
  * Implementation of the Abstract Syntax Tree node for a constant declaration instruction.
@@ -83,12 +84,26 @@ public class ConstantDeclaration implements Instruction, Declaration {
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "Semantics collectAndPartialResolve is undefined in ConstantDeclaration.");
+		if (_scope.accepts(this)){
+			boolean res = value.collectAndPartialResolve(_scope);
+			_scope.register(this);
+			return res;
+		} else {
+			Logger.error("The constant " + name + " is already declared");
+			return false;
+		}
 	}
 	
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
-		throw new SemanticsUndefinedException( "Semantics collectAndPartialResolve is undefined in ConstantDeclaration.");
+		if (_scope.accepts(this)){
+			boolean res = value.collectAndPartialResolve(_scope);
+			_scope.register(this);
+			return res;
+		} else {
+			Logger.error("The constant " + name + " is already declared");
+			return false;
+		}
 
 	}
 	
@@ -97,7 +112,14 @@ public class ConstantDeclaration implements Instruction, Declaration {
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "Semantics completeResolve is undefined in ConstantDeclaration.");
+		boolean res = value.completeResolve(_scope);
+		if (_scope.accepts(this)){
+			_scope.register(this);
+			return res;
+		} else {
+			Logger.error("The constant " + name + " is already declared");
+			return false;
+		}
 	}
 
 	/* (non-Javadoc)
@@ -105,7 +127,11 @@ public class ConstantDeclaration implements Instruction, Declaration {
 	 */
 	@Override
 	public boolean checkType() {
-		throw new SemanticsUndefinedException( "Semantics checkType is undefined in ConstantDeclaration.");
+		if(this.value.getType().compatibleWith(type)){
+			return true;
+		}
+		Logger.error("The constant type is not compatible");
+		return false;
 	}
 
 	/* (non-Javadoc)

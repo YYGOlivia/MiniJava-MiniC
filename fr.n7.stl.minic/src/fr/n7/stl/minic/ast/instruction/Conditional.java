@@ -10,9 +10,12 @@ import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.scope.SymbolTable;
+import fr.n7.stl.minic.ast.type.AtomicType;
+import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
+import fr.n7.stl.util.Logger;
 
 /**
  * Implementation of the Abstract Syntax Tree node for a conditional instruction.
@@ -89,7 +92,17 @@ public class Conditional implements Instruction {
 	 */
 	@Override
 	public boolean checkType() {
-		throw new SemanticsUndefinedException( "Semantics checkType is undefined in Conditional.");
+		boolean ok1 = thenBranch.checkType();
+		Type okCond = condition.getType();
+		if (okCond.equals(AtomicType.BooleanType)){
+			if (elseBranch!=null){
+				boolean ok2 = elseBranch.checkType();
+				return ok1 && ok2;
+			}
+			return ok1;
+		}
+		Logger.error("Condition not of Boolean type");
+		return false;
 	}
 
 	/* (non-Javadoc)

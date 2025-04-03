@@ -13,6 +13,7 @@ import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
+import fr.n7.stl.util.Logger;
 
 /**
  * Implementation of the Abstract Syntax Tree node for an array type.
@@ -76,7 +77,7 @@ public class Assignment implements Instruction, Expression {
 	 */
 	@Override
 	public Type getType() {
-		throw new SemanticsUndefinedException( "Semantics getType is undefined in Assignment.");
+		return this.assignable.getType();
 	}
 
 	/* (non-Javadoc)
@@ -84,7 +85,13 @@ public class Assignment implements Instruction, Expression {
 	 */
 	@Override
 	public boolean checkType() {
-		throw new SemanticsUndefinedException( "Semantics checkType is undefined in Assignment.");
+		Type valueType = this.value.getType();
+		Type assignableType = this.assignable.getType();
+		if (valueType.compatibleWith(assignableType)) {
+			return true;
+		}
+		Logger.error("Wrong assignment type");
+		return false;
 	}
 	
 	/* (non-Javadoc)
