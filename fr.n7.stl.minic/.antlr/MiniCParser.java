@@ -1,4 +1,4 @@
-// Generated from /home/nas0546/Documents/TDL/fr.n7.stl.minic/MiniCParser.g4 by ANTLR 4.13.1
+// Generated from /home/nas0546/Documents/TDL/MiniC/fr.n7.stl.minic/MiniCParser.g4 by ANTLR 4.13.1
 
 package fr.n7.stl.minic.parser;
 import java.io.IOException;

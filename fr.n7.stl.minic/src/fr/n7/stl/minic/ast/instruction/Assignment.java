@@ -90,7 +90,7 @@ public class Assignment implements Instruction, Expression {
 		if (valueType.compatibleWith(assignableType)) {
 			return true;
 		}
-		Logger.error("Wrong assignment type");
+		Logger.error("Wrong assignment type: assignable is " + assignableType + " but value is " + valueType);
 		return false;
 	}
 	

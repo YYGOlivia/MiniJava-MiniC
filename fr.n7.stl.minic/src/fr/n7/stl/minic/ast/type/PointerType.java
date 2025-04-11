@@ -6,6 +6,7 @@ package fr.n7.stl.minic.ast.type;
 import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
+import fr.n7.stl.util.Logger;
 
 /**
  * Implementation of the Abstract Syntax Tree node for a pointer type.
@@ -29,7 +30,12 @@ public class PointerType implements Type {
 	 */
 	@Override
 	public boolean equalsTo(Type _other) {
-		throw new SemanticsUndefinedException("Semantics equalsTo undefined in PointerType.");
+		if (_other instanceof PointerType) {
+			PointerType _otherPointerType = (PointerType)_other;
+			return element.equals(_otherPointerType.getPointedType());
+		}
+		Logger.error(_other.toString() + " is not a PointerType");
+		return false;
 	}
 
 	/* (non-Javadoc)
@@ -37,7 +43,12 @@ public class PointerType implements Type {
 	 */
 	@Override
 	public boolean compatibleWith(Type _other) {
-		throw new SemanticsUndefinedException("Semantics compatibleWith undefined in PointerType.");
+		if (_other instanceof PointerType) {
+			PointerType _otherPointerType = (PointerType)_other;
+			return element.compatibleWith(_otherPointerType.getPointedType());
+		}
+		Logger.error(_other.toString() + " is not a PointerType");
+		return false;
 	}
 
 	/* (non-Javadoc)

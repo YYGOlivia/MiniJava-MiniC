@@ -1,9 +1,10 @@
 package fr.n7.stl.minic.ast.expression;
 
-import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
+import fr.n7.stl.minic.ast.type.PointerType;
 import fr.n7.stl.minic.ast.type.Type;
+import fr.n7.stl.util.Logger;
 
 /**
  * Common elements between left (Assignable) and right (Expression) end sides of assignments. These elements
@@ -39,7 +40,7 @@ public abstract class AbstractPointer<PointerKind extends Expression> implements
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException("Semantics collect is not implemented in AbstractPointer.");		
+		return pointer.collectAndPartialResolve(_scope);
 	}
 	
 	/* (non-Javadoc)
@@ -47,15 +48,21 @@ public abstract class AbstractPointer<PointerKind extends Expression> implements
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException("Semantics resolve is not implemented in AbstractPointer.");		
+		return pointer.completeResolve(_scope);
 	}
 
 	/**
 	 * Synthesized Semantics attribute to compute the type of an expression.
 	 * @return Synthesized Type of the expression.
 	 */
+	@Override
 	public Type getType() {
-		throw new SemanticsUndefinedException("Semantics getType is not implemented in PointerAccess.");
+		if (pointer.getType() instanceof PointerType) {
+			PointerType ptrType = ((PointerType)pointer.getType());
+			return ptrType.getPointedType();	
+		}
+		Logger.error(pointer.getType() + " is not a PointerType");
+		return pointer.getType();
 	}
 
 }

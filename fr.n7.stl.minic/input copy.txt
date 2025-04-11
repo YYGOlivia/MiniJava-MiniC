@@ -6,8 +6,4 @@ monProgramme {
     while (i < 10) {
         i = i + 1;
     }
-    int *ptr = new int();
-    ptr = &i;
-    boolean *fltPtr = new boolean();
-    fltPtr = &i;
 }

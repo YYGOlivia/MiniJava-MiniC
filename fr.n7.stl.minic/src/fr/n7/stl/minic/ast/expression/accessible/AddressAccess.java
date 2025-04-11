@@ -7,6 +7,7 @@ import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.assignable.AssignableExpression;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
+import fr.n7.stl.minic.ast.type.PointerType;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
@@ -34,7 +35,7 @@ public class AddressAccess implements AccessibleExpression {
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "collect is undefined in AddressAccess.");	
+		return assignable.collectAndPartialResolve(_scope);
 	}
 
 	/* (non-Javadoc)
@@ -42,7 +43,7 @@ public class AddressAccess implements AccessibleExpression {
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "resolve is undefined in AddressAccess.");	
+		return assignable.completeResolve(_scope);
 	}
 	
 	/* (non-Javadoc)
@@ -50,7 +51,7 @@ public class AddressAccess implements AccessibleExpression {
 	 */
 	@Override
 	public Type getType() {
-		throw new SemanticsUndefinedException( "getType is undefined in AddressAccess.");
+		return new PointerType(assignable.getType());
 	}
 	
 	/* (non-Javadoc)
