@@ -8,10 +8,12 @@ import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.instruction.Instruction;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
+import fr.n7.stl.minic.ast.scope.SymbolTable;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
+import fr.n7.stl.util.Logger;
 import java.util.Iterator;
 import java.util.List;
 
@@ -99,13 +101,34 @@ public class FunctionDeclaration implements Instruction, Declaration {
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "Semantics collectAndPartialResolve is undefined in FunctionDeclaration.");
+		if (!_scope.accepts(this)) {
+			Logger.error("The function " + name + " is already declared");
+			return false;
+		}
+		_scope.register(this);
+		SymbolTable functionScope = new SymbolTable(_scope);
+		for (ParameterDeclaration paramDecl : this.parameters) {
+			functionScope.register(paramDecl);
+		}
+		boolean okBody = body.collectAndPartialResolve(functionScope, this);
+		boolean okType = type.completeResolve(_scope);
+		return okBody && okType;
 	}
 	
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
-		throw new SemanticsUndefinedException( "Semantics collectAndPartialResolve is undefined in ConstantDeclaration.");
-
+		if (!_scope.accepts(this)) {
+			Logger.error("The function " + name + " is already declared");
+			return false;
+		}
+		_scope.register(this);
+		SymbolTable functionScope = new SymbolTable(_scope);
+		for (ParameterDeclaration paramDecl : this.parameters) {
+			functionScope.register(paramDecl);
+		}
+		boolean okBody = body.collectAndPartialResolve(functionScope, this);
+		boolean okType = type.completeResolve(_scope);
+		return okBody && okType;
 	}
 	
 	/* (non-Javadoc)
@@ -113,7 +136,12 @@ public class FunctionDeclaration implements Instruction, Declaration {
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		boolean okBody = body.completeResolve(_scope);
+		_scope.register(this);
+		SymbolTable functionScope = new SymbolTable(_scope);
+		for (ParameterDeclaration paramDecl : this.parameters) {
+			functionScope.register(paramDecl);
+		}
+		boolean okBody = body.completeResolve(functionScope);
 		boolean okType = type.completeResolve(_scope);
 		return okBody && okType;
 	}
@@ -123,7 +151,7 @@ public class FunctionDeclaration implements Instruction, Declaration {
 	 */
 	@Override
 	public boolean checkType() {
-		throw new SemanticsUndefinedException( "Semantics checkType is undefined in FunctionDeclaration.");
+		return body.checkType();
 	}
 
 	/* (non-Javadoc)

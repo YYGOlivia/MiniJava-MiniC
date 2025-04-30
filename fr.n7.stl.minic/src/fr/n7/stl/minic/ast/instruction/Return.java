@@ -11,6 +11,7 @@ import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
+import fr.n7.stl.util.Logger;
 import java.security.InvalidParameterException;
 
 /**
@@ -42,7 +43,7 @@ public class Return implements Instruction {
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "Semantics collect is undefined in Return.");
+		return value.collectAndPartialResolve(_scope);
 	}
 	
 	/* (non-Javadoc)
@@ -68,7 +69,12 @@ public class Return implements Instruction {
 	 */
 	@Override
 	public boolean checkType() {
-		throw new SemanticsUndefinedException("Semantics checkType undefined in Return.");
+		boolean okType = value.getType().compatibleWith(function.getType());
+		if (!okType) {
+			Logger.error("Type " + value.getType() + " is not compatible with expected return type " +
+			function.getType() + " in function " + function.getName());
+		}
+		return okType; 
 	}
 
 	/* (non-Javadoc)

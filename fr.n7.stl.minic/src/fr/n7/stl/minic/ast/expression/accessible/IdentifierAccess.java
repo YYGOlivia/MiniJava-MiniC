@@ -3,9 +3,10 @@
  */
 package fr.n7.stl.minic.ast.expression.accessible;
 
-import fr.n7.stl.minic.ast.expression.AbstractIdentifier;
 import fr.n7.stl.minic.ast.expression.AbstractAccess;
+import fr.n7.stl.minic.ast.expression.AbstractIdentifier;
 import fr.n7.stl.minic.ast.instruction.declaration.ConstantDeclaration;
+import fr.n7.stl.minic.ast.instruction.declaration.ParameterDeclaration;
 import fr.n7.stl.minic.ast.instruction.declaration.VariableDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
@@ -51,12 +52,13 @@ public class IdentifierAccess extends AbstractIdentifier implements AccessibleEx
 			Declaration _declaration = _scope.get(this.name);
 			if (_declaration instanceof VariableDeclaration) {
 				this.expression = new VariableAccess((VariableDeclaration) _declaration);
-			} else {
-				if (_declaration instanceof ConstantDeclaration) {
-					// TODO : refactor the management of Constants
-					this.expression = new ConstantAccess((ConstantDeclaration) _declaration);
-				}
+			} else if (_declaration instanceof ConstantDeclaration) {
+				// TODO : refactor the management of Constants
+				this.expression = new ConstantAccess((ConstantDeclaration) _declaration);
+			} else if (_declaration instanceof ParameterDeclaration) {
+				this.expression = new ParameterAccess((ParameterDeclaration) _declaration);
 			}
+			
 		}
 		return true;
 	}

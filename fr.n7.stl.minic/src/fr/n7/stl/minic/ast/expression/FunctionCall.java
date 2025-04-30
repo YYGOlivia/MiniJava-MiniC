@@ -6,11 +6,13 @@ package fr.n7.stl.minic.ast.expression;
 import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
+import fr.n7.stl.minic.ast.instruction.declaration.ParameterDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
+import fr.n7.stl.util.Logger;
 import java.util.Iterator;
 import java.util.List;
 
@@ -69,6 +71,17 @@ public class FunctionCall implements AccessibleExpression {
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
+		if (this.function== null) {
+			Declaration varDec = _scope.get(name);
+			if (varDec instanceof FunctionDeclaration) {
+				FunctionDeclaration funcDec = ((FunctionDeclaration)varDec);
+				this.function = funcDec;
+			} else {
+				Logger.error("The variable " + name + " is not a function");
+				return false;
+			}
+		}
+
 		boolean ok = true;
 		for (AccessibleExpression arg : arguments){
 			ok = ok && arg.collectAndPartialResolve(_scope);
@@ -81,10 +94,35 @@ public class FunctionCall implements AccessibleExpression {
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
+
+		List<ParameterDeclaration> funcParams = function.getParameters();
+		boolean argLenOk = arguments.size() == funcParams.size();
+		if (!argLenOk) {
+			Logger.error("Wrong number of arguments for " + name +
+			" (expected " + funcParams.size() +
+			" got " + arguments.size() + ")");
+			return false;
+		}
+
 		boolean ok = true;
 		for (AccessibleExpression arg : arguments){
 			ok = ok && arg.completeResolve(_scope);
 		}
+		for (int i = 0; i < arguments.size(); i++) {
+			Type funcParamType = funcParams.get(i).getType();
+			Type argType = arguments.get(i).getType();
+			ok = ok && argType.compatibleWith(funcParamType);
+		}
+		if (!ok) {
+			List<String> funcParamString= funcParams.stream().map(x -> x.getType().toString()).toList();
+			List<String> argString= arguments.stream().map(x -> x.getType().toString()).toList();
+			Logger.error("Wrong type of arguments for " + name +
+			" (expected " + funcParamString+
+			" got " + argString + ")");
+			return false;
+		}
+
+		
 		return ok && (function != null);
 	}
 	
@@ -93,7 +131,7 @@ public class FunctionCall implements AccessibleExpression {
 	 */
 	@Override
 	public Type getType() {
-		throw new SemanticsUndefinedException( "Semantics getType is undefined in FunctionCall.");
+		return function.getType();
 	}
 
 	/* (non-Javadoc)

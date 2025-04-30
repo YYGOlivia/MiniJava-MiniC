@@ -1,13 +1,7 @@
 monProgramme {
-    int i = 0;
-    if (i == 0) {
-    	i = 1;
+    float foo (int x, int y, int z) {
+        return x+1.0;
     }
-    while (i < 10) {
-        i = i + 1;
-    }
-    int *ptr = new int();
-    ptr = &i;
-    boolean *fltPtr = new boolean();
-    fltPtr = &i;
+    int b = 0;
+    float a = foo(b,b,b);
 }
