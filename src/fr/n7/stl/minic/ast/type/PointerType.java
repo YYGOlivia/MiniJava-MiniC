@@ -10,6 +10,7 @@ import fr.n7.stl.util.Logger;
 
 /**
  * Implementation of the Abstract Syntax Tree node for a pointer type.
+ * 
  * @author Marc Pantel
  *
  */
@@ -20,38 +21,44 @@ public class PointerType implements Type {
 	public PointerType(Type _element) {
 		this.element = _element;
 	}
-	
+
 	public Type getPointedType() {
 		return this.element;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.block.ast.Type#equalsTo(fr.n7.stl.block.ast.Type)
 	 */
 	@Override
 	public boolean equalsTo(Type _other) {
 		if (_other instanceof PointerType) {
-			PointerType _otherPointerType = (PointerType)_other;
+			PointerType _otherPointerType = (PointerType) _other;
 			return element.equals(_otherPointerType.getPointedType());
 		}
 		Logger.error(_other.toString() + " is not a PointerType");
 		return false;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.block.ast.Type#compatibleWith(fr.n7.stl.block.ast.Type)
 	 */
 	@Override
 	public boolean compatibleWith(Type _other) {
 		if (_other instanceof PointerType) {
-			PointerType _otherPointerType = (PointerType)_other;
+			PointerType _otherPointerType = (PointerType) _other;
 			return element.compatibleWith(_otherPointerType.getPointedType());
 		}
 		Logger.error(_other.toString() + " is not a PointerType");
 		return false;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.block.ast.Type#merge(fr.n7.stl.block.ast.Type)
 	 */
 	@Override
@@ -59,7 +66,9 @@ public class PointerType implements Type {
 		throw new SemanticsUndefinedException("Semantics merge undefined in PointerType.");
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.block.ast.Type#length(int)
 	 */
 	@Override
@@ -67,15 +76,19 @@ public class PointerType implements Type {
 		throw new SemanticsUndefinedException("Semantics length undefined in PointerType.");
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		return "(" + this.element + " *)";
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.block.ast.type.Type#resolve(fr.n7.stl.block.ast.scope.Scope)
 	 */
 	@Override

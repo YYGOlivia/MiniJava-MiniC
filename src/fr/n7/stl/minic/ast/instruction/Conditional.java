@@ -18,7 +18,9 @@ import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.Logger;
 
 /**
- * Implementation of the Abstract Syntax Tree node for a conditional instruction.
+ * Implementation of the Abstract Syntax Tree node for a conditional
+ * instruction.
+ * 
  * @author Marc Pantel
  *
  */
@@ -40,16 +42,23 @@ public class Conditional implements Instruction {
 		this.elseBranch = null;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "if (" + this.condition + " )" + this.thenBranch + ((this.elseBranch != null)?(" else " + this.elseBranch):"");
+		return "if (" + this.condition + " )" + this.thenBranch
+				+ ((this.elseBranch != null) ? (" else " + this.elseBranch) : "");
 	}
-	
-	/* (non-Javadoc)
-	 * @see fr.n7.stl.block.ast.instruction.Instruction#collect(fr.n7.stl.block.ast.scope.Scope)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * fr.n7.stl.block.ast.instruction.Instruction#collect(fr.n7.stl.block.ast.scope
+	 * .Scope)
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
@@ -60,9 +69,13 @@ public class Conditional implements Instruction {
 		boolean okElse = (elseBranch == null) ? true : elseBranch.collectAndPartialResolve(elseScope);
 		return okCond && okThen & okElse;
 	}
-	
-	/* (non-Javadoc)
-	 * @see fr.n7.stl.block.ast.instruction.Instruction#collect(fr.n7.stl.block.ast.scope.Scope)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * fr.n7.stl.block.ast.instruction.Instruction#collect(fr.n7.stl.block.ast.scope
+	 * .Scope)
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
@@ -73,9 +86,13 @@ public class Conditional implements Instruction {
 		boolean okElse = (elseBranch == null) ? true : elseBranch.collectAndPartialResolve(elseScope, _container);
 		return okCond && okThen & okElse;
 	}
-	
-	/* (non-Javadoc)
-	 * @see fr.n7.stl.block.ast.instruction.Instruction#resolve(fr.n7.stl.block.ast.scope.Scope)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * fr.n7.stl.block.ast.instruction.Instruction#resolve(fr.n7.stl.block.ast.scope
+	 * .Scope)
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
@@ -87,15 +104,17 @@ public class Conditional implements Instruction {
 		return okCond && okThen & okElse;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.block.ast.Instruction#checkType()
 	 */
 	@Override
 	public boolean checkType() {
 		boolean ok1 = thenBranch.checkType();
 		Type okCond = condition.getType();
-		if (okCond.equals(AtomicType.BooleanType)){
-			if (elseBranch!=null){
+		if (okCond.equals(AtomicType.BooleanType)) {
+			if (elseBranch != null) {
 				boolean ok2 = elseBranch.checkType();
 				return ok1 && ok2;
 			}
@@ -105,20 +124,26 @@ public class Conditional implements Instruction {
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see fr.n7.stl.block.ast.Instruction#allocateMemory(fr.n7.stl.tam.ast.Register, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * fr.n7.stl.block.ast.Instruction#allocateMemory(fr.n7.stl.tam.ast.Register,
+	 * int)
 	 */
 	@Override
 	public int allocateMemory(Register _register, int _offset) {
-		throw new SemanticsUndefinedException( "Semantics allocateMemory is undefined in Conditional.");
+		throw new SemanticsUndefinedException("Semantics allocateMemory is undefined in Conditional.");
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.block.ast.Instruction#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
-		throw new SemanticsUndefinedException( "Semantics getCode is undefined in Conditional.");
+		throw new SemanticsUndefinedException("Semantics getCode is undefined in Conditional.");
 	}
 
 }

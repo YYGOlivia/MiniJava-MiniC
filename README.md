@@ -9,4 +9,4 @@
 ## TODO (au minimum)
 
 - [ ] ajouter plus d'exemples de tests
-- [ ] vérifier qu'une déclaration de fonction n'a pas plusieurs arguments de même nom (`_scope.accepts`)
+- [x] vérifier qu'une déclaration de fonction n'a pas plusieurs arguments de même nom (`_scope.accepts`)

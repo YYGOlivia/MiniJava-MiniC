@@ -19,6 +19,7 @@ import java.util.List;
 
 /**
  * Abstract Syntax Tree node for a function declaration.
+ * 
  * @author Marc Pantel
  */
 public class FunctionDeclaration implements Instruction, Declaration {
@@ -27,17 +28,17 @@ public class FunctionDeclaration implements Instruction, Declaration {
 	 * Name of the function
 	 */
 	protected String name;
-	
+
 	/**
 	 * AST node for the returned type of the function
 	 */
 	protected Type type;
-	
+
 	/**
 	 * List of AST nodes for the formal parameters of the function
 	 */
 	protected List<ParameterDeclaration> parameters;
-	
+
 	/**
 	 * @return the parameters
 	 */
@@ -52,10 +53,12 @@ public class FunctionDeclaration implements Instruction, Declaration {
 
 	/**
 	 * Builds an AST node for a function declaration
-	 * @param _name : Name of the function
-	 * @param _type : AST node for the returned type of the function
-	 * @param _parameters : List of AST nodes for the formal parameters of the function
-	 * @param _body : AST node for the body of the function
+	 * 
+	 * @param _name       : Name of the function
+	 * @param _type       : AST node for the returned type of the function
+	 * @param _parameters : List of AST nodes for the formal parameters of the
+	 *                    function
+	 * @param _body       : AST node for the body of the function
 	 */
 	public FunctionDeclaration(String _name, Type _type, List<ParameterDeclaration> _parameters, Block _body) {
 		this.name = _name;
@@ -63,8 +66,10 @@ public class FunctionDeclaration implements Instruction, Declaration {
 		this.parameters = _parameters;
 		this.body = _body;
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
@@ -80,24 +85,32 @@ public class FunctionDeclaration implements Instruction, Declaration {
 		return _result + " )" + this.body;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.block.ast.Declaration#getName()
 	 */
 	@Override
 	public String getName() {
 		return this.name;
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.block.ast.Declaration#getType()
 	 */
 	@Override
 	public Type getType() {
 		return this.type;
 	}
-	
-	/* (non-Javadoc)
-	 * @see fr.n7.stl.block.ast.instruction.Instruction#collect(fr.n7.stl.block.ast.scope.Scope)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * fr.n7.stl.block.ast.instruction.Instruction#collect(fr.n7.stl.block.ast.scope
+	 * .Scope)
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
@@ -108,13 +121,17 @@ public class FunctionDeclaration implements Instruction, Declaration {
 		_scope.register(this);
 		SymbolTable functionScope = new SymbolTable(_scope);
 		for (ParameterDeclaration paramDecl : this.parameters) {
+			if (!functionScope.accepts(paramDecl)) {
+				Logger.error("The parameter " + paramDecl.getName() + " is already declared in the function " + name);
+				return false;
+			}
 			functionScope.register(paramDecl);
 		}
 		boolean okBody = body.collectAndPartialResolve(functionScope, this);
 		boolean okType = type.completeResolve(_scope);
 		return okBody && okType;
 	}
-	
+
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
 		if (!_scope.accepts(this)) {
@@ -124,21 +141,33 @@ public class FunctionDeclaration implements Instruction, Declaration {
 		_scope.register(this);
 		SymbolTable functionScope = new SymbolTable(_scope);
 		for (ParameterDeclaration paramDecl : this.parameters) {
+			if (!functionScope.accepts(paramDecl)) {
+				Logger.error("The parameter " + paramDecl.getName() + " is already declared in the function " + name);
+				return false;
+			}
 			functionScope.register(paramDecl);
 		}
 		boolean okBody = body.collectAndPartialResolve(functionScope, this);
 		boolean okType = type.completeResolve(_scope);
 		return okBody && okType;
 	}
-	
-	/* (non-Javadoc)
-	 * @see fr.n7.stl.block.ast.instruction.Instruction#resolve(fr.n7.stl.block.ast.scope.Scope)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * fr.n7.stl.block.ast.instruction.Instruction#resolve(fr.n7.stl.block.ast.scope
+	 * .Scope)
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
 		_scope.register(this);
 		SymbolTable functionScope = new SymbolTable(_scope);
 		for (ParameterDeclaration paramDecl : this.parameters) {
+			if (!functionScope.accepts(paramDecl)) {
+				Logger.error("The parameter " + paramDecl.getName() + " is already declared in the function " + name);
+				return false;
+			}
 			functionScope.register(paramDecl);
 		}
 		boolean okBody = body.completeResolve(functionScope);
@@ -146,7 +175,9 @@ public class FunctionDeclaration implements Instruction, Declaration {
 		return okBody && okType;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.block.ast.instruction.Instruction#checkType()
 	 */
 	@Override
@@ -154,20 +185,27 @@ public class FunctionDeclaration implements Instruction, Declaration {
 		return body.checkType();
 	}
 
-	/* (non-Javadoc)
-	 * @see fr.n7.stl.block.ast.instruction.Instruction#allocateMemory(fr.n7.stl.tam.ast.Register, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * fr.n7.stl.block.ast.instruction.Instruction#allocateMemory(fr.n7.stl.tam.ast.
+	 * Register, int)
 	 */
 	@Override
 	public int allocateMemory(Register _register, int _offset) {
-		throw new SemanticsUndefinedException( "Semantics allocateMemory is undefined in FunctionDeclaration.");
+		throw new SemanticsUndefinedException("Semantics allocateMemory is undefined in FunctionDeclaration.");
 	}
 
-	/* (non-Javadoc)
-	 * @see fr.n7.stl.block.ast.instruction.Instruction#getCode(fr.n7.stl.tam.ast.TAMFactory)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see fr.n7.stl.block.ast.instruction.Instruction#getCode(fr.n7.stl.tam.ast.
+	 * TAMFactory)
 	 */
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
-		throw new SemanticsUndefinedException( "Semantics getCode is undefined in FunctionDeclaration.");
+		throw new SemanticsUndefinedException("Semantics getCode is undefined in FunctionDeclaration.");
 	}
 
 }

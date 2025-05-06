@@ -18,6 +18,7 @@ import java.util.List;
 
 /**
  * Abstract Syntax Tree node for a function call expression.
+ * 
  * @author Marc Pantel
  *
  */
@@ -28,21 +29,23 @@ public class FunctionCall implements AccessibleExpression {
 	 * TODO : Should be an expression.
 	 */
 	protected String name;
-	
+
 	/**
 	 * Declaration of the called function after name resolution.
 	 * TODO : Should rely on the VariableUse class.
 	 */
 	protected FunctionDeclaration function;
-	
+
 	/**
-	 * List of AST nodes that computes the values of the parameters for the function call.
+	 * List of AST nodes that computes the values of the parameters for the function
+	 * call.
 	 */
 	protected List<AccessibleExpression> arguments;
-	
+
 	/**
-	 * @param _name : Name of the called function.
-	 * @param _arguments : List of AST nodes that computes the values of the parameters for the function call.
+	 * @param _name      : Name of the called function.
+	 * @param _arguments : List of AST nodes that computes the values of the
+	 *                   parameters for the function call.
 	 */
 	public FunctionCall(String _name, List<AccessibleExpression> _arguments) {
 		this.name = _name;
@@ -50,12 +53,14 @@ public class FunctionCall implements AccessibleExpression {
 		this.arguments = _arguments;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		String _result = ((this.function == null)?this.name:this.function) + "( ";
+		String _result = ((this.function == null) ? this.name : this.function) + "( ";
 		Iterator<AccessibleExpression> _iter = this.arguments.iterator();
 		if (_iter.hasNext()) {
 			_result += _iter.next();
@@ -63,18 +68,22 @@ public class FunctionCall implements AccessibleExpression {
 		while (_iter.hasNext()) {
 			_result += " ," + _iter.next();
 		}
-		return  _result + ")";
+		return _result + ")";
 	}
-	
-	/* (non-Javadoc)
-	 * @see fr.n7.stl.block.ast.expression.Expression#collect(fr.n7.stl.block.ast.scope.HierarchicalScope)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * fr.n7.stl.block.ast.expression.Expression#collect(fr.n7.stl.block.ast.scope.
+	 * HierarchicalScope)
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		if (this.function== null) {
+		if (this.function == null) {
 			Declaration varDec = _scope.get(name);
 			if (varDec instanceof FunctionDeclaration) {
-				FunctionDeclaration funcDec = ((FunctionDeclaration)varDec);
+				FunctionDeclaration funcDec = ((FunctionDeclaration) varDec);
 				this.function = funcDec;
 			} else {
 				Logger.error("The variable " + name + " is not a function");
@@ -83,14 +92,18 @@ public class FunctionCall implements AccessibleExpression {
 		}
 
 		boolean ok = true;
-		for (AccessibleExpression arg : arguments){
+		for (AccessibleExpression arg : arguments) {
 			ok = ok && arg.collectAndPartialResolve(_scope);
 		}
 		return ok && (function != null);
 	}
 
-	/* (non-Javadoc)
-	 * @see fr.n7.stl.block.ast.expression.Expression#resolve(fr.n7.stl.block.ast.scope.HierarchicalScope)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * fr.n7.stl.block.ast.expression.Expression#resolve(fr.n7.stl.block.ast.scope.
+	 * HierarchicalScope)
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
@@ -99,13 +112,13 @@ public class FunctionCall implements AccessibleExpression {
 		boolean argLenOk = arguments.size() == funcParams.size();
 		if (!argLenOk) {
 			Logger.error("Wrong number of arguments for " + name +
-			" (expected " + funcParams.size() +
-			" got " + arguments.size() + ")");
+					" (expected " + funcParams.size() +
+					" got " + arguments.size() + ")");
 			return false;
 		}
 
 		boolean ok = true;
-		for (AccessibleExpression arg : arguments){
+		for (AccessibleExpression arg : arguments) {
 			ok = ok && arg.completeResolve(_scope);
 		}
 		for (int i = 0; i < arguments.size(); i++) {
@@ -114,19 +127,20 @@ public class FunctionCall implements AccessibleExpression {
 			ok = ok && argType.compatibleWith(funcParamType);
 		}
 		if (!ok) {
-			List<String> funcParamString= funcParams.stream().map(x -> x.getType().toString()).toList();
-			List<String> argString= arguments.stream().map(x -> x.getType().toString()).toList();
+			List<String> funcParamString = funcParams.stream().map(x -> x.getType().toString()).toList();
+			List<String> argString = arguments.stream().map(x -> x.getType().toString()).toList();
 			Logger.error("Wrong type of arguments for " + name +
-			" (expected " + funcParamString+
-			" got " + argString + ")");
+					" (expected " + funcParamString +
+					" got " + argString + ")");
 			return false;
 		}
 
-		
 		return ok && (function != null);
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.block.ast.Expression#getType()
 	 */
 	@Override
@@ -134,12 +148,14 @@ public class FunctionCall implements AccessibleExpression {
 		return function.getType();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.block.ast.Expression#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
-		throw new SemanticsUndefinedException( "Semantics getCode is undefined in FunctionCall.");
+		throw new SemanticsUndefinedException("Semantics getCode is undefined in FunctionCall.");
 	}
 
 }

@@ -16,13 +16,14 @@ import java.security.InvalidParameterException;
 
 /**
  * Implementation of the Abstract Syntax Tree node for a return instruction.
+ * 
  * @author Marc Pantel
  *
  */
 public class Return implements Instruction {
 
 	protected Expression value;
-	
+
 	protected FunctionDeclaration function;
 
 	public Return(Expression _value) {
@@ -30,41 +31,55 @@ public class Return implements Instruction {
 		this.function = null;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return ((this.function != null)?("// Return in function : " + this.function.getName() + "\n"):"") + "return " + this.value + ";\n";
+		return ((this.function != null) ? ("// Return in function : " + this.function.getName() + "\n") : "")
+				+ "return " + this.value + ";\n";
 	}
-	
-	/* (non-Javadoc)
-	 * @see fr.n7.stl.block.ast.instruction.Instruction#collect(fr.n7.stl.block.ast.scope.Scope)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * fr.n7.stl.block.ast.instruction.Instruction#collect(fr.n7.stl.block.ast.scope
+	 * .Scope)
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
 		return value.collectAndPartialResolve(_scope);
 	}
-	
-	/* (non-Javadoc)
-	 * @see fr.n7.stl.block.ast.instruction.Instruction#resolve(fr.n7.stl.block.ast.scope.Scope)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * fr.n7.stl.block.ast.instruction.Instruction#resolve(fr.n7.stl.block.ast.scope
+	 * .Scope)
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
 		return value.completeResolve(_scope);
 	}
-	
+
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
 		if (this.function == null) {
-			this.function = _container;		
+			this.function = _container;
 		} else {
-			throw new InvalidParameterException("Trying to set a function declaration to a return instruction when one has already been set.");
+			throw new InvalidParameterException(
+					"Trying to set a function declaration to a return instruction when one has already been set.");
 		}
 		return this.collectAndPartialResolve(_scope);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.block.ast.Instruction#checkType()
 	 */
 	@Override
@@ -72,20 +87,26 @@ public class Return implements Instruction {
 		boolean okType = value.getType().compatibleWith(function.getType());
 		if (!okType) {
 			Logger.error("Type " + value.getType() + " is not compatible with expected return type " +
-			function.getType() + " in function " + function.getName());
+					function.getType() + " in function " + function.getName());
 		}
-		return okType; 
+		return okType;
 	}
 
-	/* (non-Javadoc)
-	 * @see fr.n7.stl.block.ast.Instruction#allocateMemory(fr.n7.stl.tam.ast.Register, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * fr.n7.stl.block.ast.Instruction#allocateMemory(fr.n7.stl.tam.ast.Register,
+	 * int)
 	 */
 	@Override
 	public int allocateMemory(Register _register, int _offset) {
 		throw new SemanticsUndefinedException("Semantics allocateMemory undefined in Return.");
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.block.ast.Instruction#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override

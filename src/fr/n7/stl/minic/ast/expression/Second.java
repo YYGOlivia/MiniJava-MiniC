@@ -13,43 +13,57 @@ import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
 
 /**
- * Implementation of the Abstract Syntax Tree node  for an expression extracting the second component in a couple.
+ * Implementation of the Abstract Syntax Tree node for an expression extracting
+ * the second component in a couple.
+ * 
  * @author Marc Pantel
  *
  */
 public class Second implements AccessibleExpression {
 
 	/**
-	 * AST node for the expression whose value must whose second element is extracted by the expression.
+	 * AST node for the expression whose value must whose second element is
+	 * extracted by the expression.
 	 */
 	private AccessibleExpression target;
-	
+
 	/**
-	 * Builds an Abstract Syntax Tree node for an expression extracting the second component of a couple.
-	 * @param _target : AST node for the expression whose value must whose second element is extracted by the expression.
+	 * Builds an Abstract Syntax Tree node for an expression extracting the second
+	 * component of a couple.
+	 * 
+	 * @param _target : AST node for the expression whose value must whose second
+	 *                element is extracted by the expression.
 	 */
 	public Second(AccessibleExpression _target) {
 		this.target = _target;
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
 		return "(snd" + this.target + ")";
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.block.ast.Expression#getType()
 	 */
 	@Override
 	public Type getType() {
 		Type targetType = target.getType();
-		return ((CoupleType)targetType).getSecond();
+		return ((CoupleType) targetType).getSecond();
 	}
-	
-	/* (non-Javadoc)
-	 * @see fr.n7.stl.block.ast.expression.Expression#collect(fr.n7.stl.block.ast.scope.Scope)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * fr.n7.stl.block.ast.expression.Expression#collect(fr.n7.stl.block.ast.scope.
+	 * Scope)
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
@@ -57,15 +71,21 @@ public class Second implements AccessibleExpression {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see fr.n7.stl.block.ast.expression.Expression#resolve(fr.n7.stl.block.ast.scope.Scope)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * fr.n7.stl.block.ast.expression.Expression#resolve(fr.n7.stl.block.ast.scope.
+	 * Scope)
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
 		return target.completeResolve(_scope);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.block.ast.Expression#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override

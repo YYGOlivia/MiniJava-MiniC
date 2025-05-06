@@ -7,8 +7,10 @@ import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.util.Logger;
 
 /**
- * Common elements between left (Assignable) and right (Expression) end sides of assignments. These elements
+ * Common elements between left (Assignable) and right (Expression) end sides of
+ * assignments. These elements
  * share attributes, toString and getType methods.
+ * 
  * @author Marc Pantel
  *
  */
@@ -18,33 +20,46 @@ public abstract class AbstractPointer<PointerKind extends Expression> implements
 	 * AST node that represents an expression whose value is a pointer.
 	 */
 	protected PointerKind pointer;
-	
+
 	/**
-	 * Construction for the implementation of a pointer content access expression Abstract Syntax Tree node.
-	 * @param _pointer Abstract Syntax Tree for the pointer expression in a pointer content access expression.
+	 * Construction for the implementation of a pointer content access expression
+	 * Abstract Syntax Tree node.
+	 * 
+	 * @param _pointer Abstract Syntax Tree for the pointer expression in a pointer
+	 *                 content access expression.
 	 */
 	public AbstractPointer(PointerKind _pointer) {
 		this.pointer = _pointer;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		return "(*" + this.pointer + ")";
 	}
-	
-	/* (non-Javadoc)
-	 * @see fr.n7.stl.block.ast.expression.Expression#collect(fr.n7.stl.block.ast.scope.HierarchicalScope)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * fr.n7.stl.block.ast.expression.Expression#collect(fr.n7.stl.block.ast.scope.
+	 * HierarchicalScope)
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
 		return pointer.collectAndPartialResolve(_scope);
 	}
-	
-	/* (non-Javadoc)
-	 * @see fr.n7.stl.block.ast.expression.Expression#resolve(fr.n7.stl.block.ast.scope.HierarchicalScope)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * fr.n7.stl.block.ast.expression.Expression#resolve(fr.n7.stl.block.ast.scope.
+	 * HierarchicalScope)
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
@@ -53,13 +68,14 @@ public abstract class AbstractPointer<PointerKind extends Expression> implements
 
 	/**
 	 * Synthesized Semantics attribute to compute the type of an expression.
+	 * 
 	 * @return Synthesized Type of the expression.
 	 */
 	@Override
 	public Type getType() {
 		if (pointer.getType() instanceof PointerType) {
-			PointerType ptrType = ((PointerType)pointer.getType());
-			return ptrType.getPointedType();	
+			PointerType ptrType = ((PointerType) pointer.getType());
+			return ptrType.getPointedType();
 		}
 		Logger.error(pointer.getType() + " is not a PointerType");
 		return pointer.getType();

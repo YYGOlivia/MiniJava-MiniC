@@ -14,14 +14,17 @@ import fr.n7.stl.tam.ast.TAMInstruction;
 /**
  * Implementation of the factory to build a TAM program AST.
  * It relies on a single implementation class TAMInstructionImpl.
+ * 
  * @author Marc Pantel
  *
  */
 public class TAMFactoryImpl implements TAMFactory {
-	
+
 	private static int labelNumber = 0;
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.tam.ast.TAMFactory#createFragment()
 	 */
 	@Override
@@ -29,7 +32,9 @@ public class TAMFactoryImpl implements TAMFactory {
 		return new FragmentImpl();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.tam.ast.TAMFactory#createLoadL(int)
 	 */
 	@Override
@@ -39,12 +44,14 @@ public class TAMFactoryImpl implements TAMFactory {
 				Optional.empty(),
 				Optional.empty(),
 				Optional.of(_value),
-				Optional.empty(), 
+				Optional.empty(),
 				Optional.empty(),
 				Optional.empty());
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.tam.ast.TAMFactory#createPush(int)
 	 */
 	@Override
@@ -54,12 +61,14 @@ public class TAMFactoryImpl implements TAMFactory {
 				Optional.empty(),
 				Optional.empty(),
 				Optional.of(_size),
-				Optional.empty(), 
+				Optional.empty(),
 				Optional.empty(),
 				Optional.empty());
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.tam.ast.TAMFactory#createPop(int, int)
 	 */
 	@Override
@@ -69,13 +78,16 @@ public class TAMFactoryImpl implements TAMFactory {
 				Optional.empty(),
 				Optional.empty(),
 				Optional.of(_remove),
-				Optional.empty(), 
+				Optional.empty(),
 				Optional.of(_keep),
 				Optional.empty());
 	}
 
-	/* (non-Javadoc)
-	 * @see fr.n7.stl.tam.ast.TAMFactory#createLoad(fr.n7.stl.tam.ast.Register, int, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see fr.n7.stl.tam.ast.TAMFactory#createLoad(fr.n7.stl.tam.ast.Register, int,
+	 * int)
 	 */
 	@Override
 	public TAMInstruction createLoad(Register _register, int _offset, int _size) {
@@ -84,13 +96,16 @@ public class TAMFactoryImpl implements TAMFactory {
 				Optional.empty(),
 				Optional.of(_register),
 				Optional.of(_offset),
-				Optional.empty(), 
+				Optional.empty(),
 				Optional.of(_size),
 				Optional.empty());
 	}
 
-	/* (non-Javadoc)
-	 * @see fr.n7.stl.tam.ast.TAMFactory#createLoadA(fr.n7.stl.tam.ast.Register, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see fr.n7.stl.tam.ast.TAMFactory#createLoadA(fr.n7.stl.tam.ast.Register,
+	 * int)
 	 */
 	@Override
 	public TAMInstruction createLoadA(Register _register, int _offset) {
@@ -99,12 +114,14 @@ public class TAMFactoryImpl implements TAMFactory {
 				Optional.empty(),
 				Optional.of(_register),
 				Optional.of(_offset),
-				Optional.empty(), 
+				Optional.empty(),
 				Optional.empty(),
 				Optional.empty());
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.tam.ast.TAMFactory#createLoadA(java.lang.String)
 	 */
 	@Override
@@ -112,14 +129,16 @@ public class TAMFactoryImpl implements TAMFactory {
 		return new TAMInstructionImpl(
 				TAMInstructionKind.LOADA,
 				Optional.empty(),
-				Optional.empty(), 
-				Optional.empty(), 
+				Optional.empty(),
+				Optional.empty(),
 				Optional.of(_label),
 				Optional.empty(),
 				Optional.empty());
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.tam.ast.TAMFactory#createLoadI(int)
 	 */
 	@Override
@@ -128,14 +147,17 @@ public class TAMFactoryImpl implements TAMFactory {
 				TAMInstructionKind.LOADI,
 				Optional.empty(),
 				Optional.empty(),
-				Optional.empty(), 
-				Optional.empty(), 
+				Optional.empty(),
+				Optional.empty(),
 				Optional.of(_size),
 				Optional.empty());
 	}
 
-	/* (non-Javadoc)
-	 * @see fr.n7.stl.tam.ast.TAMFactory#createStore(fr.n7.stl.tam.ast.Register, int, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see fr.n7.stl.tam.ast.TAMFactory#createStore(fr.n7.stl.tam.ast.Register,
+	 * int, int)
 	 */
 	@Override
 	public TAMInstruction createStore(Register _register, int _offset, int _size) {
@@ -144,12 +166,14 @@ public class TAMFactoryImpl implements TAMFactory {
 				Optional.empty(),
 				Optional.of(_register),
 				Optional.of(_offset),
-				Optional.empty(), 
+				Optional.empty(),
 				Optional.of(_size),
 				Optional.empty());
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.tam.ast.TAMFactory#createStoreI(int)
 	 */
 	@Override
@@ -159,12 +183,14 @@ public class TAMFactoryImpl implements TAMFactory {
 				Optional.empty(),
 				Optional.empty(),
 				Optional.empty(),
-				Optional.empty(), 
+				Optional.empty(),
 				Optional.of(_size),
 				Optional.empty());
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.tam.ast.TAMFactory#createJump(fr.n7.stl.tam.ast.Register, int)
 	 */
 	@Override
@@ -174,12 +200,14 @@ public class TAMFactoryImpl implements TAMFactory {
 				Optional.empty(),
 				Optional.of(_register),
 				Optional.of(_offset),
-				Optional.empty(), 
+				Optional.empty(),
 				Optional.empty(),
 				Optional.empty());
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.tam.ast.TAMFactory#createJump(java.lang.String)
 	 */
 	@Override
@@ -187,15 +215,18 @@ public class TAMFactoryImpl implements TAMFactory {
 		return new TAMInstructionImpl(
 				TAMInstructionKind.JUMP,
 				Optional.empty(),
-				Optional.empty(), 				
-				Optional.empty(), 
+				Optional.empty(),
+				Optional.empty(),
 				Optional.of(_label),
 				Optional.empty(),
 				Optional.empty());
 	}
 
-	/* (non-Javadoc)
-	 * @see fr.n7.stl.tam.ast.TAMFactory#createJumpIf(fr.n7.stl.tam.ast.Register, int, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see fr.n7.stl.tam.ast.TAMFactory#createJumpIf(fr.n7.stl.tam.ast.Register,
+	 * int, int)
 	 */
 	@Override
 	public TAMInstruction createJumpIf(Register _register, int _offset, int _value) {
@@ -204,12 +235,14 @@ public class TAMFactoryImpl implements TAMFactory {
 				Optional.empty(),
 				Optional.of(_register),
 				Optional.of(_offset),
-				Optional.empty(), 
+				Optional.empty(),
 				Optional.empty(),
 				Optional.empty());
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.tam.ast.TAMFactory#createJumpIf(java.lang.String, int)
 	 */
 	@Override
@@ -217,14 +250,16 @@ public class TAMFactoryImpl implements TAMFactory {
 		return new TAMInstructionImpl(
 				TAMInstructionKind.JUMPIF,
 				Optional.empty(),
-				Optional.empty(), 
-				Optional.empty(), 
+				Optional.empty(),
+				Optional.empty(),
 				Optional.of(_label),
 				Optional.of(_value),
 				Optional.empty());
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.tam.ast.TAMFactory#createHalt()
 	 */
 	@Override
@@ -232,15 +267,18 @@ public class TAMFactoryImpl implements TAMFactory {
 		return new TAMInstructionImpl(
 				TAMInstructionKind.HALT,
 				Optional.empty(),
-				Optional.empty(), 
 				Optional.empty(),
-				Optional.empty(), 
+				Optional.empty(),
+				Optional.empty(),
 				Optional.empty(),
 				Optional.empty());
 	}
 
-	/* (non-Javadoc)
-	 * @see fr.n7.stl.tam.ast.TAMFactory#createCall(fr.n7.stl.tam.ast.Register, int, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see fr.n7.stl.tam.ast.TAMFactory#createCall(fr.n7.stl.tam.ast.Register, int,
+	 * int)
 	 */
 	@Override
 	public TAMInstruction createCall(Register _register, int _offset, Register _frame) {
@@ -249,12 +287,14 @@ public class TAMFactoryImpl implements TAMFactory {
 				Optional.empty(),
 				Optional.of(_register),
 				Optional.of(_offset),
-				Optional.empty(), 
+				Optional.empty(),
 				Optional.empty(),
 				Optional.of(_frame));
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.tam.ast.TAMFactory#createCall(java.lang.String, int)
 	 */
 	@Override
@@ -262,14 +302,16 @@ public class TAMFactoryImpl implements TAMFactory {
 		return new TAMInstructionImpl(
 				TAMInstructionKind.CALL,
 				Optional.empty(),
-				Optional.empty(), 
-				Optional.empty(), 
+				Optional.empty(),
+				Optional.empty(),
 				Optional.of(_label),
 				Optional.empty(),
 				Optional.of(_frame));
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.tam.ast.TAMFactory#createCallI(int)
 	 */
 	@Override
@@ -277,14 +319,16 @@ public class TAMFactoryImpl implements TAMFactory {
 		return new TAMInstructionImpl(
 				TAMInstructionKind.CALLI,
 				Optional.empty(),
-				Optional.empty(), 
 				Optional.empty(),
-				Optional.empty(), 
+				Optional.empty(),
+				Optional.empty(),
 				Optional.empty(),
 				Optional.of(_frame));
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.tam.ast.TAMFactory#createCallI(int)
 	 */
 	@Override
@@ -292,14 +336,16 @@ public class TAMFactoryImpl implements TAMFactory {
 		return new TAMInstructionImpl(
 				TAMInstructionKind.CALLI,
 				Optional.empty(),
-				Optional.empty(), 
 				Optional.empty(),
-				Optional.empty(), 
+				Optional.empty(),
+				Optional.empty(),
 				Optional.empty(),
 				Optional.empty());
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.tam.ast.TAMFactory#createReturn(int, int)
 	 */
 	@Override
@@ -307,14 +353,16 @@ public class TAMFactoryImpl implements TAMFactory {
 		return new TAMInstructionImpl(
 				TAMInstructionKind.RETURN,
 				Optional.empty(),
-				Optional.empty(), 
+				Optional.empty(),
 				Optional.of(_remove),
-				Optional.empty(), 
+				Optional.empty(),
 				Optional.of(_keep),
 				Optional.empty());
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.tam.ast.TAMFactory#createFragment(java.util.List)
 	 */
 	@Override

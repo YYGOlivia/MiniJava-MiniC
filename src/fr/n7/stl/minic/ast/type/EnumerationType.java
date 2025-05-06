@@ -16,9 +16,9 @@ import fr.n7.stl.minic.ast.type.declaration.LabelDeclaration;
  *
  */
 public class EnumerationType implements Type, Declaration {
-	
+
 	private String name;
-	
+
 	private List<LabelDeclaration> labels;
 
 	/**
@@ -28,8 +28,10 @@ public class EnumerationType implements Type, Declaration {
 		this.name = _name;
 		this.labels = _labels;
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
@@ -45,7 +47,9 @@ public class EnumerationType implements Type, Declaration {
 		return _result + " }";
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.block.ast.type.Type#equalsTo(fr.n7.stl.block.ast.type.Type)
 	 */
 	@Override
@@ -53,15 +57,20 @@ public class EnumerationType implements Type, Declaration {
 		throw new SemanticsUndefinedException("Semantics equalsTo is not implemented in EnumerationType.");
 	}
 
-	/* (non-Javadoc)
-	 * @see fr.n7.stl.block.ast.type.Type#compatibleWith(fr.n7.stl.block.ast.type.Type)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * fr.n7.stl.block.ast.type.Type#compatibleWith(fr.n7.stl.block.ast.type.Type)
 	 */
 	@Override
 	public boolean compatibleWith(Type _other) {
 		throw new SemanticsUndefinedException("Semantics compatibleWith is not implemented in EnumerationType.");
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.block.ast.type.Type#merge(fr.n7.stl.block.ast.type.Type)
 	 */
 	@Override
@@ -69,15 +78,19 @@ public class EnumerationType implements Type, Declaration {
 		throw new SemanticsUndefinedException("Semantics merge is not implemented in EnumerationType.");
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.block.ast.type.Type#length()
 	 */
 	@Override
 	public int length() {
 		throw new SemanticsUndefinedException("Semantics length is not implemented in EnumerationType.");
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.block.ast.type.Type#resolve(fr.n7.stl.block.ast.scope.Scope)
 	 */
 	@Override
@@ -85,7 +98,9 @@ public class EnumerationType implements Type, Declaration {
 		return true;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.block.ast.scope.Declaration#getName()
 	 */
 	@Override
@@ -93,7 +108,9 @@ public class EnumerationType implements Type, Declaration {
 		return this.name;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.block.ast.scope.Declaration#getType()
 	 */
 	@Override

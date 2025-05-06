@@ -16,39 +16,49 @@ import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.Logger;
 
 /**
- * Implementation of the Abstract Syntax Tree node for an identifier access expression (can be a variable,
+ * Implementation of the Abstract Syntax Tree node for an identifier access
+ * expression (can be a variable,
  * a parameter, a constant, a function, ...).
- * Will be connected to an appropriate object after resolving the identifier to know to which kind of element
+ * Will be connected to an appropriate object after resolving the identifier to
+ * know to which kind of element
  * it is associated (variable, parameter, constant, function, ...).
+ * 
  * @author Marc Pantel
- * TODO : Should also hold a function and not only a variable.
+ *         TODO : Should also hold a function and not only a variable.
  */
 public class IdentifierAccess extends AbstractIdentifier implements AccessibleExpression {
-	
+
 	protected AbstractAccess expression;
-	
+
 	/**
 	 * Creates a variable use expression Abstract Syntax Tree node.
+	 * 
 	 * @param _name Name of the used variable.
 	 */
 	public IdentifierAccess(String _name) {
 		super(_name);
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
-	@Override 
+	@Override
 	public String toString() {
 		return this.name;
 	}
-	
-	/* (non-Javadoc)
-	 * @see fr.n7.stl.block.ast.expression.Expression#collect(fr.n7.stl.block.ast.scope.HierarchicalScope)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * fr.n7.stl.block.ast.expression.Expression#collect(fr.n7.stl.block.ast.scope.
+	 * HierarchicalScope)
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		if (((HierarchicalScope<Declaration>)_scope).knows(this.name)) {
+		if (((HierarchicalScope<Declaration>) _scope).knows(this.name)) {
 			Declaration _declaration = _scope.get(this.name);
 			if (_declaration instanceof VariableDeclaration) {
 				this.expression = new VariableAccess((VariableDeclaration) _declaration);
@@ -58,18 +68,22 @@ public class IdentifierAccess extends AbstractIdentifier implements AccessibleEx
 			} else if (_declaration instanceof ParameterDeclaration) {
 				this.expression = new ParameterAccess((ParameterDeclaration) _declaration);
 			}
-			
+
 		}
 		return true;
 	}
-	
-	/* (non-Javadoc)
-	 * @see fr.n7.stl.block.ast.expression.Expression#resolve(fr.n7.stl.block.ast.scope.HierarchicalScope)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * fr.n7.stl.block.ast.expression.Expression#resolve(fr.n7.stl.block.ast.scope.
+	 * HierarchicalScope)
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
 		if (this.expression == null) {
-			if (((HierarchicalScope<Declaration>)_scope).knows(this.name)) {
+			if (((HierarchicalScope<Declaration>) _scope).knows(this.name)) {
 				Declaration _declaration = _scope.get(this.name);
 				if (_declaration instanceof ConstantDeclaration) {
 					// TODO : refactor the management of Constants
@@ -87,8 +101,10 @@ public class IdentifierAccess extends AbstractIdentifier implements AccessibleEx
 			return true;
 		}
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.block.ast.Expression#getType()
 	 */
 	@Override
@@ -96,7 +112,9 @@ public class IdentifierAccess extends AbstractIdentifier implements AccessibleEx
 		return this.expression.getType();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.block.ast.Expression#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override

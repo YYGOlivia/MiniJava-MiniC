@@ -18,7 +18,9 @@ import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.Logger;
 
 /**
- * Implementation of the Abstract Syntax Tree node for a conditional instruction.
+ * Implementation of the Abstract Syntax Tree node for a conditional
+ * instruction.
+ * 
  * @author Marc Pantel
  *
  */
@@ -32,16 +34,22 @@ public class Iteration implements Instruction {
 		this.body = _body;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		return "while (" + this.condition + " )" + this.body;
 	}
-	
-	/* (non-Javadoc)
-	 * @see fr.n7.stl.block.ast.instruction.Instruction#collect(fr.n7.stl.block.ast.scope.Scope)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * fr.n7.stl.block.ast.instruction.Instruction#collect(fr.n7.stl.block.ast.scope
+	 * .Scope)
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
@@ -50,7 +58,7 @@ public class Iteration implements Instruction {
 		boolean okBody = body.collectAndPartialResolve(bodyScope);
 		return okCond && okBody;
 	}
-	
+
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
 		SymbolTable bodyScope = new SymbolTable(_scope);
@@ -58,9 +66,13 @@ public class Iteration implements Instruction {
 		boolean okBody = body.collectAndPartialResolve(bodyScope, _container);
 		return okCond && okBody;
 	}
-	
-	/* (non-Javadoc)
-	 * @see fr.n7.stl.block.ast.instruction.Instruction#resolve(fr.n7.stl.block.ast.scope.Scope)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * fr.n7.stl.block.ast.instruction.Instruction#resolve(fr.n7.stl.block.ast.scope
+	 * .Scope)
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
@@ -70,7 +82,9 @@ public class Iteration implements Instruction {
 		return okCond && okBody;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.block.ast.Instruction#checkType()
 	 */
 	@Override
@@ -84,20 +98,26 @@ public class Iteration implements Instruction {
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see fr.n7.stl.block.ast.Instruction#allocateMemory(fr.n7.stl.tam.ast.Register, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * fr.n7.stl.block.ast.Instruction#allocateMemory(fr.n7.stl.tam.ast.Register,
+	 * int)
 	 */
 	@Override
 	public int allocateMemory(Register _register, int _offset) {
-		throw new SemanticsUndefinedException( "Semantics allocateMemory is undefined in Iteration.");
+		throw new SemanticsUndefinedException("Semantics allocateMemory is undefined in Iteration.");
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.n7.stl.block.ast.Instruction#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
-		throw new SemanticsUndefinedException( "Semantics getCode is undefined in Iteration.");
+		throw new SemanticsUndefinedException("Semantics getCode is undefined in Iteration.");
 	}
 
 }
