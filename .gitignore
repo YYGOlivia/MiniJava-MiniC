@@ -1,6 +1,7 @@
 # fichiers générés par la compilation
 *.class
 target/
+bin/
 
 # fichiers générés par ANTLR
 .antlr/
