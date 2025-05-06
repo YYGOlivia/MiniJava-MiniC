@@ -37,7 +37,23 @@ public class FunctionType implements Type {
 	 */
 	@Override
 	public boolean equalsTo(Type _other) {
-		throw new SemanticsUndefinedException("equalsTo is undefined in FunctionType.");
+		if (!(_other instanceof FunctionType)) {
+			return false;
+		}
+
+		FunctionType _function = (FunctionType) _other;
+		if (!this.result.equalsTo(_function.result)) {
+			return false;
+		}
+		if (this.parameters.size() != _function.parameters.size()) {
+			return false;
+		}
+
+		boolean okParamTypes = true;
+		for (int i = 0; i < this.parameters.size(); i++) {
+			okParamTypes = okParamTypes && this.parameters.get(i).equalsTo(_function.parameters.get(i));
+		}
+		return okParamTypes;
 	}
 
 	/*
@@ -47,7 +63,26 @@ public class FunctionType implements Type {
 	 */
 	@Override
 	public boolean compatibleWith(Type _other) {
-		throw new SemanticsUndefinedException("compatibleWith is undefined in FunctionType.");
+		if (!(_other instanceof FunctionType)) {
+			return false;
+		}
+		FunctionType _function = (FunctionType) _other;
+
+		// type retour covariant
+		if (!this.result.compatibleWith(_function.result)) {
+			return false;
+		}
+
+		if (this.parameters.size() != _function.parameters.size()) {
+			return false;
+		}
+
+		// type paramètres contravariant
+		boolean okParamTypes = true;
+		for (int i = 0; i < this.parameters.size(); i++) {
+			okParamTypes = okParamTypes && _function.parameters.get(i).compatibleWith(this.parameters.get(i));
+		}
+		return okParamTypes;
 	}
 
 	/*
@@ -95,7 +130,11 @@ public class FunctionType implements Type {
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException("Semantics resolve is undefined in FunctionType.");
+		boolean ok = this.result.completeResolve(_scope);
+		for (Type _type : this.parameters) {
+			ok = ok && _type.completeResolve(_scope);
+		}
+		return ok;
 	}
 
 }

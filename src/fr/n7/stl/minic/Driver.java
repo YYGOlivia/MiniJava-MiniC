@@ -1,13 +1,16 @@
 package fr.n7.stl.minic;
 
-import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.tree.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 import fr.n7.stl.minic.parser.MiniCLexer;
 import fr.n7.stl.minic.parser.MiniCParser;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 public class Driver {
 

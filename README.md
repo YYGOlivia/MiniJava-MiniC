@@ -8,5 +8,14 @@
 
 ## TODO (au minimum)
 
-- [ ] ajouter plus d'exemples de tests
+- [ ] faire un script de test pour chaque élément
 - [x] vérifier qu'une déclaration de fonction n'a pas plusieurs arguments de même nom (`_scope.accepts`)
+- [x] tous les `collectAndPartialResolve`
+- [x] tous les `completeResolve`
+- [x] tous les `getType`
+- [x] tous les `checkType`
+- [ ] tous les `merge`
+- [ ] tous les `length`
+- [ ] tous les `allocateMemory`
+- [ ] tous les `getCode`
+- [ ] toutes les classes `Abstract*`

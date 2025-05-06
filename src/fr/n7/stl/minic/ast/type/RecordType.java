@@ -3,9 +3,11 @@
  */
 package fr.n7.stl.minic.ast.type;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.scope.Declaration;
@@ -77,7 +79,29 @@ public class RecordType implements Type, Declaration, Scope<FieldDeclaration> {
 	 */
 	@Override
 	public boolean equalsTo(Type _other) {
-		throw new SemanticsUndefinedException("compatibleWith is undefined in RecordType.");
+		if (!(_other instanceof RecordType)) {
+			return false;
+		}
+		RecordType otherRecord = ((RecordType) _other);
+
+		// il faut le même nombre de champs
+		if (this.fields.size() != otherRecord.fields.size()) {
+			return false;
+		}
+		Map<String, FieldDeclaration> otherFields = new HashMap<>();
+		for (FieldDeclaration field : otherRecord.fields) {
+			otherFields.put(field.getName(), field);
+		}
+
+		// il faut que tous les champs soient égaux 2 à 2
+		boolean okFields = true;
+		for (FieldDeclaration field : this.fields) {
+			FieldDeclaration otherField = otherFields.get(field.getName());
+			boolean okField = otherField != null
+					&& field.getType().equalsTo(otherField.getType());
+			okFields = okFields && okField;
+		}
+		return okFields;
 	}
 
 	/*
@@ -87,7 +111,31 @@ public class RecordType implements Type, Declaration, Scope<FieldDeclaration> {
 	 */
 	@Override
 	public boolean compatibleWith(Type _other) {
-		throw new SemanticsUndefinedException("compatibleWith is undefined in RecordType.");
+		if (!(_other instanceof RecordType)) {
+			return false;
+		}
+		RecordType otherRecord = ((RecordType) _other);
+
+		// il faut plus ou autant de champs que l'autre
+		if (this.fields.size() < otherRecord.fields.size()) {
+			return false;
+		}
+
+		// il faut que j'ai tous ses champs ET que mes champs soient compatibles avec
+		// les siens du même nom
+		Map<String, FieldDeclaration> thisFiedls = new HashMap<>();
+		for (FieldDeclaration field : this.fields) {
+			thisFiedls.put(field.getName(), field);
+		}
+
+		boolean okFields = true;
+		for (FieldDeclaration field : otherRecord.fields) {
+			FieldDeclaration thisField = thisFiedls.get(field.getName());
+			boolean okField = thisField != null
+					&& thisField.getType().compatibleWith(field.getType());
+			okFields = okFields && okField;
+		}
+		return okFields;
 	}
 
 	/*
@@ -97,7 +145,7 @@ public class RecordType implements Type, Declaration, Scope<FieldDeclaration> {
 	 */
 	@Override
 	public Type merge(Type _other) {
-		throw new SemanticsUndefinedException("compatibleWith is undefined in RecordType.");
+		throw new SemanticsUndefinedException("merge is undefined in RecordType.");
 	}
 
 	/*

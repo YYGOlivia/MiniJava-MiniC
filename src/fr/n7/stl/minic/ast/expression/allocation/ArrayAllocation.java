@@ -47,7 +47,9 @@ public class ArrayAllocation implements AccessibleExpression, AssignableExpressi
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException("Semantics collect is undefined in ArrayAllocation.");
+		boolean okType = this.element.completeResolve(_scope);
+		boolean okSize = this.size.collectAndPartialResolve(_scope);
+		return okType && okSize;
 	}
 
 	/*
@@ -59,7 +61,9 @@ public class ArrayAllocation implements AccessibleExpression, AssignableExpressi
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException("Semantics resolve is undefined in ArrayAllocation.");
+		boolean okType = this.element.completeResolve(_scope);
+		boolean okSize = this.size.completeResolve(_scope);
+		return okType && okSize;
 	}
 
 	/*

@@ -3,13 +3,14 @@
  */
 package fr.n7.stl.minic.ast.expression.value;
 
+import org.apache.commons.text.StringEscapeUtils;
+
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.AtomicType;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
-import org.apache.commons.text.*;
 
 /**
  * Implementation of the Abstract Syntax Tree node for an integer constant

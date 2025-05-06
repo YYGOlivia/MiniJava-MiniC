@@ -73,7 +73,7 @@ public abstract class AbstractField<RecordKind extends Expression> implements Ex
 	 * @return Synthesized Type of the expression.
 	 */
 	public Type getType() {
-		throw new SemanticsUndefinedException("getType is undefined in FieldAccess.");
+		return this.field.getType();
 	}
 
 }

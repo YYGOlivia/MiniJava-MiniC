@@ -92,7 +92,9 @@ public class AbstractConditional<ExpressionKind extends Expression> implements E
 	 */
 	@Override
 	public Type getType() {
-		throw new SemanticsUndefinedException("Semantics getType is undefined in ConditionalExpression.");
+		Type thenType = this.thenExpression.getType();
+		Type elseType = this.elseExpression.getType();
+		return thenType.merge(elseType);
 	}
 
 	/*

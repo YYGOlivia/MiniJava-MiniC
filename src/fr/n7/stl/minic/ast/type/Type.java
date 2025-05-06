@@ -32,6 +32,8 @@ public interface Type {
 	 * of self can be
 	 * used as a value of _other.
 	 * 
+	 * <p><b> UN POINT COLORÉ EST COMPATIBLE AVEC UN POINT </b></p>
+	 * 
 	 * @param _other The other type
 	 * @return True if the types are compatibles, False otherwise.
 	 */

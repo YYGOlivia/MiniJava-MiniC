@@ -1,5 +1,5 @@
 monProgramme {
-    float foo (int x, int x, int z) {
+    float foo (int x, int y, int z) {
         return x+1.0;
     }
     int b = 0;
