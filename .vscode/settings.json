@@ -1,0 +1,6 @@
+{
+    "search.exclude": {
+        "**/*.class": true, // Exclude all class files from search
+        "target": true // Exclude target folder from search
+    }
+}
