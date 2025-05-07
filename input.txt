@@ -1,10 +1,5 @@
 monProgramme {
-    typedef enum e_t {
-        A,
-        B,
-        C
-    } test;
-
-    test a = A;
+    typedef int test;
+    test a = 111;
 
 }

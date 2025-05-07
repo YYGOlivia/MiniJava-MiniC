@@ -8,6 +8,7 @@
 
 ## TODO (au minimum)
 
+- [ ] TypeDeclaration (typedef)
 - [ ] faire un script de test pour chaque élément
 - [x] vérifier qu'une déclaration de fonction n'a pas plusieurs arguments de même nom (`_scope.accepts`)
 - [x] tous les `collectAndPartialResolve`

@@ -86,7 +86,13 @@ public class TypeDeclaration implements Declaration, Instruction {
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		return type.completeResolve(_scope);
+		if (_scope.accepts(this)) {
+			_scope.register(this);
+			return type.completeResolve(_scope);
+		} else {
+			Logger.error("The type " + name + " is already declared.");
+			return false;
+		}
 	}
 
 	/**

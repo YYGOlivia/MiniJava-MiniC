@@ -73,6 +73,7 @@ public class AddressAccess implements AccessibleExpression {
 	 */
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
+		assignable.getCode(_factory)
 		throw new SemanticsUndefinedException("getCode is undefined in AddressAccess.");
 	}
 

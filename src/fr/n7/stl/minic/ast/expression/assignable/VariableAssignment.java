@@ -10,6 +10,7 @@ import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.tam.ast.Fragment;
+import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.Logger;
 
@@ -87,7 +88,12 @@ public class VariableAssignment extends AbstractIdentifier implements Assignable
 	 */
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
-		throw new SemanticsUndefinedException("Semantics getCode undefined in VariableAssignment.");
+		Fragment result = _factory.createFragment();
+		result.addComment(this.toString());
+		result.add(_factory.createPush(getType().length()));
+		result.append(this.declaration.getCode(_factory));
+		result.add(_factory.createStore(Register.SB, 0, getType().length()));
+		return result;
 	}
 
 }

@@ -8,6 +8,7 @@ import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.instruction.Instruction;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
+import fr.n7.stl.minic.ast.type.EnumerationType;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
@@ -154,6 +155,7 @@ public class VariableDeclaration implements Declaration, Instruction {
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
+		Logger.warning(_scope.toString());
 		boolean res = value.completeResolve(_scope);
 		if (_scope.accepts(this)) {
 			_scope.register(this);
@@ -171,10 +173,12 @@ public class VariableDeclaration implements Declaration, Instruction {
 	 */
 	@Override
 	public boolean checkType() {
-		if (this.value.getType().compatibleWith(type)) {
+		if (this.value.getType().compatibleWith(this.type)) {
 			return true;
 		}
-		Logger.error("the " + name + " variable type is not compatible");
+		Logger.error(
+				"The type " + this.value.getType() + " is not compatible with the declared type of " + name + " ("
+						+ this.type + ").");
 		return false;
 
 	}
@@ -198,7 +202,10 @@ public class VariableDeclaration implements Declaration, Instruction {
 	 */
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
-		throw new SemanticsUndefinedException("Semantics getCode is undefined in VariableDeclaration.");
+		Fragment result = _factory.createFragment();
+		result.addComment(this.toString());
+		result.append(this.value.getCode(_factory));
+		return result;
 	}
 
 }

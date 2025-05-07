@@ -46,7 +46,7 @@ public enum AtomicType implements Type {
 				case NullType:
 					return ((_other != ErrorType) && (_other != VoidType));
 				case IntegerType:
-					return (_other == FloatingType);
+					return (_other == FloatingType) || (_other instanceof EnumerationType);
 				default:
 					return false;
 			}

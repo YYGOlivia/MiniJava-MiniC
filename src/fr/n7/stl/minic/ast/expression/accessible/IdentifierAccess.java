@@ -74,8 +74,6 @@ public class IdentifierAccess extends AbstractIdentifier implements AccessibleEx
 		} else if (_declaration instanceof ParameterDeclaration) {
 			this.expression = new ParameterAccess((ParameterDeclaration) _declaration);
 
-		} else if (_declaration instanceof LabelDeclaration) {
-			this.expression = new ConstantAccess((ConstantDeclaration) _declaration);
 		} else {
 			Logger.error("Declaration of " + name + " refers to neither variable, constant or parameter.");
 			return false;

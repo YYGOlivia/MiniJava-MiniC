@@ -21,11 +21,14 @@ public class NamedType implements Type {
 	public String name;
 
 	public NamedType(String _name) {
+		Logger
+				.warning("On est dans NamedType !!!!!!!!!!!!!!!!!!!");
 		this.name = _name;
 		this.declaration = null;
 	}
 
 	public NamedType(TypeDeclaration _declaration) {
+
 		this.declaration = _declaration;
 		this.name = _declaration.getName();
 	}
@@ -82,6 +85,7 @@ public class NamedType implements Type {
 	 * @return Type associated to the name.
 	 */
 	public Type getType() {
+		Logger.warning("CheckType de NamedType");
 		Type _result = this.declaration.getType();
 		if (_result instanceof NamedType) {
 			return ((NamedType) _result).getType();
@@ -117,6 +121,7 @@ public class NamedType implements Type {
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
+		Logger.warning("On est dans NamedType completeResolve !!!!!!!!!!!!!!!!!!!");
 		if (this.declaration == null) {
 			if (_scope.knows(this.name)) {
 				try {

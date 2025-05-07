@@ -142,7 +142,6 @@ public class Block {
 	 * @param _offset   Inherited Current offset for the address of the variables.
 	 */
 	public void allocateMemory(Register _register, int _offset) {
-		throw new SemanticsUndefinedException("Semantics allocateMemory is undefined in Block.");
 	}
 
 	/**

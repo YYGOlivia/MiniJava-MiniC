@@ -9,9 +9,12 @@ import java.util.List;
 import java.util.Set;
 
 import fr.n7.stl.minic.ast.SemanticsUndefinedException;
+import fr.n7.stl.minic.ast.expression.value.IntegerValue;
+import fr.n7.stl.minic.ast.instruction.declaration.ConstantDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.declaration.LabelDeclaration;
+import fr.n7.stl.util.Logger;
 
 /**
  * @author Marc Pantel
@@ -87,27 +90,10 @@ public class EnumerationType implements Type, Declaration {
      */
     @Override
     public boolean compatibleWith(Type _other) {
-        if (!(_other instanceof EnumerationType)) {
-            return false;
+        if (_other instanceof EnumerationType) {
+            return true;
         }
-        EnumerationType otherEnum = (EnumerationType) _other;
-
-        // il faut plus ou autant de label que l'autre
-        if (this.labels.size() < otherEnum.labels.size()) {
-            return false;
-        }
-
-        // il faut que j'ai au moins tous ses labels
-        Set<String> thisLabels = new HashSet<>();
-        for (LabelDeclaration labelDecl : this.labels) {
-            thisLabels.add(labelDecl.getName());
-        }
-
-        boolean okLabels = true;
-        for (LabelDeclaration labelDecl : otherEnum.labels) {
-            okLabels = okLabels && thisLabels.contains(labelDecl.getName());
-        }
-        return okLabels;
+        return AtomicType.IntegerType.compatibleWith(_other);
     }
 
     /*
@@ -138,8 +124,14 @@ public class EnumerationType implements Type, Declaration {
     @Override
     public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
         // pas sûr
-        for (LabelDeclaration labelDeclaration : labels) {
-            _scope.register(labelDeclaration);
+        for (int i = 0; i < this.labels.size(); i++) {
+            LabelDeclaration labelDecl = this.labels.get(i);
+            ConstantDeclaration constDecl = new ConstantDeclaration(labelDecl.getName(), AtomicType.IntegerType, new IntegerValue(String.valueOf(i)));
+            if (!(_scope.accepts(constDecl))) {
+                Logger.error("The constant " + constDecl.getName() + " is already declared.");
+                return false;
+            }
+            _scope.register(constDecl);
         }
         return true;
     }

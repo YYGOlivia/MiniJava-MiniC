@@ -194,7 +194,15 @@ public class FunctionDeclaration implements Instruction, Declaration {
 	 */
 	@Override
 	public int allocateMemory(Register _register, int _offset) {
-		throw new SemanticsUndefinedException("Semantics allocateMemory is undefined in FunctionDeclaration.");
+		int off = 0;
+		for (ParameterDeclaration paramDecl : this.parameters) {
+			off += paramDecl.getType().length();
+		}
+		body.allocateMemory(Register.LB, off);
+		for (ParameterDeclaration paramDecl : this.parameters) {
+			off -= paramDecl.getType().length();
+		}
+		return 0;
 	}
 
 	/*

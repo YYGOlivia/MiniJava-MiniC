@@ -37,7 +37,7 @@ parametres returns [List<ParameterDeclaration> l]:
 
 instruction returns [Instruction i]: 
     (DefinitionConstante | /* vide */) type identifiant Egal expression PointVirgule #instructionDeclaration /* const int a = expr; | int a = expr; */ 
-    | DefinitionType type identifiant PointVirgule #instructionTypeDeclaration /* type int a; */ 
+    | DefinitionType type identifiant PointVirgule #instructionTypeDeclaration /* typedef int a; */ 
     | type identifiant ParentheseOuvrante parametres ParentheseFermante bloc #instructionFunctionDeclaration /* void func(param){instructions}; */ 
     | affectable Egal valeur=expression PointVirgule #instructionAffectation /* a = expr; */
     | Afficher expression PointVirgule #instructionAffichage /* print(expr); */
