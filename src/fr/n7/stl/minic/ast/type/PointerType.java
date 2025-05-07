@@ -63,7 +63,11 @@ public class PointerType implements Type {
 	 */
 	@Override
 	public Type merge(Type _other) {
-		throw new SemanticsUndefinedException("Semantics merge undefined in PointerType.");
+		if (_other instanceof PointerType) {
+			return new PointerType(this.element.merge(((PointerType) _other).element));
+		} else {
+			return AtomicType.ErrorType;
+		}
 	}
 
 	/*

@@ -1,7 +1,10 @@
 monProgramme {
-    float foo (int x, int y, int z) {
-        return x+1.0;
-    }
-    int b = 0;
-    float a = foo(b,b,b);
+    typedef enum e_t {
+        A,
+        B,
+        C
+    } test;
+
+    test a = A;
+
 }

@@ -137,6 +137,10 @@ public class EnumerationType implements Type, Declaration {
      */
     @Override
     public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
+        // pas sûr
+        for (LabelDeclaration labelDeclaration : labels) {
+            _scope.register(labelDeclaration);
+        }
         return true;
     }
 

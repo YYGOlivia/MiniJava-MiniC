@@ -3,6 +3,7 @@ package fr.n7.stl.minic.ast.expression.accessible;
 import fr.n7.stl.minic.ast.expression.AbstractConversion;
 import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.type.Type;
+import fr.n7.stl.util.Logger;
 
 /**
  * Implementation of the Abstract Syntax Tree node for a type conversion
@@ -19,6 +20,10 @@ public class AccessibleConversion extends AbstractConversion<Expression> impleme
 
 	public AccessibleConversion(Expression _target, Type _type) {
 		super(_target, _type);
+		Logger.warning("abs conv accessible " + _target + "----" + _type);
+		
 	}
+
+	
 
 }

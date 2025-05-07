@@ -4,11 +4,14 @@
 package fr.n7.stl.minic.ast.expression;
 
 import fr.n7.stl.minic.ast.SemanticsUndefinedException;
+import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
+import fr.n7.stl.minic.ast.instruction.declaration.TypeDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
+import fr.n7.stl.util.Logger;
 
 /**
  * Common elements between left (Assignable) and right (Expression) end sides of
@@ -25,12 +28,14 @@ public abstract class AbstractConversion<TargetType> implements Expression {
 	protected String name;
 
 	public AbstractConversion(TargetType _target, String _type) {
+		Logger.warning("abs conv1 " + _target + "----" + _type);
 		this.target = _target;
 		this.name = _type;
 		this.type = null;
 	}
 
 	public AbstractConversion(TargetType _target, Type _type) {
+		Logger.warning("abs conv2 " + _target + "----" + _type);
 		this.target = _target;
 		this.name = null;
 		this.type = _type;
@@ -56,7 +61,7 @@ public abstract class AbstractConversion<TargetType> implements Expression {
 	 */
 	@Override
 	public Type getType() {
-		throw new SemanticsUndefinedException("Semantics getType undefined in TypeConversion.");
+		return this.type;
 	}
 
 	/*
@@ -68,7 +73,19 @@ public abstract class AbstractConversion<TargetType> implements Expression {
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException("Semantics collect undefined in TypeConversion.");
+		if (this.type != null) {
+			return true;
+		}
+
+		Declaration decl = _scope.get(this.name);
+		if (!(decl instanceof TypeDeclaration)) {
+			Logger.error("Type " + this.name + " is not declared.");
+			return false;
+		}
+
+		TypeDeclaration typeDecl = ((TypeDeclaration) decl);
+		this.type = typeDecl.getType();
+		return true;
 	}
 
 	/*
@@ -80,7 +97,25 @@ public abstract class AbstractConversion<TargetType> implements Expression {
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException("Semantics resolve undefined in TypeConversion.");
+		if (this.target instanceof AccessibleExpression) {
+			AccessibleExpression targetAcc = (AccessibleExpression) target;
+			boolean okTarget = targetAcc.completeResolve(_scope);
+			if (!type.compatibleWith(targetAcc.getType())) {
+				Logger.error(type + " is not compatible with " + targetAcc.getType());
+				return false;
+			}
+			return okTarget;
+		} else if (this.target instanceof Expression) {
+			Expression targetExp = (Expression) target;
+			boolean okTarget = targetExp.completeResolve(_scope);
+			if (!type.compatibleWith(targetExp.getType())) {
+				Logger.error(type + " is not compatible with " + targetExp.getType());
+				return false;
+			}
+			return okTarget;
+		}
+		Logger.error(target + " is not an Expression or an AccessibleExpression");
+		return false;
 	}
 
 	/*
