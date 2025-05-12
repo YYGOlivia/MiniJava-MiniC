@@ -1,0 +1,4 @@
+test03 {
+   // Type error: applying a boolean operation to an integer value and a boolean value
+   int i = 1 && true;
+}

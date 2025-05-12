@@ -1,5 +1,8 @@
 test59 {
-   // No error: Initializing an integer array variable with a dynamically created array
-   int p[] = new int[2];
-   int i = p[0];
+   // No error: Initializing a static array variable with a Boolean sequence value of size 2
+   // Extracting the first element of the pair in a conditional
+   boolean a = true;
+   boolean *p =  & a ;
+   if (*p) {
+   }
 }

@@ -1,7 +1,0 @@
-test71 {
-  // No error: Initialize a record-type variable containing two Boolean fields with a Boolean sequence value of size 2
-  // Extracting the first field of the record in a conditional
-   struct B { boolean a; boolean b; } p =  { true, false } ;
-   while (p.a) {
-   }
-}

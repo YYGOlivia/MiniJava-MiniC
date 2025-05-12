@@ -1,7 +1,7 @@
 test11 {
-   // No error: double declaration in a sub-block with a different type.
+   // No error: Double declaration in a sub-block with the same type.
    int i = 1 ;
-   if (true) {
-      boolean i = true;
+   while (true) {
+      int i = 1;
    }
 }

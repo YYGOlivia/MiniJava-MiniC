@@ -1,4 +1,0 @@
-test64 {
-   // No error: initializing a record variable containing two integer fields with an integer sequence value of size 2
-   struct P { int x; int y; } p = { 1, 2};
-}

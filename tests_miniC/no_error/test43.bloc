@@ -1,6 +1,6 @@
 test43 {
-   // No error: initialization of a variable of type pair of integers with a value sequence of integers of size 2
-   // reading the first component of the pair.
-   <int,int> p = { 3, 4};
-   int k = (fst p);
+   // No error: Initializing a record variable containing two integer fields with an integer sequence value of size 2
+   // Reading the first field of the record.
+   struct P { int x; int y; } p = { 3, 4};
+   int i = p.x;
 }

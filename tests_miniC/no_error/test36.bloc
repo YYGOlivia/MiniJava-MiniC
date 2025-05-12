@@ -1,7 +1,5 @@
 test36 {
-   // No error: Use of a variable after a sub-block.
-   int i = 1 ;
-   while (true) {
-   }
-   i = 2;
+   // No error: initializing an integer array type variable with a dynamically created array
+   int p[] = new int[2];
+   p[0] = 3;
 }

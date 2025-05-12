@@ -1,7 +1,6 @@
 test25 {
-   // Type error: Using a variable with another type after a sub-block.
-   int i = 1 ;
-   if (true) {
-   }
-   i = true;
+  // Type error: Initializing a variable of type pair of integers with a value of a sequence of integers of size 2
+  // Initializing a variable of type pair of integers and booleans with a value of a pair of integers
+   <int,int> p = { 3, 4};
+   <int,boolean> q = p;
 }

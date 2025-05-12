@@ -1,5 +1,6 @@
 test45 {
-   // No error: Initializing an integer pair variable with an integer sequence value of size 2
-   //           initializing an integer pair variable with an integer pair value
-   <int,int> k = p;
+   // No error: Initializing a record variable containing two integer fields with an integer sequence value of size 2
+   // Initializing a variable of the same type with the previous record.
+   struct P { int x; int y; } p = { 3, 4};
+   p.x = 2;
 }

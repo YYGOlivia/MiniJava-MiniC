@@ -1,4 +1,4 @@
 test04 {
-   // Type error: calling an arithmetic operation with on a interger value and a boolean value
-   int i = 1 + true;
-}
+   // Declaration error: reading a variable that is not defined
+   int i = 1 + j;
+   }

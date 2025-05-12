@@ -1,4 +1,5 @@
-test05 {
-   // Type error: applying a boolean operation to an integer value and a boolean value
-   int i = 1 && true;
+test07 {
+   // Type error: initializing an integer variable with the value of a boolean variable
+   boolean p = true ;
+   int i = p;
 }

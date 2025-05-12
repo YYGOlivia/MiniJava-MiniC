@@ -1,4 +1,7 @@
 test03 {
-   // No error: initialization of an integer variable with the result of calculating an integer expression
-   int i = 1 + 2;
+   // No error: double declaration in a sub-block with a different type.
+   int i = 1 ;
+   if (true) {
+      boolean i = true;
+   }
 }

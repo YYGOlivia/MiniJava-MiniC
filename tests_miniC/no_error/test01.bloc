@@ -1,0 +1,4 @@
+test01 {
+   // No error: initialization of an integer variable with the result of calculating an integer expression
+   int i = 1 + 2;
+}

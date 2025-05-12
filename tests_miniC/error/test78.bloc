@@ -1,7 +1,0 @@
-test78 {
-  // Type error: Initializing a variable of type pair of integers and booleans with a sequence value of integers and booleans
-  // Extracting the first element of the pair in a conditional
-   <int,boolean> p =  { 1, false } ;
-   if (fst p) {
-   }
-}

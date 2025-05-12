@@ -1,4 +1,0 @@
-test74 {
-   // Type error: initialization of a variable of type pair of integers with a sequence value containing an integer and a boolean
-   <int,int> p = { 1, true};
-}

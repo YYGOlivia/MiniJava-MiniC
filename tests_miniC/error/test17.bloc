@@ -1,0 +1,8 @@
+test17 {
+   // Declaration error: Double declaration of different types separated by a sub-block.
+   int i = 1 ;
+   while (true) {
+      int i = 1;
+   }
+   boolean i = true;
+}

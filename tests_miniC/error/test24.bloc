@@ -1,7 +1,6 @@
 test24 {
-   // Type error: Using a variable with another type after a sub-block.
-   int i = 1 ;
-   if (true) {
-   }
-   boolean p = i;
+   // Type error: Initializing an integer pair variable with an integer sequence value of size 2
+   // Initializing a Boolean variable with the first component of the pair.
+   <int,int> p = { 1, 2};
+   boolean a = (fst p);
 }

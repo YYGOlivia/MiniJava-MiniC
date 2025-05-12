@@ -1,6 +1,7 @@
 test21 {
-   // Type error: use of a variable in a condition.
+   // Type error: Using a variable with another type after a subblock.
    int i = 1 ;
-   if (i) {
+   while (true) {
    }
+   i = true;
 }

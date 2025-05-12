@@ -1,0 +1,5 @@
+test34 {
+   // Type error: initialization of an integer array type variable with a dynamically created array then assignment with a boolean
+   int p[] = new int[2];
+   p[0] = true;
+}

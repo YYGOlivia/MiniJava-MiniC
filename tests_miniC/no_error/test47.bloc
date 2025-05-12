@@ -1,6 +1,8 @@
 test47 {
-   // No error: Initializing an integer pair variable with an integer sequence value of size 2
-   //           Initializing an integer pair variable with an integer pair value
-   <int,int> p = { 3, 4};
-   p = { (fst p), (snd p) };
+  // No error: Initialize a record-type variable containing two Boolean fields with a Boolean sequence value of size 2
+  // Extracting the first field of the record in a conditional
+struct B { boolean a; boolean b; } p = { true, false } ;
+   struct B { boolean a; boolean b; } p =  { true, false } ;
+   if (p.a) {
+   }
 }

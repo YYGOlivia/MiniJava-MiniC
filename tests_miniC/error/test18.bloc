@@ -1,0 +1,6 @@
+test18 {
+   // Type error: using an integer variable in a condition.
+   int i = 1 ;
+   while (i) {
+   }
+}

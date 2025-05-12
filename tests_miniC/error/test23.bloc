@@ -1,7 +1,4 @@
 test23 {
-   // Type error: Using a variable with another type in a sub-block.
-   int i = 1 ;
-   if (true) {
-      i = true;
-   }
+   // Type error: initialization of a variable of type pair of integers with a sequence value containing an integer and a boolean
+   <int,int> p = { 1, true};
 }

@@ -1,8 +1,0 @@
-test100 {
-   // No error: Initializing a static array variable with a Boolean sequence value of size 2
-   // Extracting the first element of the pair in a conditional
-   boolean a = true;
-   boolean *p =  & a ;
-   if (*p) {
-   }
-}

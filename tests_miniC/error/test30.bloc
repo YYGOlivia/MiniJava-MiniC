@@ -1,8 +1,5 @@
 test30 {
-   // Declaration error: Double declaration of different types separated by a sub-block.
-   int i = 1 ;
-   while (true) {
-      int i = 1;
-   }
-   boolean i = true;
+   // Type error: Initializing an integer array variable with a statically created array, then assigning the array with an integer and boolean sequence
+   int p[] = { 3, 4};
+   p = { 1, true};
 }

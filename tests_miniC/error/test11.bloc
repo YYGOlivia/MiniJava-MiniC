@@ -1,0 +1,7 @@
+test11 {
+   // Type error: Using a variable with another type in a sub-block.
+   int i = 1 ;
+   if (true) {
+      boolean p = i;
+   }
+}

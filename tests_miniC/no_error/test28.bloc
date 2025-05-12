@@ -1,0 +1,7 @@
+test28 {
+   // No error: Initialize a pair variable composed of a Boolean and an integer with a sequence value composed of a Boolean and an integer
+   //           extracting the first element in the pair in a conditional
+   <boolean,int> p =  { true, 1 } ;
+   if (fst p) {
+   }
+}

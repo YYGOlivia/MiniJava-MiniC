@@ -1,7 +1,7 @@
 test39 {
-   // Type error: Using a variable with another type in a sub-block.
-   int i = 1 ;
-   while (true) {
-      boolean p = i;
+   // Type error: Initializing a record-type variable containing two Boolean fields with a Boolean sequence value of size 2
+   // Extracting the first field of the record in a conditional statement
+struct B { boolean a; int n; } p = { true, 1 } ;
+   while (p.n) {
    }
 }

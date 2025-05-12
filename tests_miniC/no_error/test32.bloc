@@ -1,7 +1,5 @@
 test32 {
-   // No error: Use of a variable in a sub-block.
-   int i = 1 ;
-   while (true) {
-      int j = i;
-   }
+   // No error: initializing an integer array variable with a statically created array, then assigning the array
+   int p[] = { 1, 2};
+   p = { 3, 4};
 }

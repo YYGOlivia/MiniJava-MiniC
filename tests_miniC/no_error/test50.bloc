@@ -1,7 +1,7 @@
 test50 {
-   // No error: Initialize a pair variable composed of a Boolean and an integer with a sequence value composed of a Boolean and an integer
-   //           extracting the first element in the pair in a conditional
-   <boolean,int> p =  { true, 1 } ;
-   if (fst p) {
+  // No error: Initialize a record-type variable containing two Boolean fields with a Boolean sequence value of size 2
+  // Extract the first field of the record in a conditional
+   struct B { boolean a; int n; } p =  { true, 1 } ;
+   while (p.a) {
    }
 }

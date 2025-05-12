@@ -1,0 +1,6 @@
+test26 {
+   // Type error: Initializing an integer pair variable with an integer sequence value of size 2
+   // Assigning an integer pair variable with an integer and boolean pair value
+   <int,int> p = { 3, 4};
+   p = { 3, true };
+}

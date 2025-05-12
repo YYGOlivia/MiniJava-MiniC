@@ -1,0 +1,5 @@
+test32 {
+   // Type error: Initializing an integer array variable with a statically created array, then assigning the first cell with a boolean
+   int p[] = { 1, 2};
+   p[0] = true;
+}

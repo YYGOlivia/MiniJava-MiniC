@@ -1,4 +1,0 @@
-test80 {
-   // Type error: initialization of an integer array type variable with a statically created array initialized by a sequence of integers and booleans
-   int p[] = { 1, true};
-}

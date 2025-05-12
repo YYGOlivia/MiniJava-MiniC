@@ -1,4 +1,4 @@
 test42 {
-   // No error: initialization of a variable of type pair of integers with a value sequence of integers of size 2
-   <int,int> p = { 3, 4};
+   // No error: initializing a record variable containing two integer fields with an integer sequence value of size 2
+   struct P { int x; int y; } p = { 1, 2};
 }

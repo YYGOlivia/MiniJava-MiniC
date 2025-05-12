@@ -1,6 +1,4 @@
 test31 {
-   // No error: using a variable in a condition.
-   int i = 1 ;
-   if (i == 1) {
-   }
+   // No error: Initializing an integer array variable with a dynamically created array
+   int p[] = new int[3];
 }

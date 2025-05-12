@@ -1,7 +1,7 @@
 test27 {
-   // No error: Double declaration in a subblock with a different type.
-   int i = 1 ;
-   while (true) {
-      boolean i = true;
+   // No error: initialize a variable of type pair of booleans with a value of sequence of booleans of size 2
+   // extracting the first element in the pair in a conditional
+   <boolean,boolean> p =  { true, false } ;
+   while (fst p) {
    }
 }

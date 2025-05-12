@@ -1,0 +1,7 @@
+test02 {
+   // No error: double declaration in a sub-block with the same type.
+   int i = 1 ;
+   if (true) {
+      int i = 1;
+   }
+}

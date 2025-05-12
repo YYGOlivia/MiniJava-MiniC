@@ -1,4 +1,4 @@
 test02 {
-   // Type error: initializing an integer variable with a Boolean value
-   int i = true;
+   // Type error: calling an arithmetic operation with on a interger value and a boolean value
+   int i = 1 + true;
 }

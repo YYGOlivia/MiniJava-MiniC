@@ -1,6 +1,0 @@
-test97 {
-  // No error: initializing an integer array variable with a statically created array, then assigning the array
-   int i = 1;
-   int *p = &i;
-   int j = *p;
-}

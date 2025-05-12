@@ -1,5 +1,5 @@
-test54 {
-   // No error: initializing an integer array variable with a statically created array, then assigning the array
-   int p[] = { 1, 2};
-   p = { 3, 4};
+test54{
+   // No error: initializing an integer array type variable with a dynamically created array
+   int *p = new int();
+   *p = 2;
 }

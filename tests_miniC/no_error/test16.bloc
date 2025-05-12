@@ -1,6 +1,7 @@
 test16 {
-   // No error: using a variable in a condition.
+   // No error: use of a variable in a sub-block.
    int i = 1 ;
-   if (i == 1) {
+   while (true) {
+      i = 2;
    }
 }

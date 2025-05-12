@@ -1,7 +1,7 @@
 test18 {
-   // No error: use of a variable in a sub-block.
+   // No error: Use of a variable after a sub-block.
    int i = 1 ;
-   if (true) {
-      i = 2;
+   while (true) {
    }
+   i = 2;
 }

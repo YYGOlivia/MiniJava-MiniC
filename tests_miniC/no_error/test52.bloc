@@ -1,4 +1,4 @@
 test52 {
-   // No error: initializing an integer array variable with a statically created array
-   int p[] = { 3, 4};
+   // No error: initializing an integer array type variable with a dynamically created array
+   int *p = new int ();
 }

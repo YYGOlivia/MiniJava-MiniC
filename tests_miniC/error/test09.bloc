@@ -1,5 +1,8 @@
 test09 {
-   // Declaration error: double declaration of the same variable with two different types
+   // Declaration error: double declaration of different types separated by a sub-block.
    int i = 1 ;
+   if (true) {
+      int i = 1;
+   }
    boolean i = true;
 }

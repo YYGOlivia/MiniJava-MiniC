@@ -1,7 +1,8 @@
 test62 {
-      // No error: Initialize a static array variable of Boolean type with a Boolean sequence value of size 2
-      // Extract the first element of the pair in a repeat condition
-   boolean p[] = { true, false } ;
-   while (p[0]) {
+   // No error: Initializing a static array variable with a Boolean sequence value of size 2
+   // Extracting the first element of the pair in a repeat condition
+   boolean a = true;
+   boolean *p =  & a ;
+   while (*p) {
    }
 }

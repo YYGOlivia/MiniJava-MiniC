@@ -1,6 +1,0 @@
-test88 {
-   // Type error: Initializing a record variable containing two integer fields with an integer sequence value of size 2
-   // Reading the first field of the record.
-   struct P { int x; int y; } p = { 3, 4};
-   boolean a = p.x;
-}

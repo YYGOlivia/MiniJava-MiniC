@@ -1,4 +1,5 @@
 test06 {
-   // Declaration error: reading a variable that is not defined
-   int i = 1 + j;
-   }
+   // Declaration error: double declaration of a variable of the same type.
+   int i = 1 ;
+   int i = 1;
+}

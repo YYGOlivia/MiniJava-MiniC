@@ -1,7 +1,8 @@
 test49 {
-   // No error: initialize a variable of type pair of booleans with a value of sequence of booleans of size 2
-   // extracting the first element in the pair in a conditional
-   <boolean,boolean> p =  { true, false } ;
-   while (fst p) {
+  // No error: Initialize a record-type variable containing two Boolean fields with a Boolean sequence value of size 2
+  // Extracting the first field of the record in a conditional statement
+struct B { boolean a; int n; } p = { true, 1 } ;
+   struct B { boolean a; int n; } p =  { true, 1 } ;
+   if (p.a) {
    }
 }

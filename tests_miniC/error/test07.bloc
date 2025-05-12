@@ -1,5 +1,5 @@
 test07 {
-   // Type error: initializing an integer variable with the value of a boolean variable
-   boolean p = true ;
-   int i = p;
+   // Declaration error: double declaration of the same variable with two different types
+   int i = 1 ;
+   boolean i = true;
 }
