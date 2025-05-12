@@ -1,0 +1,5 @@
+test57 {
+   // No error: Initializing an integer array variable with a statically created array, then assigning the array
+   int p[] = { 3, 4};
+   int j = p[0];
+}

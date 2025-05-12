@@ -1,0 +1,7 @@
+test41 {
+   // Type error: Using a variable with another type after a subblock.
+   int i = 1 ;
+   while (true) {
+   }
+   i = true;
+}

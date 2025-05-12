@@ -1,0 +1,4 @@
+test02 {
+   // Type error: initializing an integer variable with a Boolean value
+   int i = true;
+}

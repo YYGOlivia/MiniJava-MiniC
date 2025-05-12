@@ -1,0 +1,7 @@
+test27 {
+   // No error: Double declaration in a subblock with a different type.
+   int i = 1 ;
+   while (true) {
+      boolean i = true;
+   }
+}

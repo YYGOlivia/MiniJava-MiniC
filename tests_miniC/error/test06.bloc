@@ -1,0 +1,4 @@
+test06 {
+   // Declaration error: reading a variable that is not defined
+   int i = 1 + j;
+   }

@@ -1,0 +1,4 @@
+test93 {
+   // No error: initializing an integer array type variable with a dynamically created array
+   int *p = new int ();
+}

@@ -1,0 +1,6 @@
+test21 {
+   // Type error: use of a variable in a condition.
+   int i = 1 ;
+   if (i) {
+   }
+}

@@ -1,0 +1,7 @@
+test39 {
+   // Type error: Using a variable with another type in a sub-block.
+   int i = 1 ;
+   while (true) {
+      boolean p = i;
+   }
+}

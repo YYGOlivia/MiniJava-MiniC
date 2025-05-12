@@ -1,0 +1,6 @@
+test63 {
+   // No error: Initializing a dynamic array of Boolean types with a Boolean sequence value of size 2
+   // Extracting the first element of the pair in a repeat condition
+   while (p[0]) {
+   }
+}

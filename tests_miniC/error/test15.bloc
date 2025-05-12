@@ -1,0 +1,8 @@
+test15 {
+   // Declaration error: double declaration of different types separated by a sub-block.
+   int i = 1 ;
+   if (true) {
+      int i = 1;
+   }
+   boolean i = true;
+}

@@ -1,0 +1,4 @@
+test87 {
+   // Type error: Initialization of a record variable containing two integer fields with a sequence value of integer and boolean
+   struct P { int x; int y; } p = { 3, true};
+}

@@ -1,0 +1,6 @@
+test67 {
+   // Declaration error: Initializing a record variable containing two integer fields with an integer sequence value of size 2
+   // Initializing a variable with the same type as the previous one, therefore a double declaration.
+   struct P { int x; int y; } p = { 3, 4};
+   struct P { int x; int y; } q = p;
+}

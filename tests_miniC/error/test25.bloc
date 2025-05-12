@@ -1,0 +1,7 @@
+test25 {
+   // Type error: Using a variable with another type after a sub-block.
+   int i = 1 ;
+   if (true) {
+   }
+   i = true;
+}

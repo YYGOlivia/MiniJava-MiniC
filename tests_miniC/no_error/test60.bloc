@@ -1,0 +1,7 @@
+test60 {
+   // No error: Initialization of a static array type variable of booleans with a sequence value of booleans of size 2
+   // 	   	    extracting the first element of the pair in a conditional condition
+   boolean p[] =  { true, false } ;
+   if (p[0]) {
+   }
+}

@@ -1,0 +1,5 @@
+test92 {
+   // No error: Initializing a pointer with an integer variable
+   int i = 1;
+   int *p = &i;
+}

@@ -1,0 +1,5 @@
+test84 {
+   // Type error: initializing an integer array variable with a statically created array, then assigning a boolean variable with the contents of the first box
+   int p[] = { 1, 2};
+   boolean a = p[0];
+}

@@ -1,0 +1,7 @@
+test90 {
+   // Type error: Initializing a record-type variable containing two Boolean fields with a Boolean sequence value of size 2
+   // Extracting the first field of the record in a conditional statement
+struct B { boolean a; int n; } p = { true, 1 } ;
+   while (p.n) {
+   }
+}

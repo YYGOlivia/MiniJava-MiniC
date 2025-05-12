@@ -1,0 +1,4 @@
+test00 {
+   // No error: Initializing an integer variable with an integer value
+   int i = 1;
+}

@@ -1,0 +1,5 @@
+test55 {
+   // No error: Initializing an integer array variable with a dynamically created array
+   int p[] = new int[2];
+   p = { 3, 4};
+}

@@ -1,0 +1,7 @@
+test46 {
+   // No error: Initializing an integer pair variable with a sequence value of size 2
+   //           initializing an integer pair variable with a pair value of integers
+<int,int> p = { 3, 4};
+   <int,int> p = { 3, 4};
+   p = p;
+}

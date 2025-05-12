@@ -1,0 +1,4 @@
+test01 {
+   // Declaration error: assignment of a variable that is not defined
+   i = 1;
+}

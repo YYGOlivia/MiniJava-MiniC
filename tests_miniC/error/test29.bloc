@@ -1,0 +1,8 @@
+test29 {
+   // Declaration error: Double declaration of the same type separated by a subblock.
+   int i = 1 ;
+   while (true) {
+      int i = 1;
+   }
+   int i = 1;
+}

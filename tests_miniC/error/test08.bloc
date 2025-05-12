@@ -1,0 +1,5 @@
+test08 {
+   // Declaration error: double declaration of a variable of the same type.
+   int i = 1 ;
+   int i = 1;
+}

@@ -1,0 +1,5 @@
+test81 {
+   // Type error: Initializing an integer array variable with a statically created array, then assigning the array with an integer and boolean sequence
+   int p[] = { 3, 4};
+   p = { 1, true};
+}

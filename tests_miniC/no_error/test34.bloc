@@ -1,0 +1,7 @@
+test34 {
+   // No error: use of a variable in a sub-block.
+   int i = 1 ;
+   while (true) {
+      i = 2;
+   }
+}
