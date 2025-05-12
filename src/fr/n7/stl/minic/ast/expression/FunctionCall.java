@@ -3,7 +3,6 @@
  */
 package fr.n7.stl.minic.ast.expression;
 
-import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.instruction.declaration.ParameterDeclaration;
@@ -11,10 +10,12 @@ import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.tam.ast.Fragment;
+import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.Logger;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Abstract Syntax Tree node for a function call expression.
@@ -86,7 +87,7 @@ public class FunctionCall implements AccessibleExpression {
 				FunctionDeclaration funcDec = ((FunctionDeclaration) varDec);
 				this.function = funcDec;
 			} else {
-				Logger.error("The variable " + name + " is not a function");
+				Logger.error("[FunctionCall] The variable " + name + " is not a function");
 				return false;
 			}
 		}
@@ -111,7 +112,7 @@ public class FunctionCall implements AccessibleExpression {
 		List<ParameterDeclaration> funcParams = function.getParameters();
 		boolean argLenOk = arguments.size() == funcParams.size();
 		if (!argLenOk) {
-			Logger.error("Wrong number of arguments for " + name +
+			Logger.error("[FunctionCall] Wrong number of arguments for " + name +
 					" (expected " + funcParams.size() +
 					" got " + arguments.size() + ")");
 			return false;
@@ -127,9 +128,9 @@ public class FunctionCall implements AccessibleExpression {
 			ok = ok && argType.compatibleWith(funcParamType);
 		}
 		if (!ok) {
-			List<String> funcParamString = funcParams.stream().map(x -> x.getType().toString()).toList();
-			List<String> argString = arguments.stream().map(x -> x.getType().toString()).toList();
-			Logger.error("Wrong type of arguments for " + name +
+			List<String> funcParamString = funcParams.stream().map(x -> x.getType().toString()).collect(Collectors.toList());
+			List<String> argString = arguments.stream().map(x -> x.getType().toString()).collect(Collectors.toList());
+			Logger.error("[FunctionCall] Wrong type of arguments for " + name +
 					" (expected " + funcParamString +
 					" got " + argString + ")");
 			return false;
@@ -155,7 +156,15 @@ public class FunctionCall implements AccessibleExpression {
 	 */
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
-		throw new SemanticsUndefinedException("Semantics getCode is undefined in FunctionCall.");
+		Fragment _fragment = _factory.createFragment();
+		_fragment.addComment(toString());
+		// charge chaque argument
+		for (AccessibleExpression arg : arguments) {
+			_fragment.append(arg.getCode(_factory));
+		}
+		// CALL (SB) name
+		_fragment.add(_factory.createCall(name, Register.SB));
+		return _fragment;
 	}
 
 }

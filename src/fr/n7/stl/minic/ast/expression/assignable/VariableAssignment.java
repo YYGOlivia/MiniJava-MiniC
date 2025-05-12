@@ -3,7 +3,6 @@
  */
 package fr.n7.stl.minic.ast.expression.assignable;
 
-import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.AbstractIdentifier;
 import fr.n7.stl.minic.ast.instruction.declaration.VariableDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
@@ -49,11 +48,11 @@ public class VariableAssignment extends AbstractIdentifier implements Assignable
 				this.declaration = ((VariableDeclaration) _declaration);
 				return true;
 			} else {
-				Logger.error("The declaration for " + this.name + " is of the wrong kind.");
+				Logger.error("[VariableAssignement] The declaration for " + this.name + " is of the wrong kind.");
 				return false;
 			}
 		} else {
-			Logger.error("The identifier " + this.name + " has not been found.");
+			Logger.error("[VariableAssignement] The identifier " + this.name + " has not been found.");
 			return false;
 		}
 	}

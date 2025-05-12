@@ -77,7 +77,7 @@ public abstract class AbstractPointer<PointerKind extends Expression> implements
 			PointerType ptrType = ((PointerType) pointer.getType());
 			return ptrType.getPointedType();
 		}
-		Logger.error(pointer.getType() + " is not a PointerType");
+		Logger.error("[AbstractPointer] " + pointer.getType() + " is not a PointerType");
 		return pointer.getType();
 	}
 

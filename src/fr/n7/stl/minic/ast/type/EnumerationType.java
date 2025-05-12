@@ -3,11 +3,6 @@
  */
 package fr.n7.stl.minic.ast.type;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-
 import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.value.IntegerValue;
 import fr.n7.stl.minic.ast.instruction.declaration.ConstantDeclaration;
@@ -15,6 +10,10 @@ import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.declaration.LabelDeclaration;
 import fr.n7.stl.util.Logger;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author Marc Pantel
@@ -128,7 +127,7 @@ public class EnumerationType implements Type, Declaration {
             LabelDeclaration labelDecl = this.labels.get(i);
             ConstantDeclaration constDecl = new ConstantDeclaration(labelDecl.getName(), AtomicType.IntegerType, new IntegerValue(String.valueOf(i)));
             if (!(_scope.accepts(constDecl))) {
-                Logger.error("The constant " + constDecl.getName() + " is already declared.");
+                Logger.error("[EnumerationType] The constant " + constDecl.getName() + " is already declared.");
                 return false;
             }
             _scope.register(constDecl);

@@ -11,7 +11,6 @@ import fr.n7.stl.minic.ast.instruction.declaration.VariableDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.Type;
-import fr.n7.stl.minic.ast.type.declaration.LabelDeclaration;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.Logger;
@@ -60,7 +59,7 @@ public class IdentifierAccess extends AbstractIdentifier implements AccessibleEx
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
 		if (!_scope.knows(this.name)) {
-			Logger.error(name + " is not known by scope.");
+			Logger.error("[IdentifierAccess] " + name + " is not known by scope.");
 			return false;
 		}
 
@@ -75,7 +74,7 @@ public class IdentifierAccess extends AbstractIdentifier implements AccessibleEx
 			this.expression = new ParameterAccess((ParameterDeclaration) _declaration);
 
 		} else {
-			Logger.error("Declaration of " + name + " refers to neither variable, constant or parameter.");
+			Logger.error("[IdentifierAccess] Declaration of " + name + " refers to neither variable, constant or parameter.");
 			return false;
 		}
 		return true;
@@ -96,7 +95,7 @@ public class IdentifierAccess extends AbstractIdentifier implements AccessibleEx
 		}
 
 		if (!_scope.knows(this.name)) {
-			Logger.error(name + " is not known by scope.");
+			Logger.error("[IdentifierAccess] "+ name + " is not known by scope.");
 			return false;
 		}
 
@@ -111,7 +110,7 @@ public class IdentifierAccess extends AbstractIdentifier implements AccessibleEx
 			this.expression = new ParameterAccess((ParameterDeclaration) _declaration);
 
 		} else {
-			Logger.error("Declaration of " + name + " refers to neither variable, constant or parameter.");
+			Logger.error("[IdentifierAccess] Declaration of " + name + " refers to neither variable, constant or parameter.");
 			return false;
 		}
 		return true;

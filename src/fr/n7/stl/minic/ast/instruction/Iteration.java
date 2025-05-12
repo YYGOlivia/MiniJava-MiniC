@@ -94,7 +94,7 @@ public class Iteration implements Instruction {
 		if (condType.equals(AtomicType.BooleanType)) {
 			return okBody;
 		}
-		Logger.error("Wrong condition type");
+		Logger.error("[Iteration] Wrong condition type");
 		return false;
 	}
 

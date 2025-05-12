@@ -129,11 +129,11 @@ public class NamedType implements Type {
 					this.declaration = _declaration;
 					return true;
 				} catch (ClassCastException e) {
-					Logger.error("The declaration for " + this.name + " is of the wrong kind.");
+					Logger.error("[NamedType] The declaration for " + this.name + " is of the wrong kind.");
 					return false;
 				}
 			} else {
-				Logger.error("The identifier " + this.name + " has not been found.");
+				Logger.error("[NamedType] The identifier " + this.name + " has not been found.");
 				return false;
 			}
 		} else {

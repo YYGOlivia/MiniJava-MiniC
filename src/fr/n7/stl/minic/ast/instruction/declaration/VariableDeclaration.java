@@ -8,7 +8,6 @@ import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.instruction.Instruction;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
-import fr.n7.stl.minic.ast.type.EnumerationType;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
@@ -128,7 +127,7 @@ public class VariableDeclaration implements Declaration, Instruction {
 			_scope.register(this);
 			return res;
 		} else {
-			Logger.error("The variable " + name + " is already declared");
+			Logger.error("[VariableDeclaration] The variable " + name + " is already declared");
 			return false;
 		}
 	}
@@ -140,7 +139,7 @@ public class VariableDeclaration implements Declaration, Instruction {
 			_scope.register(this);
 			return res;
 		} else {
-			Logger.error("The variable " + name + " is already declared");
+			Logger.error("[VariableDeclaration] The variable " + name + " is already declared");
 			return false;
 		}
 
@@ -161,7 +160,7 @@ public class VariableDeclaration implements Declaration, Instruction {
 			_scope.register(this);
 			return res;
 		} else {
-			Logger.error("The variable " + name + " is already declared");
+			Logger.error("[VariableDeclaration] The variable " + name + " is already declared");
 			return false;
 		}
 	}
@@ -177,7 +176,7 @@ public class VariableDeclaration implements Declaration, Instruction {
 			return true;
 		}
 		Logger.error(
-				"The type " + this.value.getType() + " is not compatible with the declared type of " + name + " ("
+				"[VariableDeclaration] The type " + this.value.getType() + " is not compatible with the declared type of " + name + " ("
 						+ this.type + ").");
 		return false;
 

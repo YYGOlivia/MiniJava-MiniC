@@ -120,7 +120,7 @@ public class Conditional implements Instruction {
 			}
 			return ok1;
 		}
-		Logger.error("Condition not of Boolean type");
+		Logger.error("[Conditional] Condition not of Boolean type");
 		return false;
 	}
 

@@ -104,7 +104,7 @@ public class ConstantDeclaration implements Instruction, Declaration {
 			_scope.register(this);
 			return res;
 		} else {
-			Logger.error("The constant " + name + " is already declared");
+			Logger.error("[ConstantDeclaration] The constant " + name + " is already declared");
 			return false;
 		}
 	}
@@ -116,7 +116,7 @@ public class ConstantDeclaration implements Instruction, Declaration {
 			_scope.register(this);
 			return res;
 		} else {
-			Logger.error("The constant " + name + " is already declared");
+			Logger.error("[ConstantDeclaration] The constant " + name + " is already declared");
 			return false;
 		}
 
@@ -136,7 +136,7 @@ public class ConstantDeclaration implements Instruction, Declaration {
 			_scope.register(this);
 			return res;
 		} else {
-			Logger.error("The constant " + name + " is already declared");
+			Logger.error("[ConstantDeclaration] The constant " + name + " is already declared");
 			return false;
 		}
 	}
@@ -151,7 +151,7 @@ public class ConstantDeclaration implements Instruction, Declaration {
 		if (this.value.getType().compatibleWith(type)) {
 			return true;
 		}
-		Logger.error("The constant type is not compatible");
+		Logger.error("[ConstantDeclaration] The constant type is not compatible");
 		return false;
 	}
 
@@ -174,7 +174,16 @@ public class ConstantDeclaration implements Instruction, Declaration {
 	 */
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
-		throw new SemanticsUndefinedException("Semantics getCode is undefined in ConstantDeclaration.");
+		Fragment _fragment = _factory.createFragment();
+		//PUSH size
+		_fragment.add(_factory.createPush(type.length()));
+		//LOAD value
+		_fragment.append(value.getCode(_factory));
+		//STORE (size) pos[register]
+		// WARNING comment on sait si on est dans une fonction ? --> changer le registre
+		// Peut être il faut utiliser allocateMemory ? 
+		_fragment.add(_factory.createStore(Register.SB, 0, type.length()));
+		return _fragment;
 	}
 
 }

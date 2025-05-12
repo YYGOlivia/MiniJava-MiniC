@@ -79,7 +79,7 @@ public abstract class AbstractConversion<TargetType> implements Expression {
 
 		Declaration decl = _scope.get(this.name);
 		if (!(decl instanceof TypeDeclaration)) {
-			Logger.error("Type " + this.name + " is not declared.");
+			Logger.error("[AbstractConversion] Type " + this.name + " is not declared.");
 			return false;
 		}
 
@@ -101,7 +101,7 @@ public abstract class AbstractConversion<TargetType> implements Expression {
 			AccessibleExpression targetAcc = (AccessibleExpression) target;
 			boolean okTarget = targetAcc.completeResolve(_scope);
 			if (!type.compatibleWith(targetAcc.getType())) {
-				Logger.error(type + " is not compatible with " + targetAcc.getType());
+				Logger.error("[AbstractConversion] " + type + " is not compatible with " + targetAcc.getType());
 				return false;
 			}
 			return okTarget;
@@ -109,12 +109,12 @@ public abstract class AbstractConversion<TargetType> implements Expression {
 			Expression targetExp = (Expression) target;
 			boolean okTarget = targetExp.completeResolve(_scope);
 			if (!type.compatibleWith(targetExp.getType())) {
-				Logger.error(type + " is not compatible with " + targetExp.getType());
+				Logger.error("[AbstractConversion] " + type + " is not compatible with " + targetExp.getType());
 				return false;
 			}
 			return okTarget;
 		}
-		Logger.error(target + " is not an Expression or an AccessibleExpression");
+		Logger.error("[AbstractConversion] " + target + " is not an Expression or an AccessibleExpression");
 		return false;
 	}
 

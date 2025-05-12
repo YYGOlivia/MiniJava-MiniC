@@ -61,7 +61,7 @@ public class TypeDeclaration implements Declaration, Instruction {
 			_scope.register(this);
 			return type.completeResolve(_scope);
 		} else {
-			Logger.error("The type " + name + " is already declared.");
+			Logger.error("[TypeDeclaration] The type " + name + " is already declared.");
 			return false;
 		}
 	}
@@ -72,7 +72,7 @@ public class TypeDeclaration implements Declaration, Instruction {
 			_scope.register(this);
 			return type.completeResolve(_scope);
 		} else {
-			Logger.error("The type " + name + " is already declared.");
+			Logger.error("[TypeDeclaration] The type " + name + " is already declared.");
 			return false;
 		}
 	}
@@ -90,7 +90,7 @@ public class TypeDeclaration implements Declaration, Instruction {
 			_scope.register(this);
 			return type.completeResolve(_scope);
 		} else {
-			Logger.error("The type " + name + " is already declared.");
+			Logger.error("[TypeDeclaration] The type " + name + " is already declared.");
 			return false;
 		}
 	}

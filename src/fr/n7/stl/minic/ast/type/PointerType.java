@@ -37,7 +37,7 @@ public class PointerType implements Type {
 			PointerType _otherPointerType = (PointerType) _other;
 			return element.equals(_otherPointerType.getPointedType());
 		}
-		Logger.error(_other.toString() + " is not a PointerType");
+		Logger.error("[PointerType] " + _other.toString() + " is not a PointerType");
 		return false;
 	}
 
@@ -52,7 +52,7 @@ public class PointerType implements Type {
 			PointerType _otherPointerType = (PointerType) _other;
 			return element.compatibleWith(_otherPointerType.getPointedType());
 		}
-		Logger.error(_other.toString() + " is not a PointerType");
+		Logger.error("[PointerType] " + _other.toString() + " is not a PointerType");
 		return false;
 	}
 

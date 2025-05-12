@@ -86,7 +86,7 @@ public class Return implements Instruction {
 	public boolean checkType() {
 		boolean okType = value.getType().compatibleWith(function.getType());
 		if (!okType) {
-			Logger.error("Type " + value.getType() + " is not compatible with expected return type " +
+			Logger.error("[Return] Type " + value.getType() + " is not compatible with expected return type " +
 					function.getType() + " in function " + function.getName());
 		}
 		return okType;

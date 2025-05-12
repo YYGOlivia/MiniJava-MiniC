@@ -115,14 +115,14 @@ public class FunctionDeclaration implements Instruction, Declaration {
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
 		if (!_scope.accepts(this)) {
-			Logger.error("The function " + name + " is already declared");
+			Logger.error("[FunctionDeclaration] The function " + name + " is already declared");
 			return false;
 		}
 		_scope.register(this);
 		SymbolTable functionScope = new SymbolTable(_scope);
 		for (ParameterDeclaration paramDecl : this.parameters) {
 			if (!functionScope.accepts(paramDecl)) {
-				Logger.error("The parameter " + paramDecl.getName() + " is already declared in the function " + name);
+				Logger.error("[FunctionDeclaration] The parameter " + paramDecl.getName() + " is already declared in the function " + name);
 				return false;
 			}
 			functionScope.register(paramDecl);
@@ -135,14 +135,14 @@ public class FunctionDeclaration implements Instruction, Declaration {
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
 		if (!_scope.accepts(this)) {
-			Logger.error("The function " + name + " is already declared");
+			Logger.error("[FunctionDeclaration] The function " + name + " is already declared");
 			return false;
 		}
 		_scope.register(this);
 		SymbolTable functionScope = new SymbolTable(_scope);
 		for (ParameterDeclaration paramDecl : this.parameters) {
 			if (!functionScope.accepts(paramDecl)) {
-				Logger.error("The parameter " + paramDecl.getName() + " is already declared in the function " + name);
+				Logger.error("[FunctionDeclaration] The parameter " + paramDecl.getName() + " is already declared in the function " + name);
 				return false;
 			}
 			functionScope.register(paramDecl);
@@ -165,7 +165,7 @@ public class FunctionDeclaration implements Instruction, Declaration {
 		SymbolTable functionScope = new SymbolTable(_scope);
 		for (ParameterDeclaration paramDecl : this.parameters) {
 			if (!functionScope.accepts(paramDecl)) {
-				Logger.error("The parameter " + paramDecl.getName() + " is already declared in the function " + name);
+				Logger.error("[FunctionDeclaration] The parameter " + paramDecl.getName() + " is already declared in the function " + name);
 				return false;
 			}
 			functionScope.register(paramDecl);
