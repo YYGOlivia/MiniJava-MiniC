@@ -44,6 +44,17 @@
 
 	</target>
 
+	<target name="test" depends="compile">
+		<java classname="fr.n7.stl.minic.TestRunner" failonerror="true">
+			<classpath>
+				<pathelement location="${classes}" />
+				<pathelement location="${tools}/commons-lang3-3.7.jar" />
+				<pathelement location="${tools}/commons-text-1.2.jar" />
+				<pathelement location="${tools}/antlr-4.13.1-complete.jar" />
+			</classpath>
+		</java>
+	</target>
+
 
 	<target name="clean">
 		<delete dir="${classes}" />
