@@ -138,7 +138,7 @@ class TAMInstructionImpl implements TAMInstruction {
 	 */
 	@Override
 	public void addComment(String _comment) {
-		this.comments.add(_comment);
+		this.comments.add(_comment.replaceAll("\n", "\n;"));
 	}
 
 	public String toString() {

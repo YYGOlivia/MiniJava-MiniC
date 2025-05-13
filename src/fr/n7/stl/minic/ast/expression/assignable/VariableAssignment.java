@@ -4,6 +4,7 @@
 package fr.n7.stl.minic.ast.expression.assignable;
 
 import fr.n7.stl.minic.ast.expression.AbstractIdentifier;
+import fr.n7.stl.minic.ast.instruction.declaration.ParameterDeclaration;
 import fr.n7.stl.minic.ast.instruction.declaration.VariableDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
@@ -47,6 +48,9 @@ public class VariableAssignment extends AbstractIdentifier implements Assignable
 			if (_declaration instanceof VariableDeclaration) {
 				this.declaration = ((VariableDeclaration) _declaration);
 				return true;
+			} else if (_declaration instanceof ParameterDeclaration) {
+				Logger.error("[VariableAssignement] The parameter " + this.name + " is is not assignable.");
+				return false;
 			} else {
 				Logger.error("[VariableAssignement] The declaration for " + this.name + " is of the wrong kind.");
 				return false;
@@ -88,10 +92,11 @@ public class VariableAssignment extends AbstractIdentifier implements Assignable
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
 		Fragment result = _factory.createFragment();
-		result.addComment(this.toString());
-		result.add(_factory.createPush(getType().length()));
-		result.append(this.declaration.getCode(_factory));
-		result.add(_factory.createStore(Register.SB, 0, getType().length()));
+		int off = declaration.getOffset();
+		Register reg = declaration.getRegister();
+		int size = getType().length();
+		result.add(_factory.createLoad(reg, off, size));
+		result.add(_factory.createStoreI(size));
 		return result;
 	}
 

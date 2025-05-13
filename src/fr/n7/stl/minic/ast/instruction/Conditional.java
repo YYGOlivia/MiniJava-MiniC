@@ -4,7 +4,6 @@
 package fr.n7.stl.minic.ast.instruction;
 
 import fr.n7.stl.minic.ast.Block;
-import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
@@ -133,7 +132,11 @@ public class Conditional implements Instruction {
 	 */
 	@Override
 	public int allocateMemory(Register _register, int _offset) {
-		throw new SemanticsUndefinedException("Semantics allocateMemory is undefined in Conditional.");
+		thenBranch.allocateMemory(_register, _offset);
+		if (elseBranch != null) {
+			elseBranch.allocateMemory(_register, _offset);
+		}
+		return 0;
 	}
 
 	/*
@@ -147,15 +150,23 @@ public class Conditional implements Instruction {
 
 		Fragment _fragment = _factory.createFragment();
 		_fragment.append(condition.getCode(_factory));
-		_fragment.add(_factory.createJumpIf("sinon_conditionnelle" + num, 0));
-
+		if (elseBranch != null) {
+			// si la condition est fausse on jump au sinon
+			_fragment.add(_factory.createJumpIf("sinon_conditionnelle_" + num, 0));
+		} else {
+			// si pas de else, on saute à la fin
+			_fragment.add(_factory.createJumpIf("fin_conditionnelle_" + num, 0));
+		}
 		_fragment.append(thenBranch.getCode(_factory));
-		_fragment.add(_factory.createJump("fin_conditionnelle" + num));
-
-		Fragment elseCode = elseBranch.getCode(_factory);
-		elseCode.addPrefix("sinon_conditionnelle" + num);
-		_fragment.append(elseCode);
-		_fragment.addSuffix("fin_conditionnelle" + num);
+		if (elseBranch != null) {
+			_fragment.add(_factory.createJump("fin_conditionnelle_" + num));
+			Fragment elseCode = elseBranch.getCode(_factory);
+			elseCode.addPrefix("sinon_conditionnelle_" + num);
+			_fragment.append(elseCode);
+			
+		}
+		_fragment.addSuffix("fin_conditionnelle_" + num);
+		// _fragment.addComment(toString());
 		return _fragment;
 	}
 

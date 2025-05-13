@@ -3,7 +3,6 @@
  */
 package fr.n7.stl.minic.ast.instruction;
 
-import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
@@ -101,7 +100,7 @@ public class Return implements Instruction {
 	 */
 	@Override
 	public int allocateMemory(Register _register, int _offset) {
-		throw new SemanticsUndefinedException("Semantics allocateMemory undefined in Return.");
+		return 0;
 	}
 
 	/*
@@ -111,7 +110,16 @@ public class Return implements Instruction {
 	 */
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
-		throw new SemanticsUndefinedException("Semantics getCode undefined in Return.");
-	}
+		Fragment fragment = _factory.createFragment();
+		fragment.append(value.getCode(_factory));
 
+		int keep = value.getType().length(); // taille de ce qu'on écrit dans la pile
+		int remove = function.getParameters().stream()
+				.map(param -> param.getType().length())
+				.reduce(0, Integer::sum); // taille à remplacer (on oublie les paramètres)
+		fragment.add(_factory.createReturn(keep, remove));
+
+		fragment.addComment(toString());
+		return fragment;
+	}
 }

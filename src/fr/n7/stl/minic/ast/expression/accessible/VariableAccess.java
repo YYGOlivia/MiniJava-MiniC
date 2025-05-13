@@ -49,7 +49,6 @@ public class VariableAccess extends AbstractAccess {
 				this.declaration.getRegister(),
 				this.declaration.getOffset(),
 				this.declaration.getType().length()));
-		_result.addComment(this.toString());
 		return _result;
 	}
 

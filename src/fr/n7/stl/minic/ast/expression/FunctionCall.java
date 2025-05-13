@@ -157,7 +157,7 @@ public class FunctionCall implements AccessibleExpression {
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
 		Fragment _fragment = _factory.createFragment();
-		_fragment.addComment(toString());
+		//_fragment.addComment(toString());
 		// charge chaque argument
 		for (AccessibleExpression arg : arguments) {
 			_fragment.append(arg.getCode(_factory));

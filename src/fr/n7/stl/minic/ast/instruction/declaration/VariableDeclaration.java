@@ -3,7 +3,6 @@
  */
 package fr.n7.stl.minic.ast.instruction.declaration;
 
-import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.instruction.Instruction;
 import fr.n7.stl.minic.ast.scope.Declaration;
@@ -191,7 +190,9 @@ public class VariableDeclaration implements Declaration, Instruction {
 	 */
 	@Override
 	public int allocateMemory(Register _register, int _offset) {
-		throw new SemanticsUndefinedException("Semantics allocateMemory is undefined in VariableDeclaration.");
+		this.register = _register;
+		this.offset = _offset;
+		return type.length();
 	}
 
 	/*
@@ -202,10 +203,10 @@ public class VariableDeclaration implements Declaration, Instruction {
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
 		Fragment result = _factory.createFragment();
-		result.addComment(this.toString());
 		result.add(_factory.createPush(type.length()));
 		result.append(this.value.getCode(_factory));
 		result.add(_factory.createStore(register, offset, type.length()));
+		result.addComment(this.toString());
 		return result;
 	}
 

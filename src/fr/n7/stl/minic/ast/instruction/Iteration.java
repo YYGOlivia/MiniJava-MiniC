@@ -4,7 +4,6 @@
 package fr.n7.stl.minic.ast.instruction;
 
 import fr.n7.stl.minic.ast.Block;
-import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
@@ -107,7 +106,8 @@ public class Iteration implements Instruction {
 	 */
 	@Override
 	public int allocateMemory(Register _register, int _offset) {
-		throw new SemanticsUndefinedException("Semantics allocateMemory is undefined in Iteration.");
+		body.allocateMemory(_register, _offset);
+		return 0;
 	}
 
 	/*
@@ -119,13 +119,14 @@ public class Iteration implements Instruction {
 	public Fragment getCode(TAMFactory _factory) {
 		int num = _factory.createLabelNumber();
 		Fragment _fragment = _factory.createFragment();
-		_fragment.addPrefix("debut_boucle" + num);
 		_fragment.append(condition.getCode(_factory));
-		_fragment.add(_factory.createJumpIf("fin_boucle" + num, 0));
+		_fragment.addPrefix("debut_boucle_" + num);
+		_fragment.add(_factory.createJumpIf("fin_boucle_" + num, 0));
 		Fragment bodyCode = body.getCode(_factory);
 		_fragment.append(bodyCode);
-		_fragment.add(_factory.createJump("debut_boucle" + num));
-		_fragment.addSuffix("fin_boucle" + num);
+		_fragment.add(_factory.createJump("debut_boucle_" + num));
+		_fragment.addSuffix("fin_boucle_" + num);
+		// _fragment.addComment(toString());
 		return _fragment;
 	}
 

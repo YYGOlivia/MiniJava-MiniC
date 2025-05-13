@@ -1,8 +1,22 @@
-monProgramme {
-    int n = 0;
-    if (n==0){
-        n = 1;
-    }else {
-        n = 2;
+pgcd {
+  const int test = 0;
+  int pgcd( int c, int d ) {
+    int a = c;
+    int b = d;
+    while (a * b != test) {
+      if ( a > b ) {
+	int na = a-b;
+	a = na;
+      } else {
+	int nb = b-a;
+	b = nb;
+      }
     }
+    int res = a;
+    if (res == test) {
+      res = b;
+    }
+    return res;
+  }
+  print pgcd( 47,53 );
 }

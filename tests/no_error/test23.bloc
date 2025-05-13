@@ -1,5 +1,6 @@
 test23 {
    // No error: Initializing an integer pair variable with an integer sequence value of size 2
    //           initializing an integer pair variable with an integer pair value
+   <int, int> p = { 1, 2 };
    <int,int> k = p;
 }

@@ -1,0 +1,15 @@
+;int i = 1;
+;
+PUSH 1
+LOADL 1
+STORE (1) 0[SB]
+LOADL 1
+JUMPIF (0) fin_conditionnelle_14
+;boolean i = true;
+;
+PUSH 1
+LOADL 1
+STORE (1) 1[SB]
+fin_conditionnelle_14
+HALT
+

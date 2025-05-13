@@ -1,0 +1,9 @@
+;int i = (1 + 2);
+;
+PUSH 1
+LOADL 1
+LOADL 2
+SUBR IAdd
+STORE (1) 0[SB]
+HALT
+

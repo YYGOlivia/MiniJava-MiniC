@@ -71,6 +71,7 @@ public class TestRunner {
         if (dir.exists() && dir.isDirectory()) {
             Files.walk(Paths.get(directory))
                     .filter(Files::isRegularFile)
+                    .filter(file -> file.getFileName().toString().endsWith(".bloc"))
                     .forEach(path -> files.add(path.toString()));
         }
         return files;

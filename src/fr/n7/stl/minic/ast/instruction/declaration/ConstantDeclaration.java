@@ -3,7 +3,6 @@
  */
 package fr.n7.stl.minic.ast.instruction.declaration;
 
-import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.instruction.Instruction;
 import fr.n7.stl.minic.ast.scope.Declaration;
@@ -164,7 +163,7 @@ public class ConstantDeclaration implements Instruction, Declaration {
 	 */
 	@Override
 	public int allocateMemory(Register _register, int _offset) {
-		throw new SemanticsUndefinedException("Semantics allocateMemory is undefined in ConstantDeclaration.");
+		return 0;
 	}
 
 	/*
@@ -175,14 +174,7 @@ public class ConstantDeclaration implements Instruction, Declaration {
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
 		Fragment _fragment = _factory.createFragment();
-		//PUSH size
-		_fragment.add(_factory.createPush(type.length()));
-		//LOAD value
 		_fragment.append(value.getCode(_factory));
-		//STORE (size) pos[register]
-		// WARNING comment on sait si on est dans une fonction ? --> changer le registre
-		// Peut être il faut utiliser allocateMemory ? 
-		_fragment.add(_factory.createStore(Register.SB, 0, type.length()));
 		return _fragment;
 	}
 

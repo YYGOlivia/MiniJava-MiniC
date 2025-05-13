@@ -4,7 +4,6 @@
 package fr.n7.stl.minic.ast.instruction.declaration;
 
 import fr.n7.stl.minic.ast.Block;
-import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.instruction.Instruction;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
@@ -122,7 +121,8 @@ public class FunctionDeclaration implements Instruction, Declaration {
 		SymbolTable functionScope = new SymbolTable(_scope);
 		for (ParameterDeclaration paramDecl : this.parameters) {
 			if (!functionScope.accepts(paramDecl)) {
-				Logger.error("[FunctionDeclaration] The parameter " + paramDecl.getName() + " is already declared in the function " + name);
+				Logger.error("[FunctionDeclaration] The parameter " + paramDecl.getName()
+						+ " is already declared in the function " + name);
 				return false;
 			}
 			functionScope.register(paramDecl);
@@ -142,7 +142,8 @@ public class FunctionDeclaration implements Instruction, Declaration {
 		SymbolTable functionScope = new SymbolTable(_scope);
 		for (ParameterDeclaration paramDecl : this.parameters) {
 			if (!functionScope.accepts(paramDecl)) {
-				Logger.error("[FunctionDeclaration] The parameter " + paramDecl.getName() + " is already declared in the function " + name);
+				Logger.error("[FunctionDeclaration] The parameter " + paramDecl.getName()
+						+ " is already declared in the function " + name);
 				return false;
 			}
 			functionScope.register(paramDecl);
@@ -163,16 +164,19 @@ public class FunctionDeclaration implements Instruction, Declaration {
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
 		_scope.register(this);
 		SymbolTable functionScope = new SymbolTable(_scope);
+		boolean okParams = true;
 		for (ParameterDeclaration paramDecl : this.parameters) {
+			okParams = okParams && paramDecl.getType().completeResolve(_scope);
 			if (!functionScope.accepts(paramDecl)) {
-				Logger.error("[FunctionDeclaration] The parameter " + paramDecl.getName() + " is already declared in the function " + name);
+				Logger.error("[FunctionDeclaration] The parameter " + paramDecl.getName()
+						+ " is already declared in the function " + name);
 				return false;
 			}
 			functionScope.register(paramDecl);
 		}
 		boolean okBody = body.completeResolve(functionScope);
 		boolean okType = type.completeResolve(_scope);
-		return okBody && okType;
+		return okParams && okBody && okType;
 	}
 
 	/*
@@ -200,6 +204,7 @@ public class FunctionDeclaration implements Instruction, Declaration {
 		}
 		body.allocateMemory(Register.LB, off);
 		for (ParameterDeclaration paramDecl : this.parameters) {
+			paramDecl.setOffset(off);
 			off -= paramDecl.getType().length();
 		}
 		return 0;
@@ -213,7 +218,12 @@ public class FunctionDeclaration implements Instruction, Declaration {
 	 */
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
-		throw new SemanticsUndefinedException("Semantics getCode is undefined in FunctionDeclaration.");
+		Fragment fragment = _factory.createFragment();
+		
+		fragment.append(body.getCode(_factory));
+		fragment.addPrefix(name);
+		// fragment.addComment(toString());
+		return fragment;
 	}
 
 }

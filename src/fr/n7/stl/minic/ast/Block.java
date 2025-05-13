@@ -87,7 +87,7 @@ public class Block {
 	 *                   with the function declaration.
 	 * @return Synthesized Semantics attribute that indicates if the identifier
 	 *         declaration are
-	 *         allowed.   
+	 *         allowed.
 	 */
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
 		boolean ok = true;
@@ -142,6 +142,10 @@ public class Block {
 	 * @param _offset   Inherited Current offset for the address of the variables.
 	 */
 	public void allocateMemory(Register _register, int _offset) {
+		int off = _offset;
+		for (Instruction instr : instructions) {
+			off += instr.allocateMemory(_register, off);
+		}
 	}
 
 	/**
@@ -154,11 +158,25 @@ public class Block {
 	 */
 	public Fragment getCode(TAMFactory _factory) {
 		Fragment _fragment = _factory.createFragment();
-		_fragment.addComment(toString());
-		for ( Instruction instr : instructions) {
-			_fragment.append(instr.getCode(_factory));
+		for (Instruction instr : instructions) {
+			if (!(instr instanceof FunctionDeclaration)) {
+				// on ajoute seulement les instructions qui ne sont pas des fonctions
+				_fragment.append(instr.getCode(_factory));
+			}
 		}
+		// _fragment.addComment(toString());
 		return _fragment;
 	}
 
+	public Fragment getFunctions(TAMFactory _factory) {
+		Fragment _fragment = _factory.createFragment();
+		for (Instruction instr : instructions) {
+			if (instr instanceof FunctionDeclaration) {
+				// on ajoute seulement les instructions qui sont des déclarations de fonction
+				_fragment.append(instr.getCode(_factory));
+			}
+		}
+		// _fragment.addComment(toString());
+		return _fragment;
+	}
 }

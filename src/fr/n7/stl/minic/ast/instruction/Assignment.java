@@ -3,7 +3,6 @@
  */
 package fr.n7.stl.minic.ast.instruction;
 
-import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.expression.assignable.AssignableExpression;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
@@ -110,7 +109,8 @@ public class Assignment implements Instruction, Expression {
 		if (valueType.compatibleWith(assignableType)) {
 			return true;
 		}
-		Logger.error("[Assignement] Wrong assignment type: assignable is " + assignableType + " but value is " + valueType);
+		Logger.error(
+				"[Assignement] Wrong assignment type: assignable is " + assignableType + " but value is " + valueType);
 		return false;
 	}
 
@@ -123,7 +123,7 @@ public class Assignment implements Instruction, Expression {
 	 */
 	@Override
 	public int allocateMemory(Register _register, int _offset) {
-		throw new SemanticsUndefinedException("Semantics allocateMemory is undefined in Assignment.");
+		return 0;
 	}
 
 	/*
@@ -133,7 +133,11 @@ public class Assignment implements Instruction, Expression {
 	 */
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
-		throw new SemanticsUndefinedException("Semantics getCode is undefined in Assignment.");
+		Fragment fragment = _factory.createFragment();
+		fragment.append(value.getCode(_factory));
+		fragment.append(assignable.getCode(_factory));
+		fragment.addComment(toString());
+		return fragment;
 	}
 
 }

@@ -1,5 +1,7 @@
 package fr.n7.stl.minic;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -120,6 +122,10 @@ import fr.n7.stl.minic.parser.MiniCParser.TypeEnumContext;
 import fr.n7.stl.minic.parser.MiniCParser.TypeNamedContext;
 import fr.n7.stl.minic.parser.MiniCParser.TypeRecordContext;
 import fr.n7.stl.minic.parser.MiniCParserBaseListener;
+import fr.n7.stl.tam.ast.Fragment;
+import fr.n7.stl.tam.ast.Register;
+import fr.n7.stl.tam.ast.TAMFactory;
+import fr.n7.stl.tam.ast.impl.TAMFactoryImpl;
 import fr.n7.stl.util.Pair;
 
 public class ASTBuilder extends MiniCParserBaseListener {
@@ -149,15 +155,15 @@ public class ASTBuilder extends MiniCParserBaseListener {
                     // System.out.println("Code generation ...");
                     // this.mainBlock.allocateMemory(Register.SB, 0);
                     // try {
-                    // PrintWriter writer = new PrintWriter(output_path);
-                    // TAMFactory factory = new TAMFactoryImpl();
-                    // Fragment f = this.mainBlock.getCode(factory);
-                    // f.add(factory.createHalt());
-                    // f.append(this.mainBlock.getFunctions(factory));
-                    // writer.println(f);
-                    // writer.close();
+                    //     PrintWriter writer = new PrintWriter(output_path);
+                    //     TAMFactory factory = new TAMFactoryImpl();
+                    //     Fragment f = this.mainBlock.getCode(factory);
+                    //     f.add(factory.createHalt());
+                    //     f.append(this.mainBlock.getFunctions(factory));
+                    //     writer.println(f);
+                    //     writer.close();
                     // } catch (IOException e) {
-                    // e.printStackTrace();
+                    //     e.printStackTrace();
                     // }
                     // System.out.println("Code generation finished");
 
