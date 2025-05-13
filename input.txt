@@ -1,5 +1,8 @@
 monProgramme {
-    typedef int test;
-    test a = 111;
-
+    int n = 0;
+    if (n==0){
+        n = 1;
+    }else {
+        n = 2;
+    }
 }

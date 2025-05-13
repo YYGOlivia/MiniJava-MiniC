@@ -203,7 +203,9 @@ public class VariableDeclaration implements Declaration, Instruction {
 	public Fragment getCode(TAMFactory _factory) {
 		Fragment result = _factory.createFragment();
 		result.addComment(this.toString());
+		result.add(_factory.createPush(type.length()));
 		result.append(this.value.getCode(_factory));
+		result.add(_factory.createStore(register, offset, type.length()));
 		return result;
 	}
 

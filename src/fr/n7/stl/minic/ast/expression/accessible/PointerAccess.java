@@ -35,7 +35,8 @@ public class PointerAccess extends AbstractPointer<AccessibleExpression> impleme
 	 */
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
-		// LOAD (size) pos_memoire[SB]
+		// LOAD (size) pos_memoire[LB]
+
 		throw new SemanticsUndefinedException("Semantics getCode is not implemented in PointerAccess.");
 	}
 
