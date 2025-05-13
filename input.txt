@@ -1,8 +1,8 @@
 pgcd {
   const int test = 0;
-  int pgcd( int c, int d ) {
-    int a = c;
-    int b = d;
+  int pgcd( <int,int> c ) {
+    int a = fst c;
+    int b = snd c;
     while (a * b != test) {
       if ( a > b ) {
 	int na = a-b;
@@ -18,5 +18,5 @@ pgcd {
     }
     return res;
   }
-  print pgcd( 47,53 );
+  print pgcd( {47,53} );
 }

@@ -1,0 +1,13 @@
+;< int, int> i = { 2 ,3 };
+;
+PUSH 2
+LOADL 2
+LOADL 3
+STORE (2) 0[SB]
+;int a = (fsti);
+;
+PUSH 1
+POP (0) 1
+STORE (1) 2[SB]
+HALT
+

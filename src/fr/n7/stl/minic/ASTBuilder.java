@@ -152,20 +152,20 @@ public class ASTBuilder extends MiniCParserBaseListener {
                 if (this.mainBlock.checkType()) {
                     System.out.println("Type verification succeeded.");
 
-                    // System.out.println("Code generation ...");
-                    // this.mainBlock.allocateMemory(Register.SB, 0);
-                    // try {
-                    //     PrintWriter writer = new PrintWriter(output_path);
-                    //     TAMFactory factory = new TAMFactoryImpl();
-                    //     Fragment f = this.mainBlock.getCode(factory);
-                    //     f.add(factory.createHalt());
-                    //     f.append(this.mainBlock.getFunctions(factory));
-                    //     writer.println(f);
-                    //     writer.close();
-                    // } catch (IOException e) {
-                    //     e.printStackTrace();
-                    // }
-                    // System.out.println("Code generation finished");
+                    System.out.println("Code generation ...");
+                    this.mainBlock.allocateMemory(Register.SB, 0);
+                    try {
+                        PrintWriter writer = new PrintWriter(output_path);
+                        TAMFactory factory = new TAMFactoryImpl();
+                        Fragment f = this.mainBlock.getCode(factory);
+                        f.add(factory.createHalt());
+                        f.append(this.mainBlock.getFunctions(factory));
+                        writer.println(f);
+                        writer.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println("Code generation finished");
 
                 } else {
                     System.out.println("Type verification failed.");

@@ -202,7 +202,7 @@ public class FunctionDeclaration implements Instruction, Declaration {
 		for (ParameterDeclaration paramDecl : this.parameters) {
 			off += paramDecl.getType().length();
 		}
-		body.allocateMemory(Register.LB, off);
+		body.allocateMemory(Register.LB, off + 1);
 		for (ParameterDeclaration paramDecl : this.parameters) {
 			paramDecl.setOffset(off);
 			off -= paramDecl.getType().length();

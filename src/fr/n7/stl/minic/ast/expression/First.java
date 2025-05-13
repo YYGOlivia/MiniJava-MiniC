@@ -3,7 +3,6 @@
  */
 package fr.n7.stl.minic.ast.expression;
 
-import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
@@ -89,7 +88,13 @@ public class First implements AccessibleExpression {
 	 */
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
-		throw new SemanticsUndefinedException("Semantics getCode undefined in First.");
+		Fragment fragment = _factory.createFragment();
+		// LOAD la variable
+		fragment.append(target.getCode(_factory));
+		// POP (0) 1
+		fragment.add(_factory.createPop(0, 1));
+		//throw new SemanticsUndefinedException("Semantics getCode undefined in First.");
+		return fragment;
 	}
 
 }

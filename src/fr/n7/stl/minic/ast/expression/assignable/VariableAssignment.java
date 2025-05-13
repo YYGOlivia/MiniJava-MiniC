@@ -95,8 +95,7 @@ public class VariableAssignment extends AbstractIdentifier implements Assignable
 		int off = declaration.getOffset();
 		Register reg = declaration.getRegister();
 		int size = getType().length();
-		result.add(_factory.createLoad(reg, off, size));
-		result.add(_factory.createStoreI(size));
+		result.add(_factory.createStore(reg, off, size));
 		return result;
 	}
 
