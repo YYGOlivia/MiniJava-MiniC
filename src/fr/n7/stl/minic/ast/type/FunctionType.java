@@ -92,7 +92,7 @@ public class FunctionType implements Type {
 	 */
 	@Override
 	public Type merge(Type _other) {
-		throw new SemanticsUndefinedException("merge is undefined in FunctionType.");
+		throw new SemanticsUndefinedException("Semantics merge is undefined in FunctionType.");
 	}
 
 	/*

@@ -1,0 +1,4 @@
+prog {
+  int i[] = new int[2];
+  int a = i[0];
+}

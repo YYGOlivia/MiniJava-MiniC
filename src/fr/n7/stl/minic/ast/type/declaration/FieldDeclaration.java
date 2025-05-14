@@ -62,7 +62,7 @@ public class FieldDeclaration implements Declaration {
 		return this.offset;
 	}
 
-	public int computerOffset(int _offset) {
+	public int computeOffset(int _offset) {
 		this.offset = _offset;
 		return this.type.length();
 	}

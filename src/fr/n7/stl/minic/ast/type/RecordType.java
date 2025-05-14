@@ -145,7 +145,7 @@ public class RecordType implements Type, Declaration, Scope<FieldDeclaration> {
 	 */
 	@Override
 	public Type merge(Type _other) {
-		throw new SemanticsUndefinedException("merge is undefined in RecordType.");
+		throw new SemanticsUndefinedException("Semantics merge is undefined in RecordType.");
 	}
 
 	/*

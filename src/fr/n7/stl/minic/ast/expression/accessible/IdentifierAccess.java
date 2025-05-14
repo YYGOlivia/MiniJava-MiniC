@@ -74,7 +74,8 @@ public class IdentifierAccess extends AbstractIdentifier implements AccessibleEx
 			this.expression = new ParameterAccess((ParameterDeclaration) _declaration);
 
 		} else {
-			Logger.error("[IdentifierAccess] Declaration of " + name + " refers to neither variable, constant or parameter.");
+			Logger.error("[IdentifierAccess] Declaration of " + name
+					+ " refers to neither variable, constant or parameter.");
 			return false;
 		}
 		return true;
@@ -90,12 +91,8 @@ public class IdentifierAccess extends AbstractIdentifier implements AccessibleEx
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
 
-		if (this.expression != null) {
-			return true;
-		}
-
 		if (!_scope.knows(this.name)) {
-			Logger.error("[IdentifierAccess] "+ name + " is not known by scope.");
+			Logger.error("[IdentifierAccess] " + name + " is not known by scope.");
 			return false;
 		}
 
@@ -110,7 +107,8 @@ public class IdentifierAccess extends AbstractIdentifier implements AccessibleEx
 			this.expression = new ParameterAccess((ParameterDeclaration) _declaration);
 
 		} else {
-			Logger.error("[IdentifierAccess] Declaration of " + name + " refers to neither variable, constant or parameter.");
+			Logger.error("[IdentifierAccess] Declaration of " + name
+					+ " refers to neither variable, constant or parameter.");
 			return false;
 		}
 		return true;

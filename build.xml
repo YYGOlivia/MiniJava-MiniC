@@ -59,5 +59,10 @@
 	<target name="clean">
 		<delete dir="${classes}" />
 		<delete dir="${result}" />
+		<delete>
+			<fileset dir=".">
+				<include name="**/*.tam" />
+			</fileset>
+		</delete>
 	</target>
 </project>

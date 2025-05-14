@@ -112,7 +112,7 @@ public class EnumerationType implements Type, Declaration {
      */
     @Override
     public int length() {
-        throw new SemanticsUndefinedException("Semantics length is not implemented in EnumerationType.");
+        return labels.size() * AtomicType.IntegerType.length();
     }
 
     /*
@@ -125,7 +125,8 @@ public class EnumerationType implements Type, Declaration {
         // pas sûr
         for (int i = 0; i < this.labels.size(); i++) {
             LabelDeclaration labelDecl = this.labels.get(i);
-            ConstantDeclaration constDecl = new ConstantDeclaration(labelDecl.getName(), AtomicType.IntegerType, new IntegerValue(String.valueOf(i)));
+            ConstantDeclaration constDecl = new ConstantDeclaration(labelDecl.getName(), AtomicType.IntegerType,
+                    new IntegerValue(String.valueOf(i)));
             if (!(_scope.accepts(constDecl))) {
                 Logger.error("[EnumerationType] The constant " + constDecl.getName() + " is already declared.");
                 return false;

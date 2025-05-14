@@ -8,8 +8,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.stringtemplate.v4.compiler.CodeGenerator.primary_return;
-
 public class TestRunner {
 
     private static final String ERROR_DIR = "tests/error";
@@ -71,7 +69,7 @@ public class TestRunner {
         if (dir.exists() && dir.isDirectory()) {
             Files.walk(Paths.get(directory))
                     .filter(Files::isRegularFile)
-                    .filter(file -> file.getFileName().toString().endsWith(".bloc"))
+                    .filter(file -> file.getFileName().toString().endsWith(".block"))
                     .forEach(path -> files.add(path.toString()));
         }
         return files;

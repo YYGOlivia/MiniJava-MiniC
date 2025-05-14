@@ -4,7 +4,8 @@
 
 - `ant compile` : compile le projet
 - `ant execute -Darg=input.txt` : compile et exécute le projet sur le fichier `inout.txt`
-- `ant clean` : nettoie le projet
+- `ant clean` : supprime les fichiers générés par la compilation ainsi que les `*.tam`
+- `ant test` : lance execution sur tous les fichiers de [`tests/`](tests/)
 
 ## TODO (au minimum)
 

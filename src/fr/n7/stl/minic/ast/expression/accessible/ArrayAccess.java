@@ -37,7 +37,7 @@ public class ArrayAccess extends AbstractArray<AccessibleExpression> implements 
 	 */
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
-		throw new SemanticsUndefinedException("getCode is undefined in ArrayAccess.");
+		throw new SemanticsUndefinedException("Semantics getCode is undefined in ArrayAccess.");
 	}
 
 }

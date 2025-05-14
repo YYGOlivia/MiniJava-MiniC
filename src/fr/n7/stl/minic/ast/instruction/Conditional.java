@@ -112,6 +112,7 @@ public class Conditional implements Instruction {
 	public boolean checkType() {
 		boolean ok1 = thenBranch.checkType();
 		Type okCond = condition.getType();
+		Logger.warning(condition.getClass().getName());
 		if (okCond.equals(AtomicType.BooleanType)) {
 			if (elseBranch != null) {
 				boolean ok2 = elseBranch.checkType();
@@ -119,7 +120,8 @@ public class Conditional implements Instruction {
 			}
 			return ok1;
 		}
-		Logger.error("[Conditional] Condition not of Boolean type");
+		Logger.error("[Conditional] Condition is of type " + condition.getType()
+				+ "(exepected BooleanType)");
 		return false;
 	}
 
@@ -163,7 +165,7 @@ public class Conditional implements Instruction {
 			Fragment elseCode = elseBranch.getCode(_factory);
 			elseCode.addPrefix("sinon_conditionnelle_" + num);
 			_fragment.append(elseCode);
-			
+
 		}
 		_fragment.addSuffix("fin_conditionnelle_" + num);
 		// _fragment.addComment(toString());

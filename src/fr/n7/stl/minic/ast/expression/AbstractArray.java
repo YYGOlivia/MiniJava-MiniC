@@ -3,7 +3,10 @@ package fr.n7.stl.minic.ast.expression;
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
+import fr.n7.stl.minic.ast.type.ArrayType;
+import fr.n7.stl.minic.ast.type.AtomicType;
 import fr.n7.stl.minic.ast.type.Type;
+import fr.n7.stl.util.Logger;
 
 /**
  * Common elements between left (Assignable) and right (Expression) end sides of
@@ -61,6 +64,11 @@ public abstract class AbstractArray<ArrayKind extends Expression> implements Exp
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
 		boolean okArray = this.array.collectAndPartialResolve(_scope);
 		boolean okIndex = this.index.collectAndPartialResolve(_scope);
+
+		if (!(array.getType() instanceof ArrayType)) {
+			Logger.error("[AbstractArray] " + array + " is not an array type.");
+			return false;
+		}
 		return okArray && okIndex;
 	}
 
@@ -84,7 +92,11 @@ public abstract class AbstractArray<ArrayKind extends Expression> implements Exp
 	 * @return Synthesized Type of the expression.
 	 */
 	public Type getType() {
-		return array.getType();
+		if (!(array.getType() instanceof ArrayType)) {
+			return AtomicType.ErrorType;
+		}
+		ArrayType arrayType = (ArrayType) array.getType();
+		return arrayType.getType();
 	}
 
 }
