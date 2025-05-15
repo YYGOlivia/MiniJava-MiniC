@@ -8,6 +8,7 @@ import fr.n7.stl.minic.ast.expression.assignable.AssignableExpression;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
+import fr.n7.stl.minic.ast.type.NamedType;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
@@ -105,13 +106,15 @@ public class Assignment implements Instruction, Expression {
 	@Override
 	public boolean checkType() {
 		Type valueType = this.value.getType();
-		Type assignableType = this.assignable.getType();
-		if (valueType.compatibleWith(assignableType)) {
-			return true;
+		Type valueTrueType = (valueType instanceof NamedType) ? ((NamedType) valueType).getType() : valueType;
+		Type assType = this.assignable.getType();
+		Type assTrueType = (assType instanceof NamedType) ? ((NamedType) assType).getType() : assType;
+		if (!valueTrueType.compatibleWith(assTrueType)) {
+			Logger.error(
+					"[Assignment] Type mismatch: cannot assign " + valueType + " to " + assType);
+			return false;
 		}
-		Logger.error(
-			"[Assignment] Type mismatch: cannot assign " + valueType + " to " + assignableType);
-		return false;
+		return true;
 	}
 
 	/*

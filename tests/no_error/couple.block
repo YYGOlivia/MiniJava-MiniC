@@ -1,0 +1,50 @@
+test {
+    // Basic types for couples
+    <int, float> coords = {5, 3.14};
+    <String, boolean> config = {"test", true};
+
+    // compatibilité
+    <float, float> coords2 =  coords;
+
+    // Nested couples
+    <int, <String, boolean>> nested = {42, config};
+
+    // compatibilité imbriquée
+    <String, <float, float>> nested2 = {"foo", coords};
+
+    // Function using couples
+    int main(<float, float> couple) {
+        // Access couple elements
+        float x = snd coords;
+        String msg = fst config;
+
+        // Create new couple from existing ones
+        <boolean, int> swapped = {snd config, fst coords};
+
+        // Couple with array type
+        int arr[] = new int[3];
+
+        // Complex nesting
+        <<int, float>, <String, boolean>> complex = {coords, config};
+
+        // Using couple elements in expressions
+        if (snd config) {
+            return fst coords;
+        }
+
+        if (snd (snd complex)) {
+            return fst (fst complex);
+        }
+
+        return 0;
+    }
+
+    <int, int> couple = {main(coords), main(coords)};
+
+    // tableau de couples
+    <int, int> arr[] = new <int, int>[2];
+    arr[0] = {1, 2};
+    arr[1] = {3, 4};
+    arr[0] = {snd arr[1], 5};
+
+}

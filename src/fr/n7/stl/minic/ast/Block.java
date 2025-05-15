@@ -3,6 +3,8 @@
  */
 package fr.n7.stl.minic.ast;
 
+import java.util.List;
+
 import fr.n7.stl.minic.ast.instruction.Instruction;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
@@ -11,7 +13,6 @@ import fr.n7.stl.minic.ast.scope.SymbolTable;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
-import java.util.List;
 
 /**
  * Represents a Block node in the Abstract Syntax Tree node for the Bloc

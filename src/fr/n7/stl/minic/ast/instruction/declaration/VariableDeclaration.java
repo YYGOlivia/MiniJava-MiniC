@@ -122,26 +122,26 @@ public class VariableDeclaration implements Declaration, Instruction {
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		if (_scope.accepts(this)) {
-			boolean res = value.collectAndPartialResolve(_scope);
-			_scope.register(this);
-			return res;
-		} else {
+		if (!_scope.accepts(this)) {
 			Logger.error("[VariableDeclaration] The variable " + name + " is already declared");
 			return false;
 		}
+		_scope.register(this);
+		boolean okValue = value.collectAndPartialResolve(_scope);
+		boolean okType = type.completeResolve(_scope);
+		return okValue && okType;
 	}
 
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
-		if (_scope.accepts(this)) {
-			boolean res = value.collectAndPartialResolve(_scope);
-			_scope.register(this);
-			return res;
-		} else {
+		if (!_scope.accepts(this)) {
 			Logger.error("[VariableDeclaration] The variable " + name + " is already declared");
 			return false;
 		}
+		_scope.register(this);
+		boolean okValue = value.collectAndPartialResolve(_scope);
+		boolean okType = type.completeResolve(_scope);
+		return okValue && okType;
 
 	}
 
@@ -154,14 +154,14 @@ public class VariableDeclaration implements Declaration, Instruction {
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		boolean res = value.completeResolve(_scope);
-		if (_scope.accepts(this)) {
-			_scope.register(this);
-			return res;
-		} else {
+		if (!_scope.accepts(this)) {
 			Logger.error("[VariableDeclaration] The variable " + name + " is already declared");
 			return false;
 		}
+		_scope.register(this);
+		boolean okValue = value.completeResolve(_scope);
+		boolean okType = type.completeResolve(_scope);
+		return okValue && okType;
 	}
 
 	/*
@@ -172,8 +172,8 @@ public class VariableDeclaration implements Declaration, Instruction {
 	@Override
 	public boolean checkType() {
 		Type valueType = value.getType();
-		Type thisTrueType = (type instanceof NamedType) ? ((NamedType) type).getType() : type;
 		Type valueTrueType = (valueType instanceof NamedType) ? ((NamedType) valueType).getType() : valueType;
+		Type thisTrueType = (type instanceof NamedType) ? ((NamedType) type).getType() : type;
 		if (valueTrueType.compatibleWith(thisTrueType)) {
 			return true;
 		}

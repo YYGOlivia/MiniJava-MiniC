@@ -71,17 +71,15 @@ public abstract class AbstractConversion<TargetType> implements Expression {
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		if (this.type != null) {
-			return true;
-		}
 
 		Declaration decl = _scope.get(this.name);
 		if (!(decl instanceof TypeDeclaration)) {
 			Logger.error("[AbstractConversion] Type " + this.name + " is not declared.");
 			return false;
 		}
-
 		TypeDeclaration typeDecl = ((TypeDeclaration) decl);
+
+		typeDecl.collectAndPartialResolve(_scope);
 		this.type = typeDecl.getType();
 		return true;
 	}

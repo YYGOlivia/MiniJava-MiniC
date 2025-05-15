@@ -5,6 +5,7 @@ import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.ArrayType;
 import fr.n7.stl.minic.ast.type.AtomicType;
+import fr.n7.stl.minic.ast.type.NamedType;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.util.Logger;
 
@@ -65,8 +66,11 @@ public abstract class AbstractArray<ArrayKind extends Expression> implements Exp
 		boolean okArray = this.array.collectAndPartialResolve(_scope);
 		boolean okIndex = this.index.collectAndPartialResolve(_scope);
 
-		if (!(array.getType() instanceof ArrayType)) {
-			Logger.error("[AbstractArray] " + array + " is not an array type.");
+		Type arrayType = array.getType();
+		Type arrayTrueType = arrayType instanceof NamedType ? ((NamedType) arrayType).getType() : arrayType;
+
+		if (!(arrayTrueType instanceof ArrayType)) {
+			Logger.error("[AbstractArray] " + array + " should be array type (is " + array.getType() + ").");
 			return false;
 		}
 		return okArray && okIndex;
@@ -83,6 +87,13 @@ public abstract class AbstractArray<ArrayKind extends Expression> implements Exp
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
 		boolean okArray = this.array.completeResolve(_scope);
 		boolean okIndex = this.index.completeResolve(_scope);
+		Type arrayType = array.getType();
+		Type arrayTrueType = arrayType instanceof NamedType ? ((NamedType) arrayType).getType() : arrayType;
+
+		if (!(arrayTrueType instanceof ArrayType)) {
+			Logger.error("[AbstractArray] " + array + " should be array type (is " + array.getType() + ").");
+			return false;
+		}
 		return okArray && okIndex;
 	}
 
