@@ -7,10 +7,13 @@ import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
+import fr.n7.stl.minic.ast.type.AtomicType;
+import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Library;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
+import fr.n7.stl.tam.ast.TAMInstruction;
 
 /**
  * Implementation of the Abstract Syntax Tree node for a printer instruction.
@@ -87,6 +90,22 @@ public class Printer implements Instruction {
 		return 0;
 	}
 
+	private TAMInstruction getRightOut(AtomicType atomicType){
+		switch (atomicType) {
+		case BooleanType:
+			return Library.BOut;
+		case IntegerType:
+			return Library.IOut;
+		case CharacterType:
+			return Library.COut;
+		case StringType:
+			return Library.SOut;
+		default:
+			// Aucune idee de ce qu'on fait là
+			return Library.IOut;
+		}
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -95,8 +114,20 @@ public class Printer implements Instruction {
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
 		Fragment fragment = _factory.createFragment();
-		fragment.append(parameter.getCode(_factory));
-		fragment.add(Library.IOut);
+		Type type = parameter.getType();
+		if (type instanceof AtomicType){
+			AtomicType atomicType = (AtomicType) type;
+			fragment.append(parameter.getCode(_factory));
+			fragment.add(getRightOut(atomicType));
+		}else{
+			//Pour print toute les valeurs dans l'ordre inverse -> <2,3> sera affiché 3 2
+			for (int i=0; i<type.length(); i++){
+				fragment.add(Library.IOut); // Ici ca ne marche que pour les int
+				fragment.add(_factory.createLoadL(' '));
+				fragment.add(Library.COut);
+			}
+		}
+		
 		fragment.addComment(toString().strip());
 		return fragment;
 	}
