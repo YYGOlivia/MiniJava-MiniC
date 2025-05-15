@@ -1,5 +1,3 @@
 prog {
-  int t[] = new int[5];
-  int i = t[3];
-  t[2] = 4;
+  <int, int> t[] = new <int, int>[5];
 }
