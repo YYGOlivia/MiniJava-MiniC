@@ -5,6 +5,7 @@ package fr.n7.stl.minic.ast.expression.accessible;
 
 import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.assignable.AssignableExpression;
+import fr.n7.stl.minic.ast.expression.assignable.VariableAssignment;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.PointerType;
@@ -73,6 +74,24 @@ public class AddressAccess implements AccessibleExpression {
 	 */
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
+		Fragment fragment = _factory.createFragment();
+
+		VariableAssignment elem = (VariableAssignment) assignable;
+		
+		
+		// if (access instanceof ParameterAccess){
+		// 	ParameterAccess paramAccess = (ParameterAccess) access;
+		// 	ParameterDeclaration declaration  = (ParameterDeclaration) paramAccess.getDeclaration();
+		// 	fragment.add(_factory.createLoadA(Register.LB, declaration.getOffset()));
+		// }else if (access instanceof VariableAccess){
+		// 	VariableAccess varAccess = (VariableAccess) access;
+		// 	VariableDeclaration declaration  = (VariableDeclaration) varAccess.getDeclaration();
+		// 	fragment.add(_factory.createLoadA(declaration.getRegister(), declaration.getOffset()));
+		// }else{
+		// 	//Should not happend 
+		// 	Logger.error("[AddressAccess] A constant does not have an address");
+		// }
+		//return fragment;
 		throw new SemanticsUndefinedException("Semantics getCode is undefined in AddressAccess.");
 	}
 

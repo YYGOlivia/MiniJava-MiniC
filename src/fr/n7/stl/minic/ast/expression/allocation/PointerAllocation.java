@@ -3,7 +3,6 @@
  */
 package fr.n7.stl.minic.ast.expression.allocation;
 
-import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.expression.assignable.AssignableExpression;
 import fr.n7.stl.minic.ast.scope.Declaration;
@@ -11,6 +10,7 @@ import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.PointerType;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.tam.ast.Fragment;
+import fr.n7.stl.tam.ast.Library;
 import fr.n7.stl.tam.ast.TAMFactory;
 
 /**
@@ -76,7 +76,10 @@ public class PointerAllocation implements AccessibleExpression, AssignableExpres
 	 */
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
-		throw new SemanticsUndefinedException("Semantics getCode is undefined in PointerAllocation.");
+		Fragment fragment = _factory.createFragment();
+		fragment.add(_factory.createLoadL(element.length()));
+		fragment.add(Library.MAlloc);
+		return fragment;
 	}
 
 }
