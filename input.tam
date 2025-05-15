@@ -1,0 +1,28 @@
+;(int []) t = new int[ 5 ];
+;
+PUSH 1
+LOADL 5
+LOADL 1
+SUBR IMul
+SUBR MAlloc
+STORE (1) 0[SB]
+;int i = t[ 3 ];
+;
+PUSH 1
+LOAD (1) 0[SB]
+LOADL 3
+LOADL 1
+SUBR IMul
+SUBR IAdd
+LOADI (1)
+STORE (1) 1[SB]
+; t [ 2 ] = 4;
+;
+LOADL 4
+STORE (1) 0[SB]
+LOADL 2
+LOADL 1
+SUBR IMul
+SUBR IAdd
+HALT
+

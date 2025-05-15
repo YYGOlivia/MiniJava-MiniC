@@ -1,0 +1,13 @@
+;< int, int> b = { 3 ,6 };
+;
+PUSH 2
+LOADL 3
+LOADL 6
+STORE (2) 0[SB]
+;< int, int> d = b;
+;
+PUSH 2
+LOAD (2) 0[SB]
+STORE (2) 2[SB]
+HALT
+
