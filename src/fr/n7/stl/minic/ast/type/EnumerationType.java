@@ -89,10 +89,17 @@ public class EnumerationType implements Type, Declaration {
      */
     @Override
     public boolean compatibleWith(Type _other) {
-        if (_other instanceof EnumerationType) {
+        if (_other == AtomicType.IntegerType) {
+            // compatible avec les ints
+            return true;
+        } else if (this.equalsTo(_other)) {
+            // compatible avec lui-même
+            return true;
+        } else if (_other instanceof EnumerationType) {
+            // compatible avec les enums
             return true;
         }
-        return AtomicType.IntegerType.compatibleWith(_other);
+        return false;
     }
 
     /*

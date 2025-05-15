@@ -1,0 +1,3 @@
+test {
+    enum Color {RED, GREEN, BLUE} p = 2.5;
+}

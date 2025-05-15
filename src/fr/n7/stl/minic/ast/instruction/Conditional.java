@@ -112,7 +112,6 @@ public class Conditional implements Instruction {
 	public boolean checkType() {
 		boolean ok1 = thenBranch.checkType();
 		Type okCond = condition.getType();
-		Logger.warning(condition.getClass().getName());
 		if (okCond.equals(AtomicType.BooleanType)) {
 			if (elseBranch != null) {
 				boolean ok2 = elseBranch.checkType();

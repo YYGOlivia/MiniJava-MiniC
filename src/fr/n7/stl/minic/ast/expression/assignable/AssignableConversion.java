@@ -12,7 +12,5 @@ public class AssignableConversion extends AbstractConversion<AssignableExpressio
 
 	public AssignableConversion(AssignableExpression _target, Type _type) {
 		super(_target, _type);
-		Logger.warning("abs conv assignable " + _target + "----" + _type);
 	}
-
 }

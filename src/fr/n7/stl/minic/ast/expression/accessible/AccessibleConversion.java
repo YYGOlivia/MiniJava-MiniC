@@ -20,10 +20,6 @@ public class AccessibleConversion extends AbstractConversion<Expression> impleme
 
 	public AccessibleConversion(Expression _target, Type _type) {
 		super(_target, _type);
-		Logger.warning("abs conv accessible " + _target + "----" + _type);
-		
 	}
-
-	
 
 }

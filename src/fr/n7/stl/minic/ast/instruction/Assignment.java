@@ -110,7 +110,7 @@ public class Assignment implements Instruction, Expression {
 			return true;
 		}
 		Logger.error(
-				"[Assignement] Wrong assignment type: assignable is " + assignableType + " but value is " + valueType);
+			"[Assignment] Type mismatch: cannot assign " + valueType + " to " + assignableType);
 		return false;
 	}
 

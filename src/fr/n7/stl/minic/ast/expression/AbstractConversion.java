@@ -28,14 +28,12 @@ public abstract class AbstractConversion<TargetType> implements Expression {
 	protected String name;
 
 	public AbstractConversion(TargetType _target, String _type) {
-		Logger.warning("abs conv1 " + _target + "----" + _type);
 		this.target = _target;
 		this.name = _type;
 		this.type = null;
 	}
 
 	public AbstractConversion(TargetType _target, Type _type) {
-		Logger.warning("abs conv2 " + _target + "----" + _type);
 		this.target = _target;
 		this.name = null;
 		this.type = _type;

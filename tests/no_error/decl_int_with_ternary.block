@@ -1,0 +1,4 @@
+test {
+    boolean b = true;
+    int i = b ? 1 : 0;
+}

@@ -5,6 +5,7 @@ package fr.n7.stl.minic.ast.type;
 
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
+import fr.n7.stl.util.Logger;
 
 /**
  * Elementary types in the Bloc language.
@@ -46,6 +47,7 @@ public enum AtomicType implements Type {
 				case NullType:
 					return ((_other != ErrorType) && (_other != VoidType));
 				case IntegerType:
+				Logger.warning("[AtomicType]: " + _other.getClass().getName());
 					return (_other == FloatingType) || (_other instanceof EnumerationType);
 				default:
 					return false;

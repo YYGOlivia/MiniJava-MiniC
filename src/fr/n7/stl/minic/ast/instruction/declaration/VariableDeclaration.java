@@ -7,6 +7,7 @@ import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.instruction.Instruction;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
+import fr.n7.stl.minic.ast.type.NamedType;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
@@ -153,7 +154,6 @@ public class VariableDeclaration implements Declaration, Instruction {
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		Logger.warning(_scope.toString());
 		boolean res = value.completeResolve(_scope);
 		if (_scope.accepts(this)) {
 			_scope.register(this);
@@ -171,11 +171,15 @@ public class VariableDeclaration implements Declaration, Instruction {
 	 */
 	@Override
 	public boolean checkType() {
-		if (this.value.getType().compatibleWith(this.type)) {
+		Type valueType = value.getType();
+		Type thisTrueType = (type instanceof NamedType) ? ((NamedType) type).getType() : type;
+		Type valueTrueType = (valueType instanceof NamedType) ? ((NamedType) valueType).getType() : valueType;
+		if (valueTrueType.compatibleWith(thisTrueType)) {
 			return true;
 		}
 		Logger.error(
-				"[VariableDeclaration] The type " + this.value.getType() + " is not compatible with the declared type of " + name + " ("
+				"[VariableDeclaration] The type " + this.value.getType()
+						+ " is not compatible with the declared type of " + name + " ("
 						+ this.type + ").");
 		return false;
 
