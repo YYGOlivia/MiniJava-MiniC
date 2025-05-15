@@ -6,16 +6,18 @@
 	<property name="lib" location="lib" />
 	<property name="tools" location="tools" />
 	<property name="base" location="." />
-
+	<property environment="env" />
 
 	<path id="libraries">
 		<files includes="${tools}/commons-text-1.9.jar" />
 		<files includes="${tools}/antlr-4.13.1-complete.jar" />
 	</path>
 
+	<!-- Générer le code Java à partir des grammaires ANTLR -->
 	<target name="generate">
 		<mkdir dir="${java}/fr/n7/stl/minic/parser" />
-		<java classname="org.antlr.v4.Tool" classpath="tools/antlr-4.13.1-complete.jar:$CLASSPATH">
+		<java classname="org.antlr.v4.Tool" classpath="tools/antlr-4.13.1-complete.jar:$CLASSPATH"
+			failonerror="true">
 			<arg value="-o" />
 			<arg value="${java}/fr/n7/stl/minic/parser" />
 			<arg value="MiniCLexer.g4" />
@@ -23,27 +25,56 @@
 		</java>
 	</target>
 
+	<!-- Compiler le code java -->
 	<target name="compile">
 		<mkdir dir="${classes}" />
 		<mkdir dir="${result}" />
-		<javac includeantruntime="false" srcdir="${java}" destdir="${classes}">
+		<javac includeantruntime="false" srcdir="${java}" destdir="${classes}" failonerror="true">
 			<classpath refid="libraries" />
 		</javac>
 	</target>
 
-	<target name="execute" depends="compile">
-		<java classname="fr.n7.stl.minic.Driver">
+	<!-- Vérifier le code du fichier donné sans générer le code TAM -->
+	<target name="verify" depends="compile">
+		<java classname="fr.n7.stl.minic.Driver" failonerror="true">
 			<classpath>
 				<pathelement location="${classes}" />
 				<pathelement location="${tools}/commons-lang3-3.7.jar" />
 				<pathelement location="${tools}/commons-text-1.2.jar" />
 				<pathelement location="${tools}/antlr-4.13.1-complete.jar" />
 			</classpath>
-			<arg value="${arg}" />
+			<arg value="--verify" />
+			<arg value="${file}" />
 		</java>
-
 	</target>
 
+	<!-- Vérifier et générer le code TAM -->
+	<target name="compile-tam" depends="compile">
+		<java classname="fr.n7.stl.minic.Driver" failonerror="true">
+			<classpath>
+				<pathelement location="${classes}" />
+				<pathelement location="${tools}/commons-lang3-3.7.jar" />
+				<pathelement location="${tools}/commons-text-1.2.jar" />
+				<pathelement location="${tools}/antlr-4.13.1-complete.jar" />
+			</classpath>
+			<arg value="${file}" />
+		</java>
+	</target>
+
+	<!-- Lancer la vérification de tous les programmes test -->
+	<target name="test-verify" depends="compile">
+		<java classname="fr.n7.stl.minic.TestRunner" failonerror="true">
+			<classpath>
+				<pathelement location="${classes}" />
+				<pathelement location="${tools}/commons-lang3-3.7.jar" />
+				<pathelement location="${tools}/commons-text-1.2.jar" />
+				<pathelement location="${tools}/antlr-4.13.1-complete.jar" />
+			</classpath>
+			<arg value="--verify" />
+		</java>
+	</target>
+
+	<!-- Lancer la compilation de tous les programmes de test-->
 	<target name="test" depends="compile">
 		<java classname="fr.n7.stl.minic.TestRunner" failonerror="true">
 			<classpath>
@@ -55,7 +86,24 @@
 		</java>
 	</target>
 
+	<!-- Lancer le code TAM -->
+	<target name="runtam">
+		<java jar="${tools}/runtam.jar" fork="true" failonerror="true">
+			<arg value="${file}" />
+		</java>
+	</target>
 
+	<!-- l'interface de la machine tam -->
+	<target name="itam">
+		<java jar="${tools}/itam.jar" fork="true" failonerror="true">
+			<jvmarg value="--module-path" />
+			<jvmarg value="${env.PATH_TO_FX}" />
+			<jvmarg value="--add-modules" />
+			<jvmarg value="javafx.controls,javafx.fxml" />
+		</java>
+	</target>
+
+	<!-- Nettoyer les fichiers générés -->
 	<target name="clean">
 		<delete dir="${classes}" />
 		<delete dir="${result}" />

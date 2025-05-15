@@ -12,8 +12,18 @@ public class TestRunner {
 
     private static final String ERROR_DIR = "tests/error";
     private static final String NO_ERROR_DIR = "tests/no_error";
+    private static boolean generateCode;
 
     public static void main(String[] args) {
+        if (args.length > 0) {
+            if (args[0].equals("-v") || args[0].equals("--verify")) {
+                System.out.println("Running in verification mode...");
+                generateCode = false;
+            } else {
+                System.out.println("Running in compilation mode...");
+                generateCode = true;
+            }
+        }
         try {
             int totalTests = 0;
             int passedTests = 0;
@@ -94,7 +104,10 @@ public class TestRunner {
                 }
             }));
 
-            String[] args = { filename };
+            String[] args = generateCode
+                    ? new String[] { filename }
+                    : new String[] { "-v", filename };
+
             Driver.main(args);
             return !expectError;
         } catch (Exception e) {

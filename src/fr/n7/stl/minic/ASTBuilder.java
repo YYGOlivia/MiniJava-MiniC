@@ -1,5 +1,7 @@
 package fr.n7.stl.minic;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -120,6 +122,10 @@ import fr.n7.stl.minic.parser.MiniCParser.TypeEnumContext;
 import fr.n7.stl.minic.parser.MiniCParser.TypeNamedContext;
 import fr.n7.stl.minic.parser.MiniCParser.TypeRecordContext;
 import fr.n7.stl.minic.parser.MiniCParserBaseListener;
+import fr.n7.stl.tam.ast.Fragment;
+import fr.n7.stl.tam.ast.Register;
+import fr.n7.stl.tam.ast.TAMFactory;
+import fr.n7.stl.tam.ast.impl.TAMFactoryImpl;
 import fr.n7.stl.util.Pair;
 
 public class ASTBuilder extends MiniCParserBaseListener {
@@ -128,48 +134,55 @@ public class ASTBuilder extends MiniCParserBaseListener {
     private Block mainBlock;
     private String name;
 
-    public ASTBuilder(String _output) {
-        this.output_path = _output;
+    public ASTBuilder(String output) {
+        this.output_path = output;
     }
 
     /**
      * Start the compile phase : collect, resolve, memory allocation and
      * code generation.
      */
-    public void startCompilation() {
+    public void startCompilation(boolean generateCode) {
         System.out.println(this.name + " " + this.mainBlock);
         SymbolTable tds = new SymbolTable();
-        if (this.mainBlock.collectAndPartialResolve(tds)) {
-            System.out.println("collect succeeded");
-            if (this.mainBlock.completeResolve(tds)) {
-                System.out.println("Resolve succeeded.");
-                if (this.mainBlock.checkType()) {
-                    System.out.println("Type verification succeeded.");
 
-                    // System.out.println("Code generation ...");
-                    // this.mainBlock.allocateMemory(Register.SB, 0);
-                    // try {
-                    //     PrintWriter writer = new PrintWriter(output_path);
-                    //     TAMFactory factory = new TAMFactoryImpl();
-                    //     Fragment f = this.mainBlock.getCode(factory);
-                    //     f.add(factory.createHalt());
-                    //     f.append(this.mainBlock.getFunctions(factory));
-                    //     writer.println(f);
-                    //     writer.close();
-                    // } catch (IOException e) {
-                    //     e.printStackTrace();
-                    // }
-                    // System.out.println("Code generation finished");
-
-                } else {
-                    System.out.println("Type verification failed.");
-                }
-            } else {
-                System.out.println("Resolve failed." + tds);
-            }
-        } else {
+        if (!this.mainBlock.collectAndPartialResolve(tds)) {
             System.out.println("Collect failed : " + tds);
+            return;
         }
+        System.out.println("Collect succeeded.");
+
+        if (!this.mainBlock.completeResolve(tds)) {
+            System.out.println("Resolve failed : " + tds);
+            return;
+        }
+        System.out.println("Resolve Succeeded.");
+
+        if (!this.mainBlock.checkType()) {
+            System.out.println("Type verification failed.");
+            return;
+        }
+        System.out.println("Type verification succeeded.");
+
+        if (!generateCode) {
+            System.out.println("Skipping code generation.");
+            return;
+        }
+
+        System.out.println("Code generation ...");
+        this.mainBlock.allocateMemory(Register.SB, 0);
+        try {
+            PrintWriter writer = new PrintWriter(output_path);
+            TAMFactory factory = new TAMFactoryImpl();
+            Fragment f = this.mainBlock.getCode(factory);
+            f.add(factory.createHalt());
+            f.append(this.mainBlock.getFunctions(factory));
+            writer.println(f);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Code generation finished.");
     }
 
     @Override
