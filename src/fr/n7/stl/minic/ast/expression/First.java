@@ -93,7 +93,6 @@ public class First implements AccessibleExpression {
 		fragment.append(target.getCode(_factory));
 		// POP (0) 1
 		fragment.add(_factory.createPop(0, 1));
-		//throw new SemanticsUndefinedException("Semantics getCode undefined in First.");
 		return fragment;
 	}
 

@@ -38,8 +38,13 @@
 - [x] tous les `completeResolve`
 - [x] tous les `getType`
 - [x] tous les `checkType`
+<<<<<<< HEAD
 - [ ] tous les `merge`
 - [ ] tous les `length`
+=======
+- [ ] tous les `merge` (EnumerationType, FunctionType, RecordType)
+- [X] tous les `length` (PointerType)
+>>>>>>> e5fcace (array getCode)
 - [x] tous les `allocateMemory`
 - [ ] tous les `getCode`
 - [ ] toutes les classes `Abstract*`

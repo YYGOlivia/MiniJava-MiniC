@@ -94,7 +94,6 @@ public class Second implements AccessibleExpression {
 		fragment.append(target.getCode(_factory));
 		// POP (1) 1
 		fragment.add(_factory.createPop(1, 1));
-		//throw new SemanticsUndefinedException("Semantics getCode undefined in Second.");
 		return fragment;
 	}
 
