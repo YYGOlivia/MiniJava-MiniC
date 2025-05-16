@@ -1,0 +1,12 @@
+;int i = 1;
+;
+PUSH 1
+LOADL 1
+STORE (1) 0[SB]
+LOAD (1) 0[SB]
+LOADL 1
+SUBR IEq
+JUMPIF (0) fin_conditionnelle_29
+fin_conditionnelle_29
+HALT
+

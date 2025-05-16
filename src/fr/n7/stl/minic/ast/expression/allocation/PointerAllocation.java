@@ -7,11 +7,13 @@ import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.expression.assignable.AssignableExpression;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
+import fr.n7.stl.minic.ast.type.NamedType;
 import fr.n7.stl.minic.ast.type.PointerType;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Library;
 import fr.n7.stl.tam.ast.TAMFactory;
+import fr.n7.stl.util.Logger;
 
 /**
  * @author Marc Pantel
@@ -44,7 +46,10 @@ public class PointerAllocation implements AccessibleExpression, AssignableExpres
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		return element.completeResolve(_scope);
+		boolean okElement = element.completeResolve(_scope);
+		Type elementTrueType = NamedType.toBaseType(element);
+		element = elementTrueType;
+		return okElement;
 	}
 
 	/*
@@ -56,7 +61,10 @@ public class PointerAllocation implements AccessibleExpression, AssignableExpres
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		return element.completeResolve(_scope);
+		boolean okElement = element.completeResolve(_scope);
+		Type elementTrueType = NamedType.toBaseType(element);
+		element = elementTrueType;
+		return okElement;
 	}
 
 	/*
@@ -66,6 +74,7 @@ public class PointerAllocation implements AccessibleExpression, AssignableExpres
 	 */
 	@Override
 	public Type getType() {
+		Logger.warning("[PointerAllocation] getType() -> " + this.element);
 		return new PointerType(element);
 	}
 

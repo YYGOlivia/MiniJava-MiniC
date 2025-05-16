@@ -1,0 +1,16 @@
+;int i = 1;
+;
+PUSH 1
+LOADL 1
+STORE (1) 0[SB]
+debut_boucle_17
+LOADL 1
+JUMPIF (0) fin_boucle_17
+; i  = 2;
+;
+LOADL 2
+STORE (1) 0[SB]
+JUMP debut_boucle_17
+fin_boucle_17
+HALT
+

@@ -1,0 +1,61 @@
+test
+{
+    // Basic type aliases
+    typedef int Integer;
+    typedef Integer *IntPtr;
+    typedef IntPtr *PtrToIntPtr;
+    typedef<Integer, IntPtr> NumberWithPtr;
+
+    // Array type definitions
+    typedef Integer IntArray[];
+    typedef IntPtr PtrArray[];
+    typedef NumberWithPtr PairArray[];
+
+    // Basic allocated pointers
+    IntPtr p1 = new int();
+    IntPtr p2 = new int();
+    *p1 = 42;
+    *p2 = 84;
+
+    // // Static values with their pointers
+    Integer static1 = 100;
+    Integer static2 = 200;
+    IntPtr ptrStatic1 = &static1;
+    IntPtr ptrStatic2 = &static2;
+
+    // // Arrays initialization
+    IntArray numbers = new int[4];
+    PtrArray pointers = new IntPtr[4];
+    PairArray pairs = new<int, IntPtr>[2];
+
+    // // Fill arrays
+    numbers[0] = *p1;
+    numbers[1] = *p2;
+    numbers[2] = static1;
+    numbers[3] = static2;
+
+    // // Array of pointers manipulation
+    pointers[0] = p1;
+    pointers[1] = p2;
+    pointers[2] = ptrStatic1;
+    pointers[3] = ptrStatic2;
+
+    // // Pointer to pointer array element
+    PtrToIntPtr ptrToPtr1 = &pointers[0];
+    PtrToIntPtr ptrToPtr2 = &pointers[1];
+
+    // // Complex couples in array
+    pairs[0] = <*p1, p1>;
+    pairs[1] = <static1, ptrStatic1>;
+
+    // // Pointer manipulation through different paths
+    **ptrToPtr1 = 120;   // Change *p1 through pointer to pointer
+    *pointers[1] = 150;  // Change *p2 through pointer array
+    *snd pairs[0] = 180; // Change *p1 through couple in array
+
+    // // Print results to verify
+    print(**ptrToPtr1);  // Should print 180
+    print(*pointers[1]); // Should print 150
+    print(fst pairs[0]); // Should print 180
+    print(numbers[2]);   // Should print 100
+}

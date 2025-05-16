@@ -22,7 +22,8 @@ public class PointerType implements Type {
 	}
 
 	public Type getPointedType() {
-		return this.element;
+		Type elementTrueType = NamedType.toBaseType(this.element);
+		return elementTrueType;
 	}
 
 	/*

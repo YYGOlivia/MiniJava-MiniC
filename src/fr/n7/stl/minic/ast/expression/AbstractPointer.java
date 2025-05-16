@@ -2,6 +2,8 @@ package fr.n7.stl.minic.ast.expression;
 
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
+import fr.n7.stl.minic.ast.type.AtomicType;
+import fr.n7.stl.minic.ast.type.NamedType;
 import fr.n7.stl.minic.ast.type.PointerType;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.util.Logger;
@@ -73,12 +75,12 @@ public abstract class AbstractPointer<PointerKind extends Expression> implements
 	 */
 	@Override
 	public Type getType() {
-		if (pointer.getType() instanceof PointerType) {
-			PointerType ptrType = ((PointerType) pointer.getType());
-			return ptrType.getPointedType();
+		Type ptrTrueType = NamedType.getTrueType(pointer);
+		if (!(ptrTrueType instanceof PointerType)) {
+			return AtomicType.ErrorType;
 		}
-		Logger.error("[AbstractPointer] " + pointer.getType() + " is not a PointerType");
-		return pointer.getType();
+		PointerType ptrType = ((PointerType) ptrTrueType);
+		return ptrType.getPointedType();
 	}
 
 }

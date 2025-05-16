@@ -1,0 +1,34 @@
+;int n = 10;
+;
+PUSH 1
+LOADL 10
+STORE (1) 0[SB]
+;int r = 1;
+;
+PUSH 1
+LOADL 1
+STORE (1) 1[SB]
+debut_boucle_16
+LOAD (1) 0[SB]
+LOADL 0
+SUBR IGtr
+JUMPIF (0) fin_boucle_16
+; r  = (r * n);
+;
+LOAD (1) 1[SB]
+LOAD (1) 0[SB]
+SUBR IMul
+STORE (1) 1[SB]
+; n  = (n - 1);
+;
+LOAD (1) 0[SB]
+LOADL 1
+SUBR ISub
+STORE (1) 0[SB]
+JUMP debut_boucle_16
+fin_boucle_16
+;print n;
+LOAD (1) 0[SB]
+SUBR IOut
+HALT
+

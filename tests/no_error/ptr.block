@@ -1,0 +1,13 @@
+test
+{
+    int a = 1;
+    int b = 2;
+    int c = 3;
+
+    int *ptra = &a;
+    int *ptrb = &b;
+    int *ptrc = &c;
+
+    int *ptrArray[] = {ptra, ptrb, ptrc};
+    int **ptrToPtrArray= &ptrArray[0];
+}

@@ -1,0 +1,14 @@
+;< int, int> p = { 3 ,4 };
+;
+PUSH 2
+LOADL 3
+LOADL 4
+STORE (2) 0[SB]
+;int k = (fstp);
+;
+PUSH 1
+LOAD (2) 0[SB]
+POP (0) 1
+STORE (1) 2[SB]
+HALT
+

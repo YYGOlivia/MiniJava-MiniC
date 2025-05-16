@@ -15,15 +15,15 @@ public class TestRunner {
     private static boolean generateCode;
 
     public static void main(String[] args) {
-        if (args.length > 0) {
-            if (args[0].equals("-v") || args[0].equals("--verify")) {
-                System.out.println("Running in verification mode...");
-                generateCode = false;
-            } else {
-                System.out.println("Running in compilation mode...");
-                generateCode = true;
-            }
+        if (args.length > 0 &&
+                (args[0].equals("-v") || args[0].equals("--verify"))) {
+            System.out.println("Running in verification mode...");
+            generateCode = false;
+        } else {
+            System.out.println("Running in compilation mode...");
+            generateCode = true;
         }
+
         try {
             int totalTests = 0;
             int passedTests = 0;

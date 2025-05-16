@@ -1,0 +1,12 @@
+;(boolean *) p = new boolean;
+;
+PUSH 1
+LOADL 1
+SUBR MAlloc
+STORE (1) 0[SB]
+LOAD (1) 0[SB]
+LOADI (1)
+JUMPIF (0) fin_conditionnelle_30
+fin_conditionnelle_30
+HALT
+

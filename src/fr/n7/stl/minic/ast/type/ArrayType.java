@@ -100,7 +100,6 @@ public class ArrayType implements Type {
 	 * @return Type of the elements in the array.
 	 */
 	public Type getType() {
-		Logger.warning("[ArrayType] getType -> " + this.element);
 		return this.element;
 	}
 

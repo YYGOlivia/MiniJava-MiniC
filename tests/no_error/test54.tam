@@ -1,0 +1,13 @@
+;(int *) p = new int;
+;
+PUSH 1
+LOADL 1
+SUBR MAlloc
+STORE (1) 0[SB]
+;(*p) = 2;
+;
+LOADL 2
+LOAD (1) 0[SB]
+STOREI (1)
+HALT
+

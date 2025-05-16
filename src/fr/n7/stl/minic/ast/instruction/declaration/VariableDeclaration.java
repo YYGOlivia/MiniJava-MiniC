@@ -174,14 +174,14 @@ public class VariableDeclaration implements Declaration, Instruction {
 		// Type valueType = value.getType();
 		Type valueTrueType = NamedType.getTrueType(value);
 		Type thisTrueType = NamedType.getTrueType(this);
-		if (valueTrueType.compatibleWith(thisTrueType)) {
-			return true;
+		if (!valueTrueType.compatibleWith(thisTrueType)) {
+			Logger.error(
+					"[VariableDeclaration] The type " + valueTrueType
+							+ " is not compatible with the declared type of " + name + " ("
+							+ thisTrueType + ").");
+			return false;
 		}
-		Logger.error(
-				"[VariableDeclaration] The type " + valueTrueType
-						+ " is not compatible with the declared type of " + name + " ("
-						+ this.type + ").");
-		return false;
+		return true;
 
 	}
 
