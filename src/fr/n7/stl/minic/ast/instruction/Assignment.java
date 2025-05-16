@@ -137,7 +137,7 @@ public class Assignment implements Instruction, Expression {
 		Fragment fragment = _factory.createFragment();
 		fragment.append(value.getCode(_factory));
 		fragment.append(assignable.getCode(_factory));
-		fragment.addComment(toString());
+		//fragment.addComment(toString());
 		return fragment;
 	}
 

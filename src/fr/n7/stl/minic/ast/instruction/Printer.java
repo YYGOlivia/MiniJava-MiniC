@@ -128,7 +128,7 @@ public class Printer implements Instruction {
 			}
 		}
 		
-		fragment.addComment(toString().strip());
+		//fragment.addComment(toString().strip());
 		return fragment;
 	}
 
