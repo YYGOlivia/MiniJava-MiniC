@@ -1,0 +1,73 @@
+test
+{
+    // dypedef atomiques
+    typedef int Integer;
+    typedef Integer Number;
+    typedef boolean Flag;
+    typedef float Real;
+
+    // typdef tableaux
+    typedef int NumberArray[];
+    typedef Real RealArray[];
+    typedef boolean FlagArray[];
+    typedef RealArray RealMatrix[];
+
+    // typdedef couples
+    typedef<int, boolean> NumberFlag;
+    typedef<Real, NumberFlag> ComplexPair;
+    typedef<NumberFlag, Integer> DataPair;
+
+    typedef <RealMatrix, RealArray> MatrixPair;
+
+    // Basic variables using renamed types
+    Integer count = 42;
+    Flag isValid = true;
+    Real pi = 3.14;
+
+    int arr[] = new int[5];
+    // int arr2[][] = new int[5][2];
+
+    RealMatrix *matrix = new RealMatrix();
+
+    RealMatrix matrix1 = new RealMatrix[2][3];
+    matrix1[0][0] = 1.0;
+    matrix1 = *matrix;
+
+    RealArray matrix2[] = new RealArray[2];
+    float matrix3[][] = new RealMatrix[2][3];
+
+    // Array declarations with proper initialization
+    NumberArray numbers = new int[5];
+    RealArray points = new float[3];
+    FlagArray flags = new boolean[2];
+
+    // Array assignments
+    numbers[0] = count;
+    points[0] = pi;
+    flags[0] = isValid;
+
+    // Couple declarations and assignments
+    NumberFlag pair1 = <10, true>;
+    ComplexPair pair2 = <3.14, <20, false>>;
+    DataPair pair3 = << 30, true >, 40 > ;
+
+    // Accessing couple elements
+    Integer num = fst pair1;
+    Flag bool = snd pair1;
+
+    // Nested couple access
+    Real value = fst pair2;
+    Flag nested = snd snd pair2;
+
+    // Mixed assignments between arrays and couples
+    numbers[1] = fst pair1;
+    points[1] = fst pair2;
+    flags[1] = snd fst pair3;
+
+    // Print some values to verify
+    print(num);
+    print(bool);
+    print(numbers[0]);
+    print(points[1]);
+    print(nested);
+}

@@ -105,13 +105,11 @@ public class Assignment implements Instruction, Expression {
 	 */
 	@Override
 	public boolean checkType() {
-		Type valueType = this.value.getType();
-		Type valueTrueType = (valueType instanceof NamedType) ? ((NamedType) valueType).getType() : valueType;
-		Type assType = this.assignable.getType();
-		Type assTrueType = (assType instanceof NamedType) ? ((NamedType) assType).getType() : assType;
+		Type valueTrueType = NamedType.getTrueType(value);
+		Type assTrueType = NamedType.getTrueType(assignable);
 		if (!valueTrueType.compatibleWith(assTrueType)) {
 			Logger.error(
-					"[Assignment] Type mismatch: cannot assign " + valueType + " to " + assType);
+					"[Assignment] Type mismatch: cannot assign " + value.getType() + " to " + assignable.getType());
 			return false;
 		}
 		return true;

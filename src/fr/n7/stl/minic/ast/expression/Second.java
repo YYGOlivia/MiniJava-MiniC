@@ -7,9 +7,11 @@ import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.CoupleType;
+import fr.n7.stl.minic.ast.type.NamedType;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
+import fr.n7.stl.util.Logger;
 
 /**
  * Implementation of the Abstract Syntax Tree node for an expression extracting
@@ -53,7 +55,7 @@ public class Second implements AccessibleExpression {
 	 */
 	@Override
 	public Type getType() {
-		Type targetType = target.getType();
+		Type targetType = NamedType.getTrueType(target);
 		return ((CoupleType) targetType).getSecond();
 	}
 
@@ -66,8 +68,13 @@ public class Second implements AccessibleExpression {
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		return target.collectAndPartialResolve(_scope);
-
+		boolean okTarget = this.target.collectAndPartialResolve(_scope);
+		Type targetTrueType = NamedType.getTrueType(target);
+		if (!(targetTrueType instanceof CoupleType)) {
+			Logger.error("[Second] " + target + " should be a couple type (is " + target.getType() + ").");
+			return false;
+		}
+		return okTarget;
 	}
 
 	/*
@@ -79,7 +86,13 @@ public class Second implements AccessibleExpression {
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		return target.completeResolve(_scope);
+		boolean okTarget = this.target.completeResolve(_scope);
+		Type targetTrueType = NamedType.getTrueType(target);
+		if (!(targetTrueType instanceof CoupleType)) {
+			Logger.error("[Second] " + target + " should be a couple type (is " + target.getType() + ").");
+			return false;
+		}
+		return okTarget;
 	}
 
 	/*

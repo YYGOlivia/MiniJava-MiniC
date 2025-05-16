@@ -5,6 +5,7 @@ package fr.n7.stl.minic.ast.type;
 
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
+import fr.n7.stl.util.Logger;
 
 /**
  * @author Marc Pantel
@@ -14,8 +15,8 @@ public class ArrayType implements Type {
 
 	protected Type element;
 
-	public ArrayType(Type _element) {
-		this.element = _element;
+	public ArrayType(Type element) {
+		this.element = element;
 	}
 
 	/*
@@ -87,13 +88,19 @@ public class ArrayType implements Type {
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		return this.element.completeResolve(_scope);
+		boolean okElement = this.element.completeResolve(_scope);
+		if (element instanceof NamedType) {
+			NamedType namedType = (NamedType) element;
+			this.element = namedType.getType();
+		}
+		return okElement;
 	}
 
 	/**
 	 * @return Type of the elements in the array.
 	 */
 	public Type getType() {
+		Logger.warning("[ArrayType] getType -> " + this.element);
 		return this.element;
 	}
 

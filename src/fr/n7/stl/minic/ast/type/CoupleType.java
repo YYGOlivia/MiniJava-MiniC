@@ -121,6 +121,8 @@ public class CoupleType implements Type {
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
 		boolean _first = this.first.completeResolve(_scope);
 		boolean _second = this.second.completeResolve(_scope);
+		this.first = NamedType.toBaseType(first);
+		this.second = NamedType.toBaseType(second);
 		return _first && _second;
 	}
 

@@ -1,5 +1,7 @@
 package fr.n7.stl.minic.ast.expression;
 
+import org.stringtemplate.v4.compiler.STParser.ifstat_return;
+
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
@@ -66,8 +68,7 @@ public abstract class AbstractArray<ArrayKind extends Expression> implements Exp
 		boolean okArray = this.array.collectAndPartialResolve(_scope);
 		boolean okIndex = this.index.collectAndPartialResolve(_scope);
 
-		Type arrayType = array.getType();
-		Type arrayTrueType = arrayType instanceof NamedType ? ((NamedType) arrayType).getType() : arrayType;
+		Type arrayTrueType =  NamedType.getTrueType(array);
 
 		if (!(arrayTrueType instanceof ArrayType)) {
 			Logger.error("[AbstractArray] " + array + " should be array type (is " + array.getType() + ").");
@@ -87,8 +88,7 @@ public abstract class AbstractArray<ArrayKind extends Expression> implements Exp
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
 		boolean okArray = this.array.completeResolve(_scope);
 		boolean okIndex = this.index.completeResolve(_scope);
-		Type arrayType = array.getType();
-		Type arrayTrueType = arrayType instanceof NamedType ? ((NamedType) arrayType).getType() : arrayType;
+		Type arrayTrueType = NamedType.getTrueType(array);
 
 		if (!(arrayTrueType instanceof ArrayType)) {
 			Logger.error("[AbstractArray] " + array + " should be array type (is " + array.getType() + ").");
@@ -103,11 +103,12 @@ public abstract class AbstractArray<ArrayKind extends Expression> implements Exp
 	 * @return Synthesized Type of the expression.
 	 */
 	public Type getType() {
-		if (!(array.getType() instanceof ArrayType)) {
+		Type arrayTrueType = NamedType.getTrueType(array);
+		if (!(arrayTrueType instanceof ArrayType)) {
+			Logger.warning("[AbstractArray] aïe aïe aïe");
 			return AtomicType.ErrorType;
 		}
-		ArrayType arrayType = (ArrayType) array.getType();
-		return arrayType.getType();
+		return ((ArrayType) arrayTrueType).getType();
 	}
 
 }

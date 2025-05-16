@@ -2,6 +2,6 @@ test
 {
     typedef int IntArray[];
     IntArray arr = new int[2];
-    // int a = arr[0];
+    int a = arr[0];
     arr[0] = 1;
 }
