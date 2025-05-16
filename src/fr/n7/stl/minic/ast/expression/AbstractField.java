@@ -2,6 +2,7 @@ package fr.n7.stl.minic.ast.expression;
 
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
+import fr.n7.stl.minic.ast.type.NamedType;
 import fr.n7.stl.minic.ast.type.RecordType;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.minic.ast.type.declaration.FieldDeclaration;
@@ -55,13 +56,14 @@ public abstract class AbstractField<RecordKind extends Expression> implements Ex
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
 		boolean okRecord = this.record.collectAndPartialResolve(_scope);
 		boolean okRecordType = this.record.getType().completeResolve(_scope);
+		Type recordTrueType = NamedType.getTrueType(record);
 
-		if (!(this.record.getType() instanceof RecordType)) {
+		if (!(recordTrueType instanceof RecordType)) {
 			Logger.error("[AbstractField] " + this.record.toString() + " is not a record type.");
 			return false;
 		}
 
-		RecordType recordType = (RecordType) this.record.getType();
+		RecordType recordType = (RecordType) recordTrueType;
 		field = recordType.get(this.name);
 		if (field == null) {
 			Logger.error("[AbstractField] " + this.name + " is not a field of record type " + recordType.getName());
@@ -79,7 +81,8 @@ public abstract class AbstractField<RecordKind extends Expression> implements Ex
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		if (!(this.record.getType() instanceof RecordType)) {
+		Type recordTrueType = NamedType.getTrueType(record);
+		if (!(recordTrueType instanceof RecordType)) {
 			Logger.error("[AbstractField] " + this.record.toString() + " is not a record type.");
 			return false;
 		}
@@ -87,7 +90,7 @@ public abstract class AbstractField<RecordKind extends Expression> implements Ex
 		boolean okRecord = this.record.completeResolve(_scope);
 		boolean okRecordType = this.record.getType().completeResolve(_scope);
 
-		RecordType recordType = (RecordType) this.record.getType();
+		RecordType recordType = (RecordType) recordTrueType;
 		field = recordType.get(this.name);
 		if (field == null) {
 			Logger.error("[AbstractField] " + this.name + " is not a field of record type " + recordType.getName());
