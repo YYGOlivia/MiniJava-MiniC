@@ -1,0 +1,9 @@
+Groupe,         L12-8,       ,       ,        ,     ,
+,               Gestion TdS, Typage, Mémoire, Code, Code lecture, Code écriture
+Expressions,    OK,          OK,     OK,      ?,    ?,            ?
+Instructions,   OK,          OK,     OK,      OK,   OK,           OK
+Paire,          OK,          OK,     OK,      OK,   OK,           OK
+Tableau,        OK,          OK,     OK,      OK,   OK,           OK
+Pointeur,       OK,          OK,     OK,      OK,   OK,           OK
+Enregistrement, OK,          OK,     ?,       ?,    ?,            ?
+Fonction,       OK,          OK,     OK,      Ok,   OK,           OK
