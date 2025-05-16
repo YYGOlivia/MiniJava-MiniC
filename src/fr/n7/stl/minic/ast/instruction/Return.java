@@ -119,7 +119,7 @@ public class Return implements Instruction {
 				.reduce(0, Integer::sum); // taille à remplacer (on oublie les paramètres)
 		fragment.add(_factory.createReturn(keep, remove));
 
-		fragment.addComment(toString());
+		fragment.addComment("Return in function");
 		return fragment;
 	}
 }

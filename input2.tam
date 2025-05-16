@@ -1,0 +1,12 @@
+;int v = 8;
+;
+PUSH 1
+LOADL 8
+STORE (1) 0[SB]
+;(int *) ptr = &  v ;
+;
+PUSH 1
+LOADA 0[SB]
+STORE (1) 1[SB]
+HALT
+

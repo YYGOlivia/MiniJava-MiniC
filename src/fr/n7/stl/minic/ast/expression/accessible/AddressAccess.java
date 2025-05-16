@@ -3,15 +3,16 @@
  */
 package fr.n7.stl.minic.ast.expression.accessible;
 
-import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.assignable.AssignableExpression;
 import fr.n7.stl.minic.ast.expression.assignable.VariableAssignment;
+import fr.n7.stl.minic.ast.instruction.declaration.VariableDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.PointerType;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
+import fr.n7.stl.util.Logger;
 
 /**
  * Implementation of the Abstract Syntax Tree node for accessing an expression
@@ -54,7 +55,11 @@ public class AddressAccess implements AccessibleExpression {
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		return assignable.completeResolve(_scope);
+		boolean okAssign = assignable.completeResolve(_scope);
+		if (!(assignable instanceof VariableAssignment)){
+			Logger.error("[AddressAccess] " + assignable.toString() + " should be a VariableAssignement");
+		}
+		return okAssign;
 	}
 
 	/*
@@ -77,22 +82,9 @@ public class AddressAccess implements AccessibleExpression {
 		Fragment fragment = _factory.createFragment();
 
 		VariableAssignment elem = (VariableAssignment) assignable;
-		
-		
-		// if (access instanceof ParameterAccess){
-		// 	ParameterAccess paramAccess = (ParameterAccess) access;
-		// 	ParameterDeclaration declaration  = (ParameterDeclaration) paramAccess.getDeclaration();
-		// 	fragment.add(_factory.createLoadA(Register.LB, declaration.getOffset()));
-		// }else if (access instanceof VariableAccess){
-		// 	VariableAccess varAccess = (VariableAccess) access;
-		// 	VariableDeclaration declaration  = (VariableDeclaration) varAccess.getDeclaration();
-		// 	fragment.add(_factory.createLoadA(declaration.getRegister(), declaration.getOffset()));
-		// }else{
-		// 	//Should not happend 
-		// 	Logger.error("[AddressAccess] A constant does not have an address");
-		// }
-		//return fragment;
-		throw new SemanticsUndefinedException("Semantics getCode is undefined in AddressAccess.");
+		VariableDeclaration declaration  = (VariableDeclaration) elem.getDeclaration();
+		fragment.add(_factory.createLoadA(declaration.getRegister(), declaration.getOffset()));
+		return fragment;
 	}
 
 }
