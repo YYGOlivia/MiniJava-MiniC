@@ -133,4 +133,18 @@
 		</java>
 	</target>
 
+	<!-- Vérifier le code du fichier donné sans générer le code TAM -->
+	<target name="j-verify" depends="compile">
+		<java classname="fr.n7.stl.minijava.Driver" failonerror="true">
+			<classpath>
+				<pathelement location="${classes}" />
+				<pathelement location="${tools}/commons-lang3-3.7.jar" />
+				<pathelement location="${tools}/commons-text-1.2.jar" />
+				<pathelement location="${tools}/antlr-4.13.1-complete.jar" />
+			</classpath>
+			<arg value="--verify" />
+			<arg value="${file}" />
+		</java>
+	</target>
+
 </project>

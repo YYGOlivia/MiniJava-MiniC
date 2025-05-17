@@ -33,7 +33,7 @@ public class Driver {
         for (String name : files) {
             String fname = name.split("\\.")[0];
             try {
-                CharStream input = CharStreams.fromFileName(fname);
+                CharStream input = CharStreams.fromFileName(name);
                 ParsingErrorListener errorListener = new ParsingErrorListener();
                 MiniJavaLexer lexer = new MiniJavaLexer(input);
                 lexer.addErrorListener(errorListener);

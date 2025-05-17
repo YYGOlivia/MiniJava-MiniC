@@ -25,6 +25,7 @@ Retour: 'return';
 DefinitionConstante: 'final';
 DefinitionClasse: 'class';
 Nouveau: 'new';
+Ceci: 'this';
 
 // Operateurs
 Asterisque: '*';
@@ -37,10 +38,10 @@ DoubleBarre: '||';
 DoubleEsperluette: '&&';
 PointExclamation: '!';
 // Operateurs de comparaison
-Inferieur: '<';
-Superieur: '>';
-InferieurEgal: '<=';
-SuperieurEgal: '>=';
+Inf: '<';
+Sup: '>';
+InfEg: '<=';
+SupEg: '>=';
 DoubleEgal: '==';
 ExclamationEgal: '!=';
 Esperluette: '&';
@@ -58,7 +59,7 @@ Nul: 'null';
 Caractere: '\'' . '\'';
 Chaine: '"' .*? '"';
 
-// visibilités
+// modificateurs d'accès
 Publique: 'public';
 Prive: 'private';
 Statique: 'static';

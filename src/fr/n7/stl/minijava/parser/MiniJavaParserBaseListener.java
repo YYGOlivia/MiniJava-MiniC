@@ -31,13 +31,13 @@ public class MiniJavaParserBaseListener implements MiniJavaParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBlock(MiniJavaParser.BlockContext ctx) { }
+	@Override public void enterBloc(MiniJavaParser.BlocContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitBlock(MiniJavaParser.BlockContext ctx) { }
+	@Override public void exitBloc(MiniJavaParser.BlocContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -79,6 +79,18 @@ public class MiniJavaParserBaseListener implements MiniJavaParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterConstructeur(MiniJavaParser.ConstructeurContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitConstructeur(MiniJavaParser.ConstructeurContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterMethode(MiniJavaParser.MethodeContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -115,18 +127,6 @@ public class MiniJavaParserBaseListener implements MiniJavaParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpressionBinaire(MiniJavaParser.ExpressionBinaireContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitExpressionBinaire(MiniJavaParser.ExpressionBinaireContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterExpression(MiniJavaParser.ExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -134,18 +134,6 @@ public class MiniJavaParserBaseListener implements MiniJavaParserListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitExpression(MiniJavaParser.ExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterAtomique(MiniJavaParser.AtomiqueContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitAtomique(MiniJavaParser.AtomiqueContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -175,13 +163,37 @@ public class MiniJavaParserBaseListener implements MiniJavaParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVisibilites(MiniJavaParser.VisibilitesContext ctx) { }
+	@Override public void enterAtomique(MiniJavaParser.AtomiqueContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVisibilites(MiniJavaParser.VisibilitesContext ctx) { }
+	@Override public void exitAtomique(MiniJavaParser.AtomiqueContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterModificateur(MiniJavaParser.ModificateurContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitModificateur(MiniJavaParser.ModificateurContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExpressionConstante(MiniJavaParser.ExpressionConstanteContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExpressionConstante(MiniJavaParser.ExpressionConstanteContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

@@ -4,14 +4,19 @@
 
 ### Java
 
-- `ant generate` : génère le parser ANTLR depuis les fichiers .g4
 - `ant compile` : compile le projet Java
 - `ant clean` : supprime les fichiers générés et les fichiers .tam
 
 ### MiniC
 
+- `ant generate` : génère le parser ANTLR depuis les fichiers .g4
 - `ant verify -Dfile=program.c` : vérifie la syntaxe et la sémantique du fichier sans générer de code TAM
 - `ant compile-tam -Dfile=program.c` : compile le fichier MiniC vers du code TAM
+
+## MiniJava
+
+- `ant j-generate` : génère le parser ANTLR depuis les fichiers .g4
+- `ant j-verify -Dfile=program.java` : vérifie la syntaxe et la sémantique du fichier sans générer de code TAM
 
 ### TAM
 

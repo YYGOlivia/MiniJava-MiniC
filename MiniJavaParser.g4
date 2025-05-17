@@ -7,48 +7,74 @@ options {
     package fr.n7.stl.minijava.parser;
 }
 
-programme: classes += classe*;
+programme:
+	(classes += classe)* // class A {...} class B {...}
+	mainBlock = bloc; // { A a = new A(); ... }
 
-block:
+bloc:
 	AccoladeOuvrante instructions += instruction* AccoladeFermante;
 
 classe:
 	// class ident {bloc}
 	DefinitionClasse nom = Identificateur AccoladeOuvrante membres += membre* AccoladeFermante;
 
-membre: visibilites (methode | attribut);
+membre:
+	attribut // private int a;
+	| constructeur // public A() { this.a = 0; }
+	| methode; // public int getA() { return this.a; }
 
-attribut: type identifiant PointVirgule;
+attribut:
+	// private int a;
+	modificateur type identifiant PointVirgule;
+
+constructeur:
+	// public A() {...}
+	modificateur nom = Identificateur ParentheseOuvrante parametres ParentheseFermante block = bloc;
 
 methode:
-	nom = Identificateur ParentheseOuvrante parametres ParentheseFermante bloc = block;
+	// public int getA() {...}
+	modificateur type nom = Identificateur ParentheseOuvrante parametres ParentheseFermante block =
+		bloc;
 
 parametres:
-	type identifiant (
+	/* vide */
+	| type identifiant (
 		Virgule suiteType += type suiteIdent += identifiant
 	)*;
 
 instruction:
 	// if(cond){instructions}
-	Si ParentheseOuvrante expression ParentheseFermante alors = block
+	Si ParentheseOuvrante expression ParentheseFermante alors = bloc
 	// if(cond){instructions} else{instructions}
-	| Si ParentheseOuvrante expression ParentheseFermante alors = block Sinon sinon = block
+	| Si ParentheseOuvrante expression ParentheseFermante alors = bloc Sinon sinon = bloc
 	// while(cond){instructions}
-	| TantQue ParentheseOuvrante expression ParentheseFermante body = block;
-
-expressionBinaire:
-	gauche = expression op = (Asterisque | Oblique | PourCent) droite = expression
-	| gauche = expression op = (Plus | Moins) droite = expression
-	| gauche = expression op = (
-		Inferieur
-		| Superieur
-		| InferieurEgal
-		| SuperieurEgal
-	) droite = expression;
+	| TantQue ParentheseOuvrante expression ParentheseFermante body = bloc
+	// for (instr, cond, instr) {...}
+	| Pour ParentheseOuvrante instruction PointVirgule expression PointVirgule instruction
+		ParentheseFermante body = bloc
+	| Pour ParentheseOuvrante type identifiant DeuxPoint expression ParentheseFermante body = bloc;
 
 expression:
-	// (expression)
-	ParentheseOuvrante expression ParentheseFermante;
+	ParentheseOuvrante expression ParentheseFermante // (expr)
+	| expression Point Identificateur // expr.id
+	| expression CrochetOuvrant expression CrochetFermant // expr[expr]
+	| Moins expression // -expr
+	| gauche = expression op = (Asterisque | Oblique | PourCent) droite = expression // expr * expr
+	| gauche = expression op = (Plus | Moins) droite = expression // expr + expr
+	| gauche = expression op = (Inf | Sup | InfEg | SupEg) droite = expression // expr < expr
+	| gauche = expression op = (DoubleEgal | ExclamationEgal) droite = expression // expr == expr
+	| AccoladeOuvrante expression AccoladeFermante // {expr}
+	| expression PointInterrogation expression DeuxPoint expression // expr ? expr : expr
+	| expressionConstante; // true | false | null ...
+
+type:
+	atomique
+	| identifiant
+	| type CrochetOuvrant CrochetFermant;
+
+identifiant:
+	Identificateur // ident
+	| ParentheseOuvrante identifiant ParentheseFermante; // (ident)
 
 atomique:
 	TypeEntier
@@ -58,12 +84,15 @@ atomique:
 	| TypeChaine
 	| TypeVide;
 
-type: atomique | identifiant;
+modificateur: Publique | Prive | Statique;
 
-identifiant:
-	Identificateur // ident
-	| identifiant CrochetOuvrant CrochetFermant // ident[]
-	| Asterisque identifiant // *ident
-	| ParentheseOuvrante identifiant ParentheseFermante; // (ident)
-
-visibilites: Publique | Prive | Statique;
+expressionConstante:
+	Vrai
+	| Faux
+	| Nul
+	| Entier
+	| Flottant
+	| Caractere
+	| Chaine
+	| Nul
+	| Identificateur;

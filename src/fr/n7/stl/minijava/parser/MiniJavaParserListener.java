@@ -20,15 +20,15 @@ public interface MiniJavaParserListener extends ParseTreeListener {
 	 */
 	void exitProgramme(MiniJavaParser.ProgrammeContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MiniJavaParser#block}.
+	 * Enter a parse tree produced by {@link MiniJavaParser#bloc}.
 	 * @param ctx the parse tree
 	 */
-	void enterBlock(MiniJavaParser.BlockContext ctx);
+	void enterBloc(MiniJavaParser.BlocContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MiniJavaParser#block}.
+	 * Exit a parse tree produced by {@link MiniJavaParser#bloc}.
 	 * @param ctx the parse tree
 	 */
-	void exitBlock(MiniJavaParser.BlockContext ctx);
+	void exitBloc(MiniJavaParser.BlocContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MiniJavaParser#classe}.
 	 * @param ctx the parse tree
@@ -60,6 +60,16 @@ public interface MiniJavaParserListener extends ParseTreeListener {
 	 */
 	void exitAttribut(MiniJavaParser.AttributContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link MiniJavaParser#constructeur}.
+	 * @param ctx the parse tree
+	 */
+	void enterConstructeur(MiniJavaParser.ConstructeurContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MiniJavaParser#constructeur}.
+	 * @param ctx the parse tree
+	 */
+	void exitConstructeur(MiniJavaParser.ConstructeurContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link MiniJavaParser#methode}.
 	 * @param ctx the parse tree
 	 */
@@ -90,16 +100,6 @@ public interface MiniJavaParserListener extends ParseTreeListener {
 	 */
 	void exitInstruction(MiniJavaParser.InstructionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MiniJavaParser#expressionBinaire}.
-	 * @param ctx the parse tree
-	 */
-	void enterExpressionBinaire(MiniJavaParser.ExpressionBinaireContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link MiniJavaParser#expressionBinaire}.
-	 * @param ctx the parse tree
-	 */
-	void exitExpressionBinaire(MiniJavaParser.ExpressionBinaireContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link MiniJavaParser#expression}.
 	 * @param ctx the parse tree
 	 */
@@ -109,16 +109,6 @@ public interface MiniJavaParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitExpression(MiniJavaParser.ExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link MiniJavaParser#atomique}.
-	 * @param ctx the parse tree
-	 */
-	void enterAtomique(MiniJavaParser.AtomiqueContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link MiniJavaParser#atomique}.
-	 * @param ctx the parse tree
-	 */
-	void exitAtomique(MiniJavaParser.AtomiqueContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MiniJavaParser#type}.
 	 * @param ctx the parse tree
@@ -140,13 +130,33 @@ public interface MiniJavaParserListener extends ParseTreeListener {
 	 */
 	void exitIdentifiant(MiniJavaParser.IdentifiantContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link MiniJavaParser#visibilites}.
+	 * Enter a parse tree produced by {@link MiniJavaParser#atomique}.
 	 * @param ctx the parse tree
 	 */
-	void enterVisibilites(MiniJavaParser.VisibilitesContext ctx);
+	void enterAtomique(MiniJavaParser.AtomiqueContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link MiniJavaParser#visibilites}.
+	 * Exit a parse tree produced by {@link MiniJavaParser#atomique}.
 	 * @param ctx the parse tree
 	 */
-	void exitVisibilites(MiniJavaParser.VisibilitesContext ctx);
+	void exitAtomique(MiniJavaParser.AtomiqueContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MiniJavaParser#modificateur}.
+	 * @param ctx the parse tree
+	 */
+	void enterModificateur(MiniJavaParser.ModificateurContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MiniJavaParser#modificateur}.
+	 * @param ctx the parse tree
+	 */
+	void exitModificateur(MiniJavaParser.ModificateurContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MiniJavaParser#expressionConstante}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpressionConstante(MiniJavaParser.ExpressionConstanteContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MiniJavaParser#expressionConstante}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpressionConstante(MiniJavaParser.ExpressionConstanteContext ctx);
 }

@@ -1,0 +1,26 @@
+class A {
+    // attribut + get + set
+    private int a;
+    public int getA() { if(true){}}
+    private void setA(int a) {}
+
+    // attribut type complexe + set + get
+    private int[] tab;
+    private int[] getTab(){}
+    private void setTab(int[] tab){}
+
+    // constructeur
+    public A(){}
+}
+class B {}
+
+{
+    // if-else
+    if (true ? "a" : "b") {} else {}
+
+    // while
+    while (1 + 2) {}
+
+    // foreach
+    for (int a : b) {}
+}
