@@ -7,17 +7,28 @@ options {
     package fr.n7.stl.minijava.parser;
 }
 
-block
-	returns[Block b]:
+programme: classes += classe*;
+
+block:
 	AccoladeOuvrante instructions += instruction* AccoladeFermante;
 
-classe
-	returns[ClassDeclaration c]:
+classe:
 	// class ident {bloc}
-	DefinitionClasse bloc = block;
+	DefinitionClasse nom = Identificateur AccoladeOuvrante membres += membre* AccoladeFermante;
 
-instruction
-	returns[Instruction i]:
+membre: visibilites (methode | attribut);
+
+attribut: type identifiant PointVirgule;
+
+methode:
+	nom = Identificateur ParentheseOuvrante parametres ParentheseFermante bloc = block;
+
+parametres:
+	type identifiant (
+		Virgule suiteType += type suiteIdent += identifiant
+	)*;
+
+instruction:
 	// if(cond){instructions}
 	Si ParentheseOuvrante expression ParentheseFermante alors = block
 	// if(cond){instructions} else{instructions}
@@ -25,19 +36,21 @@ instruction
 	// while(cond){instructions}
 	| TantQue ParentheseOuvrante expression ParentheseFermante body = block;
 
-expressionBinaire
-	returns[Expression e]:
+expressionBinaire:
 	gauche = expression op = (Asterisque | Oblique | PourCent) droite = expression
 	| gauche = expression op = (Plus | Moins) droite = expression
-	| gauche = expression op = (Inferieur | Superieur | InferieurEgal | SuperieurEgal) droite=expression;
+	| gauche = expression op = (
+		Inferieur
+		| Superieur
+		| InferieurEgal
+		| SuperieurEgal
+	) droite = expression;
 
-expression
-	returns[Expression e]:
+expression:
 	// (expression)
 	ParentheseOuvrante expression ParentheseFermante;
 
-atomique
-	returns[AtomicType t]:
+atomique:
 	TypeEntier
 	| TypeFlottant
 	| TypeBooleen
@@ -45,9 +58,12 @@ atomique
 	| TypeChaine
 	| TypeVide;
 
-identifiant
-	returns[fr.n7.stl.util.Pair<String, PartialType> id]:
+type: atomique | identifiant;
+
+identifiant:
 	Identificateur // ident
 	| identifiant CrochetOuvrant CrochetFermant // ident[]
 	| Asterisque identifiant // *ident
 	| ParentheseOuvrante identifiant ParentheseFermante; // (ident)
+
+visibilites: Publique | Prive | Statique;

@@ -5,6 +5,7 @@
     },
     "files.associations": {
         "*.tam": "lisp",
-        "*.block": "c"
+        "*.block": "c",
+        "*.mj": "java"
     }
 }

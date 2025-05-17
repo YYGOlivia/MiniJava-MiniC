@@ -58,6 +58,7 @@ Nul: 'null';
 Caractere: '\'' . '\'';
 Chaine: '"' .*? '"';
 
+// visibilités
 Publique: 'public';
 Prive: 'private';
 Statique: 'static';

@@ -13,6 +13,46 @@
 		<files includes="${tools}/antlr-4.13.1-complete.jar" />
 	</path>
 
+	<!-- - - - - - - - - - - -->
+	<!-- Commandes globales  -->
+	<!-- - - - - - - - - - - -->
+
+	<!-- Compiler le code java -->
+	<target name="compile">
+		<mkdir dir="${classes}" />
+		<mkdir dir="${result}" />
+		<javac includeantruntime="false" srcdir="${java}" destdir="${classes}" failonerror="true">
+			<classpath refid="libraries" />
+		</javac>
+	</target>
+
+	<!-- Lancer le code TAM -->
+	<target name="runtam">
+		<java jar="${tools}/runtam.jar" fork="true" failonerror="true">
+			<arg value="${file}" />
+		</java>
+	</target>
+
+	<!-- Lancer la machine TAM avec interface -->
+	<target name="itam">
+		<java jar="${tools}/itam.jar" fork="true" failonerror="true">
+			<jvmarg value="--module-path" />
+			<jvmarg value="${env.PATH_TO_FX}" />
+			<jvmarg value="--add-modules" />
+			<jvmarg value="javafx.controls,javafx.fxml" />
+		</java>
+	</target>
+
+	<!-- Nettoyer les fichiers générés -->
+	<target name="clean">
+		<delete dir="${classes}" />
+		<delete dir="${result}" />
+	</target>
+
+	<!-- - - - -->
+	<!-- MiniC -->
+	<!-- - - - -->
+
 	<!-- Générer le code Java à partir des grammaires ANTLR -->
 	<target name="generate">
 		<mkdir dir="${java}/fr/n7/stl/minic/parser" />
@@ -23,15 +63,6 @@
 			<arg value="MiniCLexer.g4" />
 			<arg value="MiniCParser.g4" />
 		</java>
-	</target>
-
-	<!-- Compiler le code java -->
-	<target name="compile">
-		<mkdir dir="${classes}" />
-		<mkdir dir="${result}" />
-		<javac includeantruntime="false" srcdir="${java}" destdir="${classes}" failonerror="true">
-			<classpath refid="libraries" />
-		</javac>
 	</target>
 
 	<!-- Vérifier le code du fichier donné sans générer le code TAM -->
@@ -86,26 +117,20 @@
 		</java>
 	</target>
 
-	<!-- Lancer le code TAM -->
-	<target name="runtam">
-		<java jar="${tools}/runtam.jar" fork="true" failonerror="true">
-			<arg value="${file}" />
+	<!-- - - - -  -->
+	<!-- miniJava -->
+	<!-- - - - -  -->
+
+	<!-- Générer le code Java à partir des grammaires ANTLR -->
+	<target name="j-generate">
+		<mkdir dir="${java}/fr/n7/stl/minijava/parser" />
+		<java classname="org.antlr.v4.Tool" classpath="tools/antlr-4.13.1-complete.jar:$CLASSPATH"
+			failonerror="true">
+			<arg value="-o" />
+			<arg value="${java}/fr/n7/stl/minijava/parser" />
+			<arg value="MiniJavaLexer.g4" />
+			<arg value="MiniJavaParser.g4" />
 		</java>
 	</target>
 
-	<!-- l'interface de la machine tam -->
-	<target name="itam">
-		<java jar="${tools}/itam.jar" fork="true" failonerror="true">
-			<jvmarg value="--module-path" />
-			<jvmarg value="${env.PATH_TO_FX}" />
-			<jvmarg value="--add-modules" />
-			<jvmarg value="javafx.controls,javafx.fxml" />
-		</java>
-	</target>
-
-	<!-- Nettoyer les fichiers générés -->
-	<target name="clean">
-		<delete dir="${classes}" />
-		<delete dir="${result}" />
-	</target>
 </project>
