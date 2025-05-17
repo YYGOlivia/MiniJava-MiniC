@@ -16,65 +16,80 @@ bloc:
 
 classe:
 	// class ident {bloc}
-	DefinitionClasse nom = Identificateur AccoladeOuvrante membres += membre* AccoladeFermante;
+	DefClasse nom = Identificateur AccoladeOuvrante membres += membre* AccoladeFermante;
 
 membre:
 	attribut // private int a;
-	| constructeur // public A() { this.a = 0; }
-	| methode; // public int getA() { return this.a; }
+	| constructeur // public A() {...}
+	| methode; // public int getA() {...}
 
 attribut:
-	// private int a;
-	modificateur type identifiant PointVirgule;
+	// private int a; | public int a = 0;
+	modificateur Final? type Identificateur (Egal expression)? PointVirgule;
 
 constructeur:
 	// public A() {...}
-	modificateur nom = Identificateur ParentheseOuvrante parametres ParentheseFermante block = bloc;
+	modificateur nom = Identificateur ParOuv parametres ParFer block = bloc;
 
 methode:
 	// public int getA() {...}
-	modificateur type nom = Identificateur ParentheseOuvrante parametres ParentheseFermante block =
-		bloc;
+	modificateur type nom = Identificateur ParOuv parametres ParFer block = bloc;
 
 parametres:
 	/* vide */
-	| type identifiant (
-		Virgule suiteType += type suiteIdent += identifiant
+	| type Identificateur (
+		Virgule suiteType += type suiteIdent += Identificateur
 	)*;
 
 instruction:
 	// if(cond){instructions}
-	Si ParentheseOuvrante expression ParentheseFermante alors = bloc
+	Si ParOuv expression ParFer alors = bloc
 	// if(cond){instructions} else{instructions}
-	| Si ParentheseOuvrante expression ParentheseFermante alors = bloc Sinon sinon = bloc
+	| Si ParOuv expression ParFer alors = bloc Sinon sinon = bloc
 	// while(cond){instructions}
-	| TantQue ParentheseOuvrante expression ParentheseFermante body = bloc
-	// for (instr, cond, instr) {...}
-	| Pour ParentheseOuvrante instruction PointVirgule expression PointVirgule instruction
-		ParentheseFermante body = bloc
-	| Pour ParentheseOuvrante type identifiant DeuxPoint expression ParentheseFermante body = bloc;
+	| TantQue ParOuv expression ParFer body = bloc
+	// for (instr; cond; instr) {...}
+	| Pour ParOuv instruction PointVirgule expression PointVirgule instruction ParFer body = bloc
+	// for (int i : array) {...}
+	| Pour ParOuv type Identificateur DeuxPoint expression ParFer body = bloc
+	| declarationLocale
+	| assignation;
 
 expression:
-	ParentheseOuvrante expression ParentheseFermante // (expr)
+	ParOuv expression ParFer // (expr)
 	| expression Point Identificateur // expr.id
-	| expression CrochetOuvrant expression CrochetFermant // expr[expr]
+	| expression Point Identificateur ParOuv expressions? ParFer // expr.id(expr1, expr2, ...)
+	| Nouveau Identificateur ParOuv expressions? ParFer // new id(expr1, expr2, ...)
+	| expression CrochOuv expression CrochFer // expr[expr]
 	| Moins expression // -expr
 	| gauche = expression op = (Asterisque | Oblique | PourCent) droite = expression // expr * expr
 	| gauche = expression op = (Plus | Moins) droite = expression // expr + expr
 	| gauche = expression op = (Inf | Sup | InfEg | SupEg) droite = expression // expr < expr
 	| gauche = expression op = (DoubleEgal | ExclamationEgal) droite = expression // expr == expr
-	| AccoladeOuvrante expression AccoladeFermante // {expr}
+	| AccoladeOuvrante expressions AccoladeFermante // {expr1, expr2, ...}
 	| expression PointInterrogation expression DeuxPoint expression // expr ? expr : expr
 	| expressionConstante; // true | false | null ...
 
-type:
-	atomique
-	| identifiant
-	| type CrochetOuvrant CrochetFermant;
+declarationLocale:
+	// final int a = 0;
+	Final? type Identificateur (Egal expression)? PointVirgule;
 
-identifiant:
-	Identificateur // ident
-	| ParentheseOuvrante identifiant ParentheseFermante; // (ident)
+assignation:
+	// id = expr; | id.attribut = expr; | id[expr] = expr;
+	assignable Egal expression PointVirgule;
+
+assignable:
+	Identificateur
+	| assignable Point Identificateur // id.attribut
+	| assignable CrochOuv expression CrochFer; // id[expr]
+
+expressions:
+	premiere = expression (Virgule suite += expression)*; // expr1, expr2, ...
+
+type:
+	atomique // int
+	| Identificateur // A
+	| type CrochOuv CrochFer; // int[]
 
 atomique:
 	TypeEntier

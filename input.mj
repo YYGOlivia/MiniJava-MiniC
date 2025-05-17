@@ -1,6 +1,6 @@
 class A {
     // attribut + get + set
-    private int a;
+    private final int a = 0;
     public int getA() { if(true){}}
     private void setA(int a) {}
 
@@ -23,4 +23,13 @@ class B {}
 
     // foreach
     for (int a : b) {}
+
+    for (int a : a.getElements()) {}
+
+    int[] i = 2;
+    i = new I();
+    i = (new I(a,b)).attr;
+    i = i.foo(a,b);
+    i[2] = 2;
+    i = 1;
 }

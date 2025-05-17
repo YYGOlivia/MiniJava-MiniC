@@ -110,6 +110,46 @@ public interface MiniJavaParserListener extends ParseTreeListener {
 	 */
 	void exitExpression(MiniJavaParser.ExpressionContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link MiniJavaParser#declarationLocale}.
+	 * @param ctx the parse tree
+	 */
+	void enterDeclarationLocale(MiniJavaParser.DeclarationLocaleContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MiniJavaParser#declarationLocale}.
+	 * @param ctx the parse tree
+	 */
+	void exitDeclarationLocale(MiniJavaParser.DeclarationLocaleContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MiniJavaParser#assignation}.
+	 * @param ctx the parse tree
+	 */
+	void enterAssignation(MiniJavaParser.AssignationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MiniJavaParser#assignation}.
+	 * @param ctx the parse tree
+	 */
+	void exitAssignation(MiniJavaParser.AssignationContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MiniJavaParser#assignable}.
+	 * @param ctx the parse tree
+	 */
+	void enterAssignable(MiniJavaParser.AssignableContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MiniJavaParser#assignable}.
+	 * @param ctx the parse tree
+	 */
+	void exitAssignable(MiniJavaParser.AssignableContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MiniJavaParser#expressions}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpressions(MiniJavaParser.ExpressionsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MiniJavaParser#expressions}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpressions(MiniJavaParser.ExpressionsContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link MiniJavaParser#type}.
 	 * @param ctx the parse tree
 	 */
@@ -119,16 +159,6 @@ public interface MiniJavaParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitType(MiniJavaParser.TypeContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link MiniJavaParser#identifiant}.
-	 * @param ctx the parse tree
-	 */
-	void enterIdentifiant(MiniJavaParser.IdentifiantContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link MiniJavaParser#identifiant}.
-	 * @param ctx the parse tree
-	 */
-	void exitIdentifiant(MiniJavaParser.IdentifiantContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MiniJavaParser#atomique}.
 	 * @param ctx the parse tree
