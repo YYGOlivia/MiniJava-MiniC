@@ -128,7 +128,9 @@ public class Printer implements Instruction {
 			}
 		}
 		
-		//fragment.addComment(toString().strip());
+		//Pour avoir des espaces entre chaque valeur
+		fragment.add(_factory.createLoadL(' '));
+		fragment.add(Library.COut);
 		return fragment;
 	}
 

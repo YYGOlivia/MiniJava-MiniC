@@ -7,9 +7,11 @@ import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.instruction.Instruction;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
+import fr.n7.stl.minic.ast.type.ArrayType;
 import fr.n7.stl.minic.ast.type.NamedType;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.tam.ast.Fragment;
+import fr.n7.stl.tam.ast.Library;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.Logger;
@@ -208,8 +210,20 @@ public class VariableDeclaration implements Declaration, Instruction {
 	public Fragment getCode(TAMFactory _factory) {
 		Fragment result = _factory.createFragment();
 		result.add(_factory.createPush(type.length()));
-		result.append(this.value.getCode(_factory));
-		result.add(_factory.createStore(register, offset, type.length()));
+		if (type instanceof ArrayType){
+			//On alloue d'abord de la place au tableau
+			result.add(_factory.createLoadL(value.getType().length()));
+			result.add(Library.MAlloc);
+			result.add(_factory.createStore(register, offset, type.length()));
+			//On recupère le code de la valeur
+			result.append(this.value.getCode(_factory));
+			// On récupere l'adresse du tableau
+			result.add(_factory.createLoad(register, offset, type.length()));
+			result.add(_factory.createStoreI(value.getType().length()));
+		}else{
+			result.append(this.value.getCode(_factory));
+			result.add(_factory.createStore(register, offset, type.length()));
+		}
 		//result.addComment(this.toString());
 		return result;
 	}
