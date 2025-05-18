@@ -1,6 +1,14 @@
 // Generated from MiniJavaParser.g4 by ANTLR 4.13.1
 
     package fr.n7.stl.minijava.parser;
+	import fr.n7.stl.minijava.ast.Block;
+	import fr.n7.stl.minijava.ast.type.AtomicType;
+	import fr.n7.stl.minijava.ast.type.Type;
+	import fr.n7.stl.minijava.ast.clazz.Modifier;
+	import fr.n7.stl.minijava.ast.clazz.Class;
+	import fr.n7.stl.minijava.ast.clazz.Attribute;
+	import fr.n7.stl.minijava.ast.clazz.Constructor;
+	import fr.n7.stl.minijava.ast.clazz.Method;
 
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -139,13 +147,13 @@ public class MiniJavaParserBaseListener implements MiniJavaParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDeclarationLocale(MiniJavaParser.DeclarationLocaleContext ctx) { }
+	@Override public void enterDeclLocale(MiniJavaParser.DeclLocaleContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDeclarationLocale(MiniJavaParser.DeclarationLocaleContext ctx) { }
+	@Override public void exitDeclLocale(MiniJavaParser.DeclLocaleContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -187,13 +195,37 @@ public class MiniJavaParserBaseListener implements MiniJavaParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterType(MiniJavaParser.TypeContext ctx) { }
+	@Override public void enterTypeArray(MiniJavaParser.TypeArrayContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitType(MiniJavaParser.TypeContext ctx) { }
+	@Override public void exitTypeArray(MiniJavaParser.TypeArrayContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTypeNamed(MiniJavaParser.TypeNamedContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTypeNamed(MiniJavaParser.TypeNamedContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTypeAtomic(MiniJavaParser.TypeAtomicContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTypeAtomic(MiniJavaParser.TypeAtomicContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -223,13 +255,97 @@ public class MiniJavaParserBaseListener implements MiniJavaParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpressionConstante(MiniJavaParser.ExpressionConstanteContext ctx) { }
+	@Override public void enterExpressionTrue(MiniJavaParser.ExpressionTrueContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExpressionConstante(MiniJavaParser.ExpressionConstanteContext ctx) { }
+	@Override public void exitExpressionTrue(MiniJavaParser.ExpressionTrueContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExpressionFalse(MiniJavaParser.ExpressionFalseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExpressionFalse(MiniJavaParser.ExpressionFalseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExpressionInt(MiniJavaParser.ExpressionIntContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExpressionInt(MiniJavaParser.ExpressionIntContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExpressionFloat(MiniJavaParser.ExpressionFloatContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExpressionFloat(MiniJavaParser.ExpressionFloatContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExpressionCharacter(MiniJavaParser.ExpressionCharacterContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExpressionCharacter(MiniJavaParser.ExpressionCharacterContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExpressionString(MiniJavaParser.ExpressionStringContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExpressionString(MiniJavaParser.ExpressionStringContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExpressionNull(MiniJavaParser.ExpressionNullContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExpressionNull(MiniJavaParser.ExpressionNullContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExpressionAccess(MiniJavaParser.ExpressionAccessContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExpressionAccess(MiniJavaParser.ExpressionAccessContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

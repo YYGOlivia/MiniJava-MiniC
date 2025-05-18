@@ -81,6 +81,12 @@ public class ParameterDeclaration implements Declaration {
 		return this.offset;
 	}
 
+	/**
+	 * Set the offset of the formal parameter in the list of formal parameters for
+	 * the function
+	 *
+	 * @param offset Offset of the formal parameter
+	 */
 	public void setOffset(int offset) {
 		this.offset = offset;
 	}

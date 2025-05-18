@@ -20,7 +20,7 @@ public class MiniJavaLexer extends Lexer {
 		new PredictionContextCache();
 	public static final int
 		Egal=1, AccoladeOuvrante=2, AccoladeFermante=3, ParOuv=4, ParFer=5, CrochOuv=6, 
-		CrochFer=7, Point=8, PointInterrogation=9, DeuxPoint=10, Virgule=11, PointVirgule=12, 
+		CrochFer=7, Point=8, PointInterrogation=9, DeuxPoint=10, Virg=11, PtVirg=12, 
 		Afficher=13, Si=14, Sinon=15, TantQue=16, Pour=17, Retour=18, Final=19, 
 		DefClasse=20, Nouveau=21, Ceci=22, Asterisque=23, Oblique=24, PourCent=25, 
 		Plus=26, Moins=27, DoubleBarre=28, DoubleEsperluette=29, PointExclamation=30, 
@@ -40,7 +40,7 @@ public class MiniJavaLexer extends Lexer {
 	private static String[] makeRuleNames() {
 		return new String[] {
 			"Egal", "AccoladeOuvrante", "AccoladeFermante", "ParOuv", "ParFer", "CrochOuv", 
-			"CrochFer", "Point", "PointInterrogation", "DeuxPoint", "Virgule", "PointVirgule", 
+			"CrochFer", "Point", "PointInterrogation", "DeuxPoint", "Virg", "PtVirg", 
 			"Afficher", "Si", "Sinon", "TantQue", "Pour", "Retour", "Final", "DefClasse", 
 			"Nouveau", "Ceci", "Asterisque", "Oblique", "PourCent", "Plus", "Moins", 
 			"DoubleBarre", "DoubleEsperluette", "PointExclamation", "Inf", "Sup", 
@@ -68,9 +68,9 @@ public class MiniJavaLexer extends Lexer {
 	private static String[] makeSymbolicNames() {
 		return new String[] {
 			null, "Egal", "AccoladeOuvrante", "AccoladeFermante", "ParOuv", "ParFer", 
-			"CrochOuv", "CrochFer", "Point", "PointInterrogation", "DeuxPoint", "Virgule", 
-			"PointVirgule", "Afficher", "Si", "Sinon", "TantQue", "Pour", "Retour", 
-			"Final", "DefClasse", "Nouveau", "Ceci", "Asterisque", "Oblique", "PourCent", 
+			"CrochOuv", "CrochFer", "Point", "PointInterrogation", "DeuxPoint", "Virg", 
+			"PtVirg", "Afficher", "Si", "Sinon", "TantQue", "Pour", "Retour", "Final", 
+			"DefClasse", "Nouveau", "Ceci", "Asterisque", "Oblique", "PourCent", 
 			"Plus", "Moins", "DoubleBarre", "DoubleEsperluette", "PointExclamation", 
 			"Inf", "Sup", "InfEg", "SupEg", "DoubleEgal", "ExclamationEgal", "Esperluette", 
 			"TypeEntier", "TypeFlottant", "TypeBooleen", "TypeCaractere", "TypeChaine", 

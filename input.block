@@ -1,0 +1,14 @@
+test {
+
+    int tab[] = {1,2,3};
+    print tab[0];
+    print tab[1];
+    print tab[2];
+
+    // pour bien avoir la séparation
+    int foo = 888;
+    print foo;
+
+    tab[0] = 7;
+    print tab[0];
+}

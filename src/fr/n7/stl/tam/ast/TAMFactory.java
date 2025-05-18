@@ -5,10 +5,6 @@ package fr.n7.stl.tam.ast;
 
 import java.util.List;
 
-import fr.n7.stl.minic.ast.SemanticsUndefinedException;
-import fr.n7.stl.minic.ast.expression.accessible.BinaryOperator;
-import fr.n7.stl.minic.ast.expression.accessible.UnaryOperator;
-
 /**
  * Factory to build abstract syntax tree nodes for the TAM language.
  * 
@@ -255,66 +251,6 @@ public interface TAMFactory {
 	 * @return A TAM fragment AST node containing a sequence of TAMInstruction.
 	 */
 	public Fragment createFragment(List<TAMInstruction> _instructions);
-
-	/**
-	 * Build a TAM binary operator instruction AST node whose execution will pop two
-	 * values from the stack, compute the result of the binary operator applied to
-	 * these values and push the result on the stack.
-	 * 
-	 * @param _operator The binary operator from the Bloc language.
-	 * @return A TAM instruction AST node corresponding to a binary operator.
-	 */
-	public static TAMInstruction createBinaryOperator(BinaryOperator _operator) {
-		switch (_operator) {
-			case Add:
-				return Library.IAdd;
-			case And:
-				return Library.BAnd;
-			case Different:
-				return Library.INeq;
-			case Divide:
-				return Library.IDiv;
-			case Equals:
-				return Library.IEq;
-			case Greater:
-				return Library.IGtr;
-			case GreaterOrEqual:
-				return Library.IGeq;
-			case Lesser:
-				return Library.ILss;
-			case LesserOrEqual:
-				return Library.ILeq;
-			case Modulo:
-				return Library.IMod;
-			case Multiply:
-				return Library.IMul;
-			case Or:
-				return Library.BOr;
-			case Substract:
-				return Library.ISub;
-			default:
-				throw new SemanticsUndefinedException("Unexpected unary operator: " + _operator);
-		}
-	}
-
-	/**
-	 * Build a TAM unary operator instruction AST node whose execution will pop one
-	 * value from the stack, compute the result of the unary operator applied to
-	 * that value and push the result on the stack.
-	 * 
-	 * @param _operator The unary operator from the Bloc language.
-	 * @return A TAM instruction AST node corresponding to an unary operator.
-	 */
-	public static TAMInstruction createUnaryOperator(UnaryOperator _operator) {
-		switch (_operator) {
-			case Negate:
-				return Library.BNeg;
-			case Opposite:
-				return Library.INeg;
-			default:
-				return null;
-		}
-	}
 
 	public int createLabelNumber();
 

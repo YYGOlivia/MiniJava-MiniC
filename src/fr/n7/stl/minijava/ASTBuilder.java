@@ -3,6 +3,9 @@ package fr.n7.stl.minijava;
 import fr.n7.stl.minijava.ast.Block;
 import fr.n7.stl.minijava.ast.scope.SymbolTable;
 import fr.n7.stl.minijava.parser.MiniJavaParserBaseListener;
+import fr.n7.stl.minijava.parser.MiniJavaParser.BlocContext;
+import fr.n7.stl.minijava.parser.MiniJavaParser.ParametresContext;
+import fr.n7.stl.minijava.parser.MiniJavaParser.ProgrammeContext;
 
 public class ASTBuilder extends MiniJavaParserBaseListener {
 
@@ -55,5 +58,20 @@ public class ASTBuilder extends MiniJavaParserBaseListener {
         // e.printStackTrace();
         // }
         // System.out.println("Code generation finished.");
+    }
+
+    @Override
+    public void exitProgramme(ProgrammeContext ctx) {
+        this.mainBlock = ctx.mainBlock.b;
+    }
+
+    @Override
+    public void exitBloc(BlocContext ctx) {
+        // TODO
+    }
+
+    @Override
+    public void exitParametres(ParametresContext ctx) {
+        // TODO
     }
 }

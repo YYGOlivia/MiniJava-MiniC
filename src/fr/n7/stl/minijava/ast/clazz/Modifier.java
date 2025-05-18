@@ -1,0 +1,22 @@
+package fr.n7.stl.minijava.ast.clazz;
+
+public enum Modifier {
+
+    Public,
+    Private,
+    Static;
+
+    @Override
+    public String toString() {
+        switch (this) {
+            case Public:
+                return "public";
+            case Private:
+                return "private";
+            case Static:
+                return "static";
+            default:
+                throw new IllegalArgumentException("The default case should never be triggered.");
+        }
+    }
+}

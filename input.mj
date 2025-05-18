@@ -1,13 +1,18 @@
 class A {
     // attribut + get + set
     private final int a = 0;
-    public int getA() { if(true){}}
+    public int getA() {
+        return a;
+    }
     private void setA(int a) {}
 
     // attribut type complexe + set + get
     private int[] tab;
     private int[] getTab(){}
-    private void setTab(int[] tab){}
+    private void setTab(int[] tab){
+        int i = 1;
+        i = new B();
+    }
 
     // constructeur
     public A(){}
@@ -25,6 +30,8 @@ class B {}
     for (int a : b) {}
 
     for (int a : a.getElements()) {}
+
+    for (int i = 0; i < 2; i = i + 1) {}
 
     int[] i = 2;
     i = new I();

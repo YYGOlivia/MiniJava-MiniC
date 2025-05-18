@@ -168,7 +168,7 @@ public class BinaryExpression implements AccessibleExpression {
 		 * if (this.right instanceof AccessibleExpression) {
 		 * _result.add(_factory.createLoadI(this.right.getType().length())); }
 		 */
-		_result.add(TAMFactory.createBinaryOperator(this.operator));
+		_result.add(this.operator.toTAM());
 		return _result;
 	}
 
