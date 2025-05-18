@@ -3,6 +3,7 @@
  */
 package fr.n7.stl.minic.ast.expression.accessible;
 
+import fr.n7.stl.minic.ast.expression.assignable.ArrayAssignment;
 import fr.n7.stl.minic.ast.expression.assignable.AssignableExpression;
 import fr.n7.stl.minic.ast.expression.assignable.VariableAssignment;
 import fr.n7.stl.minic.ast.instruction.declaration.VariableDeclaration;
@@ -13,6 +14,7 @@ import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.Logger;
+import java.lang.reflect.Array;
 
 /**
  * Implementation of the Abstract Syntax Tree node for accessing an expression
@@ -56,10 +58,14 @@ public class AddressAccess implements AccessibleExpression {
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
 		boolean okAssign = assignable.completeResolve(_scope);
-		if (!(assignable instanceof VariableAssignment)){
+		if (assignable instanceof VariableAssignment){
+			return okAssign;
+		}else if (assignable instanceof ArrayAssignment){
+			return okAssign;
+		}else{
 			Logger.error("[AddressAccess] " + assignable.toString() + " should be a VariableAssignement");
+			return false;
 		}
-		return okAssign;
 	}
 
 	/*
@@ -81,9 +87,14 @@ public class AddressAccess implements AccessibleExpression {
 	public Fragment getCode(TAMFactory _factory) {
 		Fragment fragment = _factory.createFragment();
 
-		VariableAssignment elem = (VariableAssignment) assignable;
-		VariableDeclaration declaration  = (VariableDeclaration) elem.getDeclaration();
-		fragment.add(_factory.createLoadA(declaration.getRegister(), declaration.getOffset()));
+		if (assignable instanceof VariableAssignment){
+			VariableAssignment elem = (VariableAssignment) assignable;
+			VariableDeclaration declaration  = (VariableDeclaration) elem.getDeclaration();
+			fragment.add(_factory.createLoadA(declaration.getRegister(), declaration.getOffset()));
+		}else if (assignable instanceof ArrayAssignment){
+			ArrayAssignment array = (ArrayAssignment) assignable;
+			fragment.append(array.getAccessCode(_factory));
+		}
 		return fragment;
 	}
 

@@ -1,17 +1,11 @@
-;< int, int> p = { 1 ,2 };
-;
 PUSH 2
 LOADL 1
 LOADL 2
 STORE (2) 0[SB]
-;< int, int> q = { 3 ,4 };
-;
 PUSH 2
 LOADL 3
 LOADL 4
 STORE (2) 2[SB]
-; p  = q;
-;
 LOAD (2) 2[SB]
 STORE (2) 0[SB]
 HALT

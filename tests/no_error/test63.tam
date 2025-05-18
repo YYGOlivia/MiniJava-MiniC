@@ -1,14 +1,12 @@
-;(boolean *) p = new boolean;
-;
 PUSH 1
 LOADL 1
 SUBR MAlloc
 STORE (1) 0[SB]
-debut_boucle_23
+debut_boucle_36
 LOAD (1) 0[SB]
 LOADI (1)
-JUMPIF (0) fin_boucle_23
-JUMP debut_boucle_23
-fin_boucle_23
+JUMPIF (0) fin_boucle_36
+JUMP debut_boucle_36
+fin_boucle_36
 HALT
 

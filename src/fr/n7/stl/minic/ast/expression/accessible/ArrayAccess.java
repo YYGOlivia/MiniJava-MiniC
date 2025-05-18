@@ -40,9 +40,13 @@ public class ArrayAccess extends AbstractArray<AccessibleExpression> implements 
 	public Fragment getCode(TAMFactory _factory) {
 		Fragment fragment = _factory.createFragment();
 		//variable array
-		IdentifierAccess id = (IdentifierAccess) array;
-		VariableDeclaration dec = (VariableDeclaration) id.expression.getDeclaration();
-		fragment.add(_factory.createLoad(dec.getRegister(), dec.getOffset(), array.getType().length()));
+		if (array instanceof IdentifierAccess){
+			IdentifierAccess id = (IdentifierAccess) array;
+			VariableDeclaration dec = (VariableDeclaration) id.expression.getDeclaration();
+			fragment.add(_factory.createLoad(dec.getRegister(), dec.getOffset(), array.getType().length()));
+		}else if (array instanceof  ArrayAccess){
+			fragment.append(array.getCode(_factory));
+		}
 		//variable index
 		fragment.append(index.getCode(_factory));
 		//taille des elements

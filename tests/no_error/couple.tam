@@ -1,101 +1,55 @@
-;< int, float> coords = { 5 ,3.14 };
-;
 PUSH 2
 LOADL 5
 STORE (2) 0[SB]
-;< String, boolean> config = { "test" ,true };
-;
 PUSH 2
 LOADL 1
 STORE (2) 2[SB]
-;< float, float> coords2 = coords;
-;
 PUSH 2
 LOAD (2) 0[SB]
 STORE (2) 4[SB]
-;< int, < String, boolean>> nested = { 42 ,config };
-;
 PUSH 3
 LOADL 42
 LOAD (2) 2[SB]
 STORE (3) 6[SB]
-;< String, < float, float>> nested2 = { "foo" ,coords };
-;
 PUSH 3
 LOAD (2) 0[SB]
 STORE (3) 9[SB]
-;< int, int> couple = { int main( < float, float> couple ){
-;float x = (sndcoords);
-;String msg = (fstconfig);
-;< boolean, int> swapped = { (sndconfig) ,(fstcoords) };
-;(int []) arr = new int[ 3 ];
-;< < int, float>, < String, boolean>> complex = { coords ,config };
-;if ((sndconfig) ){
-;// Return in function : main
-;return (fstcoords);
-;}
-;if ((snd(sndcomplex)) ){
-;// Return in function : main
-;return (fst(fstcomplex));
-;}
-;// Return in function : main
-;return 0;
-;}
-;( coords) ,int main( < float, float> couple ){
-;float x = (sndcoords);
-;String msg = (fstconfig);
-;< boolean, int> swapped = { (sndconfig) ,(fstcoords) };
-;(int []) arr = new int[ 3 ];
-;< < int, float>, < String, boolean>> complex = { coords ,config };
-;if ((sndconfig) ){
-;// Return in function : main
-;return (fstcoords);
-;}
-;if ((snd(sndcomplex)) ){
-;// Return in function : main
-;return (fst(fstcomplex));
-;}
-;// Return in function : main
-;return 0;
-;}
-;( coords) };
-;
 PUSH 2
 LOAD (2) 0[SB]
 CALL (SB) main
 LOAD (2) 0[SB]
 CALL (SB) main
 STORE (2) 12[SB]
-;(< int, int> []) arr = new < int, int>[ 2 ];
-;
 PUSH 1
+LOADL 1
+SUBR MAlloc
+STORE (1) 14[SB]
+;Allocation
 LOADL 2
 LOADL 2
 SUBR IMul
 SUBR MAlloc
-STORE (1) 14[SB]
-; arr [ 0 ] = { 1 ,2 };
-;
+LOAD (1) 14[SB]
+STOREI (1)
 LOADL 1
 LOADL 2
-STORE (1) 14[SB]
+;Assignement
+LOAD (1) 14[SB]
 LOADL 0
 LOADL 1
 SUBR IMul
 SUBR IAdd
-LOADI (1)
-; arr [ 1 ] = { 3 ,4 };
-;
+STOREI (1)
 LOADL 3
 LOADL 4
-STORE (1) 14[SB]
+;Assignement
+LOAD (1) 14[SB]
 LOADL 1
 LOADL 1
 SUBR IMul
 SUBR IAdd
-LOADI (1)
-; arr [ 0 ] = { (sndarr[ 1 ]) ,5 };
-;
+STOREI (1)
+;Access
 LOAD (1) 14[SB]
 LOADL 1
 LOADL 1
@@ -104,73 +58,60 @@ SUBR IAdd
 LOADI (1)
 POP (1) 1
 LOADL 5
-STORE (1) 14[SB]
+;Assignement
+LOAD (1) 14[SB]
 LOADL 0
 LOADL 1
 SUBR IMul
 SUBR IAdd
-LOADI (1)
+STOREI (1)
 HALT
-;float x = (sndcoords);
-;
 main
 PUSH 1
 LOAD (2) 0[SB]
 POP (1) 1
 STORE (1) 3[LB]
-;String msg = (fstconfig);
-;
 PUSH 1
 LOAD (2) 2[SB]
 POP (0) 1
 STORE (1) 4[LB]
-;< boolean, int> swapped = { (sndconfig) ,(fstcoords) };
-;
 PUSH 2
 LOAD (2) 2[SB]
 POP (1) 1
 LOAD (2) 0[SB]
 POP (0) 1
 STORE (2) 5[LB]
-;(int []) arr = new int[ 3 ];
-;
 PUSH 1
+LOADL 1
+SUBR MAlloc
+STORE (1) 7[LB]
+;Allocation
 LOADL 3
 LOADL 1
 SUBR IMul
 SUBR MAlloc
-STORE (1) 7[LB]
-;< < int, float>, < String, boolean>> complex = { coords ,config };
-;
+LOAD (1) 7[LB]
+STOREI (1)
 PUSH 4
 LOAD (2) 0[SB]
 LOAD (2) 2[SB]
 STORE (4) 8[LB]
 LOAD (2) 2[SB]
 POP (1) 1
-JUMPIF (0) fin_conditionnelle_27
-;// Return in function : main
-;return (fstcoords);
-;
+JUMPIF (0) fin_conditionnelle_1
 LOAD (2) 0[SB]
 POP (0) 1
 RETURN (1) 2
-fin_conditionnelle_27
+fin_conditionnelle_1
 LOAD (4) 8[LB]
 POP (1) 1
 POP (1) 1
-JUMPIF (0) fin_conditionnelle_28
-;// Return in function : main
-;return (fst(fstcomplex));
-;
+JUMPIF (0) fin_conditionnelle_2
 LOAD (4) 8[LB]
 POP (0) 1
 POP (0) 1
 RETURN (1) 2
-fin_conditionnelle_28
-;// Return in function : main
-;return 0;
-;
+fin_conditionnelle_2
 LOADL 0
 RETURN (1) 2
 

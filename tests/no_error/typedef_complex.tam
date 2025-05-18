@@ -1,247 +1,209 @@
-;Integer count = 42;
-;
 PUSH 1
 LOADL 42
 STORE (1) 0[SB]
-;Flag isValid = true;
-;
 PUSH 1
 LOADL 1
 STORE (1) 1[SB]
-;Real pi = 3.14;
-;
 PUSH 1
 STORE (1) 2[SB]
-;(int []) arr = new int[ 5 ];
-;
 PUSH 1
+LOADL 1
+SUBR MAlloc
+STORE (1) 3[SB]
+;Allocation
 LOADL 5
 LOADL 1
 SUBR IMul
 SUBR MAlloc
-STORE (1) 3[SB]
-;(RealMatrix *) matrix = new RealMatrix;
-;
+LOAD (1) 3[SB]
+STOREI (1)
 PUSH 1
 LOADL 1
 SUBR MAlloc
 STORE (1) 4[SB]
-;RealMatrix matrix1 = new RealMatrix[ 2 ][ 3 ];
-;
 PUSH 1
-LOADL 2
-LOADL 1
-SUBR IMul
-SUBR MAlloc
+;Access
 LOADL 3
 LOADL 1
 SUBR IMul
 SUBR IAdd
 LOADI (1)
 STORE (1) 5[SB]
-; matrix1 [ 0 ][ 0 ] = 1.0;
-;
-STORE (1) 5[SB]
+;Assignement
+;Assignement
+LOAD (1) 5[SB]
 LOADL 0
 LOADL 1
 SUBR IMul
 SUBR IAdd
-LOADI (1)
+STOREI (1)
 LOADL 0
 LOADL 1
 SUBR IMul
 SUBR IAdd
-LOADI (1)
-; matrix1  = * matrix;
-;
+STOREI (1)
 LOAD (1) 4[SB]
 LOADI (1)
 STORE (1) 5[SB]
-;((float []) []) matrix2 = new RealArray[ 2 ];
-;
 PUSH 1
-LOADL 2
 LOADL 1
-SUBR IMul
 SUBR MAlloc
 STORE (1) 6[SB]
-;((float []) []) matrix3 = new RealMatrix[ 2 ][ 3 ];
-;
-PUSH 1
+;Allocation
 LOADL 2
 LOADL 1
 SUBR IMul
 SUBR MAlloc
+LOAD (1) 6[SB]
+STOREI (1)
+PUSH 1
+LOADL 1
+SUBR MAlloc
+STORE (1) 7[SB]
+;Access
 LOADL 3
 LOADL 1
 SUBR IMul
 SUBR IAdd
 LOADI (1)
-STORE (1) 7[SB]
-;NumberArray numbers = new int[ 5 ];
-;
+LOAD (1) 7[SB]
+STOREI (1)
 PUSH 1
+;Allocation
 LOADL 5
 LOADL 1
 SUBR IMul
 SUBR MAlloc
 STORE (1) 8[SB]
-;RealArray points = new float[ 3 ];
-;
 PUSH 1
+;Allocation
 LOADL 3
 LOADL 1
 SUBR IMul
 SUBR MAlloc
 STORE (1) 9[SB]
-;FlagArray flags = new boolean[ 2 ];
-;
 PUSH 1
+;Allocation
 LOADL 2
 LOADL 1
 SUBR IMul
 SUBR MAlloc
 STORE (1) 10[SB]
-; numbers [ 0 ] = count;
-;
 LOAD (1) 0[SB]
-STORE (1) 8[SB]
+;Assignement
+LOAD (1) 8[SB]
 LOADL 0
 LOADL 1
 SUBR IMul
 SUBR IAdd
-LOADI (1)
-; points [ 0 ] = pi;
-;
+STOREI (1)
 LOAD (1) 2[SB]
-STORE (1) 9[SB]
+;Assignement
+LOAD (1) 9[SB]
 LOADL 0
 LOADL 1
 SUBR IMul
 SUBR IAdd
-LOADI (1)
-; flags [ 0 ] = isValid;
-;
+STOREI (1)
 LOAD (1) 1[SB]
-STORE (1) 10[SB]
+;Assignement
+LOAD (1) 10[SB]
 LOADL 0
 LOADL 1
 SUBR IMul
 SUBR IAdd
-LOADI (1)
-;NumberFlag pair1 = < 10, true>;
-;
+STOREI (1)
 PUSH 2
 LOADL 10
 LOADL 1
 STORE (2) 11[SB]
-;ComplexPair pair2 = < 3.14, < 20, false>>;
-;
 PUSH 3
 LOADL 20
 LOADL 0
 STORE (3) 13[SB]
-;DataPair pair3 = < < 30, true>, 40>;
-;
 PUSH 3
 LOADL 30
 LOADL 1
 LOADL 40
 STORE (3) 16[SB]
-;Integer num = (fstpair1);
-;
 PUSH 1
 LOAD (2) 11[SB]
 POP (0) 1
 STORE (1) 19[SB]
-;Flag bool = (sndpair1);
-;
 PUSH 1
 LOAD (2) 11[SB]
 POP (1) 1
 STORE (1) 20[SB]
-;Real value = (fstpair2);
-;
 PUSH 1
 LOAD (3) 13[SB]
 POP (0) 1
 STORE (1) 21[SB]
-;Flag nested = (snd(sndpair2));
-;
 PUSH 1
 LOAD (3) 13[SB]
 POP (1) 1
 POP (1) 1
 STORE (1) 22[SB]
-; numbers [ 1 ] = (fstpair1);
-;
 LOAD (2) 11[SB]
 POP (0) 1
-STORE (1) 8[SB]
+;Assignement
+LOAD (1) 8[SB]
 LOADL 1
 LOADL 1
 SUBR IMul
 SUBR IAdd
-LOADI (1)
-; points [ 1 ] = (fstpair2);
-;
+STOREI (1)
 LOAD (3) 13[SB]
 POP (0) 1
-STORE (1) 9[SB]
+;Assignement
+LOAD (1) 9[SB]
 LOADL 1
 LOADL 1
 SUBR IMul
 SUBR IAdd
-LOADI (1)
-; flags [ 1 ] = (snd(fstpair3));
-;
+STOREI (1)
 LOAD (3) 16[SB]
 POP (0) 1
 POP (1) 1
-STORE (1) 10[SB]
+;Assignement
+LOAD (1) 10[SB]
 LOADL 1
 LOADL 1
 SUBR IMul
 SUBR IAdd
-LOADI (1)
-;print num;
-;print bool;
-;print nested;
+STOREI (1)
 SUBR IOut
 LOADL 32
 SUBR COut
-;print num;
-;print bool;
-;print nested;
+LOADL 32
+SUBR COut
 SUBR IOut
 LOADL 32
 SUBR COut
-;print numbers[ 0 ];
+LOADL 32
+SUBR COut
+;Access
 LOAD (1) 8[SB]
 LOADL 0
 LOADL 1
 SUBR IMul
 SUBR IAdd
 LOADI (1)
-;print num;
-;print bool;
-;print nested;
 SUBR IOut
-;print points[ 1 ];
+LOADL 32
+SUBR COut
+;Access
 LOAD (1) 9[SB]
 LOADL 1
 LOADL 1
 SUBR IMul
 SUBR IAdd
 LOADI (1)
-;print num;
-;print bool;
-;print nested;
 SUBR IOut
-;print num;
-;print bool;
-;print nested;
+LOADL 32
+SUBR COut
 SUBR IOut
+LOADL 32
+SUBR COut
 LOADL 32
 SUBR COut
 HALT

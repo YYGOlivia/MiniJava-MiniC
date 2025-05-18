@@ -1,11 +1,11 @@
-;(int []) p = { 1 ,2 };
-;
 PUSH 1
+LOADL 2
+SUBR MAlloc
+STORE (1) 0[SB]
 LOADL 1
 LOADL 2
-STORE (1) 0[SB]
-; p  = { 3 ,4 };
-;
+LOAD (1) 0[SB]
+STOREI (2)
 LOADL 3
 LOADL 4
 STORE (1) 0[SB]

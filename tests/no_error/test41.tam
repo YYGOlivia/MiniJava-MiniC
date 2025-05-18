@@ -1,20 +1,24 @@
-;(boolean []) p = new boolean[ 1 ];
-;
 PUSH 1
+LOADL 1
+SUBR MAlloc
+STORE (1) 0[SB]
+;Allocation
 LOADL 1
 LOADL 1
 SUBR IMul
 SUBR MAlloc
-STORE (1) 0[SB]
-debut_boucle_13
+LOAD (1) 0[SB]
+STOREI (1)
+;Access
+debut_boucle_28
 LOAD (1) 0[SB]
 LOADL 0
 LOADL 1
 SUBR IMul
 SUBR IAdd
 LOADI (1)
-JUMPIF (0) fin_boucle_13
-JUMP debut_boucle_13
-fin_boucle_13
+JUMPIF (0) fin_boucle_28
+JUMP debut_boucle_28
+fin_boucle_28
 HALT
 
