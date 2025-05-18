@@ -99,6 +99,15 @@ public class VariableAssignment extends AbstractIdentifier implements Assignable
 		return result;
 	}
 
+	public Fragment getAccessCode(TAMFactory _factory){
+		Fragment result = _factory.createFragment();
+		int off = declaration.getOffset();
+		Register reg = declaration.getRegister();
+		int size = getType().length();
+		result.add(_factory.createStore(reg, off, size));
+		return result;
+	}
+
 	public Declaration getDeclaration(){
 		return declaration;
 	}

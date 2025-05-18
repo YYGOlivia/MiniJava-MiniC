@@ -4,6 +4,7 @@
 package fr.n7.stl.minic.ast.expression.accessible;
 
 import fr.n7.stl.minic.ast.expression.AbstractArray;
+import fr.n7.stl.minic.ast.instruction.declaration.VariableDeclaration;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Library;
 import fr.n7.stl.tam.ast.TAMFactory;
@@ -39,7 +40,9 @@ public class ArrayAccess extends AbstractArray<AccessibleExpression> implements 
 	public Fragment getCode(TAMFactory _factory) {
 		Fragment fragment = _factory.createFragment();
 		//variable array
-		fragment.append(array.getCode(_factory));
+		IdentifierAccess id = (IdentifierAccess) array;
+		VariableDeclaration dec = (VariableDeclaration) id.expression.getDeclaration();
+		fragment.add(_factory.createLoad(dec.getRegister(), dec.getOffset(), array.getType().length()));
 		//variable index
 		fragment.append(index.getCode(_factory));
 		//taille des elements
@@ -50,6 +53,7 @@ public class ArrayAccess extends AbstractArray<AccessibleExpression> implements 
 		fragment.add(Library.IAdd);
 		//charge element
 		fragment.add(_factory.createLoadI(array.getType().length()));
+		fragment.addComment("Access");
 		return fragment;
 	}
 

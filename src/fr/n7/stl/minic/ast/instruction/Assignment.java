@@ -5,6 +5,7 @@ package fr.n7.stl.minic.ast.instruction;
 
 import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.expression.assignable.AssignableExpression;
+import fr.n7.stl.minic.ast.expression.assignable.FieldAssignment;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
@@ -137,6 +138,9 @@ public class Assignment implements Instruction, Expression {
 		Fragment fragment = _factory.createFragment();
 		fragment.append(value.getCode(_factory));
 		fragment.append(assignable.getCode(_factory));
+		if (assignable instanceof FieldAssignment){
+			fragment.add(_factory.createStoreI(value.getType().length()));
+		}
 		//fragment.addComment(toString());
 		return fragment;
 	}

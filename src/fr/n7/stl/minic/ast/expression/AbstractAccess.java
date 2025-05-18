@@ -18,7 +18,7 @@ public abstract class AbstractAccess {
 	 * 
 	 * @return Declaration of the identifier.
 	 */
-	protected abstract Declaration getDeclaration();
+	public abstract Declaration getDeclaration();
 
 	/**
 	 * Synthesized Semantics attribute to compute the type of an identifier

@@ -88,6 +88,7 @@ public class ArrayAllocation implements AccessibleExpression, AssignableExpressi
 		fragment.add(_factory.createLoadL(element.length()));
 		fragment.add(Library.IMul);
 		fragment.add(Library.MAlloc);
+		fragment.addComment("Allocation");
 		return fragment;
 	}
 

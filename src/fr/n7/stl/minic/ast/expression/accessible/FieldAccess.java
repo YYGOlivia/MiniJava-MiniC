@@ -4,11 +4,9 @@
 package fr.n7.stl.minic.ast.expression.accessible;
 
 import fr.n7.stl.minic.ast.expression.AbstractField;
-import fr.n7.stl.minic.ast.type.NamedType;
-import fr.n7.stl.minic.ast.type.RecordType;
-import fr.n7.stl.minic.ast.type.declaration.FieldDeclaration;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
+import fr.n7.stl.util.Logger;
 
 /**
  * Implementation of the Abstract Syntax Tree node for accessing a field in a
