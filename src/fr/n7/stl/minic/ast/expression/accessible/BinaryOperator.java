@@ -3,9 +3,9 @@
  */
 package fr.n7.stl.minic.ast.expression.accessible;
 
-import fr.n7.stl.minijava.ast.SemanticsUndefinedException;
 import fr.n7.stl.tam.ast.Library;
 import fr.n7.stl.tam.ast.TAMInstruction;
+import fr.n7.stl.util.SemanticsUndefinedException;
 
 /**
  * Binary operators in the Bloc language.

@@ -1,4 +1,4 @@
-package fr.n7.stl.minijava.ast;
+package fr.n7.stl.util;
 
 public class SemanticsUndefinedException extends RuntimeException {
 

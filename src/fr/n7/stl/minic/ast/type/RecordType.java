@@ -9,11 +9,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.scope.Scope;
 import fr.n7.stl.minic.ast.type.declaration.FieldDeclaration;
+import fr.n7.stl.util.SemanticsUndefinedException;
 
 /**
  * Implementation of the Abstract Syntax Tree node for a record type.

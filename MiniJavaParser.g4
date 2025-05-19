@@ -15,6 +15,7 @@ options {
 	import fr.n7.stl.minijava.ast.instruction.declaration.clazz.MethodDeclaration;
 }
 
+// TODO: en fait un programme sera juste une liste de classes dont une doit s'appeler Main et avoir une méthode psvm
 programme:
 	(classes += classe)* // class A {...} class B {...}
 	mainBlock = bloc; // { A a = new A(); ... }
