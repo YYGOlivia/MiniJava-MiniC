@@ -1,5 +1,6 @@
 package fr.n7.stl.minijava.ast.instruction.declaration;
 
+import fr.n7.stl.minijava.ast.scope.Declaration;
 import fr.n7.stl.minijava.ast.type.Type;
 
 public class ParameterDeclaration implements Declaration {

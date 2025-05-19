@@ -44,7 +44,6 @@ InfEg: '<=';
 SupEg: '>=';
 DoubleEgal: '==';
 ExclamationEgal: '!=';
-Esperluette: '&';
 // Types
 TypeEntier: 'int';
 TypeFlottant: 'float';

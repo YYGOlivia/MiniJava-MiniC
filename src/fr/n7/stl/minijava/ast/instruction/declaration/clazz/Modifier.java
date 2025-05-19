@@ -1,4 +1,4 @@
-package fr.n7.stl.minijava.ast.clazz;
+package fr.n7.stl.minijava.ast.instruction.declaration.clazz;
 
 public enum Modifier {
 

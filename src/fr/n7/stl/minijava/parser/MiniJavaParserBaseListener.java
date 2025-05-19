@@ -4,11 +4,11 @@
 	import fr.n7.stl.minijava.ast.Block;
 	import fr.n7.stl.minijava.ast.type.AtomicType;
 	import fr.n7.stl.minijava.ast.type.Type;
-	import fr.n7.stl.minijava.ast.clazz.Modifier;
-	import fr.n7.stl.minijava.ast.clazz.Class;
-	import fr.n7.stl.minijava.ast.clazz.Attribute;
-	import fr.n7.stl.minijava.ast.clazz.Constructor;
-	import fr.n7.stl.minijava.ast.clazz.Method;
+	import fr.n7.stl.minijava.ast.instruction.declaration.clazz.Modifier;
+	import fr.n7.stl.minijava.ast.instruction.declaration.clazz.ClassDeclaration;
+	import fr.n7.stl.minijava.ast.instruction.declaration.clazz.AttributeDeclaration;
+	import fr.n7.stl.minijava.ast.instruction.declaration.clazz.ConstructorDeclaration;
+	import fr.n7.stl.minijava.ast.instruction.declaration.clazz.MethodDeclaration;
 
 
 import org.antlr.v4.runtime.ParserRuleContext;

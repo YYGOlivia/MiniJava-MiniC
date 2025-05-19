@@ -8,11 +8,11 @@ options {
 	import fr.n7.stl.minijava.ast.Block;
 	import fr.n7.stl.minijava.ast.type.AtomicType;
 	import fr.n7.stl.minijava.ast.type.Type;
-	import fr.n7.stl.minijava.ast.clazz.Modifier;
-	import fr.n7.stl.minijava.ast.clazz.Class;
-	import fr.n7.stl.minijava.ast.clazz.Attribute;
-	import fr.n7.stl.minijava.ast.clazz.Constructor;
-	import fr.n7.stl.minijava.ast.clazz.Method;
+	import fr.n7.stl.minijava.ast.instruction.declaration.clazz.Modifier;
+	import fr.n7.stl.minijava.ast.instruction.declaration.clazz.ClassDeclaration;
+	import fr.n7.stl.minijava.ast.instruction.declaration.clazz.AttributeDeclaration;
+	import fr.n7.stl.minijava.ast.instruction.declaration.clazz.ConstructorDeclaration;
+	import fr.n7.stl.minijava.ast.instruction.declaration.clazz.MethodDeclaration;
 }
 
 programme:
@@ -24,7 +24,7 @@ bloc
 	AccoladeOuvrante instructions += instruction* AccoladeFermante;
 
 classe
-	returns[Class c]:
+	returns[ClassDeclaration c]:
 	// class ident {bloc}
 	DefClasse nom = Identificateur AccoladeOuvrante membres += membre* AccoladeFermante;
 
@@ -34,17 +34,17 @@ membre:
 	| methode; // public int getA() {...}
 
 attribut
-	returns[Attribute a]:
+	returns[AttributeDeclaration a]:
 	// private int a; | public int a = 0;
 	modificateur Final? type Identificateur (Egal expression)? PtVirg;
 
 constructeur
-	returns[Constructor c]:
+	returns[ConstructorDeclaration c]:
 	// public A() {...}
 	modificateur nom = Identificateur ParOuv parametres ParFer block = bloc;
 
 methode
-	returns[Method m]:
+	returns[MethodDeclaration m]:
 	// public int getA() {...}
 	modificateur type nom = Identificateur ParOuv parametres ParFer block = bloc;
 
