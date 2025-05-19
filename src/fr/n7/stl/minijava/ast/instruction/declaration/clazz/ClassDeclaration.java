@@ -1,6 +1,7 @@
 
 package fr.n7.stl.minijava.ast.instruction.declaration.clazz;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import fr.n7.stl.minijava.ast.scope.Declaration;
@@ -13,9 +14,31 @@ import fr.n7.stl.util.SemanticsUndefinedException;
 public class ClassDeclaration implements Type, Declaration {
 
     private String name;
-    private List<AttributeDeclaration> attributes;
-    private List<MethodDeclaration> methods;
-    private List<ConstructorDeclaration> constructors;
+    private Modifier mod;
+    private String parentName;
+    private List<AttributeDeclaration> attributes = new LinkedList<>();
+    private List<MethodDeclaration> methods = new LinkedList<>();
+    private List<ConstructorDeclaration> constructors = new LinkedList<>();
+
+    public ClassDeclaration(String name, String parentName, Modifier mod, List<Definition> defs) {
+        this.name = name;
+        this.mod = mod;
+        this.parentName = parentName;
+
+        for (Definition def : defs) {
+            if (def instanceof AttributeDeclaration) {
+                this.attributes.add((AttributeDeclaration) def);
+            } else if (def instanceof MethodDeclaration) {
+                this.methods.add((MethodDeclaration) def);
+            } else if (def instanceof ConstructorDeclaration) {
+                this.constructors.add((ConstructorDeclaration) def);
+            } else {
+                throw new SemanticsUndefinedException(
+                        "Unknown Definition type in ClassDeclaration: " + def.getClass().getName());
+            }
+        }
+
+    }
 
     @Override
     public String getName() {

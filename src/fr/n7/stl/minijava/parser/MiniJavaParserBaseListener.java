@@ -9,6 +9,10 @@
 	import fr.n7.stl.minijava.ast.instruction.declaration.clazz.AttributeDeclaration;
 	import fr.n7.stl.minijava.ast.instruction.declaration.clazz.ConstructorDeclaration;
 	import fr.n7.stl.minijava.ast.instruction.declaration.clazz.MethodDeclaration;
+	import fr.n7.stl.minijava.ast.instruction.declaration.clazz.Definition;
+	import fr.n7.stl.minijava.ast.instruction.Instruction;
+	import fr.n7.stl.minijava.ast.instruction.declaration.ParameterDeclaration;
+	import fr.n7.stl.minijava.ast.expression.Expression;
 
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -39,18 +43,6 @@ public class MiniJavaParserBaseListener implements MiniJavaParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBloc(MiniJavaParser.BlocContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitBloc(MiniJavaParser.BlocContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterClasse(MiniJavaParser.ClasseContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -63,25 +55,13 @@ public class MiniJavaParserBaseListener implements MiniJavaParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterMembre(MiniJavaParser.MembreContext ctx) { }
+	@Override public void enterDefinition(MiniJavaParser.DefinitionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitMembre(MiniJavaParser.MembreContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterAttribut(MiniJavaParser.AttributContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitAttribut(MiniJavaParser.AttributContext ctx) { }
+	@Override public void exitDefinition(MiniJavaParser.DefinitionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -111,6 +91,42 @@ public class MiniJavaParserBaseListener implements MiniJavaParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterAttribut(MiniJavaParser.AttributContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAttribut(MiniJavaParser.AttributContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterEntete(MiniJavaParser.EnteteContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitEntete(MiniJavaParser.EnteteContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCorps(MiniJavaParser.CorpsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCorps(MiniJavaParser.CorpsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterParametres(MiniJavaParser.ParametresContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -123,25 +139,229 @@ public class MiniJavaParserBaseListener implements MiniJavaParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterInstruction(MiniJavaParser.InstructionContext ctx) { }
+	@Override public void enterInstr(MiniJavaParser.InstrContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitInstruction(MiniJavaParser.InstructionContext ctx) { }
+	@Override public void exitInstr(MiniJavaParser.InstrContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpression(MiniJavaParser.ExpressionContext ctx) { }
+	@Override public void enterExprNot(MiniJavaParser.ExprNotContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExpression(MiniJavaParser.ExpressionContext ctx) { }
+	@Override public void exitExprNot(MiniJavaParser.ExprNotContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExprConstructorCall(MiniJavaParser.ExprConstructorCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExprConstructorCall(MiniJavaParser.ExprConstructorCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExprEq(MiniJavaParser.ExprEqContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExprEq(MiniJavaParser.ExprEqContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExprMult(MiniJavaParser.ExprMultContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExprMult(MiniJavaParser.ExprMultContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExprConstante(MiniJavaParser.ExprConstanteContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExprConstante(MiniJavaParser.ExprConstanteContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExprIneq(MiniJavaParser.ExprIneqContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExprIneq(MiniJavaParser.ExprIneqContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExprParenthesee(MiniJavaParser.ExprParentheseeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExprParenthesee(MiniJavaParser.ExprParentheseeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExprArrayAccess(MiniJavaParser.ExprArrayAccessContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExprArrayAccess(MiniJavaParser.ExprArrayAccessContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExprCond(MiniJavaParser.ExprCondContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExprCond(MiniJavaParser.ExprCondContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExprOr(MiniJavaParser.ExprOrContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExprOr(MiniJavaParser.ExprOrContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExprThisMethodCall(MiniJavaParser.ExprThisMethodCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExprThisMethodCall(MiniJavaParser.ExprThisMethodCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExprAttribute(MiniJavaParser.ExprAttributeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExprAttribute(MiniJavaParser.ExprAttributeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExprAdd(MiniJavaParser.ExprAddContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExprAdd(MiniJavaParser.ExprAddContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExprAnd(MiniJavaParser.ExprAndContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExprAnd(MiniJavaParser.ExprAndContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExprSequence(MiniJavaParser.ExprSequenceContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExprSequence(MiniJavaParser.ExprSequenceContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExprMethodCall(MiniJavaParser.ExprMethodCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExprMethodCall(MiniJavaParser.ExprMethodCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExprOposite(MiniJavaParser.ExprOpositeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExprOposite(MiniJavaParser.ExprOpositeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExprThis(MiniJavaParser.ExprThisContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExprThis(MiniJavaParser.ExprThisContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -243,109 +463,97 @@ public class MiniJavaParserBaseListener implements MiniJavaParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterModificateur(MiniJavaParser.ModificateurContext ctx) { }
+	@Override public void enterExprTrue(MiniJavaParser.ExprTrueContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitModificateur(MiniJavaParser.ModificateurContext ctx) { }
+	@Override public void exitExprTrue(MiniJavaParser.ExprTrueContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpressionTrue(MiniJavaParser.ExpressionTrueContext ctx) { }
+	@Override public void enterExprFalse(MiniJavaParser.ExprFalseContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExpressionTrue(MiniJavaParser.ExpressionTrueContext ctx) { }
+	@Override public void exitExprFalse(MiniJavaParser.ExprFalseContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpressionFalse(MiniJavaParser.ExpressionFalseContext ctx) { }
+	@Override public void enterExprInt(MiniJavaParser.ExprIntContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExpressionFalse(MiniJavaParser.ExpressionFalseContext ctx) { }
+	@Override public void exitExprInt(MiniJavaParser.ExprIntContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpressionInt(MiniJavaParser.ExpressionIntContext ctx) { }
+	@Override public void enterExprFloat(MiniJavaParser.ExprFloatContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExpressionInt(MiniJavaParser.ExpressionIntContext ctx) { }
+	@Override public void exitExprFloat(MiniJavaParser.ExprFloatContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpressionFloat(MiniJavaParser.ExpressionFloatContext ctx) { }
+	@Override public void enterExprCharacter(MiniJavaParser.ExprCharacterContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExpressionFloat(MiniJavaParser.ExpressionFloatContext ctx) { }
+	@Override public void exitExprCharacter(MiniJavaParser.ExprCharacterContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpressionCharacter(MiniJavaParser.ExpressionCharacterContext ctx) { }
+	@Override public void enterExprString(MiniJavaParser.ExprStringContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExpressionCharacter(MiniJavaParser.ExpressionCharacterContext ctx) { }
+	@Override public void exitExprString(MiniJavaParser.ExprStringContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpressionString(MiniJavaParser.ExpressionStringContext ctx) { }
+	@Override public void enterExprNull(MiniJavaParser.ExprNullContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExpressionString(MiniJavaParser.ExpressionStringContext ctx) { }
+	@Override public void exitExprNull(MiniJavaParser.ExprNullContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpressionNull(MiniJavaParser.ExpressionNullContext ctx) { }
+	@Override public void enterExprAccess(MiniJavaParser.ExprAccessContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExpressionNull(MiniJavaParser.ExpressionNullContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterExpressionAccess(MiniJavaParser.ExpressionAccessContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitExpressionAccess(MiniJavaParser.ExpressionAccessContext ctx) { }
+	@Override public void exitExprAccess(MiniJavaParser.ExprAccessContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

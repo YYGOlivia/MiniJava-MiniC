@@ -12,7 +12,7 @@ ParFer: ')';
 CrochOuv: '[';
 CrochFer: ']';
 Point: '.';
-PointInterrogation: '?';
+PtInterro: '?';
 DeuxPoint: ':';
 Virg: ',';
 PtVirg: ';';
@@ -34,8 +34,8 @@ PourCent: '%';
 Plus: '+';
 Moins: '-';
 // Operateurs logiques
-DoubleBarre: '||';
-DoubleEsperluette: '&&';
+Ou: '||';
+Et: '&&';
 PointExclamation: '!';
 // Operateurs de comparaison
 Inf: '<';
@@ -43,7 +43,7 @@ Sup: '>';
 InfEg: '<=';
 SupEg: '>=';
 DoubleEgal: '==';
-ExclamationEgal: '!=';
+Different: '!=';
 // Types
 TypeEntier: 'int';
 TypeFlottant: 'float';
@@ -58,10 +58,15 @@ Nul: 'null';
 Caractere: '\'' . '\'';
 Chaine: '"' .*? '"';
 
-// modificateurs d'accès
+// modificateurs
 Publique: 'public';
+Abstrait: 'abstract';
 Prive: 'private';
 Statique: 'static';
+Protege: 'protected';
+
+// héritage
+Etend: 'extends';
 
 Identificateur: [a-zA-Z][a-zA-Z_0-9]*;
 Entier: '0' | ([1-9][0-9]*);

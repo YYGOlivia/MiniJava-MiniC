@@ -15,6 +15,12 @@ public class ConditionalExpression implements Expression {
     private Expression thenExpression;
     private Expression elseExpression;
 
+    public ConditionalExpression(Expression cond, Expression thenExpr, Expression elseExpr) {
+        this.condition = cond;
+        this.thenExpression = thenExpr;
+        this.elseExpression = elseExpr;
+    }
+
     @Override
     public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
         Type condType = condition.getType();

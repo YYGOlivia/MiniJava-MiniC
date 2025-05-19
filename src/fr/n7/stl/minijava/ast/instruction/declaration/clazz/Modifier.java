@@ -4,7 +4,8 @@ public enum Modifier {
 
     Public,
     Private,
-    Static;
+    Static,
+    Abstract;
 
     @Override
     public String toString() {

@@ -1,0 +1,29 @@
+class A {
+    // attribut + get + set
+    private static final int a=2;
+
+    public int getA() {
+        return a;
+    }
+
+    private void setA(int a) {
+    }
+
+    // attribut type complexe + set + get
+    private int[] tab;
+
+    private int[] getTab() {
+    }
+
+    private void setTab(int[] tab) {
+        int i = 1;
+        i = new B();
+    }
+
+    // constructeur
+    public A() {
+    }
+}
+
+class B {
+}

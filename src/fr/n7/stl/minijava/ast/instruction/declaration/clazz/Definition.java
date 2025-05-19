@@ -1,4 +1,5 @@
 package fr.n7.stl.minijava.ast.instruction.declaration.clazz;
 
-public class AttributeDeclaration implements Definition {
+public interface Definition {
+
 }

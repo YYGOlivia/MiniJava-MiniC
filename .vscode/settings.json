@@ -6,7 +6,7 @@
     "files.associations": {
         "*.tam": "lisp",
         "*.block": "c",
-        "*.mj": "java"
+        "*.mjava": "java"
     },
     "java.project.referencedLibraries": [
         "tools/antlr-4.13.1-complete.jar",
