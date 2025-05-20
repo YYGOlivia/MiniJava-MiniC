@@ -25,44 +25,44 @@ public interface Instruction {
 	 * check
 	 * that the declaration are allowed.
 	 * 
-	 * @param _scope Inherited Scope attribute that contains the identifiers defined
+	 * @param scope Inherited Scope attribute that contains the identifiers defined
 	 *               previously
 	 *               in the context.
 	 * @return Synthesized Semantics attribute that indicates if the identifier
 	 *         declaration are
 	 *         allowed.
 	 */
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope);
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope);
 
 	/**
 	 * Inherited Semantics attribute to collect all the identifiers declaration and
 	 * check
 	 * that the declaration are allowed.
 	 * 
-	 * @param _scope     Inherited Scope attribute that contains the identifiers
+	 * @param scope     Inherited Scope attribute that contains the identifiers
 	 *                   defined previously
 	 *                   in the context.
-	 * @param _container Inherited Container attribute that allows to link the
+	 * @param container Inherited Container attribute that allows to link the
 	 *                   return instructions
 	 *                   with the function declaration.
 	 * @return Synthesized Semantics attribute that indicates if the identifier
 	 *         declaration are
 	 *         allowed.
 	 */
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container);
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope, FunctionDeclaration container);
 
 	/**
 	 * Inherited Semantics attribute to check that all identifiers have been defined
 	 * and
 	 * associate all identifiers uses with their definitions.
 	 * 
-	 * @param _scope Inherited Scope attribute that contains the defined
+	 * @param scope Inherited Scope attribute that contains the defined
 	 *               identifiers.
 	 * @return Synthesized Semantics attribute that indicates if the identifier used
 	 *         in the
 	 *         instruction have been previously defined.
 	 */
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope);
+	public boolean completeResolve(HierarchicalScope<Declaration> scope);
 
 	/**
 	 * Synthesized Semantics attribute to check that an instruction if well typed.
@@ -77,21 +77,21 @@ public interface Instruction {
 	 * Synthesized Semantics attribute that compute the size of the allocated
 	 * memory.
 	 * 
-	 * @param _register Inherited Register associated to the address of the
+	 * @param register Inherited Register associated to the address of the
 	 *                  variables.
-	 * @param _offset   Inherited Current offset for the address of the variables.
+	 * @param offset   Inherited Current offset for the address of the variables.
 	 * @return Synthesized Size of the memory allocated to the variables.
 	 */
-	public int allocateMemory(Register _register, int _offset);
+	public int allocateMemory(Register register, int offset);
 
 	/**
 	 * Inherited Semantics attribute to build the nodes of the abstract syntax tree
 	 * for the generated TAM code.
 	 * Synthesized Semantics attribute that provide the generated TAM code.
 	 * 
-	 * @param _factory Inherited Factory to build AST nodes for TAM code.
+	 * @param factory Inherited Factory to build AST nodes for TAM code.
 	 * @return Synthesized AST for the generated TAM code.
 	 */
-	public Fragment getCode(TAMFactory _factory);
+	public Fragment getCode(TAMFactory factory);
 
 }

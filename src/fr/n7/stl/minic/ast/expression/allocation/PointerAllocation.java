@@ -23,8 +23,8 @@ public class PointerAllocation implements AccessibleExpression, AssignableExpres
 
 	protected Type element;
 
-	public PointerAllocation(Type _element) {
-		this.element = _element;
+	public PointerAllocation(Type element) {
+		this.element = element;
 	}
 
 	/*
@@ -45,8 +45,8 @@ public class PointerAllocation implements AccessibleExpression, AssignableExpres
 	 * Scope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		boolean okElement = element.completeResolve(_scope);
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
+		boolean okElement = element.completeResolve(scope);
 		Type elementTrueType = NamedType.toBaseType(element);
 		element = elementTrueType;
 		return okElement;
@@ -60,8 +60,8 @@ public class PointerAllocation implements AccessibleExpression, AssignableExpres
 	 * Scope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		boolean okElement = element.completeResolve(_scope);
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+		boolean okElement = element.completeResolve(scope);
 		Type elementTrueType = NamedType.toBaseType(element);
 		element = elementTrueType;
 		return okElement;
@@ -84,9 +84,9 @@ public class PointerAllocation implements AccessibleExpression, AssignableExpres
 	 * @see fr.n7.stl.block.ast.Expression#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		Fragment fragment = _factory.createFragment();
-		fragment.add(_factory.createLoadL(element.length()));
+	public Fragment getCode(TAMFactory factory) {
+		Fragment fragment = factory.createFragment();
+		fragment.add(factory.createLoadL(element.length()));
 		fragment.add(Library.MAlloc);
 		return fragment;
 	}

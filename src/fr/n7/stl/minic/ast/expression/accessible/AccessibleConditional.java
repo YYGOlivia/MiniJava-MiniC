@@ -12,8 +12,8 @@ import fr.n7.stl.minic.ast.expression.Expression;
  */
 public class AccessibleConditional extends AbstractConditional<AccessibleExpression> implements AccessibleExpression {
 
-	public AccessibleConditional(Expression _condition, AccessibleExpression _then, AccessibleExpression _else) {
-		super(_condition, _then, _else);
+	public AccessibleConditional(Expression condition, AccessibleExpression thenExpr, AccessibleExpression elseExpr) {
+		super(condition, thenExpr, elseExpr);
 	}
 
 }

@@ -32,11 +32,11 @@ public class First implements AccessibleExpression {
 	 * Builds an Abstract Syntax Tree node for an expression extracting the first
 	 * component of a couple.
 	 * 
-	 * @param _target : AST node for the expression whose value must whose first
+	 * @param target : AST node for the expression whose value must whose first
 	 *                element is extracted by the expression.
 	 */
-	public First(AccessibleExpression _target) {
-		this.target = _target;
+	public First(AccessibleExpression target) {
+		this.target = target;
 	}
 
 	/*
@@ -56,8 +56,8 @@ public class First implements AccessibleExpression {
 	 * HierarchicalScope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		boolean okTarget = this.target.collectAndPartialResolve(_scope);
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
+		boolean okTarget = this.target.collectAndPartialResolve(scope);
 		Type targetTrueType = NamedType.getTrueType(target);
 		if (!(targetTrueType instanceof CoupleType)) {
 			Logger.error("[First] " + target + " should be a couple type (is " + target.getType() + ").");
@@ -74,8 +74,8 @@ public class First implements AccessibleExpression {
 	 * HierarchicalScope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-	boolean okTarget = this.target.completeResolve(_scope);
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+	boolean okTarget = this.target.completeResolve(scope);
 		Type targetTrueType = NamedType.getTrueType(target);
 		if (!(targetTrueType instanceof CoupleType)) {
 			Logger.error("[First] " + target + " should be a couple type (is " + target.getType() + ").");
@@ -101,12 +101,12 @@ public class First implements AccessibleExpression {
 	 * @see fr.n7.stl.block.ast.Expression#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		Fragment fragment = _factory.createFragment();
+	public Fragment getCode(TAMFactory factory) {
+		Fragment fragment = factory.createFragment();
 		// LOAD la variable
-		fragment.append(target.getCode(_factory));
+		fragment.append(target.getCode(factory));
 		// POP (0) 1
-		fragment.add(_factory.createPop(0, 1));
+		fragment.add(factory.createPop(0, 1));
 		return fragment;
 	}
 

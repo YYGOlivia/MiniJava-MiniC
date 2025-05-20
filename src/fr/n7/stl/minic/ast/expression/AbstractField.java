@@ -26,13 +26,13 @@ public abstract class AbstractField<RecordKind extends Expression> implements Ex
 	 * Construction for the implementation of a record field access expression
 	 * Abstract Syntax Tree node.
 	 * 
-	 * @param _record Abstract Syntax Tree for the record part in a record field
+	 * @param record Abstract Syntax Tree for the record part in a record field
 	 *                access expression.
-	 * @param _name   Name of the field in the record field access expression.
+	 * @param name   Name of the field in the record field access expression.
 	 */
-	public AbstractField(RecordKind _record, String _name) {
-		this.record = _record;
-		this.name = _name;
+	public AbstractField(RecordKind record, String name) {
+		this.record = record;
+		this.name = name;
 	}
 
 	/*
@@ -53,9 +53,9 @@ public abstract class AbstractField<RecordKind extends Expression> implements Ex
 	 * HierarchicalScope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		boolean okRecord = this.record.collectAndPartialResolve(_scope);
-		boolean okRecordType = this.record.getType().completeResolve(_scope);
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
+		boolean okRecord = this.record.collectAndPartialResolve(scope);
+		boolean okRecordType = this.record.getType().completeResolve(scope);
 		Type recordTrueType = NamedType.getTrueType(record);
 
 		if (!(recordTrueType instanceof RecordType)) {
@@ -80,15 +80,15 @@ public abstract class AbstractField<RecordKind extends Expression> implements Ex
 	 * HierarchicalScope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
 		Type recordTrueType = NamedType.getTrueType(record);
 		if (!(recordTrueType instanceof RecordType)) {
 			Logger.error("[AbstractField] " + this.record.toString() + " is not a record type.");
 			return false;
 		}
 
-		boolean okRecord = this.record.completeResolve(_scope);
-		boolean okRecordType = this.record.getType().completeResolve(_scope);
+		boolean okRecord = this.record.completeResolve(scope);
+		boolean okRecordType = this.record.getType().completeResolve(scope);
 
 		RecordType recordType = (RecordType) recordTrueType;
 		field = recordType.get(this.name);

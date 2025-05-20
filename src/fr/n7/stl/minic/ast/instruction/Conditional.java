@@ -29,15 +29,15 @@ public class Conditional implements Instruction {
 	protected Block thenBranch;
 	protected Block elseBranch;
 
-	public Conditional(Expression _condition, Block _then, Block _else) {
-		this.condition = _condition;
-		this.thenBranch = _then;
-		this.elseBranch = _else;
+	public Conditional(Expression condition, Block thenBlock, Block elseBlock) {
+		this.condition = condition;
+		this.thenBranch = thenBlock;
+		this.elseBranch = elseBlock;
 	}
 
-	public Conditional(Expression _condition, Block _then) {
-		this.condition = _condition;
-		this.thenBranch = _then;
+	public Conditional(Expression condition, Block thenBlock) {
+		this.condition = condition;
+		this.thenBranch = thenBlock;
 		this.elseBranch = null;
 	}
 
@@ -60,10 +60,10 @@ public class Conditional implements Instruction {
 	 * .Scope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		SymbolTable thenScope = new SymbolTable(_scope);
-		SymbolTable elseScope = new SymbolTable(_scope);
-		boolean okCond = condition.collectAndPartialResolve(_scope);
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
+		SymbolTable thenScope = new SymbolTable(scope);
+		SymbolTable elseScope = new SymbolTable(scope);
+		boolean okCond = condition.collectAndPartialResolve(scope);
 		boolean okThen = thenBranch.collectAndPartialResolve(thenScope);
 		boolean okElse = (elseBranch == null) ? true : elseBranch.collectAndPartialResolve(elseScope);
 		return okCond && okThen & okElse;
@@ -77,12 +77,12 @@ public class Conditional implements Instruction {
 	 * .Scope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
-		SymbolTable thenScope = new SymbolTable(_scope);
-		SymbolTable elseScope = new SymbolTable(_scope);
-		boolean okCond = condition.collectAndPartialResolve(_scope);
-		boolean okThen = thenBranch.collectAndPartialResolve(thenScope, _container);
-		boolean okElse = (elseBranch == null) ? true : elseBranch.collectAndPartialResolve(elseScope, _container);
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope, FunctionDeclaration container) {
+		SymbolTable thenScope = new SymbolTable(scope);
+		SymbolTable elseScope = new SymbolTable(scope);
+		boolean okCond = condition.collectAndPartialResolve(scope);
+		boolean okThen = thenBranch.collectAndPartialResolve(thenScope, container);
+		boolean okElse = (elseBranch == null) ? true : elseBranch.collectAndPartialResolve(elseScope, container);
 		return okCond && okThen & okElse;
 	}
 
@@ -94,10 +94,10 @@ public class Conditional implements Instruction {
 	 * .Scope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		SymbolTable thenScope = new SymbolTable(_scope);
-		SymbolTable elseScope = new SymbolTable(_scope);
-		boolean okCond = condition.completeResolve(_scope);
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+		SymbolTable thenScope = new SymbolTable(scope);
+		SymbolTable elseScope = new SymbolTable(scope);
+		boolean okCond = condition.completeResolve(scope);
 		boolean okThen = thenBranch.completeResolve(thenScope);
 		boolean okElse = (elseBranch == null) ? true : elseBranch.completeResolve(elseScope);
 		return okCond && okThen & okElse;
@@ -132,10 +132,10 @@ public class Conditional implements Instruction {
 	 * int)
 	 */
 	@Override
-	public int allocateMemory(Register _register, int _offset) {
-		thenBranch.allocateMemory(_register, _offset);
+	public int allocateMemory(Register register, int offset) {
+		thenBranch.allocateMemory(register, offset);
 		if (elseBranch != null) {
-			elseBranch.allocateMemory(_register, _offset);
+			elseBranch.allocateMemory(register, offset);
 		}
 		return 0;
 	}
@@ -146,29 +146,29 @@ public class Conditional implements Instruction {
 	 * @see fr.n7.stl.block.ast.Instruction#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		int num = _factory.createLabelNumber();
+	public Fragment getCode(TAMFactory factory) {
+		int num = factory.createLabelNumber();
 
-		Fragment _fragment = _factory.createFragment();
-		_fragment.append(condition.getCode(_factory));
+		Fragment fragment = factory.createFragment();
+		fragment.append(condition.getCode(factory));
 		if (elseBranch != null) {
 			// si la condition est fausse on jump au sinon
-			_fragment.add(_factory.createJumpIf("sinon_conditionnelle_" + num, 0));
+			fragment.add(factory.createJumpIf("sinon_conditionnelle_" + num, 0));
 		} else {
 			// si pas de else, on saute à la fin
-			_fragment.add(_factory.createJumpIf("fin_conditionnelle_" + num, 0));
+			fragment.add(factory.createJumpIf("fin_conditionnelle_" + num, 0));
 		}
-		_fragment.append(thenBranch.getCode(_factory));
+		fragment.append(thenBranch.getCode(factory));
 		if (elseBranch != null) {
-			_fragment.add(_factory.createJump("fin_conditionnelle_" + num));
-			Fragment elseCode = elseBranch.getCode(_factory);
+			fragment.add(factory.createJump("fin_conditionnelle_" + num));
+			Fragment elseCode = elseBranch.getCode(factory);
 			elseCode.addPrefix("sinon_conditionnelle_" + num);
-			_fragment.append(elseCode);
+			fragment.append(elseCode);
 
 		}
-		_fragment.addSuffix("fin_conditionnelle_" + num);
-		// _fragment.addComment(toString());
-		return _fragment;
+		fragment.addSuffix("fin_conditionnelle_" + num);
+		// fragment.addComment(toString());
+		return fragment;
 	}
 
 }

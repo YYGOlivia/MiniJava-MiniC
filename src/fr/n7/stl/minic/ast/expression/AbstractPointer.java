@@ -27,11 +27,11 @@ public abstract class AbstractPointer<PointerKind extends Expression> implements
 	 * Construction for the implementation of a pointer content access expression
 	 * Abstract Syntax Tree node.
 	 * 
-	 * @param _pointer Abstract Syntax Tree for the pointer expression in a pointer
+	 * @param pointer Abstract Syntax Tree for the pointer expression in a pointer
 	 *                 content access expression.
 	 */
-	public AbstractPointer(PointerKind _pointer) {
-		this.pointer = _pointer;
+	public AbstractPointer(PointerKind pointer) {
+		this.pointer = pointer;
 	}
 
 	/*
@@ -52,8 +52,8 @@ public abstract class AbstractPointer<PointerKind extends Expression> implements
 	 * HierarchicalScope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		return pointer.collectAndPartialResolve(_scope);
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
+		return pointer.collectAndPartialResolve(scope);
 	}
 
 	/*
@@ -64,8 +64,8 @@ public abstract class AbstractPointer<PointerKind extends Expression> implements
 	 * HierarchicalScope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		return pointer.completeResolve(_scope);
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+		return pointer.completeResolve(scope);
 	}
 
 	/**

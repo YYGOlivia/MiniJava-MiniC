@@ -67,7 +67,7 @@ public class MiniJavaParser extends Parser {
 			"'private'", "'static'", "'protected'", "'extends'"
 		};
 	}
-	private static final String[] _LITERAL_NAMES = makeLiteralNames();
+	private static final String[] _LITERALnameS = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
 			null, "Egal", "AccoladeOuvrante", "AccoladeFermante", "ParOuv", "ParFer", 
@@ -81,8 +81,8 @@ public class MiniJavaParser extends Parser {
 			"Entier", "Flottant", "CommentaireLigne", "CommentaireBloc", "WS"
 		};
 	}
-	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
-	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
+	private static final String[] _SYMBOLICnameS = makeSymbolicNames();
+	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERALnameS, _SYMBOLICnameS);
 
 	/**
 	 * @deprecated Use {@link #VOCABULARY} instead.
@@ -90,7 +90,7 @@ public class MiniJavaParser extends Parser {
 	@Deprecated
 	public static final String[] tokenNames;
 	static {
-		tokenNames = new String[_SYMBOLIC_NAMES.length];
+		tokenNames = new String[_SYMBOLICnameS.length];
 		for (int i = 0; i < tokenNames.length; i++) {
 			tokenNames[i] = VOCABULARY.getLiteralName(i);
 			if (tokenNames[i] == null) {
@@ -156,11 +156,11 @@ public class MiniJavaParser extends Parser {
 	}
 
 	public final ProgrammeContext programme() throws RecognitionException {
-		ProgrammeContext _localctx = new ProgrammeContext(_ctx, getState());
-		enterRule(_localctx, 0, RULE_programme);
+		ProgrammeContext localctx = new ProgrammeContext(_ctx, getState());
+		enterRule(localctx, 0, RULE_programme);
 		int _la;
 		try {
-			enterOuterAlt(_localctx, 1);
+			enterOuterAlt(localctx, 1);
 			{
 			setState(39);
 			_errHandler.sync(this);
@@ -179,14 +179,14 @@ public class MiniJavaParser extends Parser {
 			}
 		}
 		catch (RecognitionException re) {
-			_localctx.exception = re;
+			localctx.exception = re;
 			_errHandler.reportError(this, re);
 			_errHandler.recover(this, re);
 		}
 		finally {
 			exitRule();
 		}
-		return _localctx;
+		return localctx;
 	}
 
 	@SuppressWarnings("CheckReturnValue")
@@ -228,11 +228,11 @@ public class MiniJavaParser extends Parser {
 	}
 
 	public final ClasseContext classe() throws RecognitionException {
-		ClasseContext _localctx = new ClasseContext(_ctx, getState());
-		enterRule(_localctx, 2, RULE_classe);
+		ClasseContext localctx = new ClasseContext(_ctx, getState());
+		enterRule(localctx, 2, RULE_classe);
 		int _la;
 		try {
-			enterOuterAlt(_localctx, 1);
+			enterOuterAlt(localctx, 1);
 			{
 			setState(43);
 			_errHandler.sync(this);
@@ -240,10 +240,10 @@ public class MiniJavaParser extends Parser {
 			if (_la==Publique || _la==Abstrait) {
 				{
 				setState(42);
-				((ClasseContext)_localctx).mod = _input.LT(1);
+				((ClasseContext)localctx).mod = _input.LT(1);
 				_la = _input.LA(1);
 				if ( !(_la==Publique || _la==Abstrait) ) {
-					((ClasseContext)_localctx).mod = (Token)_errHandler.recoverInline(this);
+					((ClasseContext)localctx).mod = (Token)_errHandler.recoverInline(this);
 				}
 				else {
 					if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -256,7 +256,7 @@ public class MiniJavaParser extends Parser {
 			setState(45);
 			match(DefClasse);
 			setState(46);
-			((ClasseContext)_localctx).name = match(Identificateur);
+			((ClasseContext)localctx).name = match(Identificateur);
 			setState(49);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
@@ -265,7 +265,7 @@ public class MiniJavaParser extends Parser {
 				setState(47);
 				match(Etend);
 				setState(48);
-				((ClasseContext)_localctx).parent = match(Identificateur);
+				((ClasseContext)localctx).parent = match(Identificateur);
 				}
 			}
 
@@ -278,8 +278,8 @@ public class MiniJavaParser extends Parser {
 				{
 				{
 				setState(52);
-				((ClasseContext)_localctx).definition = definition();
-				((ClasseContext)_localctx).defs.add(((ClasseContext)_localctx).definition);
+				((ClasseContext)localctx).definition = definition();
+				((ClasseContext)localctx).defs.add(((ClasseContext)localctx).definition);
 				}
 				}
 				setState(57);
@@ -291,14 +291,14 @@ public class MiniJavaParser extends Parser {
 			}
 		}
 		catch (RecognitionException re) {
-			_localctx.exception = re;
+			localctx.exception = re;
 			_errHandler.reportError(this, re);
 			_errHandler.recover(this, re);
 		}
 		finally {
 			exitRule();
 		}
-		return _localctx;
+		return localctx;
 	}
 
 	@SuppressWarnings("CheckReturnValue")
@@ -331,11 +331,11 @@ public class MiniJavaParser extends Parser {
 	}
 
 	public final DefinitionContext definition() throws RecognitionException {
-		DefinitionContext _localctx = new DefinitionContext(_ctx, getState());
-		enterRule(_localctx, 4, RULE_definition);
+		DefinitionContext localctx = new DefinitionContext(_ctx, getState());
+		enterRule(localctx, 4, RULE_definition);
 		int _la;
 		try {
-			enterOuterAlt(_localctx, 1);
+			enterOuterAlt(localctx, 1);
 			{
 			setState(60);
 			_la = _input.LA(1);
@@ -372,14 +372,14 @@ public class MiniJavaParser extends Parser {
 			}
 		}
 		catch (RecognitionException re) {
-			_localctx.exception = re;
+			localctx.exception = re;
 			_errHandler.reportError(this, re);
 			_errHandler.recover(this, re);
 		}
 		finally {
 			exitRule();
 		}
-		return _localctx;
+		return localctx;
 	}
 
 	@SuppressWarnings("CheckReturnValue")
@@ -409,10 +409,10 @@ public class MiniJavaParser extends Parser {
 	}
 
 	public final ConstructeurContext constructeur() throws RecognitionException {
-		ConstructeurContext _localctx = new ConstructeurContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_constructeur);
+		ConstructeurContext localctx = new ConstructeurContext(_ctx, getState());
+		enterRule(localctx, 6, RULE_constructeur);
 		try {
-			enterOuterAlt(_localctx, 1);
+			enterOuterAlt(localctx, 1);
 			{
 			setState(66);
 			match(Identificateur);
@@ -427,14 +427,14 @@ public class MiniJavaParser extends Parser {
 			}
 		}
 		catch (RecognitionException re) {
-			_localctx.exception = re;
+			localctx.exception = re;
 			_errHandler.reportError(this, re);
 			_errHandler.recover(this, re);
 		}
 		finally {
 			exitRule();
 		}
-		return _localctx;
+		return localctx;
 	}
 
 	@SuppressWarnings("CheckReturnValue")
@@ -464,8 +464,8 @@ public class MiniJavaParser extends Parser {
 	}
 
 	public final MethodeContext methode() throws RecognitionException {
-		MethodeContext _localctx = new MethodeContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_methode);
+		MethodeContext localctx = new MethodeContext(_ctx, getState());
+		enterRule(localctx, 8, RULE_methode);
 		int _la;
 		try {
 			setState(82);
@@ -479,7 +479,7 @@ public class MiniJavaParser extends Parser {
 			case TypeVide:
 			case Statique:
 			case Identificateur:
-				enterOuterAlt(_localctx, 1);
+				enterOuterAlt(localctx, 1);
 				{
 				setState(73);
 				_errHandler.sync(this);
@@ -498,7 +498,7 @@ public class MiniJavaParser extends Parser {
 				}
 				break;
 			case Abstrait:
-				enterOuterAlt(_localctx, 2);
+				enterOuterAlt(localctx, 2);
 				{
 				setState(78);
 				match(Abstrait);
@@ -513,14 +513,14 @@ public class MiniJavaParser extends Parser {
 			}
 		}
 		catch (RecognitionException re) {
-			_localctx.exception = re;
+			localctx.exception = re;
 			_errHandler.reportError(this, re);
 			_errHandler.recover(this, re);
 		}
 		finally {
 			exitRule();
 		}
-		return _localctx;
+		return localctx;
 	}
 
 	@SuppressWarnings("CheckReturnValue")
@@ -553,15 +553,15 @@ public class MiniJavaParser extends Parser {
 	}
 
 	public final AttributContext attribut() throws RecognitionException {
-		AttributContext _localctx = new AttributContext(_ctx, getState());
-		enterRule(_localctx, 10, RULE_attribut);
+		AttributContext localctx = new AttributContext(_ctx, getState());
+		enterRule(localctx, 10, RULE_attribut);
 		int _la;
 		try {
 			setState(98);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case Statique:
-				enterOuterAlt(_localctx, 1);
+				enterOuterAlt(localctx, 1);
 				{
 				setState(84);
 				match(Statique);
@@ -571,7 +571,7 @@ public class MiniJavaParser extends Parser {
 				if (_la==Final) {
 					{
 					setState(85);
-					((AttributContext)_localctx).isFinal = match(Final);
+					((AttributContext)localctx).isFinal = match(Final);
 					}
 				}
 
@@ -594,7 +594,7 @@ public class MiniJavaParser extends Parser {
 			case TypeChaine:
 			case TypeVide:
 			case Identificateur:
-				enterOuterAlt(_localctx, 2);
+				enterOuterAlt(localctx, 2);
 				{
 				setState(94);
 				type(0);
@@ -609,14 +609,14 @@ public class MiniJavaParser extends Parser {
 			}
 		}
 		catch (RecognitionException re) {
-			_localctx.exception = re;
+			localctx.exception = re;
 			_errHandler.reportError(this, re);
 			_errHandler.recover(this, re);
 		}
 		finally {
 			exitRule();
 		}
-		return _localctx;
+		return localctx;
 	}
 
 	@SuppressWarnings("CheckReturnValue")
@@ -645,10 +645,10 @@ public class MiniJavaParser extends Parser {
 	}
 
 	public final EnteteContext entete() throws RecognitionException {
-		EnteteContext _localctx = new EnteteContext(_ctx, getState());
-		enterRule(_localctx, 12, RULE_entete);
+		EnteteContext localctx = new EnteteContext(_ctx, getState());
+		enterRule(localctx, 12, RULE_entete);
 		try {
-			enterOuterAlt(_localctx, 1);
+			enterOuterAlt(localctx, 1);
 			{
 			setState(100);
 			type(0);
@@ -663,14 +663,14 @@ public class MiniJavaParser extends Parser {
 			}
 		}
 		catch (RecognitionException re) {
-			_localctx.exception = re;
+			localctx.exception = re;
 			_errHandler.reportError(this, re);
 			_errHandler.recover(this, re);
 		}
 		finally {
 			exitRule();
 		}
-		return _localctx;
+		return localctx;
 	}
 
 	@SuppressWarnings("CheckReturnValue")
@@ -698,11 +698,11 @@ public class MiniJavaParser extends Parser {
 	}
 
 	public final CorpsContext corps() throws RecognitionException {
-		CorpsContext _localctx = new CorpsContext(_ctx, getState());
-		enterRule(_localctx, 14, RULE_corps);
+		CorpsContext localctx = new CorpsContext(_ctx, getState());
+		enterRule(localctx, 14, RULE_corps);
 		int _la;
 		try {
-			enterOuterAlt(_localctx, 1);
+			enterOuterAlt(localctx, 1);
 			{
 			setState(106);
 			match(AccoladeOuvrante);
@@ -725,14 +725,14 @@ public class MiniJavaParser extends Parser {
 			}
 		}
 		catch (RecognitionException re) {
-			_localctx.exception = re;
+			localctx.exception = re;
 			_errHandler.reportError(this, re);
 			_errHandler.recover(this, re);
 		}
 		finally {
 			exitRule();
 		}
-		return _localctx;
+		return localctx;
 	}
 
 	@SuppressWarnings("CheckReturnValue")
@@ -772,15 +772,15 @@ public class MiniJavaParser extends Parser {
 	}
 
 	public final ParametresContext parametres() throws RecognitionException {
-		ParametresContext _localctx = new ParametresContext(_ctx, getState());
-		enterRule(_localctx, 16, RULE_parametres);
+		ParametresContext localctx = new ParametresContext(_ctx, getState());
+		enterRule(localctx, 16, RULE_parametres);
 		int _la;
 		try {
 			setState(127);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case ParFer:
-				enterOuterAlt(_localctx, 1);
+				enterOuterAlt(localctx, 1);
 				{
 				}
 				break;
@@ -791,12 +791,12 @@ public class MiniJavaParser extends Parser {
 			case TypeChaine:
 			case TypeVide:
 			case Identificateur:
-				enterOuterAlt(_localctx, 2);
+				enterOuterAlt(localctx, 2);
 				{
 				setState(116);
-				((ParametresContext)_localctx).type1 = type(0);
+				((ParametresContext)localctx).type1 = type(0);
 				setState(117);
-				((ParametresContext)_localctx).ident = match(Identificateur);
+				((ParametresContext)localctx).ident = match(Identificateur);
 				setState(124);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
@@ -806,10 +806,10 @@ public class MiniJavaParser extends Parser {
 					setState(118);
 					match(Virg);
 					setState(119);
-					((ParametresContext)_localctx).type = type(0);
-					((ParametresContext)_localctx).suiteType.add(((ParametresContext)_localctx).type);
+					((ParametresContext)localctx).type = type(0);
+					((ParametresContext)localctx).suiteType.add(((ParametresContext)localctx).type);
 					setState(120);
-					((ParametresContext)_localctx).suiteIdent = match(Identificateur);
+					((ParametresContext)localctx).suiteIdent = match(Identificateur);
 					}
 					}
 					setState(126);
@@ -823,14 +823,14 @@ public class MiniJavaParser extends Parser {
 			}
 		}
 		catch (RecognitionException re) {
-			_localctx.exception = re;
+			localctx.exception = re;
 			_errHandler.reportError(this, re);
 			_errHandler.recover(this, re);
 		}
 		finally {
 			exitRule();
 		}
-		return _localctx;
+		return localctx;
 	}
 
 	@SuppressWarnings("CheckReturnValue")
@@ -888,14 +888,14 @@ public class MiniJavaParser extends Parser {
 	}
 
 	public final InstrContext instr() throws RecognitionException {
-		InstrContext _localctx = new InstrContext(_ctx, getState());
-		enterRule(_localctx, 18, RULE_instr);
+		InstrContext localctx = new InstrContext(_ctx, getState());
+		enterRule(localctx, 18, RULE_instr);
 		try {
 			setState(181);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,13,_ctx) ) {
 			case 1:
-				enterOuterAlt(_localctx, 1);
+				enterOuterAlt(localctx, 1);
 				{
 				setState(129);
 				match(Si);
@@ -906,11 +906,11 @@ public class MiniJavaParser extends Parser {
 				setState(132);
 				match(ParFer);
 				setState(133);
-				((InstrContext)_localctx).alors = corps();
+				((InstrContext)localctx).alors = corps();
 				}
 				break;
 			case 2:
-				enterOuterAlt(_localctx, 2);
+				enterOuterAlt(localctx, 2);
 				{
 				setState(135);
 				match(Si);
@@ -921,15 +921,15 @@ public class MiniJavaParser extends Parser {
 				setState(138);
 				match(ParFer);
 				setState(139);
-				((InstrContext)_localctx).alors = corps();
+				((InstrContext)localctx).alors = corps();
 				setState(140);
 				match(Sinon);
 				setState(141);
-				((InstrContext)_localctx).sinon = corps();
+				((InstrContext)localctx).sinon = corps();
 				}
 				break;
 			case 3:
-				enterOuterAlt(_localctx, 3);
+				enterOuterAlt(localctx, 3);
 				{
 				setState(143);
 				match(TantQue);
@@ -940,11 +940,11 @@ public class MiniJavaParser extends Parser {
 				setState(146);
 				match(ParFer);
 				setState(147);
-				((InstrContext)_localctx).body = corps();
+				((InstrContext)localctx).body = corps();
 				}
 				break;
 			case 4:
-				enterOuterAlt(_localctx, 4);
+				enterOuterAlt(localctx, 4);
 				{
 				setState(149);
 				match(Pour);
@@ -977,11 +977,11 @@ public class MiniJavaParser extends Parser {
 				setState(159);
 				match(ParFer);
 				setState(160);
-				((InstrContext)_localctx).body = corps();
+				((InstrContext)localctx).body = corps();
 				}
 				break;
 			case 5:
-				enterOuterAlt(_localctx, 5);
+				enterOuterAlt(localctx, 5);
 				{
 				setState(162);
 				match(Pour);
@@ -998,11 +998,11 @@ public class MiniJavaParser extends Parser {
 				setState(168);
 				match(ParFer);
 				setState(169);
-				((InstrContext)_localctx).body = corps();
+				((InstrContext)localctx).body = corps();
 				}
 				break;
 			case 6:
-				enterOuterAlt(_localctx, 6);
+				enterOuterAlt(localctx, 6);
 				{
 				setState(171);
 				match(Retour);
@@ -1013,7 +1013,7 @@ public class MiniJavaParser extends Parser {
 				}
 				break;
 			case 7:
-				enterOuterAlt(_localctx, 7);
+				enterOuterAlt(localctx, 7);
 				{
 				setState(175);
 				declLocale();
@@ -1022,7 +1022,7 @@ public class MiniJavaParser extends Parser {
 				}
 				break;
 			case 8:
-				enterOuterAlt(_localctx, 8);
+				enterOuterAlt(localctx, 8);
 				{
 				setState(178);
 				assignation();
@@ -1033,14 +1033,14 @@ public class MiniJavaParser extends Parser {
 			}
 		}
 		catch (RecognitionException re) {
-			_localctx.exception = re;
+			localctx.exception = re;
 			_errHandler.reportError(this, re);
 			_errHandler.recover(this, re);
 		}
 		finally {
 			exitRule();
 		}
-		return _localctx;
+		return localctx;
 	}
 
 	@SuppressWarnings("CheckReturnValue")
@@ -1423,23 +1423,23 @@ public class MiniJavaParser extends Parser {
 	private ExprContext expr(int _p) throws RecognitionException {
 		ParserRuleContext _parentctx = _ctx;
 		int _parentState = getState();
-		ExprContext _localctx = new ExprContext(_ctx, _parentState);
-		ExprContext _prevctx = _localctx;
+		ExprContext localctx = new ExprContext(_ctx, _parentState);
+		ExprContext _prevctx = localctx;
 		int _startState = 20;
-		enterRecursionRule(_localctx, 20, RULE_expr, _p);
+		enterRecursionRule(localctx, 20, RULE_expr, _p);
 		int _la;
 		try {
 			int _alt;
-			enterOuterAlt(_localctx, 1);
+			enterOuterAlt(localctx, 1);
 			{
 			setState(215);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,16,_ctx) ) {
 			case 1:
 				{
-				_localctx = new ExprParentheseeContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
+				localctx = new ExprParentheseeContext(localctx);
+				_ctx = localctx;
+				_prevctx = localctx;
 
 				setState(184);
 				match(ParOuv);
@@ -1451,9 +1451,9 @@ public class MiniJavaParser extends Parser {
 				break;
 			case 2:
 				{
-				_localctx = new ExprConstructorCallContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
+				localctx = new ExprConstructorCallContext(localctx);
+				_ctx = localctx;
+				_prevctx = localctx;
 				setState(188);
 				match(Nouveau);
 				setState(189);
@@ -1476,31 +1476,31 @@ public class MiniJavaParser extends Parser {
 				break;
 			case 3:
 				{
-				_localctx = new ExprNotContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
+				localctx = new ExprNotContext(localctx);
+				_ctx = localctx;
+				_prevctx = localctx;
 				setState(195);
 				match(PointExclamation);
 				setState(196);
-				((ExprNotContext)_localctx).droite = expr(13);
+				((ExprNotContext)localctx).droite = expr(13);
 				}
 				break;
 			case 4:
 				{
-				_localctx = new ExprOpositeContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
+				localctx = new ExprOpositeContext(localctx);
+				_ctx = localctx;
+				_prevctx = localctx;
 				setState(197);
 				match(Moins);
 				setState(198);
-				((ExprOpositeContext)_localctx).droite = expr(12);
+				((ExprOpositeContext)localctx).droite = expr(12);
 				}
 				break;
 			case 5:
 				{
-				_localctx = new ExprSequenceContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
+				localctx = new ExprSequenceContext(localctx);
+				_ctx = localctx;
+				_prevctx = localctx;
 				setState(199);
 				match(AccoladeOuvrante);
 				setState(200);
@@ -1511,18 +1511,18 @@ public class MiniJavaParser extends Parser {
 				break;
 			case 6:
 				{
-				_localctx = new ExprConstanteContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
+				localctx = new ExprConstanteContext(localctx);
+				_ctx = localctx;
+				_prevctx = localctx;
 				setState(203);
 				expressionConstante();
 				}
 				break;
 			case 7:
 				{
-				_localctx = new ExprThisContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
+				localctx = new ExprThisContext(localctx);
+				_ctx = localctx;
+				_prevctx = localctx;
 				setState(204);
 				match(Ceci);
 				setState(205);
@@ -1533,9 +1533,9 @@ public class MiniJavaParser extends Parser {
 				break;
 			case 8:
 				{
-				_localctx = new ExprThisMethodCallContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
+				localctx = new ExprThisMethodCallContext(localctx);
+				_ctx = localctx;
+				_prevctx = localctx;
 				setState(207);
 				match(Ceci);
 				setState(208);
@@ -1566,23 +1566,23 @@ public class MiniJavaParser extends Parser {
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
-					_prevctx = _localctx;
+					_prevctx = localctx;
 					{
 					setState(257);
 					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,18,_ctx) ) {
 					case 1:
 						{
-						_localctx = new ExprMultContext(new ExprContext(_parentctx, _parentState));
-						((ExprMultContext)_localctx).gauche = _prevctx;
-						pushNewRecursionContext(_localctx, _startState, RULE_expr);
+						localctx = new ExprMultContext(new ExprContext(_parentctx, _parentState));
+						((ExprMultContext)localctx).gauche = _prevctx;
+						pushNewRecursionContext(localctx, _startState, RULE_expr);
 						setState(217);
 						if (!(precpred(_ctx, 11))) throw new FailedPredicateException(this, "precpred(_ctx, 11)");
 						setState(218);
-						((ExprMultContext)_localctx).op = _input.LT(1);
+						((ExprMultContext)localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 58720256L) != 0)) ) {
-							((ExprMultContext)_localctx).op = (Token)_errHandler.recoverInline(this);
+							((ExprMultContext)localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						else {
 							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -1590,21 +1590,21 @@ public class MiniJavaParser extends Parser {
 							consume();
 						}
 						setState(219);
-						((ExprMultContext)_localctx).droite = expr(12);
+						((ExprMultContext)localctx).droite = expr(12);
 						}
 						break;
 					case 2:
 						{
-						_localctx = new ExprAddContext(new ExprContext(_parentctx, _parentState));
-						((ExprAddContext)_localctx).gauche = _prevctx;
-						pushNewRecursionContext(_localctx, _startState, RULE_expr);
+						localctx = new ExprAddContext(new ExprContext(_parentctx, _parentState));
+						((ExprAddContext)localctx).gauche = _prevctx;
+						pushNewRecursionContext(localctx, _startState, RULE_expr);
 						setState(220);
 						if (!(precpred(_ctx, 10))) throw new FailedPredicateException(this, "precpred(_ctx, 10)");
 						setState(221);
-						((ExprAddContext)_localctx).op = _input.LT(1);
+						((ExprAddContext)localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==Plus || _la==Moins) ) {
-							((ExprAddContext)_localctx).op = (Token)_errHandler.recoverInline(this);
+							((ExprAddContext)localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						else {
 							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -1612,21 +1612,21 @@ public class MiniJavaParser extends Parser {
 							consume();
 						}
 						setState(222);
-						((ExprAddContext)_localctx).droite = expr(11);
+						((ExprAddContext)localctx).droite = expr(11);
 						}
 						break;
 					case 3:
 						{
-						_localctx = new ExprIneqContext(new ExprContext(_parentctx, _parentState));
-						((ExprIneqContext)_localctx).gauche = _prevctx;
-						pushNewRecursionContext(_localctx, _startState, RULE_expr);
+						localctx = new ExprIneqContext(new ExprContext(_parentctx, _parentState));
+						((ExprIneqContext)localctx).gauche = _prevctx;
+						pushNewRecursionContext(localctx, _startState, RULE_expr);
 						setState(223);
 						if (!(precpred(_ctx, 9))) throw new FailedPredicateException(this, "precpred(_ctx, 9)");
 						setState(224);
-						((ExprIneqContext)_localctx).op = _input.LT(1);
+						((ExprIneqContext)localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 32212254720L) != 0)) ) {
-							((ExprIneqContext)_localctx).op = (Token)_errHandler.recoverInline(this);
+							((ExprIneqContext)localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						else {
 							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -1634,21 +1634,21 @@ public class MiniJavaParser extends Parser {
 							consume();
 						}
 						setState(225);
-						((ExprIneqContext)_localctx).droite = expr(10);
+						((ExprIneqContext)localctx).droite = expr(10);
 						}
 						break;
 					case 4:
 						{
-						_localctx = new ExprEqContext(new ExprContext(_parentctx, _parentState));
-						((ExprEqContext)_localctx).gauche = _prevctx;
-						pushNewRecursionContext(_localctx, _startState, RULE_expr);
+						localctx = new ExprEqContext(new ExprContext(_parentctx, _parentState));
+						((ExprEqContext)localctx).gauche = _prevctx;
+						pushNewRecursionContext(localctx, _startState, RULE_expr);
 						setState(226);
 						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
 						setState(227);
-						((ExprEqContext)_localctx).op = _input.LT(1);
+						((ExprEqContext)localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==DoubleEgal || _la==Different) ) {
-							((ExprEqContext)_localctx).op = (Token)_errHandler.recoverInline(this);
+							((ExprEqContext)localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						else {
 							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -1656,56 +1656,56 @@ public class MiniJavaParser extends Parser {
 							consume();
 						}
 						setState(228);
-						((ExprEqContext)_localctx).droite = expr(9);
+						((ExprEqContext)localctx).droite = expr(9);
 						}
 						break;
 					case 5:
 						{
-						_localctx = new ExprAndContext(new ExprContext(_parentctx, _parentState));
-						((ExprAndContext)_localctx).gauche = _prevctx;
-						pushNewRecursionContext(_localctx, _startState, RULE_expr);
+						localctx = new ExprAndContext(new ExprContext(_parentctx, _parentState));
+						((ExprAndContext)localctx).gauche = _prevctx;
+						pushNewRecursionContext(localctx, _startState, RULE_expr);
 						setState(229);
 						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
 						setState(230);
-						((ExprAndContext)_localctx).op = match(Et);
+						((ExprAndContext)localctx).op = match(Et);
 						setState(231);
-						((ExprAndContext)_localctx).droite = expr(8);
+						((ExprAndContext)localctx).droite = expr(8);
 						}
 						break;
 					case 6:
 						{
-						_localctx = new ExprOrContext(new ExprContext(_parentctx, _parentState));
-						((ExprOrContext)_localctx).gauche = _prevctx;
-						pushNewRecursionContext(_localctx, _startState, RULE_expr);
+						localctx = new ExprOrContext(new ExprContext(_parentctx, _parentState));
+						((ExprOrContext)localctx).gauche = _prevctx;
+						pushNewRecursionContext(localctx, _startState, RULE_expr);
 						setState(232);
 						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
 						setState(233);
-						((ExprOrContext)_localctx).op = match(Ou);
+						((ExprOrContext)localctx).op = match(Ou);
 						setState(234);
-						((ExprOrContext)_localctx).droite = expr(7);
+						((ExprOrContext)localctx).droite = expr(7);
 						}
 						break;
 					case 7:
 						{
-						_localctx = new ExprCondContext(new ExprContext(_parentctx, _parentState));
-						((ExprCondContext)_localctx).cond = _prevctx;
-						pushNewRecursionContext(_localctx, _startState, RULE_expr);
+						localctx = new ExprCondContext(new ExprContext(_parentctx, _parentState));
+						((ExprCondContext)localctx).cond = _prevctx;
+						pushNewRecursionContext(localctx, _startState, RULE_expr);
 						setState(235);
 						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
 						setState(236);
 						match(PtInterro);
 						setState(237);
-						((ExprCondContext)_localctx).alors = expr(0);
+						((ExprCondContext)localctx).alors = expr(0);
 						setState(238);
 						match(DeuxPoint);
 						setState(239);
-						((ExprCondContext)_localctx).sinon = expr(6);
+						((ExprCondContext)localctx).sinon = expr(6);
 						}
 						break;
 					case 8:
 						{
-						_localctx = new ExprAttributeContext(new ExprContext(_parentctx, _parentState));
-						pushNewRecursionContext(_localctx, _startState, RULE_expr);
+						localctx = new ExprAttributeContext(new ExprContext(_parentctx, _parentState));
+						pushNewRecursionContext(localctx, _startState, RULE_expr);
 						setState(241);
 						if (!(precpred(_ctx, 17))) throw new FailedPredicateException(this, "precpred(_ctx, 17)");
 						setState(242);
@@ -1716,8 +1716,8 @@ public class MiniJavaParser extends Parser {
 						break;
 					case 9:
 						{
-						_localctx = new ExprMethodCallContext(new ExprContext(_parentctx, _parentState));
-						pushNewRecursionContext(_localctx, _startState, RULE_expr);
+						localctx = new ExprMethodCallContext(new ExprContext(_parentctx, _parentState));
+						pushNewRecursionContext(localctx, _startState, RULE_expr);
 						setState(244);
 						if (!(precpred(_ctx, 16))) throw new FailedPredicateException(this, "precpred(_ctx, 16)");
 						setState(245);
@@ -1742,8 +1742,8 @@ public class MiniJavaParser extends Parser {
 						break;
 					case 10:
 						{
-						_localctx = new ExprArrayAccessContext(new ExprContext(_parentctx, _parentState));
-						pushNewRecursionContext(_localctx, _startState, RULE_expr);
+						localctx = new ExprArrayAccessContext(new ExprContext(_parentctx, _parentState));
+						pushNewRecursionContext(localctx, _startState, RULE_expr);
 						setState(252);
 						if (!(precpred(_ctx, 14))) throw new FailedPredicateException(this, "precpred(_ctx, 14)");
 						setState(253);
@@ -1764,14 +1764,14 @@ public class MiniJavaParser extends Parser {
 			}
 		}
 		catch (RecognitionException re) {
-			_localctx.exception = re;
+			localctx.exception = re;
 			_errHandler.reportError(this, re);
 			_errHandler.recover(this, re);
 		}
 		finally {
 			unrollRecursionContexts(_parentctx);
 		}
-		return _localctx;
+		return localctx;
 	}
 
 	@SuppressWarnings("CheckReturnValue")
@@ -1800,11 +1800,11 @@ public class MiniJavaParser extends Parser {
 	}
 
 	public final DeclLocaleContext declLocale() throws RecognitionException {
-		DeclLocaleContext _localctx = new DeclLocaleContext(_ctx, getState());
-		enterRule(_localctx, 22, RULE_declLocale);
+		DeclLocaleContext localctx = new DeclLocaleContext(_ctx, getState());
+		enterRule(localctx, 22, RULE_declLocale);
 		int _la;
 		try {
-			enterOuterAlt(_localctx, 1);
+			enterOuterAlt(localctx, 1);
 			{
 			setState(263);
 			_errHandler.sync(this);
@@ -1835,14 +1835,14 @@ public class MiniJavaParser extends Parser {
 			}
 		}
 		catch (RecognitionException re) {
-			_localctx.exception = re;
+			localctx.exception = re;
 			_errHandler.reportError(this, re);
 			_errHandler.recover(this, re);
 		}
 		finally {
 			exitRule();
 		}
-		return _localctx;
+		return localctx;
 	}
 
 	@SuppressWarnings("CheckReturnValue")
@@ -1869,10 +1869,10 @@ public class MiniJavaParser extends Parser {
 	}
 
 	public final AssignationContext assignation() throws RecognitionException {
-		AssignationContext _localctx = new AssignationContext(_ctx, getState());
-		enterRule(_localctx, 24, RULE_assignation);
+		AssignationContext localctx = new AssignationContext(_ctx, getState());
+		enterRule(localctx, 24, RULE_assignation);
 		try {
-			enterOuterAlt(_localctx, 1);
+			enterOuterAlt(localctx, 1);
 			{
 			setState(271);
 			assignable(0);
@@ -1883,14 +1883,14 @@ public class MiniJavaParser extends Parser {
 			}
 		}
 		catch (RecognitionException re) {
-			_localctx.exception = re;
+			localctx.exception = re;
 			_errHandler.reportError(this, re);
 			_errHandler.recover(this, re);
 		}
 		finally {
 			exitRule();
 		}
-		return _localctx;
+		return localctx;
 	}
 
 	@SuppressWarnings("CheckReturnValue")
@@ -1926,13 +1926,13 @@ public class MiniJavaParser extends Parser {
 	private AssignableContext assignable(int _p) throws RecognitionException {
 		ParserRuleContext _parentctx = _ctx;
 		int _parentState = getState();
-		AssignableContext _localctx = new AssignableContext(_ctx, _parentState);
-		AssignableContext _prevctx = _localctx;
+		AssignableContext localctx = new AssignableContext(_ctx, _parentState);
+		AssignableContext _prevctx = localctx;
 		int _startState = 26;
-		enterRecursionRule(_localctx, 26, RULE_assignable, _p);
+		enterRecursionRule(localctx, 26, RULE_assignable, _p);
 		try {
 			int _alt;
-			enterOuterAlt(_localctx, 1);
+			enterOuterAlt(localctx, 1);
 			{
 			{
 			setState(276);
@@ -1945,15 +1945,15 @@ public class MiniJavaParser extends Parser {
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
-					_prevctx = _localctx;
+					_prevctx = localctx;
 					{
 					setState(286);
 					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,22,_ctx) ) {
 					case 1:
 						{
-						_localctx = new AssignableContext(_parentctx, _parentState);
-						pushNewRecursionContext(_localctx, _startState, RULE_assignable);
+						localctx = new AssignableContext(_parentctx, _parentState);
+						pushNewRecursionContext(localctx, _startState, RULE_assignable);
 						setState(278);
 						if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
 						setState(279);
@@ -1964,8 +1964,8 @@ public class MiniJavaParser extends Parser {
 						break;
 					case 2:
 						{
-						_localctx = new AssignableContext(_parentctx, _parentState);
-						pushNewRecursionContext(_localctx, _startState, RULE_assignable);
+						localctx = new AssignableContext(_parentctx, _parentState);
+						pushNewRecursionContext(localctx, _startState, RULE_assignable);
 						setState(281);
 						if (!(precpred(_ctx, 1))) throw new FailedPredicateException(this, "precpred(_ctx, 1)");
 						setState(282);
@@ -1986,14 +1986,14 @@ public class MiniJavaParser extends Parser {
 			}
 		}
 		catch (RecognitionException re) {
-			_localctx.exception = re;
+			localctx.exception = re;
 			_errHandler.reportError(this, re);
 			_errHandler.recover(this, re);
 		}
 		finally {
 			unrollRecursionContexts(_parentctx);
 		}
-		return _localctx;
+		return localctx;
 	}
 
 	@SuppressWarnings("CheckReturnValue")
@@ -2027,14 +2027,14 @@ public class MiniJavaParser extends Parser {
 	}
 
 	public final ExpressionsContext expressions() throws RecognitionException {
-		ExpressionsContext _localctx = new ExpressionsContext(_ctx, getState());
-		enterRule(_localctx, 28, RULE_expressions);
+		ExpressionsContext localctx = new ExpressionsContext(_ctx, getState());
+		enterRule(localctx, 28, RULE_expressions);
 		int _la;
 		try {
-			enterOuterAlt(_localctx, 1);
+			enterOuterAlt(localctx, 1);
 			{
 			setState(291);
-			((ExpressionsContext)_localctx).premiere = expr(0);
+			((ExpressionsContext)localctx).premiere = expr(0);
 			setState(296);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
@@ -2044,8 +2044,8 @@ public class MiniJavaParser extends Parser {
 				setState(292);
 				match(Virg);
 				setState(293);
-				((ExpressionsContext)_localctx).expr = expr(0);
-				((ExpressionsContext)_localctx).suite.add(((ExpressionsContext)_localctx).expr);
+				((ExpressionsContext)localctx).expr = expr(0);
+				((ExpressionsContext)localctx).suite.add(((ExpressionsContext)localctx).expr);
 				}
 				}
 				setState(298);
@@ -2055,14 +2055,14 @@ public class MiniJavaParser extends Parser {
 			}
 		}
 		catch (RecognitionException re) {
-			_localctx.exception = re;
+			localctx.exception = re;
 			_errHandler.reportError(this, re);
 			_errHandler.recover(this, re);
 		}
 		finally {
 			exitRule();
 		}
-		return _localctx;
+		return localctx;
 	}
 
 	@SuppressWarnings("CheckReturnValue")
@@ -2132,13 +2132,13 @@ public class MiniJavaParser extends Parser {
 	private TypeContext type(int _p) throws RecognitionException {
 		ParserRuleContext _parentctx = _ctx;
 		int _parentState = getState();
-		TypeContext _localctx = new TypeContext(_ctx, _parentState);
-		TypeContext _prevctx = _localctx;
+		TypeContext localctx = new TypeContext(_ctx, _parentState);
+		TypeContext _prevctx = localctx;
 		int _startState = 30;
-		enterRecursionRule(_localctx, 30, RULE_type, _p);
+		enterRecursionRule(localctx, 30, RULE_type, _p);
 		try {
 			int _alt;
-			enterOuterAlt(_localctx, 1);
+			enterOuterAlt(localctx, 1);
 			{
 			setState(302);
 			_errHandler.sync(this);
@@ -2150,9 +2150,9 @@ public class MiniJavaParser extends Parser {
 			case TypeChaine:
 			case TypeVide:
 				{
-				_localctx = new TypeAtomicContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
+				localctx = new TypeAtomicContext(localctx);
+				_ctx = localctx;
+				_prevctx = localctx;
 
 				setState(300);
 				atomique();
@@ -2160,9 +2160,9 @@ public class MiniJavaParser extends Parser {
 				break;
 			case Identificateur:
 				{
-				_localctx = new TypeNamedContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
+				localctx = new TypeNamedContext(localctx);
+				_ctx = localctx;
+				_prevctx = localctx;
 				setState(301);
 				match(Identificateur);
 				}
@@ -2177,11 +2177,11 @@ public class MiniJavaParser extends Parser {
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
-					_prevctx = _localctx;
+					_prevctx = localctx;
 					{
 					{
-					_localctx = new TypeArrayContext(new TypeContext(_parentctx, _parentState));
-					pushNewRecursionContext(_localctx, _startState, RULE_type);
+					localctx = new TypeArrayContext(new TypeContext(_parentctx, _parentState));
+					pushNewRecursionContext(localctx, _startState, RULE_type);
 					setState(304);
 					if (!(precpred(_ctx, 1))) throw new FailedPredicateException(this, "precpred(_ctx, 1)");
 					setState(305);
@@ -2198,14 +2198,14 @@ public class MiniJavaParser extends Parser {
 			}
 		}
 		catch (RecognitionException re) {
-			_localctx.exception = re;
+			localctx.exception = re;
 			_errHandler.reportError(this, re);
 			_errHandler.recover(this, re);
 		}
 		finally {
 			unrollRecursionContexts(_parentctx);
 		}
-		return _localctx;
+		return localctx;
 	}
 
 	@SuppressWarnings("CheckReturnValue")
@@ -2232,11 +2232,11 @@ public class MiniJavaParser extends Parser {
 	}
 
 	public final AtomiqueContext atomique() throws RecognitionException {
-		AtomiqueContext _localctx = new AtomiqueContext(_ctx, getState());
-		enterRule(_localctx, 32, RULE_atomique);
+		AtomiqueContext localctx = new AtomiqueContext(_ctx, getState());
+		enterRule(localctx, 32, RULE_atomique);
 		int _la;
 		try {
-			enterOuterAlt(_localctx, 1);
+			enterOuterAlt(localctx, 1);
 			{
 			setState(312);
 			_la = _input.LA(1);
@@ -2251,14 +2251,14 @@ public class MiniJavaParser extends Parser {
 			}
 		}
 		catch (RecognitionException re) {
-			_localctx.exception = re;
+			localctx.exception = re;
 			_errHandler.reportError(this, re);
 			_errHandler.recover(this, re);
 		}
 		finally {
 			exitRule();
 		}
-		return _localctx;
+		return localctx;
 	}
 
 	@SuppressWarnings("CheckReturnValue")
@@ -2381,71 +2381,71 @@ public class MiniJavaParser extends Parser {
 	}
 
 	public final ExpressionConstanteContext expressionConstante() throws RecognitionException {
-		ExpressionConstanteContext _localctx = new ExpressionConstanteContext(_ctx, getState());
-		enterRule(_localctx, 34, RULE_expressionConstante);
+		ExpressionConstanteContext localctx = new ExpressionConstanteContext(_ctx, getState());
+		enterRule(localctx, 34, RULE_expressionConstante);
 		try {
 			setState(322);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case Vrai:
-				_localctx = new ExprTrueContext(_localctx);
-				enterOuterAlt(_localctx, 1);
+				localctx = new ExprTrueContext(localctx);
+				enterOuterAlt(localctx, 1);
 				{
 				setState(314);
 				match(Vrai);
 				}
 				break;
 			case Faux:
-				_localctx = new ExprFalseContext(_localctx);
-				enterOuterAlt(_localctx, 2);
+				localctx = new ExprFalseContext(localctx);
+				enterOuterAlt(localctx, 2);
 				{
 				setState(315);
 				match(Faux);
 				}
 				break;
 			case Entier:
-				_localctx = new ExprIntContext(_localctx);
-				enterOuterAlt(_localctx, 3);
+				localctx = new ExprIntContext(localctx);
+				enterOuterAlt(localctx, 3);
 				{
 				setState(316);
 				match(Entier);
 				}
 				break;
 			case Flottant:
-				_localctx = new ExprFloatContext(_localctx);
-				enterOuterAlt(_localctx, 4);
+				localctx = new ExprFloatContext(localctx);
+				enterOuterAlt(localctx, 4);
 				{
 				setState(317);
 				match(Flottant);
 				}
 				break;
 			case Caractere:
-				_localctx = new ExprCharacterContext(_localctx);
-				enterOuterAlt(_localctx, 5);
+				localctx = new ExprCharacterContext(localctx);
+				enterOuterAlt(localctx, 5);
 				{
 				setState(318);
 				match(Caractere);
 				}
 				break;
 			case Chaine:
-				_localctx = new ExprStringContext(_localctx);
-				enterOuterAlt(_localctx, 6);
+				localctx = new ExprStringContext(localctx);
+				enterOuterAlt(localctx, 6);
 				{
 				setState(319);
 				match(Chaine);
 				}
 				break;
 			case Nul:
-				_localctx = new ExprNullContext(_localctx);
-				enterOuterAlt(_localctx, 7);
+				localctx = new ExprNullContext(localctx);
+				enterOuterAlt(localctx, 7);
 				{
 				setState(320);
 				match(Nul);
 				}
 				break;
 			case Identificateur:
-				_localctx = new ExprAccessContext(_localctx);
-				enterOuterAlt(_localctx, 8);
+				localctx = new ExprAccessContext(localctx);
+				enterOuterAlt(localctx, 8);
 				{
 				setState(321);
 				match(Identificateur);
@@ -2456,28 +2456,28 @@ public class MiniJavaParser extends Parser {
 			}
 		}
 		catch (RecognitionException re) {
-			_localctx.exception = re;
+			localctx.exception = re;
 			_errHandler.reportError(this, re);
 			_errHandler.recover(this, re);
 		}
 		finally {
 			exitRule();
 		}
-		return _localctx;
+		return localctx;
 	}
 
-	public boolean sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
+	public boolean sempred(RuleContext localctx, int ruleIndex, int predIndex) {
 		switch (ruleIndex) {
 		case 10:
-			return expr_sempred((ExprContext)_localctx, predIndex);
+			return expr_sempred((ExprContext)localctx, predIndex);
 		case 13:
-			return assignable_sempred((AssignableContext)_localctx, predIndex);
+			return assignable_sempred((AssignableContext)localctx, predIndex);
 		case 15:
-			return type_sempred((TypeContext)_localctx, predIndex);
+			return type_sempred((TypeContext)localctx, predIndex);
 		}
 		return true;
 	}
-	private boolean expr_sempred(ExprContext _localctx, int predIndex) {
+	private boolean expr_sempred(ExprContext localctx, int predIndex) {
 		switch (predIndex) {
 		case 0:
 			return precpred(_ctx, 11);
@@ -2502,7 +2502,7 @@ public class MiniJavaParser extends Parser {
 		}
 		return true;
 	}
-	private boolean assignable_sempred(AssignableContext _localctx, int predIndex) {
+	private boolean assignable_sempred(AssignableContext localctx, int predIndex) {
 		switch (predIndex) {
 		case 10:
 			return precpred(_ctx, 2);
@@ -2511,7 +2511,7 @@ public class MiniJavaParser extends Parser {
 		}
 		return true;
 	}
-	private boolean type_sempred(TypeContext _localctx, int predIndex) {
+	private boolean type_sempred(TypeContext localctx, int predIndex) {
 		switch (predIndex) {
 		case 12:
 			return precpred(_ctx, 1);

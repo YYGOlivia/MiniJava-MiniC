@@ -28,9 +28,9 @@ public class Iteration implements Instruction {
 	protected Expression condition;
 	protected Block body;
 
-	public Iteration(Expression _condition, Block _body) {
-		this.condition = _condition;
-		this.body = _body;
+	public Iteration(Expression condition, Block body) {
+		this.condition = condition;
+		this.body = body;
 	}
 
 	/*
@@ -51,18 +51,18 @@ public class Iteration implements Instruction {
 	 * .Scope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		SymbolTable bodyScope = new SymbolTable(_scope);
-		boolean okCond = condition.collectAndPartialResolve(_scope);
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
+		SymbolTable bodyScope = new SymbolTable(scope);
+		boolean okCond = condition.collectAndPartialResolve(scope);
 		boolean okBody = body.collectAndPartialResolve(bodyScope);
 		return okCond && okBody;
 	}
 
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
-		SymbolTable bodyScope = new SymbolTable(_scope);
-		boolean okCond = condition.collectAndPartialResolve(_scope);
-		boolean okBody = body.collectAndPartialResolve(bodyScope, _container);
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope, FunctionDeclaration container) {
+		SymbolTable bodyScope = new SymbolTable(scope);
+		boolean okCond = condition.collectAndPartialResolve(scope);
+		boolean okBody = body.collectAndPartialResolve(bodyScope, container);
 		return okCond && okBody;
 	}
 
@@ -74,9 +74,9 @@ public class Iteration implements Instruction {
 	 * .Scope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		SymbolTable bodyScope = new SymbolTable(_scope);
-		boolean okCond = condition.completeResolve(_scope);
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+		SymbolTable bodyScope = new SymbolTable(scope);
+		boolean okCond = condition.completeResolve(scope);
 		boolean okBody = body.completeResolve(bodyScope);
 		return okCond && okBody;
 	}
@@ -105,8 +105,8 @@ public class Iteration implements Instruction {
 	 * int)
 	 */
 	@Override
-	public int allocateMemory(Register _register, int _offset) {
-		body.allocateMemory(_register, _offset);
+	public int allocateMemory(Register register, int offset) {
+		body.allocateMemory(register, offset);
 		return 0;
 	}
 
@@ -116,18 +116,18 @@ public class Iteration implements Instruction {
 	 * @see fr.n7.stl.block.ast.Instruction#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		int num = _factory.createLabelNumber();
-		Fragment _fragment = _factory.createFragment();
-		_fragment.append(condition.getCode(_factory));
-		_fragment.addPrefix("debut_boucle_" + num);
-		_fragment.add(_factory.createJumpIf("fin_boucle_" + num, 0));
-		Fragment bodyCode = body.getCode(_factory);
-		_fragment.append(bodyCode);
-		_fragment.add(_factory.createJump("debut_boucle_" + num));
-		_fragment.addSuffix("fin_boucle_" + num);
-		// _fragment.addComment(toString());
-		return _fragment;
+	public Fragment getCode(TAMFactory factory) {
+		int num = factory.createLabelNumber();
+		Fragment fragment = factory.createFragment();
+		fragment.append(condition.getCode(factory));
+		fragment.addPrefix("debut_boucle_" + num);
+		fragment.add(factory.createJumpIf("fin_boucle_" + num, 0));
+		Fragment bodyCode = body.getCode(factory);
+		fragment.append(bodyCode);
+		fragment.add(factory.createJump("debut_boucle_" + num));
+		fragment.addSuffix("fin_boucle_" + num);
+		// fragment.addComment(toString());
+		return fragment;
 	}
 
 }

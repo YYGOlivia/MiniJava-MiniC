@@ -40,15 +40,15 @@ public class ConstantDeclaration implements Instruction, Declaration {
 	/**
 	 * Builds an AST node for a constant declaration
 	 * 
-	 * @param _name  : Name of the constant
-	 * @param _type  : AST node for the type of the constant
-	 * @param _value : AST node for the expression that computes the value of the
+	 * @param name  : Name of the constant
+	 * @param type  : AST node for the type of the constant
+	 * @param value : AST node for the expression that computes the value of the
 	 *               constant
 	 */
-	public ConstantDeclaration(String _name, Type _type, Expression _value) {
-		this.name = _name;
-		this.type = _type;
-		this.value = _value;
+	public ConstantDeclaration(String name, Type type, Expression value) {
+		this.name = name;
+		this.type = type;
+		this.value = value;
 	}
 
 	/*
@@ -97,10 +97,10 @@ public class ConstantDeclaration implements Instruction, Declaration {
 	 * .Scope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		if (_scope.accepts(this)) {
-			boolean res = value.collectAndPartialResolve(_scope);
-			_scope.register(this);
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
+		if (scope.accepts(this)) {
+			boolean res = value.collectAndPartialResolve(scope);
+			scope.register(this);
 			return res;
 		} else {
 			Logger.error("[ConstantDeclaration] The constant " + name + " is already declared");
@@ -109,10 +109,10 @@ public class ConstantDeclaration implements Instruction, Declaration {
 	}
 
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
-		if (_scope.accepts(this)) {
-			boolean res = value.collectAndPartialResolve(_scope);
-			_scope.register(this);
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope, FunctionDeclaration container) {
+		if (scope.accepts(this)) {
+			boolean res = value.collectAndPartialResolve(scope);
+			scope.register(this);
 			return res;
 		} else {
 			Logger.error("[ConstantDeclaration] The constant " + name + " is already declared");
@@ -129,10 +129,10 @@ public class ConstantDeclaration implements Instruction, Declaration {
 	 * .Scope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		boolean res = value.completeResolve(_scope);
-		if (_scope.accepts(this)) {
-			_scope.register(this);
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+		boolean res = value.completeResolve(scope);
+		if (scope.accepts(this)) {
+			scope.register(this);
 			return res;
 		} else {
 			Logger.error("[ConstantDeclaration] The constant " + name + " is already declared");
@@ -162,7 +162,7 @@ public class ConstantDeclaration implements Instruction, Declaration {
 	 * int)
 	 */
 	@Override
-	public int allocateMemory(Register _register, int _offset) {
+	public int allocateMemory(Register register, int offset) {
 		return 0;
 	}
 
@@ -172,10 +172,10 @@ public class ConstantDeclaration implements Instruction, Declaration {
 	 * @see fr.n7.stl.block.ast.Instruction#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		Fragment _fragment = _factory.createFragment();
-		_fragment.append(value.getCode(_factory));
-		return _fragment;
+	public Fragment getCode(TAMFactory factory) {
+		Fragment fragment = factory.createFragment();
+		fragment.append(value.getCode(factory));
+		return fragment;
 	}
 
 }

@@ -10,7 +10,7 @@ package fr.n7.stl.minic.ast.type;
 public class PartialArrayType extends ArrayType implements PartialType {
 
 	/**
-	 * @param _element
+	 * @param element
 	 */
 	public PartialArrayType() {
 		super(null);
@@ -23,11 +23,11 @@ public class PartialArrayType extends ArrayType implements PartialType {
 	 * fr.n7.stl.block.ast.type.PartialType#complete(fr.n7.stl.block.ast.type.Type)
 	 */
 	@Override
-	public Type complete(Type _type) {
+	public Type complete(Type type) {
 		if (this.element == null) {
-			return new ArrayType(_type);
+			return new ArrayType(type);
 		} else {
-			return new ArrayType(((PartialType) this.element).complete(_type));
+			return new ArrayType(((PartialType) this.element).complete(type));
 		}
 	}
 
@@ -38,11 +38,11 @@ public class PartialArrayType extends ArrayType implements PartialType {
 	 * PartialType)
 	 */
 	@Override
-	public void enrich(PartialType _type) {
+	public void enrich(PartialType type) {
 		if (this.element == null) {
-			this.element = _type;
+			this.element = type;
 		} else {
-			((PartialType) this.element).enrich(_type);
+			((PartialType) this.element).enrich(type);
 		}
 	}
 

@@ -25,8 +25,8 @@ public class Return implements Instruction {
 
 	protected FunctionDeclaration function;
 
-	public Return(Expression _value) {
-		this.value = _value;
+	public Return(Expression value) {
+		this.value = value;
 		this.function = null;
 	}
 
@@ -49,8 +49,8 @@ public class Return implements Instruction {
 	 * .Scope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		return value.collectAndPartialResolve(_scope);
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
+		return value.collectAndPartialResolve(scope);
 	}
 
 	/*
@@ -61,19 +61,19 @@ public class Return implements Instruction {
 	 * .Scope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		return value.completeResolve(_scope);
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+		return value.completeResolve(scope);
 	}
 
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope, FunctionDeclaration container) {
 		if (this.function == null) {
-			this.function = _container;
+			this.function = container;
 		} else {
 			throw new InvalidParameterException(
 					"Trying to set a function declaration to a return instruction when one has already been set.");
 		}
-		return this.collectAndPartialResolve(_scope);
+		return this.collectAndPartialResolve(scope);
 	}
 
 	/*
@@ -99,7 +99,7 @@ public class Return implements Instruction {
 	 * int)
 	 */
 	@Override
-	public int allocateMemory(Register _register, int _offset) {
+	public int allocateMemory(Register register, int offset) {
 		return 0;
 	}
 
@@ -109,15 +109,15 @@ public class Return implements Instruction {
 	 * @see fr.n7.stl.block.ast.Instruction#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		Fragment fragment = _factory.createFragment();
-		fragment.append(value.getCode(_factory));
+	public Fragment getCode(TAMFactory factory) {
+		Fragment fragment = factory.createFragment();
+		fragment.append(value.getCode(factory));
 
 		int keep = value.getType().length(); // taille de ce qu'on écrit dans la pile
 		int remove = function.getParameters().stream()
 				.map(param -> param.getType().length())
 				.reduce(0, Integer::sum); // taille à remplacer (on oublie les paramètres)
-		fragment.add(_factory.createReturn(keep, remove));
+		fragment.add(factory.createReturn(keep, remove));
 
 		//fragment.addComment("Return in function");
 		return fragment;

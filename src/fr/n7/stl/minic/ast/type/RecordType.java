@@ -30,45 +30,45 @@ public class RecordType implements Type, Declaration, Scope<FieldDeclaration> {
 	/**
 	 * Constructor for a record type including fields.
 	 * 
-	 * @param _name   Name of the record type.
-	 * @param _fields Sequence of fields to initialize the content of the record
+	 * @param name   Name of the record type.
+	 * @param fields Sequence of fields to initialize the content of the record
 	 *                type.
 	 */
-	public RecordType(String _name, Iterable<FieldDeclaration> _fields) {
-		this.name = _name;
+	public RecordType(String name, Iterable<FieldDeclaration> fields) {
+		this.name = name;
 		this.fields = new LinkedList<FieldDeclaration>();
-		for (FieldDeclaration _field : _fields) {
-			this.fields.add(_field);
+		for (FieldDeclaration field : fields) {
+			this.fields.add(field);
 		}
 	}
 
 	/**
 	 * Constructor for an empty record type (i.e. without fields).
 	 * 
-	 * @param _name Name of the record type.
+	 * @param name Name of the record type.
 	 */
-	public RecordType(String _name) {
-		this.name = _name;
+	public RecordType(String name) {
+		this.name = name;
 		this.fields = new LinkedList<FieldDeclaration>();
 	}
 
 	/**
 	 * Add a field to a record type.
 	 * 
-	 * @param _field The added field.
+	 * @paramfield The added field.
 	 */
-	public void add(FieldDeclaration _field) {
-		this.fields.add(_field);
+	public void add(FieldDeclaration field) {
+		this.fields.add(field);
 	}
 
 	/**
 	 * Add a sequence of fields to a record type.
 	 * 
-	 * @param _fields : Sequence of fields to be added.
+	 * @param fields : Sequence of fields to be added.
 	 */
-	public void addAll(Iterable<FieldDeclaration> _fields) {
-		for (FieldDeclaration _field : _fields) {
-			this.fields.add(_field);
+	public void addAll(Iterable<FieldDeclaration> fields) {
+		for (FieldDeclaration field : fields) {
+			this.fields.add(field);
 		}
 	}
 
@@ -78,11 +78,11 @@ public class RecordType implements Type, Declaration, Scope<FieldDeclaration> {
 	 * @see fr.n7.stl.block.ast.Type#equalsTo(fr.n7.stl.block.ast.Type)
 	 */
 	@Override
-	public boolean equalsTo(Type _other) {
-		if (!(_other instanceof RecordType)) {
+	public boolean equalsTo(Type other) {
+		if (!(other instanceof RecordType)) {
 			return false;
 		}
-		RecordType otherRecord = ((RecordType) _other);
+		RecordType otherRecord = ((RecordType) other);
 
 		// il faut le même nombre de champs
 		if (this.fields.size() != otherRecord.fields.size()) {
@@ -110,11 +110,11 @@ public class RecordType implements Type, Declaration, Scope<FieldDeclaration> {
 	 * @see fr.n7.stl.block.ast.Type#compatibleWith(fr.n7.stl.block.ast.Type)
 	 */
 	@Override
-	public boolean compatibleWith(Type _other) {
-		if (!(_other instanceof RecordType)) {
+	public boolean compatibleWith(Type other) {
+		if (!(other instanceof RecordType)) {
 			return false;
 		}
-		RecordType otherRecord = ((RecordType) _other);
+		RecordType otherRecord = ((RecordType) other);
 
 		// il faut plus ou autant de champs que l'autre
 		if (this.fields.size() < otherRecord.fields.size()) {
@@ -144,7 +144,7 @@ public class RecordType implements Type, Declaration, Scope<FieldDeclaration> {
 	 * @see fr.n7.stl.block.ast.Type#merge(fr.n7.stl.block.ast.Type)
 	 */
 	@Override
-	public Type merge(Type _other) {
+	public Type merge(Type other) {
 		throw new SemanticsUndefinedException("Semantics merge is undefined in RecordType.");
 	}
 
@@ -154,16 +154,16 @@ public class RecordType implements Type, Declaration, Scope<FieldDeclaration> {
 	 * @see fr.n7.stl.block.ast.Scope#get(java.lang.String)
 	 */
 	@Override
-	public FieldDeclaration get(String _name) {
-		boolean _found = false;
-		Iterator<FieldDeclaration> _iter = this.fields.iterator();
-		FieldDeclaration _current = null;
-		while (_iter.hasNext() && (!_found)) {
-			_current = _iter.next();
-			_found = _found || _current.getName().contentEquals(_name);
+	public FieldDeclaration get(String name) {
+		boolean found = false;
+		Iterator<FieldDeclaration> iter = this.fields.iterator();
+		FieldDeclaration current = null;
+		while (iter.hasNext() && (!found)) {
+			current = iter.next();
+			found = found || current.getName().contentEquals(name);
 		}
-		if (_found) {
-			return _current;
+		if (found) {
+			return current;
 		} else {
 			return null;
 		}
@@ -175,13 +175,13 @@ public class RecordType implements Type, Declaration, Scope<FieldDeclaration> {
 	 * @see fr.n7.stl.block.ast.Scope#contains(java.lang.String)
 	 */
 	@Override
-	public boolean contains(String _name) {
-		boolean _result = false;
-		Iterator<FieldDeclaration> _iter = this.fields.iterator();
-		while (_iter.hasNext() && (!_result)) {
-			_result = _result || _iter.next().getName().contentEquals(_name);
+	public boolean contains(String name) {
+		boolean result = false;
+		Iterator<FieldDeclaration> iter = this.fields.iterator();
+		while (iter.hasNext() && (!result)) {
+			result = result || iter.next().getName().contentEquals(name);
 		}
-		return _result;
+		return result;
 	}
 
 	/*
@@ -190,8 +190,8 @@ public class RecordType implements Type, Declaration, Scope<FieldDeclaration> {
 	 * @see fr.n7.stl.block.ast.Scope#accepts(fr.n7.stl.block.ast.Declaration)
 	 */
 	@Override
-	public boolean accepts(FieldDeclaration _declaration) {
-		return !this.contains(_declaration.getName());
+	public boolean accepts(FieldDeclaration declaration) {
+		return !this.contains(declaration.getName());
 	}
 
 	/*
@@ -200,9 +200,9 @@ public class RecordType implements Type, Declaration, Scope<FieldDeclaration> {
 	 * @see fr.n7.stl.block.ast.Scope#register(fr.n7.stl.block.ast.Declaration)
 	 */
 	@Override
-	public void register(FieldDeclaration _declaration) {
-		if (this.accepts(_declaration)) {
-			this.fields.add(_declaration);
+	public void register(FieldDeclaration declaration) {
+		if (this.accepts(declaration)) {
+			this.fields.add(declaration);
 		} else {
 			throw new IllegalArgumentException();
 		}
@@ -214,11 +214,11 @@ public class RecordType implements Type, Declaration, Scope<FieldDeclaration> {
 	 * @return Sequence type extracted from record fields.
 	 */
 	public SequenceType erase() {
-		SequenceType _local = new SequenceType();
-		for (FieldDeclaration _field : this.fields) {
-			_local.add(_field.getType());
+		SequenceType local = new SequenceType();
+		for (FieldDeclaration field : this.fields) {
+			local.add(field.getType());
 		}
-		return _local;
+		return local;
 	}
 
 	/*
@@ -228,11 +228,11 @@ public class RecordType implements Type, Declaration, Scope<FieldDeclaration> {
 	 */
 	@Override
 	public int length() {
-		int _length = 0;
+		int length = 0;
 		for (FieldDeclaration f : this.fields) {
-			_length += f.getType().length();
+			length += f.getType().length();
 		}
-		return _length;
+		return length;
 	}
 
 	/*
@@ -242,15 +242,15 @@ public class RecordType implements Type, Declaration, Scope<FieldDeclaration> {
 	 */
 	@Override
 	public String toString() {
-		String _result = "struct " + this.name + " { ";
-		Iterator<FieldDeclaration> _iter = this.fields.iterator();
-		if (_iter.hasNext()) {
-			_result += _iter.next();
-			while (_iter.hasNext()) {
-				_result += " " + _iter.next();
+		String result = "struct " + this.name + " { ";
+		Iterator<FieldDeclaration> iter = this.fields.iterator();
+		if (iter.hasNext()) {
+			result += iter.next();
+			while (iter.hasNext()) {
+				result += " " + iter.next();
 			}
 		}
-		return _result + "}";
+		return result + "}";
 	}
 
 	/*
@@ -259,14 +259,14 @@ public class RecordType implements Type, Declaration, Scope<FieldDeclaration> {
 	 * @see fr.n7.stl.block.ast.type.Type#resolve(fr.n7.stl.block.ast.scope.Scope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		boolean _result = true;
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+		boolean result = true;
 		int off = 0;
 		for (FieldDeclaration f : this.fields) {
-			_result = _result && f.getType().completeResolve(_scope);
+			result = result && f.getType().completeResolve(scope);
 			off += f.computeOffset(off);
 		}
-		return _result;
+		return result;
 	}
 
 	/*

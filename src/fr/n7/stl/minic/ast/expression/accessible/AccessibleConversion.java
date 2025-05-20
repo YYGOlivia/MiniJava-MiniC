@@ -14,12 +14,12 @@ import fr.n7.stl.util.Logger;
  */
 public class AccessibleConversion extends AbstractConversion<Expression> implements AccessibleExpression {
 
-	public AccessibleConversion(Expression _target, String _type) {
-		super(_target, _type);
+	public AccessibleConversion(Expression target, String type) {
+		super(target, type);
 	}
 
-	public AccessibleConversion(Expression _target, Type _type) {
-		super(_target, _type);
+	public AccessibleConversion(Expression target, Type type) {
+		super(target, type);
 	}
 
 }

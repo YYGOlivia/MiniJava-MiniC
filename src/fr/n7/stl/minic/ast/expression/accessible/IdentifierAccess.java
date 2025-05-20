@@ -33,10 +33,10 @@ public class IdentifierAccess extends AbstractIdentifier implements AccessibleEx
 	/**
 	 * Creates a variable use expression Abstract Syntax Tree node.
 	 * 
-	 * @param _name Name of the used variable.
+	 * @param name Name of the used variable.
 	 */
-	public IdentifierAccess(String _name) {
-		super(_name);
+	public IdentifierAccess(String name) {
+		super(name);
 	}
 
 	/*
@@ -57,21 +57,21 @@ public class IdentifierAccess extends AbstractIdentifier implements AccessibleEx
 	 * HierarchicalScope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		if (!_scope.knows(this.name)) {
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
+		if (!scope.knows(this.name)) {
 			Logger.error("[IdentifierAccess] " + name + " is not known by scope.");
 			return false;
 		}
 
-		Declaration _declaration = _scope.get(this.name);
-		if (_declaration instanceof VariableDeclaration) {
-			this.expression = new VariableAccess((VariableDeclaration) _declaration);
+		Declaration declaration = scope.get(this.name);
+		if (declaration instanceof VariableDeclaration) {
+			this.expression = new VariableAccess((VariableDeclaration) declaration);
 
-		} else if (_declaration instanceof ConstantDeclaration) {
-			this.expression = new ConstantAccess((ConstantDeclaration) _declaration);
+		} else if (declaration instanceof ConstantDeclaration) {
+			this.expression = new ConstantAccess((ConstantDeclaration) declaration);
 
-		} else if (_declaration instanceof ParameterDeclaration) {
-			this.expression = new ParameterAccess((ParameterDeclaration) _declaration);
+		} else if (declaration instanceof ParameterDeclaration) {
+			this.expression = new ParameterAccess((ParameterDeclaration) declaration);
 
 		} else {
 			Logger.error("[IdentifierAccess] Declaration of " + name
@@ -89,22 +89,22 @@ public class IdentifierAccess extends AbstractIdentifier implements AccessibleEx
 	 * HierarchicalScope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
 
-		if (!_scope.knows(this.name)) {
+		if (!scope.knows(this.name)) {
 			Logger.error("[IdentifierAccess] " + name + " is not known by scope.");
 			return false;
 		}
 
-		Declaration _declaration = _scope.get(this.name);
-		if (_declaration instanceof VariableDeclaration) {
-			this.expression = new VariableAccess((VariableDeclaration) _declaration);
+		Declaration declaration = scope.get(this.name);
+		if (declaration instanceof VariableDeclaration) {
+			this.expression = new VariableAccess((VariableDeclaration) declaration);
 
-		} else if (_declaration instanceof ConstantDeclaration) {
-			this.expression = new ConstantAccess((ConstantDeclaration) _declaration);
+		} else if (declaration instanceof ConstantDeclaration) {
+			this.expression = new ConstantAccess((ConstantDeclaration) declaration);
 
-		} else if (_declaration instanceof ParameterDeclaration) {
-			this.expression = new ParameterAccess((ParameterDeclaration) _declaration);
+		} else if (declaration instanceof ParameterDeclaration) {
+			this.expression = new ParameterAccess((ParameterDeclaration) declaration);
 
 		} else {
 			Logger.error("[IdentifierAccess] Declaration of " + name
@@ -131,8 +131,8 @@ public class IdentifierAccess extends AbstractIdentifier implements AccessibleEx
 	 * @see fr.n7.stl.block.ast.Expression#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		return this.expression.getCode(_factory);
+	public Fragment getCode(TAMFactory factory) {
+		return this.expression.getCode(factory);
 	}
 
 }

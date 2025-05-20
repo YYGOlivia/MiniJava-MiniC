@@ -22,10 +22,10 @@ public class VariableAccess extends AbstractAccess {
 	/**
 	 * Creates a variable use expression Abstract Syntax Tree node.
 	 * 
-	 * @param _name Name of the used variable.
+	 * @param name Name of the used variable.
 	 */
-	public VariableAccess(VariableDeclaration _declaration) {
-		this.declaration = _declaration;
+	public VariableAccess(VariableDeclaration declaration) {
+		this.declaration = declaration;
 	}
 
 	/*
@@ -43,13 +43,13 @@ public class VariableAccess extends AbstractAccess {
 	 * @see fr.n7.stl.block.ast.expression.AbstractUse#getCode(fr.n7.stl.tam.ast.
 	 * TAMFactory)
 	 */
-	public Fragment getCode(TAMFactory _factory) {
-		Fragment _result = _factory.createFragment();
-		_result.add(_factory.createLoad(
+	public Fragment getCode(TAMFactory factory) {
+		Fragment result = factory.createFragment();
+		result.add(factory.createLoad(
 				this.declaration.getRegister(),
 				this.declaration.getOffset(),
 				this.declaration.getType().length()));
-		return _result;
+		return result;
 	}
 
 }

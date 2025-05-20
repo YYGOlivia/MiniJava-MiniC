@@ -22,9 +22,9 @@ public class SymbolTable implements HierarchicalScope<Declaration> {
 		this(null);
 	}
 
-	public SymbolTable(Scope<Declaration> _context) {
+	public SymbolTable(Scope<Declaration> context) {
 		this.declarations = new HashMap<String, Declaration>();
-		this.context = _context;
+		this.context = context;
 	}
 
 	/*
@@ -33,12 +33,12 @@ public class SymbolTable implements HierarchicalScope<Declaration> {
 	 * @see fr.n7.stl.block.ast.scope.Scope#get(java.lang.String)
 	 */
 	@Override
-	public Declaration get(String _name) {
-		if (this.declarations.containsKey(_name)) {
-			return this.declarations.get(_name);
+	public Declaration get(String name) {
+		if (this.declarations.containsKey(name)) {
+			return this.declarations.get(name);
 		} else {
 			if (this.context != null) {
-				return this.context.get(_name);
+				return this.context.get(name);
 			} else {
 				return null;
 			}
@@ -51,8 +51,8 @@ public class SymbolTable implements HierarchicalScope<Declaration> {
 	 * @see fr.n7.stl.block.ast.scope.Scope#contains(java.lang.String)
 	 */
 	@Override
-	public boolean contains(String _name) {
-		return (this.declarations.containsKey(_name));
+	public boolean contains(String name) {
+		return (this.declarations.containsKey(name));
 	}
 
 	/*
@@ -62,8 +62,8 @@ public class SymbolTable implements HierarchicalScope<Declaration> {
 	 * Declaration)
 	 */
 	@Override
-	public boolean accepts(Declaration _declaration) {
-		return (!this.contains(_declaration.getName()));
+	public boolean accepts(Declaration declaration) {
+		return (!this.contains(declaration.getName()));
 	}
 
 	/*
@@ -73,9 +73,9 @@ public class SymbolTable implements HierarchicalScope<Declaration> {
 	 * Declaration)
 	 */
 	@Override
-	public void register(Declaration _declaration) {
-		if (this.accepts(_declaration)) {
-			this.declarations.put(_declaration.getName(), _declaration);
+	public void register(Declaration declaration) {
+		if (this.accepts(declaration)) {
+			this.declarations.put(declaration.getName(), declaration);
 		} else {
 			throw new IllegalArgumentException();
 		}
@@ -87,15 +87,15 @@ public class SymbolTable implements HierarchicalScope<Declaration> {
 	 * @see fr.n7.stl.block.ast.scope.HierarchicalScope#knows(java.lang.String)
 	 */
 	@Override
-	public boolean knows(String _name) {
-		if (this.contains(_name)) {
+	public boolean knows(String name) {
+		if (this.contains(name)) {
 			return true;
 		} else {
 			if (this.context != null) {
 				if (this.context instanceof HierarchicalScope<?>) {
-					return ((HierarchicalScope<?>) this.context).knows(_name);
+					return ((HierarchicalScope<?>) this.context).knows(name);
 				} else {
-					return this.context.contains(_name);
+					return this.context.contains(name);
 				}
 			} else {
 				return false;
@@ -110,15 +110,15 @@ public class SymbolTable implements HierarchicalScope<Declaration> {
 	 */
 	@Override
 	public String toString() {
-		String _local = "";
+		String local = "";
 		if (this.context != null) {
-			_local += "Hierarchical definitions :\n" + this.context.toString();
+			local += "Hierarchical definitions :\n" + this.context.toString();
 		}
-		_local += "Local definitions : ";
-		for (Entry<String, Declaration> _entry : this.declarations.entrySet()) {
-			_local += _entry.getKey() + " -> " + _entry.getValue().toString() + "\n";
+		local += "Local definitions : ";
+		for (Entry<String, Declaration> entry : this.declarations.entrySet()) {
+			local += entry.getKey() + " -> " + entry.getValue().toString() + "\n";
 		}
-		return _local;
+		return local;
 	}
 
 }

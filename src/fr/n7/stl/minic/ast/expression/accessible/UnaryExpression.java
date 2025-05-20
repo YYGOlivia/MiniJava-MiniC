@@ -28,12 +28,12 @@ public class UnaryExpression implements AccessibleExpression {
 	 * sub-expression
 	 * and the unary operation.
 	 * 
-	 * @param _operator  : Unary Operator.
-	 * @param _parameter : Expression for the parameter.
+	 * @param operator  : Unary Operator.
+	 * @param parameter : Expression for the parameter.
 	 */
-	public UnaryExpression(UnaryOperator _operator, AccessibleExpression _parameter) {
-		this.operator = _operator;
-		this.parameter = _parameter;
+	public UnaryExpression(UnaryOperator operator, AccessibleExpression parameter) {
+		this.operator = operator;
+		this.parameter = parameter;
 	}
 
 	/*
@@ -54,8 +54,8 @@ public class UnaryExpression implements AccessibleExpression {
 	 * Scope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		return this.parameter.collectAndPartialResolve(_scope);
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
+		return this.parameter.collectAndPartialResolve(scope);
 	}
 
 	/*
@@ -66,8 +66,8 @@ public class UnaryExpression implements AccessibleExpression {
 	 * Scope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		return this.parameter.completeResolve(_scope);
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+		return this.parameter.completeResolve(scope);
 	}
 
 	/*
@@ -110,15 +110,15 @@ public class UnaryExpression implements AccessibleExpression {
 	 * @see fr.n7.stl.block.ast.Expression#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		Fragment _result = this.parameter.getCode(_factory);
-		// _result.addComment(this.toString());
+	public Fragment getCode(TAMFactory factory) {
+		Fragment result = this.parameter.getCode(factory);
+		// result.addComment(this.toString());
 		/*
 		 * if (this.parameter instanceof AccessibleExpression) {
-		 * _result.add(_factory.createLoadI(this.parameter.getType().length())); }
+		 * result.add(factory.createLoadI(this.parameter.getType().length())); }
 		 */
-		_result.add(this.operator.toTAM());
-		return _result;
+		result.add(this.operator.toTAM());
+		return result;
 	}
 
 }

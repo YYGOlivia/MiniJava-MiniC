@@ -36,6 +36,6 @@ public abstract class AbstractAccess {
 	 * 
 	 * @return Synthesized Type of the expression.
 	 */
-	public abstract Fragment getCode(TAMFactory _factory);
+	public abstract Fragment getCode(TAMFactory factory);
 
 }

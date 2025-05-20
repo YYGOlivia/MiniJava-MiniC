@@ -53,17 +53,17 @@ public class FunctionDeclaration implements Instruction, Declaration {
 	/**
 	 * Builds an AST node for a function declaration
 	 * 
-	 * @param _name       : Name of the function
-	 * @param _type       : AST node for the returned type of the function
-	 * @param _parameters : List of AST nodes for the formal parameters of the
+	 * @param name       : Name of the function
+	 * @param type       : AST node for the returned type of the function
+	 * @param parameters : List of AST nodes for the formal parameters of the
 	 *                    function
-	 * @param _body       : AST node for the body of the function
+	 * @param body       : AST node for the body of the function
 	 */
-	public FunctionDeclaration(String _name, Type _type, List<ParameterDeclaration> _parameters, Block _body) {
-		this.name = _name;
-		this.type = _type;
-		this.parameters = _parameters;
-		this.body = _body;
+	public FunctionDeclaration(String name, Type type, List<ParameterDeclaration> parameters, Block body) {
+		this.name = name;
+		this.type = type;
+		this.parameters = parameters;
+		this.body = body;
 	}
 
 	/*
@@ -73,15 +73,15 @@ public class FunctionDeclaration implements Instruction, Declaration {
 	 */
 	@Override
 	public String toString() {
-		String _result = this.type + " " + this.name + "( ";
-		Iterator<ParameterDeclaration> _iter = this.parameters.iterator();
-		if (_iter.hasNext()) {
-			_result += _iter.next();
-			while (_iter.hasNext()) {
-				_result += " ," + _iter.next();
+		String result = this.type + " " + this.name + "( ";
+		Iterator<ParameterDeclaration> iter = this.parameters.iterator();
+		if (iter.hasNext()) {
+			result += iter.next();
+			while (iter.hasNext()) {
+				result += " ," + iter.next();
 			}
 		}
-		return _result + " )" + this.body;
+		return result + " )" + this.body;
 	}
 
 	/*
@@ -112,13 +112,13 @@ public class FunctionDeclaration implements Instruction, Declaration {
 	 * .Scope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		if (!_scope.accepts(this)) {
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
+		if (!scope.accepts(this)) {
 			Logger.error("[FunctionDeclaration] The function " + name + " is already declared");
 			return false;
 		}
-		_scope.register(this);
-		SymbolTable functionScope = new SymbolTable(_scope);
+		scope.register(this);
+		SymbolTable functionScope = new SymbolTable(scope);
 		for (ParameterDeclaration paramDecl : this.parameters) {
 			if (!functionScope.accepts(paramDecl)) {
 				Logger.error("[FunctionDeclaration] The parameter " + paramDecl.getName()
@@ -128,18 +128,18 @@ public class FunctionDeclaration implements Instruction, Declaration {
 			functionScope.register(paramDecl);
 		}
 		boolean okBody = body.collectAndPartialResolve(functionScope, this);
-		boolean okType = type.completeResolve(_scope);
+		boolean okType = type.completeResolve(scope);
 		return okBody && okType;
 	}
 
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
-		if (!_scope.accepts(this)) {
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope, FunctionDeclaration container) {
+		if (!scope.accepts(this)) {
 			Logger.error("[FunctionDeclaration] The function " + name + " is already declared");
 			return false;
 		}
-		_scope.register(this);
-		SymbolTable functionScope = new SymbolTable(_scope);
+		scope.register(this);
+		SymbolTable functionScope = new SymbolTable(scope);
 		for (ParameterDeclaration paramDecl : this.parameters) {
 			if (!functionScope.accepts(paramDecl)) {
 				Logger.error("[FunctionDeclaration] The parameter " + paramDecl.getName()
@@ -149,7 +149,7 @@ public class FunctionDeclaration implements Instruction, Declaration {
 			functionScope.register(paramDecl);
 		}
 		boolean okBody = body.collectAndPartialResolve(functionScope, this);
-		boolean okType = type.completeResolve(_scope);
+		boolean okType = type.completeResolve(scope);
 		return okBody && okType;
 	}
 
@@ -161,12 +161,12 @@ public class FunctionDeclaration implements Instruction, Declaration {
 	 * .Scope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		_scope.register(this);
-		SymbolTable functionScope = new SymbolTable(_scope);
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+		scope.register(this);
+		SymbolTable functionScope = new SymbolTable(scope);
 		boolean okParams = true;
 		for (ParameterDeclaration paramDecl : this.parameters) {
-			okParams = okParams && paramDecl.getType().completeResolve(_scope);
+			okParams = okParams && paramDecl.getType().completeResolve(scope);
 			if (!functionScope.accepts(paramDecl)) {
 				Logger.error("[FunctionDeclaration] The parameter " + paramDecl.getName()
 						+ " is already declared in the function " + name);
@@ -175,7 +175,7 @@ public class FunctionDeclaration implements Instruction, Declaration {
 			functionScope.register(paramDecl);
 		}
 		boolean okBody = body.completeResolve(functionScope);
-		boolean okType = type.completeResolve(_scope);
+		boolean okType = type.completeResolve(scope);
 		return okParams && okBody && okType;
 	}
 
@@ -197,7 +197,7 @@ public class FunctionDeclaration implements Instruction, Declaration {
 	 * Register, int)
 	 */
 	@Override
-	public int allocateMemory(Register _register, int _offset) {
+	public int allocateMemory(Register register, int offset) {
 		int off = 0;
 		for (ParameterDeclaration paramDecl : this.parameters) {
 			off += paramDecl.getType().length();
@@ -217,10 +217,10 @@ public class FunctionDeclaration implements Instruction, Declaration {
 	 * TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		Fragment fragment = _factory.createFragment();
+	public Fragment getCode(TAMFactory factory) {
+		Fragment fragment = factory.createFragment();
 		
-		fragment.append(body.getCode(_factory));
+		fragment.append(body.getCode(factory));
 		fragment.addPrefix(name);
 		// fragment.addComment(toString());
 		return fragment;

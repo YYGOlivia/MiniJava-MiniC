@@ -36,28 +36,28 @@ public class BlockFactory {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Block createBlock(List<Instruction> _instructions) {
-		return new Block(_instructions);
+	public Block createBlock(List<Instruction> instructions) {
+		return new Block(instructions);
 	}
 
-	public Instruction createAssignment(AssignableExpression _target, AccessibleExpression _value) {
-		return new Assignment(_target, _value);
+	public Instruction createAssignment(AssignableExpression target, AccessibleExpression value) {
+		return new Assignment(target, value);
 	}
 
-	public Instruction createConditional(AccessibleExpression _condition, Block _then) {
-		return new Conditional(_condition, _then);
+	public Instruction createConditional(AccessibleExpression condition, Block thenBlock) {
+		return new Conditional(condition, thenBlock);
 	}
 
-	public Instruction createConditional(AccessibleExpression _condition, Block _then, Block _else) {
-		return new Conditional(_condition, _then, _else);
+	public Instruction createConditional(AccessibleExpression condition, Block thenBlock, Block elseBlock) {
+		return new Conditional(condition, thenBlock, elseBlock);
 	}
 
-	public Instruction createIteration(AccessibleExpression _condition, Block _body) {
-		return new Iteration(_condition, _body);
+	public Instruction createIteration(AccessibleExpression condition, Block body) {
+		return new Iteration(condition, body);
 	}
 
-	public Instruction createPrinter(AccessibleExpression _value) {
-		return new Printer(_value);
+	public Instruction createPrinter(AccessibleExpression value) {
+		return new Printer(value);
 	}
 
 	public AccessibleExpression createTrueValue() {
@@ -72,28 +72,28 @@ public class BlockFactory {
 		return NullValue.Null;
 	}
 
-	public AccessibleExpression createIntegerValue(String _value) {
-		return new IntegerValue(_value);
+	public AccessibleExpression createIntegerValue(String value) {
+		return new IntegerValue(value);
 	}
 
-	public AccessibleExpression createUnaryExpression(UnaryOperator _operator, AccessibleExpression _parameter) {
-		return new UnaryExpression(_operator, _parameter);
+	public AccessibleExpression createUnaryExpression(UnaryOperator operator, AccessibleExpression parameter) {
+		return new UnaryExpression(operator, parameter);
 	}
 
-	public AccessibleExpression createBinaryExpression(AccessibleExpression _left, BinaryOperator _operator,
-			AccessibleExpression _right) {
-		return new BinaryExpression(_left, _operator, _right);
+	public AccessibleExpression createBinaryExpression(AccessibleExpression left, BinaryOperator operator,
+			AccessibleExpression right) {
+		return new BinaryExpression(left, operator, right);
 	}
 
-	public AccessibleExpression createIdentifierAccess(String _name) {
-		return new IdentifierAccess(_name);
+	public AccessibleExpression createIdentifierAccess(String name) {
+		return new IdentifierAccess(name);
 	}
 
-	public AccessibleExpression createArrayAccess(AccessibleExpression _array, AccessibleExpression _index) {
-		return new ArrayAccess(_array, _index);
+	public AccessibleExpression createArrayAccess(AccessibleExpression array, AccessibleExpression index) {
+		return new ArrayAccess(array, index);
 	}
 
-	public AccessibleExpression createPointerAccess(AccessibleExpression _pointer) {
-		return new PointerAccess(_pointer);
+	public AccessibleExpression createPointerAccess(AccessibleExpression pointer) {
+		return new PointerAccess(pointer);
 	}
 }

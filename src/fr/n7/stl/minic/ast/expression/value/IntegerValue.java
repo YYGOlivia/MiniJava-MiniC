@@ -25,10 +25,10 @@ public class IntegerValue implements Value {
 	 * Builds an integer value expression implementation from a textual
 	 * representation of the integer.
 	 * 
-	 * @param _text Textual representation of the integer value.
+	 * @param text Textual representation of the integer value.
 	 */
-	public IntegerValue(String _text) {
-		value = Integer.parseInt(_text);
+	public IntegerValue(String text) {
+		value = Integer.parseInt(text);
 	}
 
 	/*
@@ -49,7 +49,7 @@ public class IntegerValue implements Value {
 	 * Scope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
 		return true;
 	}
 
@@ -61,7 +61,7 @@ public class IntegerValue implements Value {
 	 * Scope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
 		return true;
 	}
 
@@ -82,10 +82,10 @@ public class IntegerValue implements Value {
 	 * @see fr.n7.stl.block.ast.Expression#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		Fragment _fragment = _factory.createFragment();
-		_fragment.add(_factory.createLoadL(this.value));
-		return _fragment;
+	public Fragment getCode(TAMFactory factory) {
+		Fragment fragment = factory.createFragment();
+		fragment.add(factory.createLoadL(this.value));
+		return fragment;
 	}
 
 }

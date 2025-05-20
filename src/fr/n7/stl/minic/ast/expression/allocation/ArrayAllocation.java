@@ -23,9 +23,9 @@ public class ArrayAllocation implements AccessibleExpression, AssignableExpressi
 	protected Type element;
 	protected Expression size;
 
-	public ArrayAllocation(Type _element, Expression _size) {
-		this.element = _element;
-		this.size = _size;
+	public ArrayAllocation(Type element, Expression size) {
+		this.element = element;
+		this.size = size;
 	}
 
 	/*
@@ -46,9 +46,9 @@ public class ArrayAllocation implements AccessibleExpression, AssignableExpressi
 	 * Scope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		boolean okType = this.element.completeResolve(_scope);
-		boolean okSize = this.size.collectAndPartialResolve(_scope);
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
+		boolean okType = this.element.completeResolve(scope);
+		boolean okSize = this.size.collectAndPartialResolve(scope);
 		return okType && okSize;
 	}
 
@@ -60,9 +60,9 @@ public class ArrayAllocation implements AccessibleExpression, AssignableExpressi
 	 * Scope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		boolean okType = this.element.completeResolve(_scope);
-		boolean okSize = this.size.completeResolve(_scope);
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+		boolean okType = this.element.completeResolve(scope);
+		boolean okSize = this.size.completeResolve(scope);
 		return okType && okSize;
 	}
 
@@ -82,10 +82,10 @@ public class ArrayAllocation implements AccessibleExpression, AssignableExpressi
 	 * @see fr.n7.stl.block.ast.Expression#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		Fragment fragment = _factory.createFragment();
-		fragment.append(size.getCode(_factory));
-		fragment.add(_factory.createLoadL(element.length()));
+	public Fragment getCode(TAMFactory factory) {
+		Fragment fragment = factory.createFragment();
+		fragment.append(size.getCode(factory));
+		fragment.add(factory.createLoadL(element.length()));
 		fragment.add(Library.IMul);
 		fragment.add(Library.MAlloc);
 		fragment.addComment("Allocation");

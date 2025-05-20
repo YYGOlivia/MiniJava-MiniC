@@ -22,10 +22,10 @@ public class ConstantAccess extends AbstractAccess {
 	/**
 	 * Creates a variable use expression Abstract Syntax Tree node.
 	 * 
-	 * @param _name Name of the used variable.
+	 * @param name Name of the used variable.
 	 */
-	public ConstantAccess(ConstantDeclaration _declaration) {
-		this.declaration = _declaration;
+	public ConstantAccess(ConstantDeclaration declaration) {
+		this.declaration = declaration;
 	}
 
 	/*
@@ -43,8 +43,8 @@ public class ConstantAccess extends AbstractAccess {
 	 * @see fr.n7.stl.block.ast.expression.AbstractUse#getCode(fr.n7.stl.tam.ast.
 	 * TAMFactory)
 	 */
-	public Fragment getCode(TAMFactory _factory) {
-		return this.declaration.getCode(_factory);
+	public Fragment getCode(TAMFactory factory) {
+		return this.declaration.getCode(factory);
 	}
 
 }

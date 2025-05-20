@@ -35,8 +35,8 @@ public class Block {
 	/**
 	 * Constructor for a block.
 	 */
-	public Block(List<Instruction> _instructions) {
-		this.instructions = _instructions;
+	public Block(List<Instruction> instructions) {
+		this.instructions = instructions;
 	}
 
 	/*
@@ -46,11 +46,11 @@ public class Block {
 	 */
 	@Override
 	public String toString() {
-		String _local = "";
-		for (Instruction _instruction : this.instructions) {
-			_local += _instruction;
+		String local = "";
+		for (Instruction instruction : this.instructions) {
+			local += instruction;
 		}
-		return "{\n" + _local + "}\n";
+		return "{\n" + local + "}\n";
 	}
 
 	/**
@@ -58,16 +58,16 @@ public class Block {
 	 * check
 	 * that the declaration are allowed.
 	 * 
-	 * @param _scope Inherited Scope attribute that contains the identifiers defined
-	 *               previously
-	 *               in the context.
+	 * @param scope Inherited Scope attribute that contains the identifiers defined
+	 *              previously
+	 *              in the context.
 	 * @return Synthesized Semantics attribute that indicates if the identifier
 	 *         declaration are
 	 *         allowed.
 	 */
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
 		boolean ok = true;
-		SymbolTable newScope = new SymbolTable(_scope);
+		SymbolTable newScope = new SymbolTable(scope);
 		for (Instruction i : instructions) {
 			ok = ok && i.collectAndPartialResolve(newScope);
 		}
@@ -79,21 +79,21 @@ public class Block {
 	 * check
 	 * that the declaration are allowed.
 	 * 
-	 * @param _scope     Inherited Scope attribute that contains the identifiers
-	 *                   defined previously
-	 *                   in the context.
-	 * @param _container Inherited Container attribute that allows to link the
-	 *                   return instructions
-	 *                   with the function declaration.
+	 * @param scope     Inherited Scope attribute that contains the identifiers
+	 *                  defined previously
+	 *                  in the context.
+	 * @param container Inherited Container attribute that allows to link the
+	 *                  return instructions
+	 *                  with the function declaration.
 	 * @return Synthesized Semantics attribute that indicates if the identifier
 	 *         declaration are
 	 *         allowed.
 	 */
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope, FunctionDeclaration container) {
 		boolean ok = true;
-		SymbolTable newScope = new SymbolTable(_scope);
+		SymbolTable newScope = new SymbolTable(scope);
 		for (Instruction i : instructions) {
-			ok = ok && i.collectAndPartialResolve(newScope, _container);
+			ok = ok && i.collectAndPartialResolve(newScope, container);
 		}
 		return ok;
 	}
@@ -103,15 +103,15 @@ public class Block {
 	 * and
 	 * associate all identifiers uses with their definitions.
 	 * 
-	 * @param _scope Inherited Scope attribute that contains the defined
-	 *               identifiers.
+	 * @param scope Inherited Scope attribute that contains the defined
+	 *              identifiers.
 	 * @return Synthesized Semantics attribute that indicates if the identifier used
 	 *         in the
 	 *         block have been previously defined.
 	 */
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
 		boolean ok = true;
-		SymbolTable newScope = new SymbolTable(_scope);
+		SymbolTable newScope = new SymbolTable(scope);
 		for (Instruction i : instructions) {
 			ok = ok && i.completeResolve(newScope);
 		}
@@ -137,14 +137,14 @@ public class Block {
 	 * Synthesized Semantics attribute that compute the size of the allocated
 	 * memory.
 	 * 
-	 * @param _register Inherited Register associated to the address of the
-	 *                  variables.
-	 * @param _offset   Inherited Current offset for the address of the variables.
+	 * @param register Inherited Register associated to the address of the
+	 *                 variables.
+	 * @param offset   Inherited Current offset for the address of the variables.
 	 */
-	public void allocateMemory(Register _register, int _offset) {
-		int off = _offset;
+	public void allocateMemory(Register register, int offset) {
+		int off = offset;
 		for (Instruction instr : instructions) {
-			off += instr.allocateMemory(_register, off);
+			off += instr.allocateMemory(register, off);
 		}
 		this.off = off;
 	}
@@ -156,30 +156,30 @@ public class Block {
 	 * for the generated TAM code.
 	 * Synthesized Semantics attribute that provide the generated TAM code.
 	 * 
-	 * @param _factory Inherited Factory to build AST nodes for TAM code.
+	 * @param factory Inherited Factory to build AST nodes for TAM code.
 	 * @return Synthesized AST for the generated TAM code.
 	 */
-	public Fragment getCode(TAMFactory _factory) {
-		Fragment _fragment = _factory.createFragment();
+	public Fragment getCode(TAMFactory factory) {
+		Fragment fragment = factory.createFragment();
 		for (Instruction instr : instructions) {
 			if (!(instr instanceof FunctionDeclaration)) {
 				// on ajoute seulement les instructions qui ne sont pas des fonctions
-				_fragment.append(instr.getCode(_factory));
+				fragment.append(instr.getCode(factory));
 			}
 		}
-		// _fragment.addComment(toString());
-		return _fragment;
+		// fragment.addComment(toString());
+		return fragment;
 	}
 
-	public Fragment getFunctions(TAMFactory _factory) {
-		Fragment _fragment = _factory.createFragment();
+	public Fragment getFunctions(TAMFactory factory) {
+		Fragment fragment = factory.createFragment();
 		for (Instruction instr : instructions) {
 			if (instr instanceof FunctionDeclaration) {
 				// on ajoute seulement les instructions qui sont des déclarations de fonction
-				_fragment.append(instr.getCode(_factory));
+				fragment.append(instr.getCode(factory));
 			}
 		}
-		// _fragment.addComment(toString());
-		return _fragment;
+		// fragment.addComment(toString());
+		return fragment;
 	}
 }

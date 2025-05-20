@@ -283,18 +283,18 @@ public enum Library implements TAMInstruction {
 	 * @see java.lang.Enum#toString()
 	 */
 	public String toString() {
-		String _result = "";
-		for (String _comment : this.comments) {
-			_result += ";" + _comment + "\n";
+		String result = "";
+		for (String comment : this.comments) {
+			result += ";" + comment + "\n";
 		}
-		for (String _label : this.prefixes) {
-			_result += _label + "\n";
+		for (String label : this.prefixes) {
+			result += label + "\n";
 		}
-		_result += "SUBR " + this.name() + "\n";
-		for (String _label : this.suffixes) {
-			_result += _label + "\n";
+		result += "SUBR " + this.name() + "\n";
+		for (String label : this.suffixes) {
+			result += label + "\n";
 		}
-		return _result;
+		return result;
 	}
 
 	/*
@@ -303,8 +303,8 @@ public enum Library implements TAMInstruction {
 	 * @see fr.n7.stl.tam.ast.TAMInstruction#addComment(java.lang.String)
 	 */
 	@Override
-	public void addComment(String _comment) {
-		this.comments.add(_comment);
+	public void addComment(String comment) {
+		this.comments.add(comment);
 	}
 
 	/*
@@ -313,8 +313,8 @@ public enum Library implements TAMInstruction {
 	 * @see fr.n7.stl.tam.ast.TAMInstruction#addPrefix(java.lang.String)
 	 */
 	@Override
-	public void addPrefix(String _label) {
-		this.prefixes.add(_label);
+	public void addPrefix(String label) {
+		this.prefixes.add(label);
 	}
 
 	/*
@@ -323,7 +323,7 @@ public enum Library implements TAMInstruction {
 	 * @see fr.n7.stl.tam.ast.TAMInstruction#addSuffix(java.lang.String)
 	 */
 	@Override
-	public void addSuffix(String _label) {
-		this.suffixes.add(_label);
+	public void addSuffix(String label) {
+		this.suffixes.add(label);
 	}
 }

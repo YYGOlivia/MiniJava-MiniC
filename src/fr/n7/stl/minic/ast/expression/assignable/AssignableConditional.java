@@ -12,8 +12,8 @@ import fr.n7.stl.minic.ast.expression.Expression;
  */
 public class AssignableConditional extends AbstractConditional<AssignableExpression> implements AssignableExpression {
 
-	public AssignableConditional(Expression _condition, AssignableExpression _then, AssignableExpression _else) {
-		super(_condition, _then, _else);
+	public AssignableConditional(Expression condition, AssignableExpression thenExpr, AssignableExpression elseExpr) {
+		super(condition, thenExpr, elseExpr);
 	}
 
 }

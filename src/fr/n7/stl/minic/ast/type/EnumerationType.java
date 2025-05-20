@@ -29,9 +29,9 @@ public class EnumerationType implements Type, Declaration {
     /**
      * 
      */
-    public EnumerationType(String _name, List<LabelDeclaration> _labels) {
-        this.name = _name;
-        this.labels = _labels;
+    public EnumerationType(String name, List<LabelDeclaration> labels) {
+        this.name = name;
+        this.labels = labels;
     }
 
     /*
@@ -41,15 +41,15 @@ public class EnumerationType implements Type, Declaration {
      */
     @Override
     public String toString() {
-        String _result = "enum" + this.name + " { ";
-        Iterator<LabelDeclaration> _iter = this.labels.iterator();
-        if (_iter.hasNext()) {
-            _result += _iter.next();
-            while (_iter.hasNext()) {
-                _result += " ," + _iter.next();
+        String result = "enum" + this.name + " { ";
+        Iterator<LabelDeclaration> iter = this.labels.iterator();
+        if (iter.hasNext()) {
+            result += iter.next();
+            while (iter.hasNext()) {
+                result += " ," + iter.next();
             }
         }
-        return _result + " }";
+        return result + " }";
     }
 
     /*
@@ -58,11 +58,11 @@ public class EnumerationType implements Type, Declaration {
      * @see fr.n7.stl.block.ast.type.Type#equalsTo(fr.n7.stl.block.ast.type.Type)
      */
     @Override
-    public boolean equalsTo(Type _other) {
-        if (!(_other instanceof EnumerationType)) {
+    public boolean equalsTo(Type other) {
+        if (!(other instanceof EnumerationType)) {
             return false;
         }
-        EnumerationType otherEnum = (EnumerationType) _other;
+        EnumerationType otherEnum = (EnumerationType) other;
 
         // il faut le même nombre de label
         if (this.labels.size() != otherEnum.labels.size()) {
@@ -89,14 +89,14 @@ public class EnumerationType implements Type, Declaration {
      * fr.n7.stl.block.ast.type.Type#compatibleWith(fr.n7.stl.block.ast.type.Type)
      */
     @Override
-    public boolean compatibleWith(Type _other) {
-        if (_other == AtomicType.IntegerType) {
+    public boolean compatibleWith(Type other) {
+        if (other == AtomicType.IntegerType) {
             // compatible avec les ints
             return true;
-        } else if (this.equalsTo(_other)) {
+        } else if (this.equalsTo(other)) {
             // compatible avec lui-même
             return true;
-        } else if (_other instanceof EnumerationType) {
+        } else if (other instanceof EnumerationType) {
             // compatible avec les enums
             return true;
         }
@@ -109,7 +109,7 @@ public class EnumerationType implements Type, Declaration {
      * @see fr.n7.stl.block.ast.type.Type#merge(fr.n7.stl.block.ast.type.Type)
      */
     @Override
-    public Type merge(Type _other) {
+    public Type merge(Type other) {
         throw new SemanticsUndefinedException("Semantics merge is not implemented in EnumerationType.");
     }
 
@@ -129,17 +129,17 @@ public class EnumerationType implements Type, Declaration {
      * @see fr.n7.stl.block.ast.type.Type#resolve(fr.n7.stl.block.ast.scope.Scope)
      */
     @Override
-    public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
+    public boolean completeResolve(HierarchicalScope<Declaration> scope) {
         // pas sûr
         for (int i = 0; i < this.labels.size(); i++) {
             LabelDeclaration labelDecl = this.labels.get(i);
             ConstantDeclaration constDecl = new ConstantDeclaration(labelDecl.getName(), AtomicType.IntegerType,
                     new IntegerValue(String.valueOf(i)));
-            if (!(_scope.accepts(constDecl))) {
+            if (!(scope.accepts(constDecl))) {
                 Logger.error("[EnumerationType] The constant " + constDecl.getName() + " is already declared.");
                 return false;
             }
-            _scope.register(constDecl);
+            scope.register(constDecl);
         }
         return true;
     }

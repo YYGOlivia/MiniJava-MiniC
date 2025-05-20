@@ -36,14 +36,14 @@ public abstract class AbstractArray<ArrayKind extends Expression> implements Exp
 	 * Construction for the implementation of an array element access expression
 	 * Abstract Syntax Tree node.
 	 * 
-	 * @param _array Abstract Syntax Tree for the array part in an array element
+	 * @param array Abstract Syntax Tree for the array part in an array element
 	 *               access expression.
-	 * @param _index Abstract Syntax Tree for the index part in an array element
+	 * @param index Abstract Syntax Tree for the index part in an array element
 	 *               access expression.
 	 */
-	public AbstractArray(ArrayKind _array, AccessibleExpression _index) {
-		this.array = _array;
-		this.index = _index;
+	public AbstractArray(ArrayKind array, AccessibleExpression index) {
+		this.array = array;
+		this.index = index;
 	}
 
 	/*
@@ -64,9 +64,9 @@ public abstract class AbstractArray<ArrayKind extends Expression> implements Exp
 	 * HierarchicalScope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		boolean okArray = this.array.collectAndPartialResolve(_scope);
-		boolean okIndex = this.index.collectAndPartialResolve(_scope);
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
+		boolean okArray = this.array.collectAndPartialResolve(scope);
+		boolean okIndex = this.index.collectAndPartialResolve(scope);
 
 		Type arrayTrueType =  NamedType.getTrueType(array);
 
@@ -85,9 +85,9 @@ public abstract class AbstractArray<ArrayKind extends Expression> implements Exp
 	 * HierarchicalScope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		boolean okArray = this.array.completeResolve(_scope);
-		boolean okIndex = this.index.completeResolve(_scope);
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+		boolean okArray = this.array.completeResolve(scope);
+		boolean okIndex = this.index.completeResolve(scope);
 		Type arrayTrueType = NamedType.getTrueType(array);
 
 		if (!(arrayTrueType instanceof ArrayType)) {

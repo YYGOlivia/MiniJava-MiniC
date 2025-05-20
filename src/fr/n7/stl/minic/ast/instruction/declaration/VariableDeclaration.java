@@ -54,14 +54,14 @@ public class VariableDeclaration implements Declaration, Instruction {
 	/**
 	 * Creates a variable declaration instruction node for the Abstract Syntax Tree.
 	 * 
-	 * @param _name  Name of the declared variable.
-	 * @param _type  AST node for the type of the declared variable.
-	 * @param _value AST node for the initial value of the declared variable.
+	 * @param name  Name of the declared variable.
+	 * @param type  AST node for the type of the declared variable.
+	 * @param value AST node for the initial value of the declared variable.
 	 */
-	public VariableDeclaration(String _name, Type _type, Expression _value) {
-		this.name = _name;
-		this.type = _type;
-		this.value = _value;
+	public VariableDeclaration(String name, Type type, Expression value) {
+		this.name = name;
+		this.type = type;
+		this.value = value;
 	}
 
 	/*
@@ -123,26 +123,26 @@ public class VariableDeclaration implements Declaration, Instruction {
 	 * .Scope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		if (!_scope.accepts(this)) {
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
+		if (!scope.accepts(this)) {
 			Logger.error("[VariableDeclaration] The variable " + name + " is already declared");
 			return false;
 		}
-		_scope.register(this);
-		boolean okValue = value.collectAndPartialResolve(_scope);
-		boolean okType = type.completeResolve(_scope);
+		scope.register(this);
+		boolean okValue = value.collectAndPartialResolve(scope);
+		boolean okType = type.completeResolve(scope);
 		return okValue && okType;
 	}
 
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
-		if (!_scope.accepts(this)) {
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope, FunctionDeclaration container) {
+		if (!scope.accepts(this)) {
 			Logger.error("[VariableDeclaration] The variable " + name + " is already declared");
 			return false;
 		}
-		_scope.register(this);
-		boolean okValue = value.collectAndPartialResolve(_scope);
-		boolean okType = type.completeResolve(_scope);
+		scope.register(this);
+		boolean okValue = value.collectAndPartialResolve(scope);
+		boolean okType = type.completeResolve(scope);
 		return okValue && okType;
 
 	}
@@ -155,14 +155,14 @@ public class VariableDeclaration implements Declaration, Instruction {
 	 * .Scope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		if (!_scope.accepts(this)) {
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+		if (!scope.accepts(this)) {
 			Logger.error("[VariableDeclaration] The variable " + name + " is already declared");
 			return false;
 		}
-		_scope.register(this);
-		boolean okValue = value.completeResolve(_scope);
-		boolean okType = type.completeResolve(_scope);
+		scope.register(this);
+		boolean okValue = value.completeResolve(scope);
+		boolean okType = type.completeResolve(scope);
 		return okValue && okType;
 	}
 
@@ -195,9 +195,9 @@ public class VariableDeclaration implements Declaration, Instruction {
 	 * int)
 	 */
 	@Override
-	public int allocateMemory(Register _register, int _offset) {
-		this.register = _register;
-		this.offset = _offset;
+	public int allocateMemory(Register register, int offset) {
+		this.register = register;
+		this.offset = offset;
 		return type.length();
 	}
 
@@ -207,22 +207,22 @@ public class VariableDeclaration implements Declaration, Instruction {
 	 * @see fr.n7.stl.block.ast.Instruction#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		Fragment result = _factory.createFragment();
-		result.add(_factory.createPush(type.length()));
+	public Fragment getCode(TAMFactory factory) {
+		Fragment result = factory.createFragment();
+		result.add(factory.createPush(type.length()));
 		if (type instanceof ArrayType){
 			//On alloue d'abord de la place au tableau
-			result.add(_factory.createLoadL(value.getType().length()));
+			result.add(factory.createLoadL(value.getType().length()));
 			result.add(Library.MAlloc);
-			result.add(_factory.createStore(register, offset, type.length()));
+			result.add(factory.createStore(register, offset, type.length()));
 			//On recupère le code de la valeur
-			result.append(this.value.getCode(_factory));
+			result.append(this.value.getCode(factory));
 			// On récupere l'adresse du tableau
-			result.add(_factory.createLoad(register, offset, type.length()));
-			result.add(_factory.createStoreI(value.getType().length()));
+			result.add(factory.createLoad(register, offset, type.length()));
+			result.add(factory.createStoreI(value.getType().length()));
 		}else{
-			result.append(this.value.getCode(_factory));
-			result.add(_factory.createStore(register, offset, type.length()));
+			result.append(this.value.getCode(factory));
+			result.add(factory.createStore(register, offset, type.length()));
 		}
 		//result.addComment(this.toString());
 		return result;

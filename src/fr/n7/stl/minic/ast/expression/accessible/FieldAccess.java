@@ -21,12 +21,12 @@ public class FieldAccess extends AbstractField<AccessibleExpression> implements 
 	 * Construction for the implementation of a record field access expression
 	 * Abstract Syntax Tree node.
 	 * 
-	 * @param _record Abstract Syntax Tree for the record part in a record field
+	 * @param record Abstract Syntax Tree for the record part in a record field
 	 *                access expression.
-	 * @param _name   Name of the field in the record field access expression.
+	 * @param name   Name of the field in the record field access expression.
 	 */
-	public FieldAccess(AccessibleExpression _record, String _name) {
-		super(_record, _name);
+	public FieldAccess(AccessibleExpression record, String name) {
+		super(record, name);
 	}
 
 	/*
@@ -35,10 +35,10 @@ public class FieldAccess extends AbstractField<AccessibleExpression> implements 
 	 * @see fr.n7.stl.block.ast.Expression#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		Fragment fragment = _factory.createFragment();
-		fragment.append(record.getCode(_factory));
-		fragment.add(_factory.createPop(super.field.getOffset(), super.field.getType().length()));
+	public Fragment getCode(TAMFactory factory) {
+		Fragment fragment = factory.createFragment();
+		fragment.append(record.getCode(factory));
+		fragment.add(factory.createPop(super.field.getOffset(), super.field.getType().length()));
 		return fragment;
 	}
 

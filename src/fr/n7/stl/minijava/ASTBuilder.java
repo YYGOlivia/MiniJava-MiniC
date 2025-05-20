@@ -11,6 +11,7 @@ import fr.n7.stl.minijava.ast.expression.UnaryExpression;
 import fr.n7.stl.minijava.ast.expression.UnaryOperator;
 import fr.n7.stl.minijava.ast.expression.value.BooleanValue;
 import fr.n7.stl.minijava.ast.expression.value.CharacterValue;
+import fr.n7.stl.minijava.ast.expression.value.FloatingValue;
 import fr.n7.stl.minijava.ast.expression.value.IntegerValue;
 import fr.n7.stl.minijava.ast.expression.value.NullValue;
 import fr.n7.stl.minijava.ast.expression.value.StringValue;
@@ -193,7 +194,7 @@ public class ASTBuilder extends MiniJavaParserBaseListener {
 
     @Override
     public void exitExprFloat(ExprFloatContext ctx) {
-        ctx.e = new IntegerValue(ctx.Flottant().getText());
+        ctx.e = new FloatingValue(ctx.Flottant().getText());
     }
 
     @Override

@@ -32,12 +32,12 @@ public class Assignment implements Instruction, Expression {
 	 * expression
 	 * and the assigned value.
 	 * 
-	 * @param _assignable Expression that can be assigned a value.
-	 * @param _value      Value assigned to the expression.
+	 * @param assignable Expression that can be assigned a value.
+	 * @param value      Value assigned to the expression.
 	 */
-	public Assignment(AssignableExpression _assignable, Expression _value) {
-		this.assignable = _assignable;
-		this.value = _value;
+	public Assignment(AssignableExpression assignable, Expression value) {
+		this.assignable = assignable;
+		this.value = value;
 		/*
 		 * This attribute will be assigned to the appropriate value by the resolve
 		 * action
@@ -62,16 +62,16 @@ public class Assignment implements Instruction, Expression {
 	 * .HierarchicalScope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		boolean valueOK = value.collectAndPartialResolve(_scope);
-		boolean assignableOK = assignable.collectAndPartialResolve(_scope);
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
+		boolean valueOK = value.collectAndPartialResolve(scope);
+		boolean assignableOK = assignable.collectAndPartialResolve(scope);
 		return valueOK && assignableOK;
 	}
 
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
-		boolean valueOK = value.collectAndPartialResolve(_scope);
-		boolean assignableOK = assignable.collectAndPartialResolve(_scope);
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope, FunctionDeclaration container) {
+		boolean valueOK = value.collectAndPartialResolve(scope);
+		boolean assignableOK = assignable.collectAndPartialResolve(scope);
 		return valueOK && assignableOK;
 	}
 
@@ -83,9 +83,9 @@ public class Assignment implements Instruction, Expression {
 	 * .HierarchicalScope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		boolean valueOK = value.completeResolve(_scope);
-		boolean assignableOK = assignable.completeResolve(_scope);
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+		boolean valueOK = value.completeResolve(scope);
+		boolean assignableOK = assignable.completeResolve(scope);
 		return valueOK && assignableOK;
 	}
 
@@ -124,7 +124,7 @@ public class Assignment implements Instruction, Expression {
 	 * int)
 	 */
 	@Override
-	public int allocateMemory(Register _register, int _offset) {
+	public int allocateMemory(Register register, int offset) {
 		return 0;
 	}
 
@@ -134,12 +134,12 @@ public class Assignment implements Instruction, Expression {
 	 * @see fr.n7.stl.block.ast.Instruction#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		Fragment fragment = _factory.createFragment();
-		fragment.append(value.getCode(_factory));
-		fragment.append(assignable.getCode(_factory));
+	public Fragment getCode(TAMFactory factory) {
+		Fragment fragment = factory.createFragment();
+		fragment.append(value.getCode(factory));
+		fragment.append(assignable.getCode(factory));
 		if (assignable instanceof FieldAssignment){
-			fragment.add(_factory.createStoreI(value.getType().length()));
+			fragment.add(factory.createStoreI(value.getType().length()));
 		}
 		//fragment.addComment(toString());
 		return fragment;

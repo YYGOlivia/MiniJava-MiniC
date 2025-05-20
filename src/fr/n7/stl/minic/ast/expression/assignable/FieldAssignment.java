@@ -23,12 +23,12 @@ public class FieldAssignment extends AbstractField<AssignableExpression> impleme
 	 * Construction for the implementation of a record field assignment expression
 	 * Abstract Syntax Tree node.
 	 * 
-	 * @param _record Abstract Syntax Tree for the record part in a record field
+	 * @param record Abstract Syntax Tree for the record part in a record field
 	 *                assignment expression.
-	 * @param _name   Name of the field in the record field assignment expression.
+	 * @param name   Name of the field in the record field assignment expression.
 	 */
-	public FieldAssignment(AssignableExpression _record, String _name) {
-		super(_record, _name);
+	public FieldAssignment(AssignableExpression record, String name) {
+		super(record, name);
 	}
 
 	/*
@@ -38,17 +38,17 @@ public class FieldAssignment extends AbstractField<AssignableExpression> impleme
 	 * TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
+	public Fragment getCode(TAMFactory factory) {
 		Logger.warning("FiledAssignement " + super.record.getClass().toString());
-		Fragment fragment = _factory.createFragment();
+		Fragment fragment = factory.createFragment();
 		if (record instanceof VariableAssignment){
 			VariableAssignment var = (VariableAssignment) record;
 			VariableDeclaration dec = (VariableDeclaration) var.getDeclaration();
-			fragment.add(_factory.createLoadA(dec.getRegister(), dec.getOffset()));
+			fragment.add(factory.createLoadA(dec.getRegister(), dec.getOffset()));
 		}else{
-			fragment.append(record.getCode(_factory));
+			fragment.append(record.getCode(factory));
 		}
-		fragment.add(_factory.createLoadL(super.field.getOffset()));
+		fragment.add(factory.createLoadL(super.field.getOffset()));
 		fragment.add(Library.IAdd);
 		fragment.addComment("FieldAssignement" + record.toString());
 		return fragment;

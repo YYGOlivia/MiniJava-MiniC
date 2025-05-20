@@ -17,8 +17,8 @@ public class PointerType implements Type {
 
 	protected Type element;
 
-	public PointerType(Type _element) {
-		this.element = _element;
+	public PointerType(Type element) {
+		this.element = element;
 	}
 
 	public Type getPointedType() {
@@ -32,12 +32,12 @@ public class PointerType implements Type {
 	 * @see fr.n7.stl.block.ast.Type#equalsTo(fr.n7.stl.block.ast.Type)
 	 */
 	@Override
-	public boolean equalsTo(Type _other) {
-		if (_other instanceof PointerType) {
-			PointerType _otherPointerType = (PointerType) _other;
-			return element.equals(_otherPointerType.getPointedType());
+	public boolean equalsTo(Type other) {
+		if (other instanceof PointerType) {
+			PointerType otherPointerType = (PointerType) other;
+			return element.equals(otherPointerType.getPointedType());
 		}
-		Logger.error("[PointerType] " + _other.toString() + " is not a PointerType");
+		Logger.error("[PointerType] " + other.toString() + " is not a PointerType");
 		return false;
 	}
 
@@ -47,12 +47,12 @@ public class PointerType implements Type {
 	 * @see fr.n7.stl.block.ast.Type#compatibleWith(fr.n7.stl.block.ast.Type)
 	 */
 	@Override
-	public boolean compatibleWith(Type _other) {
-		if (_other instanceof PointerType) {
-			PointerType _otherPointerType = (PointerType) _other;
-			return element.compatibleWith(_otherPointerType.getPointedType());
+	public boolean compatibleWith(Type other) {
+		if (other instanceof PointerType) {
+			PointerType otherPointerType = (PointerType) other;
+			return element.compatibleWith(otherPointerType.getPointedType());
 		}
-		Logger.error("[PointerType] " + _other.toString() + " is not a PointerType");
+		Logger.error("[PointerType] " + other.toString() + " is not a PointerType");
 		return false;
 	}
 
@@ -62,9 +62,9 @@ public class PointerType implements Type {
 	 * @see fr.n7.stl.block.ast.Type#merge(fr.n7.stl.block.ast.Type)
 	 */
 	@Override
-	public Type merge(Type _other) {
-		if (_other instanceof PointerType) {
-			return new PointerType(this.element.merge(((PointerType) _other).element));
+	public Type merge(Type other) {
+		if (other instanceof PointerType) {
+			return new PointerType(this.element.merge(((PointerType) other).element));
 		} else {
 			return AtomicType.ErrorType;
 		}
@@ -96,8 +96,8 @@ public class PointerType implements Type {
 	 * @see fr.n7.stl.block.ast.type.Type#resolve(fr.n7.stl.block.ast.scope.Scope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		return this.element.completeResolve(_scope);
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+		return this.element.completeResolve(scope);
 	}
 
 }

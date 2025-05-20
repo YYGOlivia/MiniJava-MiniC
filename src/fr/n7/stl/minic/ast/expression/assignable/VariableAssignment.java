@@ -28,10 +28,10 @@ public class VariableAssignment extends AbstractIdentifier implements Assignable
 	/**
 	 * Creates a variable assignment expression Abstract Syntax Tree node.
 	 * 
-	 * @param _name Name of the assigned variable.
+	 * @param name Name of the assigned variable.
 	 */
-	public VariableAssignment(String _name) {
-		super(_name);
+	public VariableAssignment(String name) {
+		super(name);
 	}
 
 	/*
@@ -42,13 +42,13 @@ public class VariableAssignment extends AbstractIdentifier implements Assignable
 	 * .scope.HierarchicalScope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		if (((HierarchicalScope<Declaration>) _scope).knows(this.name)) {
-			Declaration _declaration = _scope.get(this.name);
-			if (_declaration instanceof VariableDeclaration) {
-				this.declaration = ((VariableDeclaration) _declaration);
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
+		if (((HierarchicalScope<Declaration>) scope).knows(this.name)) {
+			Declaration declaration = scope.get(this.name);
+			if (declaration instanceof VariableDeclaration) {
+				this.declaration = ((VariableDeclaration) declaration);
 				return true;
-			} else if (_declaration instanceof ParameterDeclaration) {
+			} else if (declaration instanceof ParameterDeclaration) {
 				Logger.error("[VariableAssignement] The parameter " + this.name + " is is not assignable.");
 				return false;
 			} else {
@@ -69,7 +69,7 @@ public class VariableAssignment extends AbstractIdentifier implements Assignable
 	 * .scope.HierarchicalScope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
 		return true;
 	}
 
@@ -90,21 +90,21 @@ public class VariableAssignment extends AbstractIdentifier implements Assignable
 	 * TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		Fragment result = _factory.createFragment();
+	public Fragment getCode(TAMFactory factory) {
+		Fragment result = factory.createFragment();
 		int off = declaration.getOffset();
 		Register reg = declaration.getRegister();
 		int size = getType().length();
-		result.add(_factory.createStore(reg, off, size));
+		result.add(factory.createStore(reg, off, size));
 		return result;
 	}
 
-	public Fragment getAccessCode(TAMFactory _factory){
-		Fragment result = _factory.createFragment();
+	public Fragment getAccessCode(TAMFactory factory){
+		Fragment result = factory.createFragment();
 		int off = declaration.getOffset();
 		Register reg = declaration.getRegister();
 		int size = getType().length();
-		result.add(_factory.createStore(reg, off, size));
+		result.add(factory.createStore(reg, off, size));
 		return result;
 	}
 

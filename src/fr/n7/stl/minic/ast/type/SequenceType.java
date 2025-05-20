@@ -24,8 +24,8 @@ public class SequenceType implements Type {
 		this.types = new LinkedList<Type>();
 	}
 
-	public void add(Type _type) {
-		this.types.add(_type);
+	public void add(Type type) {
+		this.types.add(type);
 	}
 
 	/*
@@ -34,37 +34,37 @@ public class SequenceType implements Type {
 	 * @see fr.n7.stl.block.ast.Type#equalsTo(fr.n7.stl.block.ast.Type)
 	 */
 	@Override
-	public boolean equalsTo(Type _other) {
-		if (_other instanceof SequenceType) {
-			SequenceType _local = (SequenceType) _other;
-			if (this.types.size() == _local.types.size()) {
+	public boolean equalsTo(Type other) {
+		if (other instanceof SequenceType) {
+			SequenceType local = (SequenceType) other;
+			if (this.types.size() == local.types.size()) {
 				Iterator<Type> i1 = this.types.iterator();
-				Iterator<Type> i2 = _local.types.iterator();
-				boolean _result = true;
-				while (i1.hasNext() && i2.hasNext() && _result) {
-					_result = _result && (i1.next().equalsTo(i2.next()));
+				Iterator<Type> i2 = local.types.iterator();
+				boolean result = true;
+				while (i1.hasNext() && i2.hasNext() && result) {
+					result = result && (i1.next().equalsTo(i2.next()));
 				}
-				return _result;
+				return result;
 			} else {
 				return false;
 			}
 		} else {
-			if (_other instanceof ArrayType) {
-				boolean _result = true;
-				Type _element = ((ArrayType) _other).getType();
-				Iterator<Type> _iter = this.types.iterator();
-				while (_iter.hasNext() && _result) {
-					_result = _result && _iter.next().equalsTo(_element);
+			if (other instanceof ArrayType) {
+				boolean result = true;
+				Type element = ((ArrayType) other).getType();
+				Iterator<Type> iter = this.types.iterator();
+				while (iter.hasNext() && result) {
+					result = result && iter.next().equalsTo(element);
 				}
-				return _result;
+				return result;
 			} else {
-				if (_other instanceof RecordType) {
-					return this.equalsTo(((RecordType) _other).erase());
+				if (other instanceof RecordType) {
+					return this.equalsTo(((RecordType) other).erase());
 				} else {
-					if (_other instanceof CoupleType) {
+					if (other instanceof CoupleType) {
 						if (this.types.size() == 2) {
-							return this.types.get(0).equalsTo(((CoupleType) _other).getFirst()) &&
-									this.types.get(1).equalsTo(((CoupleType) _other).getSecond());
+							return this.types.get(0).equalsTo(((CoupleType) other).getFirst()) &&
+									this.types.get(1).equalsTo(((CoupleType) other).getSecond());
 						} else {
 							return false;
 						}
@@ -82,40 +82,40 @@ public class SequenceType implements Type {
 	 * @see fr.n7.stl.block.ast.Type#compatibleWith(fr.n7.stl.block.ast.Type)
 	 */
 	@Override
-	public boolean compatibleWith(Type _other) {
-		if (_other instanceof NamedType) {
-			return this.compatibleWith(((NamedType) _other).getType());
+	public boolean compatibleWith(Type other) {
+		if (other instanceof NamedType) {
+			return this.compatibleWith(((NamedType) other).getType());
 		} else {
-			if (_other instanceof SequenceType) {
-				SequenceType _local = (SequenceType) _other;
-				if (this.types.size() == _local.types.size()) {
+			if (other instanceof SequenceType) {
+				SequenceType local = (SequenceType) other;
+				if (this.types.size() == local.types.size()) {
 					Iterator<Type> i1 = this.types.iterator();
-					Iterator<Type> i2 = _local.types.iterator();
-					boolean _result = true;
-					while (i1.hasNext() && i2.hasNext() && _result) {
-						_result = _result && (i1.next().compatibleWith(i2.next()));
+					Iterator<Type> i2 = local.types.iterator();
+					boolean result = true;
+					while (i1.hasNext() && i2.hasNext() && result) {
+						result = result && (i1.next().compatibleWith(i2.next()));
 					}
-					return _result;
+					return result;
 				} else {
 					return false;
 				}
 			} else {
-				if (_other instanceof ArrayType) {
-					boolean _result = true;
-					Type _element = ((ArrayType) _other).getType();
-					Iterator<Type> _iter = this.types.iterator();
-					while (_iter.hasNext() && _result) {
-						_result = _result && _iter.next().equalsTo(_element);
+				if (other instanceof ArrayType) {
+					boolean result = true;
+					Type element = ((ArrayType) other).getType();
+					Iterator<Type> iter = this.types.iterator();
+					while (iter.hasNext() && result) {
+						result = result && iter.next().equalsTo(element);
 					}
-					return _result;
+					return result;
 				} else {
-					if (_other instanceof RecordType) {
-						return this.compatibleWith(((RecordType) _other).erase());
+					if (other instanceof RecordType) {
+						return this.compatibleWith(((RecordType) other).erase());
 					} else {
-						if (_other instanceof CoupleType) {
+						if (other instanceof CoupleType) {
 							if (this.types.size() == 2) {
-								return this.types.get(0).compatibleWith(((CoupleType) _other).getFirst()) &&
-										this.types.get(1).compatibleWith(((CoupleType) _other).getSecond());
+								return this.types.get(0).compatibleWith(((CoupleType) other).getFirst()) &&
+										this.types.get(1).compatibleWith(((CoupleType) other).getSecond());
 							} else {
 								return false;
 							}
@@ -134,17 +134,17 @@ public class SequenceType implements Type {
 	 * @see fr.n7.stl.block.ast.Type#merge(fr.n7.stl.block.ast.Type)
 	 */
 	@Override
-	public Type merge(Type _other) {
-		if (_other instanceof SequenceType) {
-			SequenceType _local = (SequenceType) _other;
-			SequenceType _result = new SequenceType();
-			if (this.types.size() == _local.types.size()) {
+	public Type merge(Type other) {
+		if (other instanceof SequenceType) {
+			SequenceType local = (SequenceType) other;
+			SequenceType result = new SequenceType();
+			if (this.types.size() == local.types.size()) {
 				Iterator<Type> i1 = this.types.iterator();
-				Iterator<Type> i2 = _local.types.iterator();
+				Iterator<Type> i2 = local.types.iterator();
 				while (i1.hasNext() && i2.hasNext()) {
-					_result.add(i1.next().merge(i2.next()));
+					result.add(i1.next().merge(i2.next()));
 				}
-				return _result;
+				return result;
 			} else {
 				return AtomicType.ErrorType;
 			}
@@ -160,11 +160,11 @@ public class SequenceType implements Type {
 	 */
 	@Override
 	public int length() {
-		int _result = 0;
-		for (Type _type : this.types) {
-			_result += _type.length();
+		int result = 0;
+		for (Type type : this.types) {
+			result += type.length();
 		}
-		return _result;
+		return result;
 	}
 
 	/*
@@ -173,11 +173,11 @@ public class SequenceType implements Type {
 	 * @see fr.n7.stl.block.ast.type.Type#resolve(fr.n7.stl.block.ast.scope.Scope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		boolean _result = true;
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+		boolean result = true;
 		for (Type t : this.types) {
-			_result = _result && t.completeResolve(_scope);
+			result = result && t.completeResolve(scope);
 		}
-		return _result;
+		return result;
 	}
 }

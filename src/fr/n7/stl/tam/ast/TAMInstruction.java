@@ -16,21 +16,21 @@ public interface TAMInstruction {
 	/**
 	 * Adds a prefix comment for the instruction.
 	 * 
-	 * @param _comment Comment to be added as an instruction prefix.
+	 * @param comment Comment to be added as an instruction prefix.
 	 */
-	public void addComment(String _comment);
+	public void addComment(String comment);
 
 	/**
 	 * Adds a prefix label for the instruction.
 	 * 
-	 * @param _label Label to be added to the instruction prefixes.
+	 * @param label Label to be added to the instruction prefixes.
 	 */
-	public void addPrefix(String _label);
+	public void addPrefix(String label);
 
 	/**
 	 * Adds a suffix label to the instruction.
 	 * 
-	 * @param _label Label to be added to the instruction suffixes.
+	 * @param label Label to be added to the instruction suffixes.
 	 */
-	public void addSuffix(String _label);
+	public void addSuffix(String label);
 }

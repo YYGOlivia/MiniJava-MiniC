@@ -20,11 +20,11 @@ public class PointerAccess extends AbstractPointer<AccessibleExpression> impleme
 	 * Construction for the implementation of a pointer content access expression
 	 * Abstract Syntax Tree node.
 	 * 
-	 * @param _pointer Abstract Syntax Tree for the pointer expression in a pointer
+	 * @param pointer Abstract Syntax Tree for the pointer expression in a pointer
 	 *                 content access expression.
 	 */
-	public PointerAccess(AccessibleExpression _pointer) {
-		super(_pointer);
+	public PointerAccess(AccessibleExpression pointer) {
+		super(pointer);
 	}
 
 	/*
@@ -33,11 +33,11 @@ public class PointerAccess extends AbstractPointer<AccessibleExpression> impleme
 	 * @see fr.n7.stl.block.ast.Expression#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
+	public Fragment getCode(TAMFactory factory) {
 		// LOAD (size) pos_memoire[LB]
-		Fragment fragment = _factory.createFragment();
-		fragment.append(pointer.getCode(_factory));
-		fragment.add(_factory.createLoadI(pointer.getType().length()));
+		Fragment fragment = factory.createFragment();
+		fragment.append(pointer.getCode(factory));
+		fragment.add(factory.createLoadI(pointer.getType().length()));
 		return fragment;
 	}
 

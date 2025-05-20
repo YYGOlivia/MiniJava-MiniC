@@ -21,11 +21,11 @@ public class PointerAssignment extends AbstractPointer<AccessibleExpression> imp
 	 * Construction for the implementation of a pointer content assignment
 	 * expression Abstract Syntax Tree node.
 	 * 
-	 * @param _pointer Abstract Syntax Tree for the pointer expression in a pointer
+	 * @param pointer Abstract Syntax Tree for the pointer expression in a pointer
 	 *                 content assignment expression.
 	 */
-	public PointerAssignment(AccessibleExpression _pointer) {
-		super(_pointer);
+	public PointerAssignment(AccessibleExpression pointer) {
+		super(pointer);
 	}
 
 	/*
@@ -35,10 +35,10 @@ public class PointerAssignment extends AbstractPointer<AccessibleExpression> imp
 	 * TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		Fragment fragment = _factory.createFragment();
-		fragment.append(pointer.getCode(_factory));
-		fragment.add(_factory.createStoreI(pointer.getType().length()));
+	public Fragment getCode(TAMFactory factory) {
+		Fragment fragment = factory.createFragment();
+		fragment.append(pointer.getCode(factory));
+		fragment.add(factory.createStoreI(pointer.getType().length()));
 		return fragment;
 	}
 

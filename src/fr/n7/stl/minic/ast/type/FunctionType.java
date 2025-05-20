@@ -22,11 +22,11 @@ public class FunctionType implements Type {
 	private Type result;
 	private List<Type> parameters;
 
-	public FunctionType(Type _result, Iterable<Type> _parameters) {
-		this.result = _result;
+	public FunctionType(Type result, Iterable<Type> parameters) {
+		this.result = result;
 		this.parameters = new LinkedList<Type>();
-		for (Type _type : _parameters) {
-			this.parameters.add(_type);
+		for (Type type : parameters) {
+			this.parameters.add(type);
 		}
 	}
 
@@ -36,22 +36,22 @@ public class FunctionType implements Type {
 	 * @see fr.n7.stl.block.ast.Type#equalsTo(fr.n7.stl.block.ast.Type)
 	 */
 	@Override
-	public boolean equalsTo(Type _other) {
-		if (!(_other instanceof FunctionType)) {
+	public boolean equalsTo(Type other) {
+		if (!(other instanceof FunctionType)) {
 			return false;
 		}
 
-		FunctionType _function = (FunctionType) _other;
-		if (!this.result.equalsTo(_function.result)) {
+		FunctionType function = (FunctionType) other;
+		if (!this.result.equalsTo(function.result)) {
 			return false;
 		}
-		if (this.parameters.size() != _function.parameters.size()) {
+		if (this.parameters.size() != function.parameters.size()) {
 			return false;
 		}
 
 		boolean okParamTypes = true;
 		for (int i = 0; i < this.parameters.size(); i++) {
-			okParamTypes = okParamTypes && this.parameters.get(i).equalsTo(_function.parameters.get(i));
+			okParamTypes = okParamTypes && this.parameters.get(i).equalsTo(function.parameters.get(i));
 		}
 		return okParamTypes;
 	}
@@ -62,25 +62,25 @@ public class FunctionType implements Type {
 	 * @see fr.n7.stl.block.ast.Type#compatibleWith(fr.n7.stl.block.ast.Type)
 	 */
 	@Override
-	public boolean compatibleWith(Type _other) {
-		if (!(_other instanceof FunctionType)) {
+	public boolean compatibleWith(Type other) {
+		if (!(other instanceof FunctionType)) {
 			return false;
 		}
-		FunctionType _function = (FunctionType) _other;
+		FunctionType function = (FunctionType) other;
 
 		// type retour covariant
-		if (!this.result.compatibleWith(_function.result)) {
+		if (!this.result.compatibleWith(function.result)) {
 			return false;
 		}
 
-		if (this.parameters.size() != _function.parameters.size()) {
+		if (this.parameters.size() != function.parameters.size()) {
 			return false;
 		}
 
 		// type paramètres contravariant
 		boolean okParamTypes = true;
 		for (int i = 0; i < this.parameters.size(); i++) {
-			okParamTypes = okParamTypes && _function.parameters.get(i).compatibleWith(this.parameters.get(i));
+			okParamTypes = okParamTypes && function.parameters.get(i).compatibleWith(this.parameters.get(i));
 		}
 		return okParamTypes;
 	}
@@ -91,7 +91,7 @@ public class FunctionType implements Type {
 	 * @see fr.n7.stl.block.ast.Type#merge(fr.n7.stl.block.ast.Type)
 	 */
 	@Override
-	public Type merge(Type _other) {
+	public Type merge(Type other) {
 		throw new SemanticsUndefinedException("Semantics merge is undefined in FunctionType.");
 	}
 
@@ -112,15 +112,15 @@ public class FunctionType implements Type {
 	 */
 	@Override
 	public String toString() {
-		String _result = "(";
-		Iterator<Type> _iter = this.parameters.iterator();
-		if (_iter.hasNext()) {
-			_result += _iter.next();
-			while (_iter.hasNext()) {
-				_result += " ," + _iter.next();
+		String result = "(";
+		Iterator<Type> iter = this.parameters.iterator();
+		if (iter.hasNext()) {
+			result += iter.next();
+			while (iter.hasNext()) {
+				result += " ," + iter.next();
 			}
 		}
-		return _result + ") -> " + this.result;
+		return result + ") -> " + this.result;
 	}
 
 	/*
@@ -129,10 +129,10 @@ public class FunctionType implements Type {
 	 * @see fr.n7.stl.block.ast.type.Type#resolve(fr.n7.stl.block.ast.scope.Scope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		boolean ok = this.result.completeResolve(_scope);
-		for (Type _type : this.parameters) {
-			ok = ok && _type.completeResolve(_scope);
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+		boolean ok = this.result.completeResolve(scope);
+		for (Type type : this.parameters) {
+			ok = ok && type.completeResolve(scope);
 		}
 		return ok;
 	}

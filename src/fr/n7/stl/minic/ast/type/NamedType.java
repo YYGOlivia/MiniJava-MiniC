@@ -21,14 +21,14 @@ public class NamedType implements Type {
 
 	public String name;
 
-	public NamedType(String _name) {
-		this.name = _name;
+	public NamedType(String name) {
+		this.name = name;
 		this.declaration = null;
 	}
 
-	public NamedType(TypeDeclaration _declaration) {
-		this.declaration = _declaration;
-		this.name = _declaration.getName();
+	public NamedType(TypeDeclaration declaration) {
+		this.declaration = declaration;
+		this.name = declaration.getName();
 	}
 
 	/*
@@ -37,11 +37,11 @@ public class NamedType implements Type {
 	 * @see fr.n7.stl.block.ast.Type#equalsTo(fr.n7.stl.block.ast.Type)
 	 */
 	@Override
-	public boolean equalsTo(Type _other) {
-		if (_other instanceof NamedType) {
-			return (this.declaration.getName().equals(((NamedType) _other).declaration.getName()));
+	public boolean equalsTo(Type other) {
+		if (other instanceof NamedType) {
+			return (this.declaration.getName().equals(((NamedType) other).declaration.getName()));
 		} else {
-			return (this.declaration.getType().equalsTo(_other));
+			return (this.declaration.getType().equalsTo(other));
 		}
 	}
 
@@ -51,12 +51,12 @@ public class NamedType implements Type {
 	 * @see fr.n7.stl.block.ast.Type#compatibleWith(fr.n7.stl.block.ast.Type)
 	 */
 	@Override
-	public boolean compatibleWith(Type _other) {
-		if (_other instanceof NamedType) {
-			NamedType otherNamedType = (NamedType) _other;
+	public boolean compatibleWith(Type other) {
+		if (other instanceof NamedType) {
+			NamedType otherNamedType = (NamedType) other;
 			return this.getType().compatibleWith(otherNamedType.getType());
 		} else {
-			return this.getType().compatibleWith(_other);
+			return this.getType().compatibleWith(other);
 		}
 	}
 
@@ -66,16 +66,16 @@ public class NamedType implements Type {
 	 * @see fr.n7.stl.block.ast.Type#merge(fr.n7.stl.block.ast.Type)
 	 */
 	@Override
-	public Type merge(Type _other) {
-		if (_other instanceof NamedType) {
-			NamedType otherNamedType = (NamedType) _other;
+	public Type merge(Type other) {
+		if (other instanceof NamedType) {
+			NamedType otherNamedType = (NamedType) other;
 			if (this.declaration.getName().equals(otherNamedType.declaration.getName())) {
 				return this;
 			} else {
 				return AtomicType.ErrorType;
 			}
 		} else {
-			return (this.declaration.getType().merge(_other));
+			return (this.declaration.getType().merge(other));
 		}
 	}
 
@@ -122,12 +122,12 @@ public class NamedType implements Type {
 	 * @see fr.n7.stl.block.ast.type.Type#resolve(fr.n7.stl.block.ast.scope.Scope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
 		if (this.declaration == null) {
-			if (_scope.knows(this.name)) {
+			if (scope.knows(this.name)) {
 				try {
-					TypeDeclaration _declaration = (TypeDeclaration) _scope.get(this.name);
-					this.declaration = _declaration;
+					TypeDeclaration declaration = (TypeDeclaration) scope.get(this.name);
+					this.declaration = declaration;
 					return true;
 				} catch (ClassCastException e) {
 					Logger.error("[NamedType] The declaration for " + this.name + " is of the wrong kind.");

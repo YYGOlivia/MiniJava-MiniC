@@ -34,12 +34,12 @@ public class Couple implements AccessibleExpression {
 	/**
 	 * Construction for a couple expression implementation.
 	 * 
-	 * @param _first  First part of the couple.
-	 * @param _second Second part of the couple.
+	 * @param first  First part of the couple.
+	 * @param second Second part of the couple.
 	 */
-	public Couple(AccessibleExpression _first, AccessibleExpression _second) {
-		this.first = _first;
-		this.second = _second;
+	public Couple(AccessibleExpression first, AccessibleExpression second) {
+		this.first = first;
+		this.second = second;
 	}
 
 	/*
@@ -60,10 +60,10 @@ public class Couple implements AccessibleExpression {
 	 * Scope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		boolean _first = this.first.collectAndPartialResolve(_scope);
-		boolean _second = this.second.collectAndPartialResolve(_scope);
-		return _first && _second;
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
+		boolean first = this.first.collectAndPartialResolve(scope);
+		boolean second = this.second.collectAndPartialResolve(scope);
+		return first && second;
 	}
 
 	/*
@@ -74,10 +74,10 @@ public class Couple implements AccessibleExpression {
 	 * Scope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		boolean _first = this.first.completeResolve(_scope);
-		boolean _second = this.second.completeResolve(_scope);
-		return _first && _second;
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+		boolean first = this.first.completeResolve(scope);
+		boolean second = this.second.completeResolve(scope);
+		return first && second;
 	}
 
 	/*
@@ -96,10 +96,10 @@ public class Couple implements AccessibleExpression {
 	 * @see fr.n7.stl.block.ast.Expression#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		Fragment fragment = _factory.createFragment();
-		fragment.append(first.getCode(_factory));
-		fragment.append(second.getCode(_factory));
+	public Fragment getCode(TAMFactory factory) {
+		Fragment fragment = factory.createFragment();
+		fragment.append(first.getCode(factory));
+		fragment.append(second.getCode(factory));
 		return fragment;
 	}
 

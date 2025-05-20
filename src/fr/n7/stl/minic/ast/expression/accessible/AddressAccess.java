@@ -27,8 +27,8 @@ public class AddressAccess implements AccessibleExpression {
 
 	protected AssignableExpression assignable;
 
-	public AddressAccess(AssignableExpression _assignable) {
-		this.assignable = _assignable;
+	public AddressAccess(AssignableExpression assignable) {
+		this.assignable = assignable;
 	}
 
 	@Override
@@ -44,8 +44,8 @@ public class AddressAccess implements AccessibleExpression {
 	 * Scope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		return assignable.collectAndPartialResolve(_scope);
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
+		return assignable.collectAndPartialResolve(scope);
 	}
 
 	/*
@@ -56,8 +56,8 @@ public class AddressAccess implements AccessibleExpression {
 	 * Scope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		boolean okAssign = assignable.completeResolve(_scope);
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+		boolean okAssign = assignable.completeResolve(scope);
 		if (assignable instanceof VariableAssignment){
 			return okAssign;
 		}else if (assignable instanceof ArrayAssignment){
@@ -84,16 +84,16 @@ public class AddressAccess implements AccessibleExpression {
 	 * @see fr.n7.stl.block.ast.Expression#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		Fragment fragment = _factory.createFragment();
+	public Fragment getCode(TAMFactory factory) {
+		Fragment fragment = factory.createFragment();
 
 		if (assignable instanceof VariableAssignment){
 			VariableAssignment elem = (VariableAssignment) assignable;
 			VariableDeclaration declaration  = (VariableDeclaration) elem.getDeclaration();
-			fragment.add(_factory.createLoadA(declaration.getRegister(), declaration.getOffset()));
+			fragment.add(factory.createLoadA(declaration.getRegister(), declaration.getOffset()));
 		}else if (assignable instanceof ArrayAssignment){
 			ArrayAssignment array = (ArrayAssignment) assignable;
-			fragment.append(array.getAccessCode(_factory));
+			fragment.append(array.getAccessCode(factory));
 		}
 		return fragment;
 	}

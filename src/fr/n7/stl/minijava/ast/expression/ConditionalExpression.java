@@ -22,28 +22,28 @@ public class ConditionalExpression implements Expression {
     }
 
     @Override
-    public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
+    public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
         Type condType = condition.getType();
         if (!(condType.equalsTo(AtomicType.BooleanType))) {
             Logger.error("[ConditionalExpression] Condition is of type " + condType
                     + "(expected BooleanType).");
         }
-        boolean okCond = condition.collectAndPartialResolve(_scope);
-        boolean okThen = thenExpression.collectAndPartialResolve(_scope);
-        boolean okElse = elseExpression.collectAndPartialResolve(_scope);
+        boolean okCond = condition.collectAndPartialResolve(scope);
+        boolean okThen = thenExpression.collectAndPartialResolve(scope);
+        boolean okElse = elseExpression.collectAndPartialResolve(scope);
         return okCond && okThen && okElse;
     }
 
     @Override
-    public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
+    public boolean completeResolve(HierarchicalScope<Declaration> scope) {
         Type condType = condition.getType();
         if (!(condType.equalsTo(AtomicType.BooleanType))) {
             Logger.error("[ConditionalExpression] Condition is of type " + condType
                     + "(expected BooleanType).");
         }
-        boolean okCond = condition.completeResolve(_scope);
-        boolean okThen = thenExpression.completeResolve(_scope);
-        boolean okElse = elseExpression.completeResolve(_scope);
+        boolean okCond = condition.completeResolve(scope);
+        boolean okThen = thenExpression.completeResolve(scope);
+        boolean okElse = elseExpression.completeResolve(scope);
         return okCond && okThen && okElse;
     }
 
@@ -60,7 +60,7 @@ public class ConditionalExpression implements Expression {
     }
 
     @Override
-    public Fragment getCode(TAMFactory _factory) {
+    public Fragment getCode(TAMFactory factory) {
         throw new SemanticsUndefinedException("Semantics getCode is undefined in ConditionalExpression.");
     }
 }

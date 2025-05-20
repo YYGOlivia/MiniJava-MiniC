@@ -44,14 +44,14 @@ public class FunctionCall implements AccessibleExpression {
 	protected List<AccessibleExpression> arguments;
 
 	/**
-	 * @param _name      : Name of the called function.
-	 * @param _arguments : List of AST nodes that computes the values of the
+	 * @param name      : Name of the called function.
+	 * @param arguments : List of AST nodes that computes the values of the
 	 *                   parameters for the function call.
 	 */
-	public FunctionCall(String _name, List<AccessibleExpression> _arguments) {
-		this.name = _name;
+	public FunctionCall(String name, List<AccessibleExpression> arguments) {
+		this.name = name;
 		this.function = null;
-		this.arguments = _arguments;
+		this.arguments = arguments;
 	}
 
 	/*
@@ -61,15 +61,15 @@ public class FunctionCall implements AccessibleExpression {
 	 */
 	@Override
 	public String toString() {
-		String _result = ((this.function == null) ? this.name : this.function) + "( ";
-		Iterator<AccessibleExpression> _iter = this.arguments.iterator();
-		if (_iter.hasNext()) {
-			_result += _iter.next();
+		String result = ((this.function == null) ? this.name : this.function) + "( ";
+		Iterator<AccessibleExpression> iter = this.arguments.iterator();
+		if (iter.hasNext()) {
+			result += iter.next();
 		}
-		while (_iter.hasNext()) {
-			_result += " ," + _iter.next();
+		while (iter.hasNext()) {
+			result += " ," + iter.next();
 		}
-		return _result + ")";
+		return result + ")";
 	}
 
 	/*
@@ -80,9 +80,9 @@ public class FunctionCall implements AccessibleExpression {
 	 * HierarchicalScope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
 		if (this.function == null) {
-			Declaration varDec = _scope.get(name);
+			Declaration varDec = scope.get(name);
 			if (varDec instanceof FunctionDeclaration) {
 				FunctionDeclaration funcDec = ((FunctionDeclaration) varDec);
 				this.function = funcDec;
@@ -94,7 +94,7 @@ public class FunctionCall implements AccessibleExpression {
 
 		boolean ok = true;
 		for (AccessibleExpression arg : arguments) {
-			ok = ok && arg.collectAndPartialResolve(_scope);
+			ok = ok && arg.collectAndPartialResolve(scope);
 		}
 		return ok && (function != null);
 	}
@@ -107,7 +107,7 @@ public class FunctionCall implements AccessibleExpression {
 	 * HierarchicalScope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
 
 		List<ParameterDeclaration> funcParams = function.getParameters();
 		boolean argLenOk = arguments.size() == funcParams.size();
@@ -120,7 +120,7 @@ public class FunctionCall implements AccessibleExpression {
 
 		boolean ok = true;
 		for (AccessibleExpression arg : arguments) {
-			ok = ok && arg.completeResolve(_scope);
+			ok = ok && arg.completeResolve(scope);
 		}
 		for (int i = 0; i < arguments.size(); i++) {
 			Type funcParamType = funcParams.get(i).getType();
@@ -155,16 +155,16 @@ public class FunctionCall implements AccessibleExpression {
 	 * @see fr.n7.stl.block.ast.Expression#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		Fragment _fragment = _factory.createFragment();
-		//_fragment.addComment(toString());
+	public Fragment getCode(TAMFactory factory) {
+		Fragment fragment = factory.createFragment();
+		//fragment.addComment(toString());
 		// charge chaque argument
 		for (AccessibleExpression arg : arguments) {
-			_fragment.append(arg.getCode(_factory));
+			fragment.append(arg.getCode(factory));
 		}
 		// CALL (SB) name
-		_fragment.add(_factory.createCall(name, Register.SB));
-		return _fragment;
+		fragment.add(factory.createCall(name, Register.SB));
+		return fragment;
 	}
 
 }

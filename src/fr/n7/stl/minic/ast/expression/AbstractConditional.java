@@ -41,14 +41,14 @@ public class AbstractConditional<ExpressionKind extends Expression> implements E
 	 * sub-expressions
 	 * and the binary operation.
 	 * 
-	 * @param _left     : Expression for the left parameter.
-	 * @param _operator : Binary Operator.
-	 * @param _right    : Expression for the right parameter.
+	 * @param left     : Expression for the left parameter.
+	 * @param operator : Binary Operator.
+	 * @param right    : Expression for the right parameter.
 	 */
-	public AbstractConditional(Expression _condition, ExpressionKind _then, ExpressionKind _else) {
-		this.condition = _condition;
-		this.thenExpression = _then;
-		this.elseExpression = _else;
+	public AbstractConditional(Expression condition, ExpressionKind thenBlock, ExpressionKind elseBlock) {
+		this.condition = condition;
+		this.thenExpression = thenBlock;
+		this.elseExpression = elseBlock;
 	}
 
 	/*
@@ -59,10 +59,10 @@ public class AbstractConditional<ExpressionKind extends Expression> implements E
 	 * Scope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		boolean okCond = condition.collectAndPartialResolve(_scope);
-		boolean okThen = thenExpression.collectAndPartialResolve(_scope);
-		boolean okElse = elseExpression.collectAndPartialResolve(_scope);
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
+		boolean okCond = condition.collectAndPartialResolve(scope);
+		boolean okThen = thenExpression.collectAndPartialResolve(scope);
+		boolean okElse = elseExpression.collectAndPartialResolve(scope);
 		return okCond && okThen && okElse;
 	}
 
@@ -74,10 +74,10 @@ public class AbstractConditional<ExpressionKind extends Expression> implements E
 	 * Scope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		boolean okCond = condition.completeResolve(_scope);
-		boolean okThen = thenExpression.completeResolve(_scope);
-		boolean okElse = elseExpression.completeResolve(_scope);
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+		boolean okCond = condition.completeResolve(scope);
+		boolean okThen = thenExpression.completeResolve(scope);
+		boolean okElse = elseExpression.completeResolve(scope);
 		return okCond && okThen && okElse;
 	}
 
@@ -109,7 +109,7 @@ public class AbstractConditional<ExpressionKind extends Expression> implements E
 	 * @see fr.n7.stl.block.ast.Expression#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
+	public Fragment getCode(TAMFactory factory) {
 		throw new SemanticsUndefinedException("Semantics getCode is undefined in ConditionalExpression.");
 	}
 

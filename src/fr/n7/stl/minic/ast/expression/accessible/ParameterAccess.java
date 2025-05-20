@@ -23,10 +23,10 @@ public class ParameterAccess extends AbstractAccess {
 	/**
 	 * Creates a variable use expression Abstract Syntax Tree node.
 	 * 
-	 * @param _name Name of the used variable.
+	 * @param name Name of the used variable.
 	 */
-	public ParameterAccess(ParameterDeclaration _declaration) {
-		this.declaration = _declaration;
+	public ParameterAccess(ParameterDeclaration declaration) {
+		this.declaration = declaration;
 	}
 
 	/*
@@ -45,11 +45,11 @@ public class ParameterAccess extends AbstractAccess {
 	 * TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		Fragment fragment = _factory.createFragment();
+	public Fragment getCode(TAMFactory factory) {
+		Fragment fragment = factory.createFragment();
 		int pos = -declaration.getOffset();
 		int size = declaration.getType().length();
-		fragment.add(_factory.createLoad(Register.LB, pos, size));
+		fragment.add(factory.createLoad(Register.LB, pos, size));
 		return fragment;
 
 	}

@@ -25,9 +25,9 @@ public class ArrayType implements Type {
 	 * @see fr.n7.stl.block.ast.Type#equalsTo(fr.n7.stl.block.ast.Type)
 	 */
 	@Override
-	public boolean equalsTo(Type _other) {
-		if (_other instanceof ArrayType) {
-			return this.element.equalsTo(((ArrayType) _other).element);
+	public boolean equalsTo(Type other) {
+		if (other instanceof ArrayType) {
+			return this.element.equalsTo(((ArrayType) other).element);
 		} else {
 			return false;
 		}
@@ -39,9 +39,9 @@ public class ArrayType implements Type {
 	 * @see fr.n7.stl.block.ast.Type#compatibleWith(fr.n7.stl.block.ast.Type)
 	 */
 	@Override
-	public boolean compatibleWith(Type _other) {
-		if (_other instanceof ArrayType) {
-			return this.element.compatibleWith(((ArrayType) _other).element);
+	public boolean compatibleWith(Type other) {
+		if (other instanceof ArrayType) {
+			return this.element.compatibleWith(((ArrayType) other).element);
 		} else {
 			return false;
 		}
@@ -53,9 +53,9 @@ public class ArrayType implements Type {
 	 * @see fr.n7.stl.block.ast.Type#merge(fr.n7.stl.block.ast.Type)
 	 */
 	@Override
-	public Type merge(Type _other) {
-		if (_other instanceof ArrayType) {
-			return new ArrayType(this.element.merge(((ArrayType) _other).element));
+	public Type merge(Type other) {
+		if (other instanceof ArrayType) {
+			return new ArrayType(this.element.merge(((ArrayType) other).element));
 		} else {
 			return AtomicType.ErrorType;
 		}
@@ -87,8 +87,8 @@ public class ArrayType implements Type {
 	 * @see fr.n7.stl.block.ast.type.Type#resolve(fr.n7.stl.block.ast.scope.Scope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		boolean okElement = this.element.completeResolve(_scope);
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+		boolean okElement = this.element.completeResolve(scope);
 		if (element instanceof NamedType) {
 			NamedType namedType = (NamedType) element;
 			this.element = namedType.getType();

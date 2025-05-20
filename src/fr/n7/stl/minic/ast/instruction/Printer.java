@@ -25,8 +25,8 @@ public class Printer implements Instruction {
 
 	protected Expression parameter;
 
-	public Printer(Expression _value) {
-		this.parameter = _value;
+	public Printer(Expression value) {
+		this.parameter = value;
 	}
 
 	/*
@@ -47,13 +47,13 @@ public class Printer implements Instruction {
 	 * .Scope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		return this.parameter.collectAndPartialResolve(_scope);
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
+		return this.parameter.collectAndPartialResolve(scope);
 	}
 
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
-		return this.parameter.collectAndPartialResolve(_scope);
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope, FunctionDeclaration container) {
+		return this.parameter.collectAndPartialResolve(scope);
 	}
 
 	/*
@@ -64,8 +64,8 @@ public class Printer implements Instruction {
 	 * .Scope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		return parameter.completeResolve(_scope);
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+		return parameter.completeResolve(scope);
 	}
 
 	/*
@@ -86,7 +86,7 @@ public class Printer implements Instruction {
 	 * int)
 	 */
 	@Override
-	public int allocateMemory(Register _register, int _offset) {
+	public int allocateMemory(Register register, int offset) {
 		return 0;
 	}
 
@@ -112,24 +112,24 @@ public class Printer implements Instruction {
 	 * @see fr.n7.stl.block.ast.Instruction#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		Fragment fragment = _factory.createFragment();
+	public Fragment getCode(TAMFactory factory) {
+		Fragment fragment = factory.createFragment();
 		Type type = parameter.getType();
 		if (type instanceof AtomicType){
 			AtomicType atomicType = (AtomicType) type;
-			fragment.append(parameter.getCode(_factory));
+			fragment.append(parameter.getCode(factory));
 			fragment.add(getRightOut(atomicType));
 		}else{
 			//Pour print toute les valeurs dans l'ordre inverse -> <2,3> sera affiché 3 2
 			for (int i=0; i<type.length(); i++){
 				fragment.add(Library.IOut); // Ici ca ne marche que pour les int
-				fragment.add(_factory.createLoadL(' '));
+				fragment.add(factory.createLoadL(' '));
 				fragment.add(Library.COut);
 			}
 		}
 		
 		//Pour avoir des espaces entre chaque valeur
-		fragment.add(_factory.createLoadL(' '));
+		fragment.add(factory.createLoadL(' '));
 		fragment.add(Library.COut);
 		return fragment;
 	}

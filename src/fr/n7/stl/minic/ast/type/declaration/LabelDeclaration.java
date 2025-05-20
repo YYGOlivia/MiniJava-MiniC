@@ -17,8 +17,8 @@ public class LabelDeclaration implements Declaration {
 
 	private String name;
 
-	public LabelDeclaration(String _name) {
-		this.name = _name;
+	public LabelDeclaration(String name) {
+		this.name = name;
 	}
 
 	/*

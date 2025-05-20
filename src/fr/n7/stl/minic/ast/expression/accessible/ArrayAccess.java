@@ -22,13 +22,13 @@ public class ArrayAccess extends AbstractArray<AccessibleExpression> implements 
 	 * Construction for the implementation of an array element access expression
 	 * Abstract Syntax Tree node.
 	 * 
-	 * @param _array Abstract Syntax Tree for the array part in an array element
+	 * @param array Abstract Syntax Tree for the array part in an array element
 	 *               access expression.
-	 * @param _index Abstract Syntax Tree for the index part in an array element
+	 * @param index Abstract Syntax Tree for the index part in an array element
 	 *               access expression.
 	 */
-	public ArrayAccess(AccessibleExpression _array, AccessibleExpression _index) {
-		super(_array, _index);
+	public ArrayAccess(AccessibleExpression array, AccessibleExpression index) {
+		super(array, index);
 	}
 
 	/*
@@ -37,26 +37,26 @@ public class ArrayAccess extends AbstractArray<AccessibleExpression> implements 
 	 * @see fr.n7.stl.block.ast.Expression#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		Fragment fragment = _factory.createFragment();
+	public Fragment getCode(TAMFactory factory) {
+		Fragment fragment = factory.createFragment();
 		//variable array
 		if (array instanceof IdentifierAccess){
 			IdentifierAccess id = (IdentifierAccess) array;
 			VariableDeclaration dec = (VariableDeclaration) id.expression.getDeclaration();
-			fragment.add(_factory.createLoad(dec.getRegister(), dec.getOffset(), array.getType().length()));
+			fragment.add(factory.createLoad(dec.getRegister(), dec.getOffset(), array.getType().length()));
 		}else if (array instanceof  ArrayAccess){
-			fragment.append(array.getCode(_factory));
+			fragment.append(array.getCode(factory));
 		}
 		//variable index
-		fragment.append(index.getCode(_factory));
+		fragment.append(index.getCode(factory));
 		//taille des elements
-		fragment.add(_factory.createLoadL(array.getType().length()));
+		fragment.add(factory.createLoadL(array.getType().length()));
 		// indice*taille elem
 		fragment.add(Library.IMul);
 		// debut tableau + (indice*taille elem)
 		fragment.add(Library.IAdd);
 		//charge element
-		fragment.add(_factory.createLoadI(array.getType().length()));
+		fragment.add(factory.createLoadI(array.getType().length()));
 		fragment.addComment("Access");
 		return fragment;
 	}

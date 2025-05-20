@@ -31,12 +31,12 @@ public class TypeDeclaration implements Declaration, Instruction {
 	/**
 	 * Builds an AST node for a type declaration
 	 * 
-	 * @param _name : Name of the declared type
-	 * @param _type : AST node for the type associated to the name
+	 * @param name : Name of the declared type
+	 * @param type : AST node for the type associated to the name
 	 */
-	public TypeDeclaration(String _name, Type _type) {
-		this.name = _name;
-		this.type = _type;
+	public TypeDeclaration(String name, Type type) {
+		this.name = name;
+		this.type = type;
 	}
 
 	/*
@@ -57,10 +57,10 @@ public class TypeDeclaration implements Declaration, Instruction {
 	 * .Scope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		if (_scope.accepts(this)) {
-			_scope.register(this);
-			return type.completeResolve(_scope);
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
+		if (scope.accepts(this)) {
+			scope.register(this);
+			return type.completeResolve(scope);
 		} else {
 			Logger.error("[TypeDeclaration] The type " + name + " is already declared.");
 			return false;
@@ -68,10 +68,10 @@ public class TypeDeclaration implements Declaration, Instruction {
 	}
 
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
-		if (_scope.accepts(this)) {
-			_scope.register(this);
-			return type.completeResolve(_scope);
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope, FunctionDeclaration container) {
+		if (scope.accepts(this)) {
+			scope.register(this);
+			return type.completeResolve(scope);
 		} else {
 			Logger.error("[TypeDeclaration] The type " + name + " is already declared.");
 			return false;
@@ -86,10 +86,10 @@ public class TypeDeclaration implements Declaration, Instruction {
 	 * .Scope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		if (_scope.accepts(this)) {
-			_scope.register(this);
-			return type.completeResolve(_scope);
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+		if (scope.accepts(this)) {
+			scope.register(this);
+			return type.completeResolve(scope);
 		} else {
 			Logger.error("[TypeDeclaration] The type " + name + " is already declared.");
 			return false;
@@ -133,7 +133,7 @@ public class TypeDeclaration implements Declaration, Instruction {
 	 * int)
 	 */
 	@Override
-	public int allocateMemory(Register _register, int _offset) {
+	public int allocateMemory(Register register, int offset) {
 		return 0;
 	}
 
@@ -143,8 +143,8 @@ public class TypeDeclaration implements Declaration, Instruction {
 	 * @see fr.n7.stl.block.ast.Instruction#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		return _factory.createFragment();
+	public Fragment getCode(TAMFactory factory) {
+		return factory.createFragment();
 	}
 
 }

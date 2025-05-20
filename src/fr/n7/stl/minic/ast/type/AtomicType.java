@@ -29,8 +29,8 @@ public enum AtomicType implements Type {
 	 * @see fr.n7.stl.block.ast.Type#equalsTo(fr.n7.stl.block.ast.Type)
 	 */
 	@Override
-	public boolean equalsTo(Type _other) {
-		return this == _other;
+	public boolean equalsTo(Type other) {
+		return this == other;
 	}
 
 	/*
@@ -39,16 +39,16 @@ public enum AtomicType implements Type {
 	 * @see fr.n7.stl.block.ast.Type#compatibleWith(fr.n7.stl.block.ast.Type)
 	 */
 	@Override
-	public boolean compatibleWith(Type _other) {
-		if (this.equalsTo(_other)) {
+	public boolean compatibleWith(Type other) {
+		if (this.equalsTo(other)) {
 			return true;
 		} else {
 			switch (this) {
 				case NullType:
-					return ((_other != ErrorType) && (_other != VoidType));
+					return ((other != ErrorType) && (other != VoidType));
 				case IntegerType:
-				Logger.warning("[AtomicType]: " + _other.getClass().getName());
-					return (_other == FloatingType) || (_other instanceof EnumerationType);
+				Logger.warning("[AtomicType]: " + other.getClass().getName());
+					return (other == FloatingType) || (other instanceof EnumerationType);
 				default:
 					return false;
 			}
@@ -61,11 +61,11 @@ public enum AtomicType implements Type {
 	 * @see fr.n7.stl.block.ast.Type#merge(fr.n7.stl.block.ast.Type)
 	 */
 	@Override
-	public Type merge(Type _other) {
-		if (this.compatibleWith(_other)) {
-			return _other;
+	public Type merge(Type other) {
+		if (this.compatibleWith(other)) {
+			return other;
 		} else {
-			if (_other.compatibleWith(this)) {
+			if (other.compatibleWith(this)) {
 				return this;
 			} else {
 				return ErrorType;
@@ -130,7 +130,7 @@ public enum AtomicType implements Type {
 	 * @see fr.n7.stl.block.ast.type.Type#resolve(fr.n7.stl.block.ast.scope.Scope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
 		return true;
 	}
 

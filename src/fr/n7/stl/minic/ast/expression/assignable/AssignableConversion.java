@@ -6,11 +6,11 @@ import fr.n7.stl.util.Logger;
 
 public class AssignableConversion extends AbstractConversion<AssignableExpression> implements AssignableExpression {
 
-	public AssignableConversion(AssignableExpression _target, String _type) {
-		super(_target, _type);
+	public AssignableConversion(AssignableExpression target, String type) {
+		super(target, type);
 	}
 
-	public AssignableConversion(AssignableExpression _target, Type _type) {
-		super(_target, _type);
+	public AssignableConversion(AssignableExpression target, Type type) {
+		super(target, type);
 	}
 }

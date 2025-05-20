@@ -86,29 +86,29 @@ class TAMInstructionImpl implements TAMInstruction {
 	/**
 	 * Construction for a full TAM instruction with kind, label, location and size.
 	 * 
-	 * @param _kind     Kind for the TAM instruction.
-	 * @param _label    Optional Label for the TAM instruction.
-	 * @param _location Optional Register for the TAM instruction.
-	 * @param _offset   Optional Integer offset for the TAM instruction.
-	 * @param _target   Optional Label target for the TAM instruction.
-	 * @param _size     Optional Integer size for the TAM instruction.
-	 * @param _frame    Optional Register frame for the TAM instruction.
+	 * @param kind     Kind for the TAM instruction.
+	 * @param label    Optional Label for the TAM instruction.
+	 * @param register Optional Register for the TAM instruction.
+	 * @param offset   Optional Integer offset for the TAM instruction.
+	 * @param target   Optional Label target for the TAM instruction.
+	 * @param size     Optional Integer size for the TAM instruction.
+	 * @param frame    Optional Register frame for the TAM instruction.
 	 */
-	public TAMInstructionImpl(TAMInstructionKind _kind, Optional<String> _label,
-			Optional<Register> _register, Optional<Integer> _offset,
-			Optional<String> _target, Optional<Integer> _size, Optional<Register> _frame) {
-		this.kind = _kind;
+	public TAMInstructionImpl(TAMInstructionKind kind, Optional<String> label,
+			Optional<Register> register, Optional<Integer> offset,
+			Optional<String> target, Optional<Integer> size, Optional<Register> frame) {
+		this.kind = kind;
 		this.comments = new LinkedList<String>();
 		this.prefixes = new LinkedList<String>();
 		this.suffixes = new LinkedList<String>();
-		if (_label.isPresent()) {
-			this.prefixes.add(_label.get());
+		if (label.isPresent()) {
+			this.prefixes.add(label.get());
 		}
-		this.register = _register;
-		this.offset = _offset;
-		this.target = _target;
-		this.size = _size;
-		this.frame = _frame;
+		this.register = register;
+		this.offset = offset;
+		this.target = target;
+		this.size = size;
+		this.frame = frame;
 	}
 
 	/*
@@ -117,8 +117,8 @@ class TAMInstructionImpl implements TAMInstruction {
 	 * @see fr.n7.stl.tam.ast.TAMInstruction#addPrefix(fr.n7.stl.tam.ast.Label)
 	 */
 	@Override
-	public void addPrefix(String _label) {
-		this.prefixes.add(_label);
+	public void addPrefix(String label) {
+		this.prefixes.add(label);
 	}
 
 	/*
@@ -127,8 +127,8 @@ class TAMInstructionImpl implements TAMInstruction {
 	 * @see fr.n7.stl.tam.ast.TAMInstruction#addSuffix(fr.n7.stl.tam.ast.Label)
 	 */
 	@Override
-	public void addSuffix(String _label) {
-		this.suffixes.add(_label);
+	public void addSuffix(String label) {
+		this.suffixes.add(label);
 	}
 
 	/*
@@ -137,29 +137,29 @@ class TAMInstructionImpl implements TAMInstruction {
 	 * @see fr.n7.stl.tam.ast.TAMInstruction#addComment(java.lang.String)
 	 */
 	@Override
-	public void addComment(String _comment) {
-		this.comments.add(_comment.replaceAll("\n", "\n;"));
+	public void addComment(String comment) {
+		this.comments.add(comment.replaceAll("\n", "\n;"));
 	}
 
 	public String toString() {
-		String _result = "";
-		for (String _comment : this.comments) {
-			_result += ";" + _comment + "\n";
+		String result = "";
+		for (String comment : this.comments) {
+			result += ";" + comment + "\n";
 		}
-		for (String _label : this.prefixes) {
-			_result += _label + "\n";
+		for (String label : this.prefixes) {
+			result += label + "\n";
 		}
-		_result += this.kind;
-		_result += ((this.size.isPresent()) ? (" (" + this.size.get() + ")")
+		result += this.kind;
+		result += ((this.size.isPresent()) ? (" (" + this.size.get() + ")")
 				: ((this.frame.isPresent()) ? (" (" + this.frame.get() + ")") : ""));
-		_result += ((this.offset.isPresent()) ? (" " + this.offset.get()) : "");
-		_result += ((this.register.isPresent()) ? ("[" + this.register.get() + "]") : "");
-		_result += ((this.target.isPresent()) ? (" " + this.target.get()) : "");
-		_result += "\n";
-		for (String _label : this.suffixes) {
-			_result += _label + "\n";
+		result += ((this.offset.isPresent()) ? (" " + this.offset.get()) : "");
+		result += ((this.register.isPresent()) ? ("[" + this.register.get() + "]") : "");
+		result += ((this.target.isPresent()) ? (" " + this.target.get()) : "");
+		result += "\n";
+		for (String label : this.suffixes) {
+			result += label + "\n";
 		}
-		return _result;
+		return result;
 	}
 
 }

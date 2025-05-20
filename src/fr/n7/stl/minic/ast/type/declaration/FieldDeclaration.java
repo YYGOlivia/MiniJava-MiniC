@@ -18,9 +18,9 @@ public class FieldDeclaration implements Declaration {
 	private Type type;
 	private int offset;
 
-	public FieldDeclaration(String _name, Type _type) {
-		this.name = _name;
-		this.type = _type;
+	public FieldDeclaration(String name, Type type) {
+		this.name = name;
+		this.type = type;
 		this.offset = -1;
 	}
 
@@ -62,8 +62,8 @@ public class FieldDeclaration implements Declaration {
 		return this.offset;
 	}
 
-	public int computeOffset(int _offset) {
-		this.offset = _offset;
+	public int computeOffset(int offset) {
+		this.offset = offset;
 		return this.type.length();
 	}
 

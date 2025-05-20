@@ -50,7 +50,7 @@ public enum BooleanValue implements Value {
 	 * Scope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
 		return true;
 	}
 
@@ -62,7 +62,7 @@ public enum BooleanValue implements Value {
 	 * Scope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
 		return true;
 	}
 
@@ -83,19 +83,19 @@ public enum BooleanValue implements Value {
 	 * @see fr.n7.stl.block.ast.Expression#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		Fragment _code = _factory.createFragment();
+	public Fragment getCode(TAMFactory factory) {
+		Fragment code = factory.createFragment();
 		switch (this) {
 			case True: {
-				_code.add(_factory.createLoadL(1));
+				code.add(factory.createLoadL(1));
 				break;
 			}
 			case False: {
-				_code.add(_factory.createLoadL(0));
+				code.add(factory.createLoadL(0));
 				break;
 			}
 		}
-		return _code;
+		return code;
 	}
 
 }

@@ -30,11 +30,11 @@ public class Sequence implements AccessibleExpression {
 	 * Builds an Abstract Syntax Tree node for an expression building a sequence of
 	 * values.
 	 * 
-	 * @param _values : List of AST nodes of the expressions computing the values in
+	 * @param values : List of AST nodes of the expressions computing the values in
 	 *                the sequence.
 	 */
-	public Sequence(List<AccessibleExpression> _values) {
-		this.values = _values;
+	public Sequence(List<AccessibleExpression> values) {
+		this.values = values;
 	}
 
 	/*
@@ -44,15 +44,15 @@ public class Sequence implements AccessibleExpression {
 	 */
 	@Override
 	public String toString() {
-		String _result = "{ ";
-		Iterator<AccessibleExpression> _iter = this.values.iterator();
-		if (_iter.hasNext()) {
-			_result += _iter.next();
-			while (_iter.hasNext()) {
-				_result += " ," + _iter.next();
+		String result = "{ ";
+		Iterator<AccessibleExpression> iter = this.values.iterator();
+		if (iter.hasNext()) {
+			result += iter.next();
+			while (iter.hasNext()) {
+				result += " ," + iter.next();
 			}
 		}
-		return _result + " }";
+		return result + " }";
 	}
 
 	/*
@@ -63,12 +63,12 @@ public class Sequence implements AccessibleExpression {
 	 * HierarchicalScope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		boolean _result = true;
-		for (Expression _value : this.values) {
-			_result = _result && _value.collectAndPartialResolve(_scope);
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
+		boolean result = true;
+		for (Expression value : this.values) {
+			result = result && value.collectAndPartialResolve(scope);
 		}
-		return _result;
+		return result;
 	}
 
 	/*
@@ -79,12 +79,12 @@ public class Sequence implements AccessibleExpression {
 	 * HierarchicalScope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		boolean _result = true;
-		for (Expression _value : this.values) {
-			_result = _result && _value.completeResolve(_scope);
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+		boolean result = true;
+		for (Expression value : this.values) {
+			result = result && value.completeResolve(scope);
 		}
-		return _result;
+		return result;
 	}
 
 	/*
@@ -94,11 +94,11 @@ public class Sequence implements AccessibleExpression {
 	 */
 	@Override
 	public Type getType() {
-		SequenceType _result = new SequenceType();
-		for (Expression _value : this.values) {
-			_result.add(_value.getType());
+		SequenceType result = new SequenceType();
+		for (Expression value : this.values) {
+			result.add(value.getType());
 		}
-		return _result;
+		return result;
 	}
 
 	/*
@@ -107,10 +107,10 @@ public class Sequence implements AccessibleExpression {
 	 * @see fr.n7.stl.block.ast.Expression#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		Fragment fragment = _factory.createFragment();
-		for (Expression _value : this.values) {
-			fragment.append(_value.getCode(_factory));
+	public Fragment getCode(TAMFactory factory) {
+		Fragment fragment = factory.createFragment();
+		for (Expression value : this.values) {
+			fragment.append(value.getCode(factory));
 		}
 		return fragment;
 	}

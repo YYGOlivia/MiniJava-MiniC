@@ -27,16 +27,16 @@ public abstract class AbstractConversion<TargetType> implements Expression {
 	protected Type type;
 	protected String name;
 
-	public AbstractConversion(TargetType _target, String _type) {
-		this.target = _target;
-		this.name = _type;
+	public AbstractConversion(TargetType target, String type) {
+		this.target = target;
+		this.name = type;
 		this.type = null;
 	}
 
-	public AbstractConversion(TargetType _target, Type _type) {
-		this.target = _target;
+	public AbstractConversion(TargetType target, Type type) {
+		this.target = target;
 		this.name = null;
-		this.type = _type;
+		this.type = type;
 	}
 
 	/*
@@ -70,16 +70,16 @@ public abstract class AbstractConversion<TargetType> implements Expression {
 	 * Scope)
 	 */
 	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
 
-		Declaration decl = _scope.get(this.name);
+		Declaration decl = scope.get(this.name);
 		if (!(decl instanceof TypeDeclaration)) {
 			Logger.error("[AbstractConversion] Type " + this.name + " is not declared.");
 			return false;
 		}
 		TypeDeclaration typeDecl = ((TypeDeclaration) decl);
 
-		typeDecl.collectAndPartialResolve(_scope);
+		typeDecl.collectAndPartialResolve(scope);
 		this.type = typeDecl.getType();
 		return true;
 	}
@@ -92,10 +92,10 @@ public abstract class AbstractConversion<TargetType> implements Expression {
 	 * Scope)
 	 */
 	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
 		if (this.target instanceof AccessibleExpression) {
 			AccessibleExpression targetAcc = (AccessibleExpression) target;
-			boolean okTarget = targetAcc.completeResolve(_scope);
+			boolean okTarget = targetAcc.completeResolve(scope);
 			if (!type.compatibleWith(targetAcc.getType())) {
 				Logger.error("[AbstractConversion] " + type + " is not compatible with " + targetAcc.getType());
 				return false;
@@ -103,7 +103,7 @@ public abstract class AbstractConversion<TargetType> implements Expression {
 			return okTarget;
 		} else if (this.target instanceof Expression) {
 			Expression targetExp = (Expression) target;
-			boolean okTarget = targetExp.completeResolve(_scope);
+			boolean okTarget = targetExp.completeResolve(scope);
 			if (!type.compatibleWith(targetExp.getType())) {
 				Logger.error("[AbstractConversion] " + type + " is not compatible with " + targetExp.getType());
 				return false;
@@ -120,7 +120,7 @@ public abstract class AbstractConversion<TargetType> implements Expression {
 	 * @see fr.n7.stl.block.ast.Expression#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
 	@Override
-	public Fragment getCode(TAMFactory _factory) {
+	public Fragment getCode(TAMFactory factory) {
 		throw new SemanticsUndefinedException("Semantics getCode undefined in TypeConversion.");
 	}
 

@@ -14,40 +14,40 @@ public interface Fragment {
 	/**
 	 * Adds a TAM instruction at the end of the fragment.
 	 * 
-	 * @param _instruction TAM instruction added at the end of the fragment.
+	 * @param instruction TAM instruction added at the end of the fragment.
 	 */
-	public void add(TAMInstruction _instruction);
+	public void add(TAMInstruction instruction);
 
 	/**
 	 * Adds a prefix comment to the first TAM instruction of the fragment.
 	 * 
-	 * @param _comment Comment that is added to the first TAM instruction of the
+	 * @param comment Comment that is added to the first TAM instruction of the
 	 *                 fragment.
 	 */
-	public void addComment(String _comment);
+	public void addComment(String comment);
 
 	/**
 	 * Adds a prefix label to the first TAM instruction of the fragment.
 	 * 
-	 * @param _label Label that is added to the first TAM instruction of the
+	 * @param label Label that is added to the first TAM instruction of the
 	 *               fragment.
 	 */
-	public void addPrefix(String _label);
+	public void addPrefix(String label);
 
 	/**
 	 * Adds a suffix label to the last TAM instruction of the fragment.
 	 * 
-	 * @param _label Label that is added to the last TAM instruction of the
+	 * @param label Label that is added to the last TAM instruction of the
 	 *               fragment.
 	 */
-	public void addSuffix(String _label);
+	public void addSuffix(String label);
 
 	/**
 	 * Add the instructions from the provided fragment at the end of the fragment.
 	 * 
-	 * @param _fragment Fragment whose instructions are added at the end of the
+	 * @param fragment Fragment whose instructions are added at the end of the
 	 *                  fragment.
 	 */
-	public void append(Fragment _fragment);
+	public void append(Fragment fragment);
 
 }
