@@ -5,13 +5,10 @@ package fr.n7.stl.minic.ast.expression.assignable;
 
 import fr.n7.stl.minic.ast.expression.AbstractArray;
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
-import fr.n7.stl.minic.ast.expression.accessible.VariableAccess;
 import fr.n7.stl.minic.ast.instruction.declaration.VariableDeclaration;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Library;
 import fr.n7.stl.tam.ast.TAMFactory;
-import fr.n7.stl.util.Logger;
-import java.lang.reflect.Array;
 
 /**
  * Abstract Syntax Tree node for an expression whose computation assigns a cell

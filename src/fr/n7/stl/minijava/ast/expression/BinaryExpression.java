@@ -10,9 +10,9 @@ import fr.n7.stl.util.Logger;
 
 public class BinaryExpression implements Expression {
 
-    protected Expression left;
-    protected Expression right;
-    protected BinaryOperator operator;
+    private Expression left;
+    private Expression right;
+    private BinaryOperator operator;
 
     public BinaryExpression(Expression left, BinaryOperator operator, Expression right) {
         this.left = left;

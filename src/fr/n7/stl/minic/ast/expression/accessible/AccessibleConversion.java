@@ -3,7 +3,6 @@ package fr.n7.stl.minic.ast.expression.accessible;
 import fr.n7.stl.minic.ast.expression.AbstractConversion;
 import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.type.Type;
-import fr.n7.stl.util.Logger;
 
 /**
  * Implementation of the Abstract Syntax Tree node for a type conversion

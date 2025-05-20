@@ -5,7 +5,7 @@ import fr.n7.stl.minijava.ast.scope.HierarchicalScope;
 
 public class ArrayType implements Type {
 
-    protected Type element;
+    private Type element;
 
     public ArrayType(Type element) {
         this.element = element;

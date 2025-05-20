@@ -1,8 +1,10 @@
 
 package fr.n7.stl.minijava.ast.instruction.declaration.clazz;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import fr.n7.stl.minijava.ast.scope.Declaration;
 import fr.n7.stl.minijava.ast.scope.HierarchicalScope;
@@ -16,8 +18,21 @@ public class ClassDeclaration implements Type, Declaration {
     private String name;
     private Modifier mod;
     private String parentName;
+    ClassDeclaration parentClass;
+
+    /**
+     * Attributes of the class
+     */
     private List<AttributeDeclaration> attributes = new LinkedList<>();
-    private List<MethodDeclaration> methods = new LinkedList<>();
+
+    /**
+     * <code>methods.get("foo")</code> is a list of methods with the same name "foo"
+     */
+    private Map<String, List<MethodDeclaration>> methods = new HashMap<>();
+
+    /**
+     * Constructors of the class
+     */
     private List<ConstructorDeclaration> constructors = new LinkedList<>();
 
     public ClassDeclaration(String name, String parentName, Modifier mod, List<Definition> defs) {
@@ -29,7 +44,13 @@ public class ClassDeclaration implements Type, Declaration {
             if (def instanceof AttributeDeclaration) {
                 this.attributes.add((AttributeDeclaration) def);
             } else if (def instanceof MethodDeclaration) {
-                this.methods.add((MethodDeclaration) def);
+                MethodDeclaration method = (MethodDeclaration) def;
+                String methodName = method.getName();
+                if (!this.methods.containsKey(methodName)) {
+                    this.methods.put(methodName, new LinkedList<>());
+                }
+                this.methods.get(methodName).add(method);
+
             } else if (def instanceof ConstructorDeclaration) {
                 this.constructors.add((ConstructorDeclaration) def);
             } else {
@@ -37,7 +58,6 @@ public class ClassDeclaration implements Type, Declaration {
                         "Unknown Definition type in ClassDeclaration: " + def.getClass().getName());
             }
         }
-
     }
 
     @Override

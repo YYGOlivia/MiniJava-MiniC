@@ -5,11 +5,11 @@ import fr.n7.stl.minijava.ast.type.Type;
 
 public class ParameterDeclaration implements Declaration {
 
-    protected String name;
+    private String name;
 
-    protected Type type;
+    private Type type;
 
-    protected int offset;
+    private int offset;
 
     public ParameterDeclaration(String name, Type type) {
         this.name = name;

@@ -1,7 +1,5 @@
 package fr.n7.stl.minic.ast.expression;
 
-import org.stringtemplate.v4.compiler.STParser.ifstat_return;
-
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;

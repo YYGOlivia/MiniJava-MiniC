@@ -2,20 +2,28 @@ package fr.n7.stl.minijava.ast.instruction.declaration.clazz;
 
 public enum Modifier {
 
-    Public,
-    Private,
-    Static,
-    Abstract;
+    PUBLIC,
+    ABSTRACT,
+    STATIC,
+    FINAL,
+    PROTECTED,
+    PRIVATE;
 
     @Override
     public String toString() {
         switch (this) {
-            case Public:
+            case PUBLIC:
                 return "public";
-            case Private:
-                return "private";
-            case Static:
+            case ABSTRACT:
+                return "abstract";
+            case STATIC:
                 return "static";
+            case FINAL:
+                return "final";
+            case PROTECTED:
+                return "protected";
+            case PRIVATE:
+                return "private";
             default:
                 throw new IllegalArgumentException("The default case should never be triggered.");
         }

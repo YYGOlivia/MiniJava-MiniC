@@ -5,7 +5,6 @@ package fr.n7.stl.minic.ast.type;
 
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
-import fr.n7.stl.util.Logger;
 
 /**
  * @author Marc Pantel

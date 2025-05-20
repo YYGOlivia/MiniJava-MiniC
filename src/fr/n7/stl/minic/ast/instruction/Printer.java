@@ -90,19 +90,19 @@ public class Printer implements Instruction {
 		return 0;
 	}
 
-	private TAMInstruction getRightOut(AtomicType atomicType){
+	private TAMInstruction getRightOut(AtomicType atomicType) {
 		switch (atomicType) {
-		case BooleanType:
-			return Library.BOut;
-		case IntegerType:
-			return Library.IOut;
-		case CharacterType:
-			return Library.COut;
-		case StringType:
-			return Library.SOut;
-		default:
-			// Aucune idee de ce qu'on fait là
-			return Library.IOut;
+			case BooleanType:
+				return Library.BOut;
+			case IntegerType:
+				return Library.IOut;
+			case CharacterType:
+				return Library.COut;
+			case StringType:
+				return Library.SOut;
+			default:
+				// Aucune idee de ce qu'on fait là
+				return Library.IOut;
 		}
 	}
 
@@ -115,20 +115,20 @@ public class Printer implements Instruction {
 	public Fragment getCode(TAMFactory factory) {
 		Fragment fragment = factory.createFragment();
 		Type type = parameter.getType();
-		if (type instanceof AtomicType){
+		if (type instanceof AtomicType) {
 			AtomicType atomicType = (AtomicType) type;
 			fragment.append(parameter.getCode(factory));
 			fragment.add(getRightOut(atomicType));
-		}else{
-			//Pour print toute les valeurs dans l'ordre inverse -> <2,3> sera affiché 3 2
-			for (int i=0; i<type.length(); i++){
+		} else {
+			// Pour print toute les valeurs dans l'ordre inverse -> <2,3> sera affiché 3 2
+			for (int i = 0; i < type.length(); i++) {
 				fragment.add(Library.IOut); // Ici ca ne marche que pour les int
 				fragment.add(factory.createLoadL(' '));
 				fragment.add(Library.COut);
 			}
 		}
-		
-		//Pour avoir des espaces entre chaque valeur
+
+		// Pour avoir des espaces entre chaque valeur
 		fragment.add(factory.createLoadL(' '));
 		fragment.add(Library.COut);
 		return fragment;
