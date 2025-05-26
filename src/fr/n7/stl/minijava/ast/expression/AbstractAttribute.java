@@ -35,11 +35,7 @@ public abstract class AbstractAttribute<ObjectKind extends Expression> implement
 
 	@Override
 	public String toString() {
-		String image = "";
-		image += this.object;
-		image += ".";
-		image += this.name;
-		return image;
+		return this.object + "." + this.name;
 	}
 
 }

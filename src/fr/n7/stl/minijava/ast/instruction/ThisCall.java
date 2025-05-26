@@ -56,8 +56,7 @@ public class ThisCall implements Instruction {
 
 	@Override
 	public String toString() {
-		String image = "";
-		image += "this( ";
+		String image = "this(";
 		Iterator<AccessibleExpression> iterator = this.arguments.iterator();
 		if (iterator.hasNext()) {
 			AccessibleExpression argument = iterator.next();

@@ -70,8 +70,7 @@ public class MethodCall implements Instruction {
 		if (this.target != null) {
 			image += target + ".";
 		}
-		image += this.name;
-		image += "( ";
+		image += this.name + "(";
 		Iterator<AccessibleExpression> iterator = this.arguments.iterator();
 		if (iterator.hasNext()) {
 			AccessibleExpression argument = iterator.next();

@@ -56,8 +56,7 @@ public class SuperCall implements Instruction {
 
 	@Override
 	public String toString() {
-		String image = "";
-		image += "super( ";
+		String image = "super(";
 		Iterator<AccessibleExpression> iterator = this.arguments.iterator();
 		if (iterator.hasNext()) {
 			AccessibleExpression argument = iterator.next();

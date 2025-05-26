@@ -210,21 +210,21 @@ public class VariableDeclaration implements Declaration, Instruction {
 	public Fragment getCode(TAMFactory factory) {
 		Fragment result = factory.createFragment();
 		result.add(factory.createPush(type.length()));
-		if (type instanceof ArrayType){
-			//On alloue d'abord de la place au tableau
+		if (type instanceof ArrayType) {
+			// On alloue d'abord de la place au tableau
 			result.add(factory.createLoadL(value.getType().length()));
 			result.add(Library.MAlloc);
 			result.add(factory.createStore(register, offset, type.length()));
-			//On recupère le code de la valeur
+			// On recupère le code de la valeur
 			result.append(this.value.getCode(factory));
 			// On récupere l'adresse du tableau
 			result.add(factory.createLoad(register, offset, type.length()));
 			result.add(factory.createStoreI(value.getType().length()));
-		}else{
+		} else {
 			result.append(this.value.getCode(factory));
 			result.add(factory.createStore(register, offset, type.length()));
 		}
-		//result.addComment(this.toString());
+		// result.addComment(this.toString());
 		return result;
 	}
 

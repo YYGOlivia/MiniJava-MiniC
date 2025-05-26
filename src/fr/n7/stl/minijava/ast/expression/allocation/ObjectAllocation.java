@@ -8,8 +8,10 @@ import fr.n7.stl.minic.ast.expression.assignable.AssignableExpression;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.Type;
+import fr.n7.stl.minijava.ast.type.declaration.ClassDeclaration;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
+import fr.n7.stl.util.Logger;
 import fr.n7.stl.util.SemanticsUndefinedException;
 
 public class ObjectAllocation implements AccessibleExpression, AssignableExpression {
@@ -25,7 +27,21 @@ public class ObjectAllocation implements AccessibleExpression, AssignableExpress
 
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
-		throw new SemanticsUndefinedException("Semantics collect is undefined in ObjectAllocation.");
+		if (!scope.knows(this.name)) {
+			Logger.error("[ObjectAllocation] Class " + this.name + " is not known in scope.");
+		}
+		if (!(scope.get(this.name) instanceof ClassDeclaration)) {
+			Logger.error("[ObjectAllocation] " + this.name + " is not a class.");
+		}
+		ClassDeclaration classDeclaration = (ClassDeclaration) scope.get(this.name);
+		if (!classDeclaration.isConcrete()) {
+			Logger.error("[ObjectAllocation] Class " + this.name + " is abstract and cannot be instantiated.");
+		}
+		// TODO: vérifier qu'un constructeur compatible existe
+
+		boolean okArgs = this.arguments.stream().allMatch(arg -> arg.collectAndPartialResolve(scope));
+
+		return okArgs;
 	}
 
 	@Override
@@ -46,7 +62,7 @@ public class ObjectAllocation implements AccessibleExpression, AssignableExpress
 	@Override
 	public String toString() {
 		String image = "";
-		image += "new " + this.name + "( ";
+		image += "new " + this.name + "(";
 		Iterator<AccessibleExpression> iterator = this.arguments.iterator();
 		if (iterator.hasNext()) {
 			AccessibleExpression argument = iterator.next();

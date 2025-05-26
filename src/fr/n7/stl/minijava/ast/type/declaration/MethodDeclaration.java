@@ -40,7 +40,7 @@ public class MethodDeclaration extends ClassElement {
 		if (!this.concrete) {
 			image += "abstract ";
 		}
-		image += this.getAccessRight() + " " + this.getElementKind() + " " + this.type + " " + this.getName() + "( ";
+		image += this.getAccessRight() + " " + this.getElementKind() + " " + this.type + " " + this.getName() + "(";
 		Iterator<ParameterDeclaration> iterator = this.parameters.iterator();
 		if (iterator.hasNext()) {
 			ParameterDeclaration parameter = iterator.next();
@@ -52,9 +52,9 @@ public class MethodDeclaration extends ClassElement {
 		}
 		image += ")";
 		if (this.concrete) {
-			image += this.body;
+			image += " " + this.body + "\n";
 		} else {
-			image += ";";
+			image += ";\n";
 		}
 		return image;
 	}

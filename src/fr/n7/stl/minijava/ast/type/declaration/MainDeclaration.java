@@ -20,6 +20,9 @@ public class MainDeclaration implements Instruction {
 
 	private Block main;
 
+	/**
+	 * Déclaration de la classe principale.
+	 */
 	public MainDeclaration(String name, List<Declaration> declarations, Block main) {
 		this.name = name;
 		this.declarations = declarations;
@@ -62,18 +65,11 @@ public class MainDeclaration implements Instruction {
 
 	@Override
 	public String toString() {
-		String image = "";
-		image += "public class " + this.name + " ";
-		image += "{\n";
-		image += "\n";
+		String image = "public class " + this.name + " {\n\n";
 		for (Declaration uneDeclaration : this.declarations) {
-			image += uneDeclaration;
-			image += "\n";
+			image += uneDeclaration + "\n";
 		}
-		image += "\tpublic static void Main( String[] args) ";
-		image += this.main;
-		image += "\n";
-		image += "}\n";
+		image += "public static void Main(String[] args) " + this.main + "\n}\n";
 		return image;
 	}
 

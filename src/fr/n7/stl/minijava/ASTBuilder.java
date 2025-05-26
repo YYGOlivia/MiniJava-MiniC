@@ -128,32 +128,24 @@ public class ASTBuilder extends MiniJavaParserBaseListener {
         }
         System.out.println(this.main);
         SymbolTable tds = new SymbolTable();
-        boolean okCollectAndPartialResolve = true;
-        for (ClassDeclaration c : this.classes) {
-            okCollectAndPartialResolve = okCollectAndPartialResolve && c.collectAndPartialResolve(tds);
-        }
-        okCollectAndPartialResolve = okCollectAndPartialResolve && this.main.collectAndPartialResolve(tds);
-        if (!okCollectAndPartialResolve) {
+
+        boolean okCollect = this.classes.stream().allMatch(c -> c.collectAndPartialResolve(tds));
+        okCollect = okCollect && this.main.collectAndPartialResolve(tds);
+        if (!okCollect) {
             System.out.println("Collect failed : " + tds);
             return;
         }
         System.out.println("Collect succeeded");
 
-        boolean okCompleteResolve = true;
-        for (ClassDeclaration c : this.classes) {
-            okCompleteResolve = okCompleteResolve && c.completeResolve(tds);
-        }
-        okCompleteResolve = okCompleteResolve && this.main.completeResolve(tds);
-        if (!okCompleteResolve) {
+        boolean okResolve = this.classes.stream().allMatch(c -> c.completeResolve(tds));
+        okResolve = okResolve && this.main.completeResolve(tds);
+        if (!okResolve) {
             System.out.println("Resolve failed." + tds);
             return;
         }
         System.out.println("Resolve succeeded.");
 
-        boolean okCheckType = true;
-        for (ClassDeclaration c : this.classes) {
-            okCheckType = okCheckType && c.checkType();
-        }
+        boolean okCheckType = this.classes.stream().allMatch(c -> c.checkType());
         okCheckType = okCheckType && this.main.checkType();
         if (!okCheckType) {
             System.out.println("Type verification failed.");
@@ -167,10 +159,9 @@ public class ASTBuilder extends MiniJavaParserBaseListener {
         }
 
         System.out.println("Code generation ...");
-        for (ClassDeclaration c : this.classes) {
-            c.allocateMemory(Register.SB, 0);
-        }
+        this.classes.stream().forEach(c -> c.allocateMemory(Register.SB, 0));
         this.main.allocateMemory(Register.SB, 0);
+
         TAMFactory factory = new TAMFactoryImpl();
         Fragment f = factory.createFragment();
         for (ClassDeclaration c : this.classes) {

@@ -22,8 +22,7 @@ public class ConstructorDeclaration extends ClassElement {
 
 	@Override
 	public String toString() {
-		String image = "";
-		image += this.getAccessRight() + " " + this.getName() + "( ";
+		String image = this.getAccessRight() + " " + this.getName() + "(";
 		Iterator<ParameterDeclaration> iterator = this.parameters.iterator();
 		if (iterator.hasNext()) {
 			ParameterDeclaration parameter = iterator.next();
@@ -33,8 +32,7 @@ public class ConstructorDeclaration extends ClassElement {
 				image += " ," + parameter;
 			}
 		}
-		image += ")";
-		image += this.body;
+		image += ")" + this.body;
 		return image;
 	}
 

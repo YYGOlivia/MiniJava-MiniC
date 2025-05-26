@@ -43,8 +43,10 @@ principale
 
 declaration
 	returns[Declaration uneDeclaration]:
-	Statique laSignature = signature leCorps = bloc												# methodeMain
-	| Statique estFinal = Final? leType = type leNom = Ident Egal laValeur = expression PtVirg	#
+	// static type ident (...) {...}
+	Statique laSignature = signature leCorps = bloc # methodeMain
+	// static final? expr ident = expr;
+	| Statique estFinal = Final? leType = type leNom = Ident Egal laValeur = expression PtVirg #
 		attributMain;
 
 elements

@@ -10,6 +10,7 @@ import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.Type;
+import fr.n7.stl.minijava.ast.type.ClassType;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
@@ -46,25 +47,29 @@ public class ClassDeclaration implements Instruction, Declaration {
 		this(concrete, name, null, elements);
 	}
 
+	public boolean isConcrete() {
+		return this.concrete;
+	}
+
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
 		if (!scope.accepts(this)) {
 			Logger.error("[ClassDeclaration] Declaration of class " + this.name + " is not accepted in scope");
 		}
-		boolean okAncestor = true;
+		scope.register(this);
 
 		if (ancestor != null) {
 			// Faut que l'ancêtre soit connue dans le scope
 			if (!scope.knows(this.ancestor)) {
-				Logger.error("[ClassDeclaration] Class " + this.name + " extends unknown class " + this.ancestor);
+				Logger.error("[ClassDeclaration] Class " + this.name + " cannot extend unknown class " + this.ancestor);
 			}
+
 			// Faut que l'ancêtre soit une classe
 			if (!(scope.get(this.ancestor) instanceof ClassDeclaration)) {
-				Logger.error("[ClassDeclaration] Class " + this.name + " extends non-class " + this.ancestor);
+				Logger.error("[ClassDeclaration] Class " + this.name + " cannot extend non-class " + this.ancestor);
 			}
 
 			ClassDeclaration ancestorClass = (ClassDeclaration) scope.get(this.ancestor);
-			okAncestor = ancestorClass.collectAndPartialResolve(scope);
 			// Une classe abstraite ne peut pas étendre une classe concrète
 			if (!this.concrete && ancestorClass.concrete) {
 				Logger.error(
@@ -87,7 +92,7 @@ public class ClassDeclaration implements Instruction, Declaration {
 				}
 			}
 		}
-		return okAncestor && true;
+		return true;
 	}
 
 	@Override
@@ -123,7 +128,7 @@ public class ClassDeclaration implements Instruction, Declaration {
 
 	@Override
 	public Type getType() {
-		throw new SemanticsUndefinedException("Semantics getCode is undefined in ClassDeclaration.");
+		return new ClassType(name);
 	}
 
 	@Override

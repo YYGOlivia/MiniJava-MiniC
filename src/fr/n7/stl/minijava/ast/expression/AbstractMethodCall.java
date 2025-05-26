@@ -52,7 +52,7 @@ public abstract class AbstractMethodCall<ObjectKind extends Expression> implemen
 		if (this.target != null) {
 			image += this.target + ".";
 		}
-		image += this.name + "( ";
+		image += this.name + "(";
 		Iterator<AccessibleExpression> iterator = this.arguments.iterator();
 		if (iterator.hasNext()) {
 			AccessibleExpression argument = iterator.next();

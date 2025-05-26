@@ -73,7 +73,7 @@ public class FunctionDeclaration implements Instruction, Declaration {
 	 */
 	@Override
 	public String toString() {
-		String result = this.type + " " + this.name + "( ";
+		String result = this.type + " " + this.name + "(";
 		Iterator<ParameterDeclaration> iter = this.parameters.iterator();
 		if (iter.hasNext()) {
 			result += iter.next();
@@ -81,7 +81,7 @@ public class FunctionDeclaration implements Instruction, Declaration {
 				result += " ," + iter.next();
 			}
 		}
-		return result + " )" + this.body;
+		return result + ")" + this.body;
 	}
 
 	/*
