@@ -28,7 +28,7 @@ import fr.n7.stl.util.Logger;
  */
 public class IdentifierAccess extends AbstractIdentifier implements AccessibleExpression {
 
-	protected AbstractAccess expression;
+	private AbstractAccess expression;
 
 	/**
 	 * Creates a variable use expression Abstract Syntax Tree node.
@@ -39,6 +39,10 @@ public class IdentifierAccess extends AbstractIdentifier implements AccessibleEx
 		super(name);
 	}
 
+	public AbstractAccess getExpression() {
+		return this.expression;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -46,7 +50,7 @@ public class IdentifierAccess extends AbstractIdentifier implements AccessibleEx
 	 */
 	@Override
 	public String toString() {
-		return this.name;
+		return this.getName();
 	}
 
 	/*
@@ -58,12 +62,12 @@ public class IdentifierAccess extends AbstractIdentifier implements AccessibleEx
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
-		if (!scope.knows(this.name)) {
-			Logger.error("[IdentifierAccess] " + name + " is not known by scope.");
+		if (!scope.knows(this.getName())) {
+			Logger.error("[IdentifierAccess] " + this.getName() + " is not known by scope.");
 			return false;
 		}
 
-		Declaration declaration = scope.get(this.name);
+		Declaration declaration = scope.get(this.getName());
 		if (declaration instanceof VariableDeclaration) {
 			this.expression = new VariableAccess((VariableDeclaration) declaration);
 
@@ -74,7 +78,7 @@ public class IdentifierAccess extends AbstractIdentifier implements AccessibleEx
 			this.expression = new ParameterAccess((ParameterDeclaration) declaration);
 
 		} else {
-			Logger.error("[IdentifierAccess] Declaration of " + name
+			Logger.error("[IdentifierAccess] Declaration of " + this.getName()
 					+ " refers to neither variable, constant or parameter.");
 			return false;
 		}
@@ -91,12 +95,12 @@ public class IdentifierAccess extends AbstractIdentifier implements AccessibleEx
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
 
-		if (!scope.knows(this.name)) {
-			Logger.error("[IdentifierAccess] " + name + " is not known by scope.");
+		if (!scope.knows(this.getName())) {
+			Logger.error("[IdentifierAccess] " + this.getName() + " is not known by scope.");
 			return false;
 		}
 
-		Declaration declaration = scope.get(this.name);
+		Declaration declaration = scope.get(this.getName());
 		if (declaration instanceof VariableDeclaration) {
 			this.expression = new VariableAccess((VariableDeclaration) declaration);
 
@@ -107,7 +111,7 @@ public class IdentifierAccess extends AbstractIdentifier implements AccessibleEx
 			this.expression = new ParameterAccess((ParameterDeclaration) declaration);
 
 		} else {
-			Logger.error("[IdentifierAccess] Declaration of " + name
+			Logger.error("[IdentifierAccess] Declaration of " + this.getName()
 					+ " refers to neither variable, constant or parameter.");
 			return false;
 		}

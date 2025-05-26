@@ -20,7 +20,7 @@ public abstract class AbstractPointer<PointerKind extends Expression> implements
 	/**
 	 * AST node that represents an expression whose value is a pointer.
 	 */
-	protected PointerKind pointer;
+	private PointerKind pointer;
 
 	/**
 	 * Construction for the implementation of a pointer content access expression
@@ -31,6 +31,10 @@ public abstract class AbstractPointer<PointerKind extends Expression> implements
 	 */
 	public AbstractPointer(PointerKind pointer) {
 		this.pointer = pointer;
+	}
+
+	public PointerKind getPointer() {
+		return this.pointer;
 	}
 
 	/*
@@ -79,7 +83,7 @@ public abstract class AbstractPointer<PointerKind extends Expression> implements
 			return AtomicType.ErrorType;
 		}
 		PointerType ptrType = ((PointerType) ptrTrueType);
-		return ptrType.getPointedType();
+		return ptrType.getElement();
 	}
 
 }

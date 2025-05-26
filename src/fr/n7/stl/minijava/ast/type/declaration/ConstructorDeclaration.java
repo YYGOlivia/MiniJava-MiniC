@@ -10,9 +10,9 @@ import fr.n7.stl.util.SemanticsUndefinedException;
 
 public class ConstructorDeclaration extends ClassElement {
 
-	protected List<ParameterDeclaration> parameters;
+	private List<ParameterDeclaration> parameters;
 
-	protected Block body;
+	private Block body;
 
 	public ConstructorDeclaration(String name, List<ParameterDeclaration> parameter, Block body) {
 		super(name);
@@ -23,7 +23,7 @@ public class ConstructorDeclaration extends ClassElement {
 	@Override
 	public String toString() {
 		String image = "";
-		image += this.accessRight + " " + this.name + "( ";
+		image += this.getAccessRight() + " " + this.getName() + "( ";
 		Iterator<ParameterDeclaration> iterator = this.parameters.iterator();
 		if (iterator.hasNext()) {
 			ParameterDeclaration parameter = iterator.next();

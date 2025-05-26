@@ -17,7 +17,7 @@ import fr.n7.stl.tam.ast.TAMFactory;
  */
 public class ConstantAccess extends AbstractAccess {
 
-	protected ConstantDeclaration declaration;
+	private ConstantDeclaration declaration;
 
 	/**
 	 * Creates a variable use expression Abstract Syntax Tree node.

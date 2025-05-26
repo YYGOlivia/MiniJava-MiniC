@@ -24,7 +24,7 @@ import fr.n7.stl.util.Logger;
  */
 public class AddressAccess implements AccessibleExpression {
 
-	protected AssignableExpression assignable;
+	private AssignableExpression assignable;
 
 	public AddressAccess(AssignableExpression assignable) {
 		this.assignable = assignable;

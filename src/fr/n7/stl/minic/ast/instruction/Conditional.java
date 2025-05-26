@@ -25,9 +25,9 @@ import fr.n7.stl.util.Logger;
  */
 public class Conditional implements Instruction {
 
-	protected Expression condition;
-	protected Block thenBranch;
-	protected Block elseBranch;
+	private Expression condition;
+	private Block thenBranch;
+	private Block elseBranch;
 
 	public Conditional(Expression condition, Block thenBlock, Block elseBlock) {
 		this.condition = condition;

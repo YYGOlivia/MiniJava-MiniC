@@ -4,11 +4,11 @@ import fr.n7.stl.minic.ast.scope.Declaration;
 
 public abstract class ClassElement implements Declaration {
 
-	protected ElementKind elementKind;
+	private ElementKind elementKind;
 
-	protected AccessRight accessRight;
+	private AccessRight accessRight;
 
-	protected String name;
+	private String name;
 
 	public ClassElement(ElementKind elementKind, AccessRight accessRight, String name) {
 		this.elementKind = elementKind;
@@ -40,5 +40,4 @@ public abstract class ClassElement implements Declaration {
 	public String getName() {
 		return this.name;
 	}
-
 }

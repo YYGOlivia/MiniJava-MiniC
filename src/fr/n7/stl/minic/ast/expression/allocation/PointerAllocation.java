@@ -13,7 +13,6 @@ import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Library;
 import fr.n7.stl.tam.ast.TAMFactory;
-import fr.n7.stl.util.Logger;
 
 /**
  * @author Marc Pantel
@@ -21,7 +20,7 @@ import fr.n7.stl.util.Logger;
  */
 public class PointerAllocation implements AccessibleExpression, AssignableExpression {
 
-	protected Type element;
+	private Type element;
 
 	public PointerAllocation(Type element) {
 		this.element = element;
@@ -74,7 +73,6 @@ public class PointerAllocation implements AccessibleExpression, AssignableExpres
 	 */
 	@Override
 	public Type getType() {
-		Logger.warning("[PointerAllocation] getType() -> " + this.element);
 		return new PointerType(element);
 	}
 

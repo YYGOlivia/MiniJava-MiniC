@@ -15,15 +15,19 @@ import fr.n7.stl.util.Logger;
  */
 public class PointerType implements Type {
 
-	protected Type element;
+	private Type element;
 
 	public PointerType(Type element) {
 		this.element = element;
 	}
 
-	public Type getPointedType() {
+	public Type getElement() {
 		Type elementTrueType = NamedType.toBaseType(this.element);
 		return elementTrueType;
+	}
+
+	public void setElement(Type element) {
+		this.element = element;
 	}
 
 	/*
@@ -35,7 +39,7 @@ public class PointerType implements Type {
 	public boolean equalsTo(Type other) {
 		if (other instanceof PointerType) {
 			PointerType otherPointerType = (PointerType) other;
-			return element.equals(otherPointerType.getPointedType());
+			return element.equals(otherPointerType.getElement());
 		}
 		Logger.error("[PointerType] " + other.toString() + " is not a PointerType");
 		return false;
@@ -50,7 +54,7 @@ public class PointerType implements Type {
 	public boolean compatibleWith(Type other) {
 		if (other instanceof PointerType) {
 			PointerType otherPointerType = (PointerType) other;
-			return element.compatibleWith(otherPointerType.getPointedType());
+			return element.compatibleWith(otherPointerType.getElement());
 		}
 		Logger.error("[PointerType] " + other.toString() + " is not a PointerType");
 		return false;

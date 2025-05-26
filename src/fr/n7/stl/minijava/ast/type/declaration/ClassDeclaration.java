@@ -5,7 +5,6 @@ package fr.n7.stl.minijava.ast.type.declaration;
 
 import java.util.List;
 
-import fr.n7.stl.util.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.instruction.Instruction;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
@@ -14,19 +13,21 @@ import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
+import fr.n7.stl.util.Logger;
+import fr.n7.stl.util.SemanticsUndefinedException;
 
 /**
  * 
  */
 public class ClassDeclaration implements Instruction, Declaration {
 
-	protected List<ClassElement> elements;
+	private List<ClassElement> elements;
 
-	protected boolean concrete;
+	private boolean concrete;
 
-	protected String name;
+	private String name;
 
-	protected String ancestor;
+	private String ancestor;
 
 	/**
 	 * 
@@ -47,12 +48,48 @@ public class ClassDeclaration implements Instruction, Declaration {
 
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
-		throw new SemanticsUndefinedException("Semantics collect is undefined in ClassDeclaration.");
+		if (!scope.accepts(this)) {
+			Logger.error("[ClassDeclaration] Declaration of class " + this.name + " is not accepted in scope");
+		}
+		boolean okAncestor = true;
+
+		if (ancestor != null) {
+			// Faut que l'ancêtre soit connue dans le scope
+			if (!scope.knows(this.ancestor)) {
+				Logger.error("[ClassDeclaration] Class " + this.name + " extends unknown class " + this.ancestor);
+			}
+			// Faut que l'ancêtre soit une classe
+			if (!(scope.get(this.ancestor) instanceof ClassDeclaration)) {
+				Logger.error("[ClassDeclaration] Class " + this.name + " extends non-class " + this.ancestor);
+			}
+
+			ClassDeclaration ancestorClass = (ClassDeclaration) scope.get(this.ancestor);
+			okAncestor = ancestorClass.collectAndPartialResolve(scope);
+			// Une classe abstraite ne peut pas étendre une classe concrète
+			if (!this.concrete && ancestorClass.concrete) {
+				Logger.error(
+						"[ClassDeclaration]" + this.name + " is abstract but extends concrete class " + this.ancestor);
+			}
+
+			// TODO: ajouter les ClassElement de l'ancêtre ?
+		}
+
+		for (ClassElement element : this.elements) {
+			if (element instanceof MethodDeclaration) {
+				MethodDeclaration method = (MethodDeclaration) element;
+				if (this.concrete && !method.isConcrete()) {
+					Logger.error("[ClassDeclaration] Class " + this.name + " is concrete but contains abstract method "
+							+ method.getName());
+				}
+			}
+		}
+		return okAncestor && true;
 	}
 
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope, FunctionDeclaration container) {
-		throw new SemanticsUndefinedException("Semantics resolve is undefined in ClassDeclaration.");
+		Logger.error("[ClassDeclaration] The class " + this.name + " cannot be declared inside a function.");
+		return false;
 	}
 
 	@Override

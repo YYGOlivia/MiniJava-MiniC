@@ -5,17 +5,17 @@ package fr.n7.stl.minijava.parser;
 }
 
 Egal: '=';
-AccoladeOuvrante: '{';
-AccoladeFermante: '}';
-ParentheseOuvrante: '(';
-ParentheseFermante: ')';
-CrochetOuvrant: '[';
-CrochetFermant:']';
-Point: '.';
-PointInterrogation: '?';
-DeuxPoint: ':';
+AccOuv: '{';
+AccFer: '}';
+ParOuv: '(';
+ParFer: ')';
+CrochOuv: '[';
+CrochFer:']';
+Pt: '.';
+PtInterro: '?';
+DeuxPt: ':';
 Virgule: ',';
-PointVirgule: ';';
+PtVirg: ';';
 Afficher: 'print';
 Si: 'if';
 Sinon: 'else';
@@ -28,12 +28,12 @@ Classe: 'class';
 Herite: 'extends';
 Public: 'public';
 Prive: 'private';
-DeClasse: 'static';
-Definitif: 'final';
+Statique: 'static';
+Final: 'final';
 Moi: 'this';
 Super: 'super';
 // ClassePrincipale: 'Main';
-MethodePrincipale: 'main';
+MethodeMain: 'main';
 Abstrait: 'abstract';
 Protege: 'protected';
 // Fin de l'ajout miniJava
@@ -46,16 +46,16 @@ PourCent: '%';
 Plus: '+';
 Moins: '-';
 // Operateurs logiques
-DoubleBarre: '||';
-DoubleEsperluette: '&&';
-PointExclamation: '!';
+Ou: '||';
+Et: '&&';
+PtExclamation: '!';
 // Operateurs de comparaison
-Inferieur: '<';
-Superieur: '>';
-InferieurEgal: '<=';
-SuperieurEgal: '>=';
+Inf: '<';
+Sup: '>';
+InfEg: '<=';
+SupEg: '>=';
 DoubleEgal: '==';
-ExclamationEgal: '!=';
+Different: '!=';
 Esperluette: '&';
 // Types
 TypeEntier: 'int';
@@ -73,7 +73,7 @@ Caractere: '\'' . '\'';
 Chaine: '"' .*? '"';
 
 Underscore: '_';
-Identificateur: ([a-zA-Z]|Underscore)([a-zA-Z_0-9]|Underscore)*;
+Ident: ([a-zA-Z]|Underscore)([a-zA-Z_0-9]|Underscore)*;
 Entier: '0' | ([1-9][0-9]*);
 Flottant: Entier '.' Entier;
 

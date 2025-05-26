@@ -24,10 +24,10 @@ public class PartialArrayType extends ArrayType implements PartialType {
 	 */
 	@Override
 	public Type complete(Type type) {
-		if (this.element == null) {
+		if (this.getElement() == null) {
 			return new ArrayType(type);
 		} else {
-			return new ArrayType(((PartialType) this.element).complete(type));
+			return new ArrayType(((PartialType) this.getElement()).complete(type));
 		}
 	}
 
@@ -39,10 +39,10 @@ public class PartialArrayType extends ArrayType implements PartialType {
 	 */
 	@Override
 	public void enrich(PartialType type) {
-		if (this.element == null) {
-			this.element = type;
+		if (this.getElement() == null) {
+			this.setElement(type);
 		} else {
-			((PartialType) this.element).enrich(type);
+			((PartialType) this.getElement()).enrich(type);
 		}
 	}
 

@@ -23,7 +23,7 @@ import fr.n7.stl.tam.ast.TAMInstruction;
  */
 public class Printer implements Instruction {
 
-	protected Expression parameter;
+	private Expression parameter;
 
 	public Printer(Expression value) {
 		this.parameter = value;

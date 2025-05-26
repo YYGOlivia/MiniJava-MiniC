@@ -8,7 +8,6 @@ import fr.n7.stl.minic.ast.instruction.declaration.VariableDeclaration;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Library;
 import fr.n7.stl.tam.ast.TAMFactory;
-import fr.n7.stl.util.Logger;
 
 /**
  * Abstract Syntax Tree node for an expression whose computation assigns a field
@@ -39,18 +38,17 @@ public class FieldAssignment extends AbstractField<AssignableExpression> impleme
 	 */
 	@Override
 	public Fragment getCode(TAMFactory factory) {
-		Logger.warning("FiledAssignement " + super.record.getClass().toString());
 		Fragment fragment = factory.createFragment();
-		if (record instanceof VariableAssignment){
-			VariableAssignment var = (VariableAssignment) record;
+		if (this.getRecord() instanceof VariableAssignment){
+			VariableAssignment var = (VariableAssignment) this.getRecord();
 			VariableDeclaration dec = (VariableDeclaration) var.getDeclaration();
 			fragment.add(factory.createLoadA(dec.getRegister(), dec.getOffset()));
 		}else{
-			fragment.append(record.getCode(factory));
+			fragment.append(this.getRecord().getCode(factory));
 		}
-		fragment.add(factory.createLoadL(super.field.getOffset()));
+		fragment.add(factory.createLoadL(this.getField().getOffset()));
 		fragment.add(Library.IAdd);
-		fragment.addComment("FieldAssignement" + record.toString());
+		fragment.addComment("FieldAssignement" + this.getField());
 		return fragment;
 		//throw new SemanticsUndefinedException("Semantics getCode undefined in FieldAssignment.");
 	}

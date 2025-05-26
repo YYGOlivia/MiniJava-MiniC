@@ -23,7 +23,7 @@ import fr.n7.stl.util.Logger;
  */
 public class VariableAssignment extends AbstractIdentifier implements AssignableExpression {
 
-	protected VariableDeclaration declaration;
+	private VariableDeclaration declaration;
 
 	/**
 	 * Creates a variable assignment expression Abstract Syntax Tree node.
@@ -43,20 +43,20 @@ public class VariableAssignment extends AbstractIdentifier implements Assignable
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
-		if (((HierarchicalScope<Declaration>) scope).knows(this.name)) {
-			Declaration declaration = scope.get(this.name);
+		if (((HierarchicalScope<Declaration>) scope).knows(this.getName())) {
+			Declaration declaration = scope.get(this.getName());
 			if (declaration instanceof VariableDeclaration) {
 				this.declaration = ((VariableDeclaration) declaration);
 				return true;
 			} else if (declaration instanceof ParameterDeclaration) {
-				Logger.error("[VariableAssignement] The parameter " + this.name + " is is not assignable.");
+				Logger.error("[VariableAssignement] The parameter " + this.getName() + " is is not assignable.");
 				return false;
 			} else {
-				Logger.error("[VariableAssignement] The declaration for " + this.name + " is of the wrong kind.");
+				Logger.error("[VariableAssignement] The declaration for " + this.getName() + " is of the wrong kind.");
 				return false;
 			}
 		} else {
-			Logger.error("[VariableAssignement] The identifier " + this.name + " has not been found.");
+			Logger.error("[VariableAssignement] The identifier " + this.getName() + " has not been found.");
 			return false;
 		}
 	}
@@ -99,7 +99,7 @@ public class VariableAssignment extends AbstractIdentifier implements Assignable
 		return result;
 	}
 
-	public Fragment getAccessCode(TAMFactory factory){
+	public Fragment getAccessCode(TAMFactory factory) {
 		Fragment result = factory.createFragment();
 		int off = declaration.getOffset();
 		Register reg = declaration.getRegister();
@@ -108,7 +108,7 @@ public class VariableAssignment extends AbstractIdentifier implements Assignable
 		return result;
 	}
 
-	public Declaration getDeclaration(){
+	public Declaration getDeclaration() {
 		return declaration;
 	}
 

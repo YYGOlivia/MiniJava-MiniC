@@ -14,11 +14,11 @@ import fr.n7.stl.util.SemanticsUndefinedException;
 
 public class MainDeclaration implements Instruction {
 
-	protected String name;
+	private String name;
 
-	protected List<Declaration> declarations;
+	private List<Declaration> declarations;
 
-	protected Block main;
+	private Block main;
 
 	public MainDeclaration(String name, List<Declaration> declarations, Block main) {
 		this.name = name;

@@ -65,7 +65,7 @@ public class MiniCLexer extends Lexer {
 			"'void'", "'true'", "'false'", "'null'", "'fst'", "'snd'"
 		};
 	}
-	private static final String[] _LITERALnameS = makeLiteralNames();
+	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
 			null, "Egal", "AccoladeOuvrante", "AccoladeFermante", "ParentheseOuvrante", 
@@ -81,8 +81,8 @@ public class MiniCLexer extends Lexer {
 			"CommentaireBloc", "WS"
 		};
 	}
-	private static final String[] _SYMBOLICnameS = makeSymbolicNames();
-	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERALnameS, _SYMBOLICnameS);
+	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
+	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
 	/**
 	 * @deprecated Use {@link #VOCABULARY} instead.
@@ -90,7 +90,7 @@ public class MiniCLexer extends Lexer {
 	@Deprecated
 	public static final String[] tokenNames;
 	static {
-		tokenNames = new String[_SYMBOLICnameS.length];
+		tokenNames = new String[_SYMBOLIC_NAMES.length];
 		for (int i = 0; i < tokenNames.length; i++) {
 			tokenNames[i] = VOCABULARY.getLiteralName(i);
 			if (tokenNames[i] == null) {

@@ -9,9 +9,9 @@ import fr.n7.stl.util.SemanticsUndefinedException;
 
 public abstract class AbstractAttribute<ObjectKind extends Expression> implements Expression {
 
-	protected ObjectKind object;
-	protected String name;
-	protected AttributeDeclaration attribute;
+	private ObjectKind object;
+	private String name;
+	private AttributeDeclaration attribute;
 
 	public AbstractAttribute(ObjectKind object, String name) {
 		this.object = object;

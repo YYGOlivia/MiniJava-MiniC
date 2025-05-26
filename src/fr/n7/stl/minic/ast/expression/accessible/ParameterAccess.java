@@ -18,7 +18,7 @@ import fr.n7.stl.tam.ast.TAMFactory;
  */
 public class ParameterAccess extends AbstractAccess {
 
-	protected ParameterDeclaration declaration;
+	private ParameterDeclaration declaration;
 
 	/**
 	 * Creates a variable use expression Abstract Syntax Tree node.

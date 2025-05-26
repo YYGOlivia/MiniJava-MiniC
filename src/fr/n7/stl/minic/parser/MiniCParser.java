@@ -1,11 +1,6 @@
 // Generated from MiniCParser.g4 by ANTLR 4.13.1
 
 package fr.n7.stl.minic.parser;
-import java.io.IOException;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.PrintWriter;
-import java.io.IOException;
 import fr.n7.stl.minic.ast.Block;
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.expression.assignable.AssignableExpression;
@@ -69,7 +64,7 @@ public class MiniCParser extends Parser {
 			"'void'", "'true'", "'false'", "'null'", "'fst'", "'snd'"
 		};
 	}
-	private static final String[] _LITERALnameS = makeLiteralNames();
+	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
 			null, "Egal", "AccoladeOuvrante", "AccoladeFermante", "ParentheseOuvrante", 
@@ -85,8 +80,8 @@ public class MiniCParser extends Parser {
 			"CommentaireBloc", "WS"
 		};
 	}
-	private static final String[] _SYMBOLICnameS = makeSymbolicNames();
-	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERALnameS, _SYMBOLICnameS);
+	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
+	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
 	/**
 	 * @deprecated Use {@link #VOCABULARY} instead.
@@ -94,7 +89,7 @@ public class MiniCParser extends Parser {
 	@Deprecated
 	public static final String[] tokenNames;
 	static {
-		tokenNames = new String[_SYMBOLICnameS.length];
+		tokenNames = new String[_SYMBOLIC_NAMES.length];
 		for (int i = 0; i < tokenNames.length; i++) {
 			tokenNames[i] = VOCABULARY.getLiteralName(i);
 			if (tokenNames[i] == null) {
@@ -159,26 +154,26 @@ public class MiniCParser extends Parser {
 	}
 
 	public final ProgrammeContext programme() throws RecognitionException {
-		ProgrammeContext localctx = new ProgrammeContext(_ctx, getState());
-		enterRule(localctx, 0, RULE_programme);
+		ProgrammeContext _localctx = new ProgrammeContext(_ctx, getState());
+		enterRule(_localctx, 0, RULE_programme);
 		try {
-			enterOuterAlt(localctx, 1);
+			enterOuterAlt(_localctx, 1);
 			{
 			setState(26);
-			((ProgrammeContext)localctx).name = match(Identificateur);
+			((ProgrammeContext)_localctx).name = match(Identificateur);
 			setState(27);
-			((ProgrammeContext)localctx).main = bloc();
+			((ProgrammeContext)_localctx).main = bloc();
 			}
 		}
 		catch (RecognitionException re) {
-			localctx.exception = re;
+			_localctx.exception = re;
 			_errHandler.reportError(this, re);
 			_errHandler.recover(this, re);
 		}
 		finally {
 			exitRule();
 		}
-		return localctx;
+		return _localctx;
 	}
 
 	@SuppressWarnings("CheckReturnValue")
@@ -209,11 +204,11 @@ public class MiniCParser extends Parser {
 	}
 
 	public final BlocContext bloc() throws RecognitionException {
-		BlocContext localctx = new BlocContext(_ctx, getState());
-		enterRule(localctx, 2, RULE_bloc);
+		BlocContext _localctx = new BlocContext(_ctx, getState());
+		enterRule(_localctx, 2, RULE_bloc);
 		int _la;
 		try {
-			enterOuterAlt(localctx, 1);
+			enterOuterAlt(_localctx, 1);
 			{
 			setState(29);
 			match(AccoladeOuvrante);
@@ -224,8 +219,8 @@ public class MiniCParser extends Parser {
 				{
 				{
 				setState(30);
-				((BlocContext)localctx).instruction = instruction();
-				((BlocContext)localctx).instructions.add(((BlocContext)localctx).instruction);
+				((BlocContext)_localctx).instruction = instruction();
+				((BlocContext)_localctx).instructions.add(((BlocContext)_localctx).instruction);
 				}
 				}
 				setState(35);
@@ -237,14 +232,14 @@ public class MiniCParser extends Parser {
 			}
 		}
 		catch (RecognitionException re) {
-			localctx.exception = re;
+			_localctx.exception = re;
 			_errHandler.reportError(this, re);
 			_errHandler.recover(this, re);
 		}
 		finally {
 			exitRule();
 		}
-		return localctx;
+		return _localctx;
 	}
 
 	@SuppressWarnings("CheckReturnValue")
@@ -287,15 +282,15 @@ public class MiniCParser extends Parser {
 	}
 
 	public final ParametresContext parametres() throws RecognitionException {
-		ParametresContext localctx = new ParametresContext(_ctx, getState());
-		enterRule(localctx, 4, RULE_parametres);
+		ParametresContext _localctx = new ParametresContext(_ctx, getState());
+		enterRule(_localctx, 4, RULE_parametres);
 		int _la;
 		try {
 			setState(50);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case ParentheseFermante:
-				enterOuterAlt(localctx, 1);
+				enterOuterAlt(_localctx, 1);
 				{
 				}
 				break;
@@ -309,12 +304,12 @@ public class MiniCParser extends Parser {
 			case TypeChaine:
 			case TypeVide:
 			case Identificateur:
-				enterOuterAlt(localctx, 2);
+				enterOuterAlt(_localctx, 2);
 				{
 				setState(39);
-				((ParametresContext)localctx).type1 = type();
+				((ParametresContext)_localctx).type1 = type();
 				setState(40);
-				((ParametresContext)localctx).ident1 = identifiant(0);
+				((ParametresContext)_localctx).ident1 = identifiant(0);
 				setState(47);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
@@ -324,11 +319,11 @@ public class MiniCParser extends Parser {
 					setState(41);
 					match(Virgule);
 					setState(42);
-					((ParametresContext)localctx).type = type();
-					((ParametresContext)localctx).suiteType.add(((ParametresContext)localctx).type);
+					((ParametresContext)_localctx).type = type();
+					((ParametresContext)_localctx).suiteType.add(((ParametresContext)_localctx).type);
 					setState(43);
-					((ParametresContext)localctx).identifiant = identifiant(0);
-					((ParametresContext)localctx).suiteIdent.add(((ParametresContext)localctx).identifiant);
+					((ParametresContext)_localctx).identifiant = identifiant(0);
+					((ParametresContext)_localctx).suiteIdent.add(((ParametresContext)_localctx).identifiant);
 					}
 					}
 					setState(49);
@@ -342,14 +337,14 @@ public class MiniCParser extends Parser {
 			}
 		}
 		catch (RecognitionException re) {
-			localctx.exception = re;
+			_localctx.exception = re;
 			_errHandler.reportError(this, re);
 			_errHandler.recover(this, re);
 		}
 		finally {
 			exitRule();
 		}
-		return localctx;
+		return _localctx;
 	}
 
 	@SuppressWarnings("CheckReturnValue")
@@ -564,15 +559,15 @@ public class MiniCParser extends Parser {
 	}
 
 	public final InstructionContext instruction() throws RecognitionException {
-		InstructionContext localctx = new InstructionContext(_ctx, getState());
-		enterRule(localctx, 6, RULE_instruction);
+		InstructionContext _localctx = new InstructionContext(_ctx, getState());
+		enterRule(_localctx, 6, RULE_instruction);
 		try {
 			setState(107);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,4,_ctx) ) {
 			case 1:
-				localctx = new InstructionDeclarationContext(localctx);
-				enterOuterAlt(localctx, 1);
+				_localctx = new InstructionDeclarationContext(_localctx);
+				enterOuterAlt(_localctx, 1);
 				{
 				setState(54);
 				_errHandler.sync(this);
@@ -612,8 +607,8 @@ public class MiniCParser extends Parser {
 				}
 				break;
 			case 2:
-				localctx = new InstructionTypeDeclarationContext(localctx);
-				enterOuterAlt(localctx, 2);
+				_localctx = new InstructionTypeDeclarationContext(_localctx);
+				enterOuterAlt(_localctx, 2);
 				{
 				setState(62);
 				match(DefinitionType);
@@ -626,8 +621,8 @@ public class MiniCParser extends Parser {
 				}
 				break;
 			case 3:
-				localctx = new InstructionFunctionDeclarationContext(localctx);
-				enterOuterAlt(localctx, 3);
+				_localctx = new InstructionFunctionDeclarationContext(_localctx);
+				enterOuterAlt(_localctx, 3);
 				{
 				setState(67);
 				type();
@@ -644,22 +639,22 @@ public class MiniCParser extends Parser {
 				}
 				break;
 			case 4:
-				localctx = new InstructionAffectationContext(localctx);
-				enterOuterAlt(localctx, 4);
+				_localctx = new InstructionAffectationContext(_localctx);
+				enterOuterAlt(_localctx, 4);
 				{
 				setState(74);
 				affectable(0);
 				setState(75);
 				match(Egal);
 				setState(76);
-				((InstructionAffectationContext)localctx).valeur = expression(0);
+				((InstructionAffectationContext)_localctx).valeur = expression(0);
 				setState(77);
 				match(PointVirgule);
 				}
 				break;
 			case 5:
-				localctx = new InstructionAffichageContext(localctx);
-				enterOuterAlt(localctx, 5);
+				_localctx = new InstructionAffichageContext(_localctx);
+				enterOuterAlt(_localctx, 5);
 				{
 				setState(79);
 				match(Afficher);
@@ -670,8 +665,8 @@ public class MiniCParser extends Parser {
 				}
 				break;
 			case 6:
-				localctx = new InstructionSiSinonContext(localctx);
-				enterOuterAlt(localctx, 6);
+				_localctx = new InstructionSiSinonContext(_localctx);
+				enterOuterAlt(_localctx, 6);
 				{
 				setState(83);
 				match(Si);
@@ -682,16 +677,16 @@ public class MiniCParser extends Parser {
 				setState(86);
 				match(ParentheseFermante);
 				setState(87);
-				((InstructionSiSinonContext)localctx).alors = bloc();
+				((InstructionSiSinonContext)_localctx).alors = bloc();
 				setState(88);
 				match(Sinon);
 				setState(89);
-				((InstructionSiSinonContext)localctx).sinon = bloc();
+				((InstructionSiSinonContext)_localctx).sinon = bloc();
 				}
 				break;
 			case 7:
-				localctx = new InstructionSiContext(localctx);
-				enterOuterAlt(localctx, 7);
+				_localctx = new InstructionSiContext(_localctx);
+				enterOuterAlt(_localctx, 7);
 				{
 				setState(91);
 				match(Si);
@@ -702,12 +697,12 @@ public class MiniCParser extends Parser {
 				setState(94);
 				match(ParentheseFermante);
 				setState(95);
-				((InstructionSiContext)localctx).alors = bloc();
+				((InstructionSiContext)_localctx).alors = bloc();
 				}
 				break;
 			case 8:
-				localctx = new InstructionReturnContext(localctx);
-				enterOuterAlt(localctx, 8);
+				_localctx = new InstructionReturnContext(_localctx);
+				enterOuterAlt(_localctx, 8);
 				{
 				setState(97);
 				match(Retour);
@@ -718,8 +713,8 @@ public class MiniCParser extends Parser {
 				}
 				break;
 			case 9:
-				localctx = new InstructionIterationContext(localctx);
-				enterOuterAlt(localctx, 9);
+				_localctx = new InstructionIterationContext(_localctx);
+				enterOuterAlt(_localctx, 9);
 				{
 				setState(101);
 				match(TantQue);
@@ -730,20 +725,20 @@ public class MiniCParser extends Parser {
 				setState(104);
 				match(ParentheseFermante);
 				setState(105);
-				((InstructionIterationContext)localctx).body = bloc();
+				((InstructionIterationContext)_localctx).body = bloc();
 				}
 				break;
 			}
 		}
 		catch (RecognitionException re) {
-			localctx.exception = re;
+			_localctx.exception = re;
 			_errHandler.reportError(this, re);
 			_errHandler.recover(this, re);
 		}
 		finally {
 			exitRule();
 		}
-		return localctx;
+		return _localctx;
 	}
 
 	@SuppressWarnings("CheckReturnValue")
@@ -770,11 +765,11 @@ public class MiniCParser extends Parser {
 	}
 
 	public final AtomiqueContext atomique() throws RecognitionException {
-		AtomiqueContext localctx = new AtomiqueContext(_ctx, getState());
-		enterRule(localctx, 8, RULE_atomique);
+		AtomiqueContext _localctx = new AtomiqueContext(_ctx, getState());
+		enterRule(_localctx, 8, RULE_atomique);
 		int _la;
 		try {
-			enterOuterAlt(localctx, 1);
+			enterOuterAlt(_localctx, 1);
 			{
 			setState(109);
 			_la = _input.LA(1);
@@ -789,14 +784,14 @@ public class MiniCParser extends Parser {
 			}
 		}
 		catch (RecognitionException re) {
-			localctx.exception = re;
+			_localctx.exception = re;
 			_errHandler.reportError(this, re);
 			_errHandler.recover(this, re);
 		}
 		finally {
 			exitRule();
 		}
-		return localctx;
+		return _localctx;
 	}
 
 	@SuppressWarnings("CheckReturnValue")
@@ -824,10 +819,10 @@ public class MiniCParser extends Parser {
 	}
 
 	public final ChampContext champ() throws RecognitionException {
-		ChampContext localctx = new ChampContext(_ctx, getState());
-		enterRule(localctx, 10, RULE_champ);
+		ChampContext _localctx = new ChampContext(_ctx, getState());
+		enterRule(_localctx, 10, RULE_champ);
 		try {
-			enterOuterAlt(localctx, 1);
+			enterOuterAlt(_localctx, 1);
 			{
 			setState(111);
 			type();
@@ -838,14 +833,14 @@ public class MiniCParser extends Parser {
 			}
 		}
 		catch (RecognitionException re) {
-			localctx.exception = re;
+			_localctx.exception = re;
 			_errHandler.reportError(this, re);
 			_errHandler.recover(this, re);
 		}
 		finally {
 			exitRule();
 		}
-		return localctx;
+		return _localctx;
 	}
 
 	@SuppressWarnings("CheckReturnValue")
@@ -877,14 +872,14 @@ public class MiniCParser extends Parser {
 	}
 
 	public final EtiquettesContext etiquettes() throws RecognitionException {
-		EtiquettesContext localctx = new EtiquettesContext(_ctx, getState());
-		enterRule(localctx, 12, RULE_etiquettes);
+		EtiquettesContext _localctx = new EtiquettesContext(_ctx, getState());
+		enterRule(_localctx, 12, RULE_etiquettes);
 		int _la;
 		try {
-			enterOuterAlt(localctx, 1);
+			enterOuterAlt(_localctx, 1);
 			{
 			setState(115);
-			((EtiquettesContext)localctx).premiere = match(Identificateur);
+			((EtiquettesContext)_localctx).premiere = match(Identificateur);
 			setState(120);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
@@ -894,8 +889,8 @@ public class MiniCParser extends Parser {
 				setState(116);
 				match(Virgule);
 				setState(117);
-				((EtiquettesContext)localctx).Identificateur = match(Identificateur);
-				((EtiquettesContext)localctx).suite.add(((EtiquettesContext)localctx).Identificateur);
+				((EtiquettesContext)_localctx).Identificateur = match(Identificateur);
+				((EtiquettesContext)_localctx).suite.add(((EtiquettesContext)_localctx).Identificateur);
 				}
 				}
 				setState(122);
@@ -905,14 +900,14 @@ public class MiniCParser extends Parser {
 			}
 		}
 		catch (RecognitionException re) {
-			localctx.exception = re;
+			_localctx.exception = re;
 			_errHandler.reportError(this, re);
 			_errHandler.recover(this, re);
 		}
 		finally {
 			exitRule();
 		}
-		return localctx;
+		return _localctx;
 	}
 
 	@SuppressWarnings("CheckReturnValue")
@@ -1025,8 +1020,8 @@ public class MiniCParser extends Parser {
 	}
 
 	public final TypeContext type() throws RecognitionException {
-		TypeContext localctx = new TypeContext(_ctx, getState());
-		enterRule(localctx, 14, RULE_type);
+		TypeContext _localctx = new TypeContext(_ctx, getState());
+		enterRule(_localctx, 14, RULE_type);
 		int _la;
 		try {
 			setState(147);
@@ -1038,40 +1033,40 @@ public class MiniCParser extends Parser {
 			case TypeCaractere:
 			case TypeChaine:
 			case TypeVide:
-				localctx = new TypeAtomicContext(localctx);
-				enterOuterAlt(localctx, 1);
+				_localctx = new TypeAtomicContext(_localctx);
+				enterOuterAlt(_localctx, 1);
 				{
 				setState(123);
 				atomique();
 				}
 				break;
 			case Identificateur:
-				localctx = new TypeNamedContext(localctx);
-				enterOuterAlt(localctx, 2);
+				_localctx = new TypeNamedContext(_localctx);
+				enterOuterAlt(_localctx, 2);
 				{
 				setState(124);
 				match(Identificateur);
 				}
 				break;
 			case Inferieur:
-				localctx = new TypeCoupleContext(localctx);
-				enterOuterAlt(localctx, 3);
+				_localctx = new TypeCoupleContext(_localctx);
+				enterOuterAlt(_localctx, 3);
 				{
 				setState(125);
 				match(Inferieur);
 				setState(126);
-				((TypeCoupleContext)localctx).gauche = type();
+				((TypeCoupleContext)_localctx).gauche = type();
 				setState(127);
 				match(Virgule);
 				setState(128);
-				((TypeCoupleContext)localctx).droite = type();
+				((TypeCoupleContext)_localctx).droite = type();
 				setState(129);
 				match(Superieur);
 				}
 				break;
 			case Enregistrement:
-				localctx = new TypeRecordContext(localctx);
-				enterOuterAlt(localctx, 4);
+				_localctx = new TypeRecordContext(_localctx);
+				enterOuterAlt(_localctx, 4);
 				{
 				setState(131);
 				match(Enregistrement);
@@ -1086,8 +1081,8 @@ public class MiniCParser extends Parser {
 					{
 					{
 					setState(134);
-					((TypeRecordContext)localctx).champ = champ();
-					((TypeRecordContext)localctx).champs.add(((TypeRecordContext)localctx).champ);
+					((TypeRecordContext)_localctx).champ = champ();
+					((TypeRecordContext)_localctx).champs.add(((TypeRecordContext)_localctx).champ);
 					}
 					}
 					setState(137); 
@@ -1099,8 +1094,8 @@ public class MiniCParser extends Parser {
 				}
 				break;
 			case Enumeration:
-				localctx = new TypeEnumContext(localctx);
-				enterOuterAlt(localctx, 5);
+				_localctx = new TypeEnumContext(_localctx);
+				enterOuterAlt(_localctx, 5);
 				{
 				setState(141);
 				match(Enumeration);
@@ -1119,14 +1114,14 @@ public class MiniCParser extends Parser {
 			}
 		}
 		catch (RecognitionException re) {
-			localctx.exception = re;
+			_localctx.exception = re;
 			_errHandler.reportError(this, re);
 			_errHandler.recover(this, re);
 		}
 		finally {
 			exitRule();
 		}
-		return localctx;
+		return _localctx;
 	}
 
 	@SuppressWarnings("CheckReturnValue")
@@ -1239,32 +1234,32 @@ public class MiniCParser extends Parser {
 	private AffectableContext affectable(int _p) throws RecognitionException {
 		ParserRuleContext _parentctx = _ctx;
 		int _parentState = getState();
-		AffectableContext localctx = new AffectableContext(_ctx, _parentState);
-		AffectableContext _prevctx = localctx;
+		AffectableContext _localctx = new AffectableContext(_ctx, _parentState);
+		AffectableContext _prevctx = _localctx;
 		int _startState = 16;
-		enterRecursionRule(localctx, 16, RULE_affectable, _p);
+		enterRecursionRule(_localctx, 16, RULE_affectable, _p);
 		try {
 			int _alt;
-			enterOuterAlt(localctx, 1);
+			enterOuterAlt(_localctx, 1);
 			{
 			setState(160);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case Identificateur:
 				{
-				localctx = new AffectableIdentifiantContext(localctx);
-				_ctx = localctx;
-				_prevctx = localctx;
+				_localctx = new AffectableIdentifiantContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 
 				setState(150);
-				((AffectableIdentifiantContext)localctx).ident = match(Identificateur);
+				((AffectableIdentifiantContext)_localctx).ident = match(Identificateur);
 				}
 				break;
 			case Asterisque:
 				{
-				localctx = new AffectablePointerContext(localctx);
-				_ctx = localctx;
-				_prevctx = localctx;
+				_localctx = new AffectablePointerContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(151);
 				match(Asterisque);
 				setState(152);
@@ -1273,9 +1268,9 @@ public class MiniCParser extends Parser {
 				break;
 			case ParentheseOuvrante:
 				{
-				localctx = new AffectableConversionContext(localctx);
-				_ctx = localctx;
-				_prevctx = localctx;
+				_localctx = new AffectableConversionContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(153);
 				match(ParentheseOuvrante);
 				setState(156);
@@ -1317,15 +1312,15 @@ public class MiniCParser extends Parser {
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
-					_prevctx = localctx;
+					_prevctx = _localctx;
 					{
 					setState(170);
 					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,10,_ctx) ) {
 					case 1:
 						{
-						localctx = new AffectableArrayContext(new AffectableContext(_parentctx, _parentState));
-						pushNewRecursionContext(localctx, _startState, RULE_affectable);
+						_localctx = new AffectableArrayContext(new AffectableContext(_parentctx, _parentState));
+						pushNewRecursionContext(_localctx, _startState, RULE_affectable);
 						setState(162);
 						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
 						setState(163);
@@ -1338,8 +1333,8 @@ public class MiniCParser extends Parser {
 						break;
 					case 2:
 						{
-						localctx = new AffectableFieldContext(new AffectableContext(_parentctx, _parentState));
-						pushNewRecursionContext(localctx, _startState, RULE_affectable);
+						_localctx = new AffectableFieldContext(new AffectableContext(_parentctx, _parentState));
+						pushNewRecursionContext(_localctx, _startState, RULE_affectable);
 						setState(167);
 						if (!(precpred(_ctx, 1))) throw new FailedPredicateException(this, "precpred(_ctx, 1)");
 						setState(168);
@@ -1358,14 +1353,14 @@ public class MiniCParser extends Parser {
 			}
 		}
 		catch (RecognitionException re) {
-			localctx.exception = re;
+			_localctx.exception = re;
 			_errHandler.reportError(this, re);
 			_errHandler.recover(this, re);
 		}
 		finally {
 			unrollRecursionContexts(_parentctx);
 		}
-		return localctx;
+		return _localctx;
 	}
 
 	@SuppressWarnings("CheckReturnValue")
@@ -1399,14 +1394,14 @@ public class MiniCParser extends Parser {
 	}
 
 	public final ExpressionsContext expressions() throws RecognitionException {
-		ExpressionsContext localctx = new ExpressionsContext(_ctx, getState());
-		enterRule(localctx, 18, RULE_expressions);
+		ExpressionsContext _localctx = new ExpressionsContext(_ctx, getState());
+		enterRule(_localctx, 18, RULE_expressions);
 		int _la;
 		try {
-			enterOuterAlt(localctx, 1);
+			enterOuterAlt(_localctx, 1);
 			{
 			setState(175);
-			((ExpressionsContext)localctx).premiere = expression(0);
+			((ExpressionsContext)_localctx).premiere = expression(0);
 			setState(180);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
@@ -1416,8 +1411,8 @@ public class MiniCParser extends Parser {
 				setState(176);
 				match(Virgule);
 				setState(177);
-				((ExpressionsContext)localctx).expression = expression(0);
-				((ExpressionsContext)localctx).suite.add(((ExpressionsContext)localctx).expression);
+				((ExpressionsContext)_localctx).expression = expression(0);
+				((ExpressionsContext)_localctx).suite.add(((ExpressionsContext)_localctx).expression);
 				}
 				}
 				setState(182);
@@ -1427,14 +1422,14 @@ public class MiniCParser extends Parser {
 			}
 		}
 		catch (RecognitionException re) {
-			localctx.exception = re;
+			_localctx.exception = re;
 			_errHandler.reportError(this, re);
 			_errHandler.recover(this, re);
 		}
 		finally {
 			exitRule();
 		}
-		return localctx;
+		return _localctx;
 	}
 
 	@SuppressWarnings("CheckReturnValue")
@@ -1458,14 +1453,14 @@ public class MiniCParser extends Parser {
 	}
 
 	public final ArgumentsContext arguments() throws RecognitionException {
-		ArgumentsContext localctx = new ArgumentsContext(_ctx, getState());
-		enterRule(localctx, 20, RULE_arguments);
+		ArgumentsContext _localctx = new ArgumentsContext(_ctx, getState());
+		enterRule(_localctx, 20, RULE_arguments);
 		try {
 			setState(185);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case ParentheseFermante:
-				enterOuterAlt(localctx, 1);
+				enterOuterAlt(_localctx, 1);
 				{
 				}
 				break;
@@ -1487,7 +1482,7 @@ public class MiniCParser extends Parser {
 			case Identificateur:
 			case Entier:
 			case Flottant:
-				enterOuterAlt(localctx, 2);
+				enterOuterAlt(_localctx, 2);
 				{
 				setState(184);
 				expressions();
@@ -1498,14 +1493,14 @@ public class MiniCParser extends Parser {
 			}
 		}
 		catch (RecognitionException re) {
-			localctx.exception = re;
+			_localctx.exception = re;
 			_errHandler.reportError(this, re);
 			_errHandler.recover(this, re);
 		}
 		finally {
 			exitRule();
 		}
-		return localctx;
+		return _localctx;
 	}
 
 	@SuppressWarnings("CheckReturnValue")
@@ -2065,23 +2060,23 @@ public class MiniCParser extends Parser {
 	private ExpressionContext expression(int _p) throws RecognitionException {
 		ParserRuleContext _parentctx = _ctx;
 		int _parentState = getState();
-		ExpressionContext localctx = new ExpressionContext(_ctx, _parentState);
-		ExpressionContext _prevctx = localctx;
+		ExpressionContext _localctx = new ExpressionContext(_ctx, _parentState);
+		ExpressionContext _prevctx = _localctx;
 		int _startState = 22;
-		enterRecursionRule(localctx, 22, RULE_expression, _p);
+		enterRecursionRule(_localctx, 22, RULE_expression, _p);
 		int _la;
 		try {
 			int _alt;
-			enterOuterAlt(localctx, 1);
+			enterOuterAlt(_localctx, 1);
 			{
 			setState(245);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,15,_ctx) ) {
 			case 1:
 				{
-				localctx = new ExpressionParentheseContext(localctx);
-				_ctx = localctx;
-				_prevctx = localctx;
+				_localctx = new ExpressionParentheseContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 
 				setState(188);
 				match(ParentheseOuvrante);
@@ -2093,20 +2088,20 @@ public class MiniCParser extends Parser {
 				break;
 			case 2:
 				{
-				localctx = new ExpressionNotContext(localctx);
-				_ctx = localctx;
-				_prevctx = localctx;
+				_localctx = new ExpressionNotContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(192);
 				match(PointExclamation);
 				setState(193);
-				((ExpressionNotContext)localctx).expr = expression(27);
+				((ExpressionNotContext)_localctx).expr = expression(27);
 				}
 				break;
 			case 3:
 				{
-				localctx = new ExpressionFirstContext(localctx);
-				_ctx = localctx;
-				_prevctx = localctx;
+				_localctx = new ExpressionFirstContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(194);
 				match(Premier);
 				setState(195);
@@ -2115,9 +2110,9 @@ public class MiniCParser extends Parser {
 				break;
 			case 4:
 				{
-				localctx = new ExpressionSecondContext(localctx);
-				_ctx = localctx;
-				_prevctx = localctx;
+				_localctx = new ExpressionSecondContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(196);
 				match(Second);
 				setState(197);
@@ -2126,9 +2121,9 @@ public class MiniCParser extends Parser {
 				break;
 			case 5:
 				{
-				localctx = new ExpressionOppositeContext(localctx);
-				_ctx = localctx;
-				_prevctx = localctx;
+				_localctx = new ExpressionOppositeContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(198);
 				match(Moins);
 				setState(199);
@@ -2137,9 +2132,9 @@ public class MiniCParser extends Parser {
 				break;
 			case 6:
 				{
-				localctx = new ExpressionArrayAllocationContext(localctx);
-				_ctx = localctx;
-				_prevctx = localctx;
+				_localctx = new ExpressionArrayAllocationContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(200);
 				match(Nouveau);
 				setState(201);
@@ -2154,9 +2149,9 @@ public class MiniCParser extends Parser {
 				break;
 			case 7:
 				{
-				localctx = new ExpressionPointerAllocationContext(localctx);
-				_ctx = localctx;
-				_prevctx = localctx;
+				_localctx = new ExpressionPointerAllocationContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(206);
 				match(Nouveau);
 				setState(207);
@@ -2169,9 +2164,9 @@ public class MiniCParser extends Parser {
 				break;
 			case 8:
 				{
-				localctx = new ExpressionSequenceContext(localctx);
-				_ctx = localctx;
-				_prevctx = localctx;
+				_localctx = new ExpressionSequenceContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(211);
 				match(AccoladeOuvrante);
 				setState(212);
@@ -2182,26 +2177,26 @@ public class MiniCParser extends Parser {
 				break;
 			case 9:
 				{
-				localctx = new ExpressionCoupleContext(localctx);
-				_ctx = localctx;
-				_prevctx = localctx;
+				_localctx = new ExpressionCoupleContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(215);
 				match(Inferieur);
 				setState(216);
-				((ExpressionCoupleContext)localctx).gauche = expression(0);
+				((ExpressionCoupleContext)_localctx).gauche = expression(0);
 				setState(217);
 				match(Virgule);
 				setState(218);
-				((ExpressionCoupleContext)localctx).droite = expression(0);
+				((ExpressionCoupleContext)_localctx).droite = expression(0);
 				setState(219);
 				match(Superieur);
 				}
 				break;
 			case 10:
 				{
-				localctx = new ExpressionFunctionCallContext(localctx);
-				_ctx = localctx;
-				_prevctx = localctx;
+				_localctx = new ExpressionFunctionCallContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(221);
 				match(Identificateur);
 				setState(222);
@@ -2214,9 +2209,9 @@ public class MiniCParser extends Parser {
 				break;
 			case 11:
 				{
-				localctx = new ExpressionPointerAccessContext(localctx);
-				_ctx = localctx;
-				_prevctx = localctx;
+				_localctx = new ExpressionPointerAccessContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(226);
 				match(Asterisque);
 				setState(227);
@@ -2225,9 +2220,9 @@ public class MiniCParser extends Parser {
 				break;
 			case 12:
 				{
-				localctx = new ExpressionAddressContext(localctx);
-				_ctx = localctx;
-				_prevctx = localctx;
+				_localctx = new ExpressionAddressContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(228);
 				match(Esperluette);
 				setState(229);
@@ -2236,9 +2231,9 @@ public class MiniCParser extends Parser {
 				break;
 			case 13:
 				{
-				localctx = new ExpressionConversionContext(localctx);
-				_ctx = localctx;
-				_prevctx = localctx;
+				_localctx = new ExpressionConversionContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(230);
 				match(ParentheseOuvrante);
 				setState(233);
@@ -2272,72 +2267,72 @@ public class MiniCParser extends Parser {
 				break;
 			case 14:
 				{
-				localctx = new ExpressionTrueContext(localctx);
-				_ctx = localctx;
-				_prevctx = localctx;
+				_localctx = new ExpressionTrueContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(237);
 				match(Vrai);
 				}
 				break;
 			case 15:
 				{
-				localctx = new ExpressionFalseContext(localctx);
-				_ctx = localctx;
-				_prevctx = localctx;
+				_localctx = new ExpressionFalseContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(238);
 				match(Faux);
 				}
 				break;
 			case 16:
 				{
-				localctx = new ExpressionIntContext(localctx);
-				_ctx = localctx;
-				_prevctx = localctx;
+				_localctx = new ExpressionIntContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(239);
 				match(Entier);
 				}
 				break;
 			case 17:
 				{
-				localctx = new ExpresionFloatContext(localctx);
-				_ctx = localctx;
-				_prevctx = localctx;
+				_localctx = new ExpresionFloatContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(240);
 				match(Flottant);
 				}
 				break;
 			case 18:
 				{
-				localctx = new ExpressionCharacterContext(localctx);
-				_ctx = localctx;
-				_prevctx = localctx;
+				_localctx = new ExpressionCharacterContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(241);
 				match(Caractere);
 				}
 				break;
 			case 19:
 				{
-				localctx = new ExpressionStringContext(localctx);
-				_ctx = localctx;
-				_prevctx = localctx;
+				_localctx = new ExpressionStringContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(242);
 				match(Chaine);
 				}
 				break;
 			case 20:
 				{
-				localctx = new ExpressionNullContext(localctx);
-				_ctx = localctx;
-				_prevctx = localctx;
+				_localctx = new ExpressionNullContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(243);
 				match(Nul);
 				}
 				break;
 			case 21:
 				{
-				localctx = new ExpressionAccessContext(localctx);
-				_ctx = localctx;
-				_prevctx = localctx;
+				_localctx = new ExpressionAccessContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(244);
 				match(Identificateur);
 				}
@@ -2350,23 +2345,23 @@ public class MiniCParser extends Parser {
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
-					_prevctx = localctx;
+					_prevctx = _localctx;
 					{
 					setState(279);
 					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,16,_ctx) ) {
 					case 1:
 						{
-						localctx = new ExpressionMultiplicativeContext(new ExpressionContext(_parentctx, _parentState));
-						((ExpressionMultiplicativeContext)localctx).gauche = _prevctx;
-						pushNewRecursionContext(localctx, _startState, RULE_expression);
+						_localctx = new ExpressionMultiplicativeContext(new ExpressionContext(_parentctx, _parentState));
+						((ExpressionMultiplicativeContext)_localctx).gauche = _prevctx;
+						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(247);
 						if (!(precpred(_ctx, 21))) throw new FailedPredicateException(this, "precpred(_ctx, 21)");
 						setState(248);
-						((ExpressionMultiplicativeContext)localctx).op = _input.LT(1);
+						((ExpressionMultiplicativeContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 58720256L) != 0)) ) {
-							((ExpressionMultiplicativeContext)localctx).op = (Token)_errHandler.recoverInline(this);
+							((ExpressionMultiplicativeContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						else {
 							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -2374,21 +2369,21 @@ public class MiniCParser extends Parser {
 							consume();
 						}
 						setState(249);
-						((ExpressionMultiplicativeContext)localctx).droite = expression(22);
+						((ExpressionMultiplicativeContext)_localctx).droite = expression(22);
 						}
 						break;
 					case 2:
 						{
-						localctx = new ExpressionAdditiveContext(new ExpressionContext(_parentctx, _parentState));
-						((ExpressionAdditiveContext)localctx).gauche = _prevctx;
-						pushNewRecursionContext(localctx, _startState, RULE_expression);
+						_localctx = new ExpressionAdditiveContext(new ExpressionContext(_parentctx, _parentState));
+						((ExpressionAdditiveContext)_localctx).gauche = _prevctx;
+						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(250);
 						if (!(precpred(_ctx, 20))) throw new FailedPredicateException(this, "precpred(_ctx, 20)");
 						setState(251);
-						((ExpressionAdditiveContext)localctx).op = _input.LT(1);
+						((ExpressionAdditiveContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==Plus || _la==Moins) ) {
-							((ExpressionAdditiveContext)localctx).op = (Token)_errHandler.recoverInline(this);
+							((ExpressionAdditiveContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						else {
 							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -2396,21 +2391,21 @@ public class MiniCParser extends Parser {
 							consume();
 						}
 						setState(252);
-						((ExpressionAdditiveContext)localctx).droite = expression(21);
+						((ExpressionAdditiveContext)_localctx).droite = expression(21);
 						}
 						break;
 					case 3:
 						{
-						localctx = new ExpressionInequalityContext(new ExpressionContext(_parentctx, _parentState));
-						((ExpressionInequalityContext)localctx).gauche = _prevctx;
-						pushNewRecursionContext(localctx, _startState, RULE_expression);
+						_localctx = new ExpressionInequalityContext(new ExpressionContext(_parentctx, _parentState));
+						((ExpressionInequalityContext)_localctx).gauche = _prevctx;
+						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(253);
 						if (!(precpred(_ctx, 19))) throw new FailedPredicateException(this, "precpred(_ctx, 19)");
 						setState(254);
-						((ExpressionInequalityContext)localctx).op = _input.LT(1);
+						((ExpressionInequalityContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 32212254720L) != 0)) ) {
-							((ExpressionInequalityContext)localctx).op = (Token)_errHandler.recoverInline(this);
+							((ExpressionInequalityContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						else {
 							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -2418,21 +2413,21 @@ public class MiniCParser extends Parser {
 							consume();
 						}
 						setState(255);
-						((ExpressionInequalityContext)localctx).droite = expression(20);
+						((ExpressionInequalityContext)_localctx).droite = expression(20);
 						}
 						break;
 					case 4:
 						{
-						localctx = new ExpressionEqualityContext(new ExpressionContext(_parentctx, _parentState));
-						((ExpressionEqualityContext)localctx).gauche = _prevctx;
-						pushNewRecursionContext(localctx, _startState, RULE_expression);
+						_localctx = new ExpressionEqualityContext(new ExpressionContext(_parentctx, _parentState));
+						((ExpressionEqualityContext)_localctx).gauche = _prevctx;
+						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(256);
 						if (!(precpred(_ctx, 18))) throw new FailedPredicateException(this, "precpred(_ctx, 18)");
 						setState(257);
-						((ExpressionEqualityContext)localctx).op = _input.LT(1);
+						((ExpressionEqualityContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==DoubleEgal || _la==ExclamationEgal) ) {
-							((ExpressionEqualityContext)localctx).op = (Token)_errHandler.recoverInline(this);
+							((ExpressionEqualityContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						else {
 							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -2440,56 +2435,56 @@ public class MiniCParser extends Parser {
 							consume();
 						}
 						setState(258);
-						((ExpressionEqualityContext)localctx).droite = expression(19);
+						((ExpressionEqualityContext)_localctx).droite = expression(19);
 						}
 						break;
 					case 5:
 						{
-						localctx = new ExpressionAndContext(new ExpressionContext(_parentctx, _parentState));
-						((ExpressionAndContext)localctx).gauche = _prevctx;
-						pushNewRecursionContext(localctx, _startState, RULE_expression);
+						_localctx = new ExpressionAndContext(new ExpressionContext(_parentctx, _parentState));
+						((ExpressionAndContext)_localctx).gauche = _prevctx;
+						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(259);
 						if (!(precpred(_ctx, 17))) throw new FailedPredicateException(this, "precpred(_ctx, 17)");
 						setState(260);
 						match(DoubleEsperluette);
 						setState(261);
-						((ExpressionAndContext)localctx).droite = expression(18);
+						((ExpressionAndContext)_localctx).droite = expression(18);
 						}
 						break;
 					case 6:
 						{
-						localctx = new ExpressionOrContext(new ExpressionContext(_parentctx, _parentState));
-						((ExpressionOrContext)localctx).gauche = _prevctx;
-						pushNewRecursionContext(localctx, _startState, RULE_expression);
+						_localctx = new ExpressionOrContext(new ExpressionContext(_parentctx, _parentState));
+						((ExpressionOrContext)_localctx).gauche = _prevctx;
+						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(262);
 						if (!(precpred(_ctx, 16))) throw new FailedPredicateException(this, "precpred(_ctx, 16)");
 						setState(263);
 						match(DoubleBarre);
 						setState(264);
-						((ExpressionOrContext)localctx).droite = expression(17);
+						((ExpressionOrContext)_localctx).droite = expression(17);
 						}
 						break;
 					case 7:
 						{
-						localctx = new ExpressionConditionalContext(new ExpressionContext(_parentctx, _parentState));
-						((ExpressionConditionalContext)localctx).condition = _prevctx;
-						pushNewRecursionContext(localctx, _startState, RULE_expression);
+						_localctx = new ExpressionConditionalContext(new ExpressionContext(_parentctx, _parentState));
+						((ExpressionConditionalContext)_localctx).condition = _prevctx;
+						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(265);
 						if (!(precpred(_ctx, 15))) throw new FailedPredicateException(this, "precpred(_ctx, 15)");
 						setState(266);
 						match(PointInterrogation);
 						setState(267);
-						((ExpressionConditionalContext)localctx).alors = expression(0);
+						((ExpressionConditionalContext)_localctx).alors = expression(0);
 						setState(268);
 						match(DeuxPoint);
 						setState(269);
-						((ExpressionConditionalContext)localctx).sinon = expression(16);
+						((ExpressionConditionalContext)_localctx).sinon = expression(16);
 						}
 						break;
 					case 8:
 						{
-						localctx = new ExpressionFieldContext(new ExpressionContext(_parentctx, _parentState));
-						pushNewRecursionContext(localctx, _startState, RULE_expression);
+						_localctx = new ExpressionFieldContext(new ExpressionContext(_parentctx, _parentState));
+						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(271);
 						if (!(precpred(_ctx, 29))) throw new FailedPredicateException(this, "precpred(_ctx, 29)");
 						setState(272);
@@ -2500,15 +2495,15 @@ public class MiniCParser extends Parser {
 						break;
 					case 9:
 						{
-						localctx = new ExpressionArrayAcessContext(new ExpressionContext(_parentctx, _parentState));
-						((ExpressionArrayAcessContext)localctx).tableau = _prevctx;
-						pushNewRecursionContext(localctx, _startState, RULE_expression);
+						_localctx = new ExpressionArrayAcessContext(new ExpressionContext(_parentctx, _parentState));
+						((ExpressionArrayAcessContext)_localctx).tableau = _prevctx;
+						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(274);
 						if (!(precpred(_ctx, 28))) throw new FailedPredicateException(this, "precpred(_ctx, 28)");
 						setState(275);
 						match(CrochetOuvrant);
 						setState(276);
-						((ExpressionArrayAcessContext)localctx).indice = expression(0);
+						((ExpressionArrayAcessContext)_localctx).indice = expression(0);
 						setState(277);
 						match(CrochetFermant);
 						}
@@ -2523,14 +2518,14 @@ public class MiniCParser extends Parser {
 			}
 		}
 		catch (RecognitionException re) {
-			localctx.exception = re;
+			_localctx.exception = re;
 			_errHandler.reportError(this, re);
 			_errHandler.recover(this, re);
 		}
 		finally {
 			unrollRecursionContexts(_parentctx);
 		}
-		return localctx;
+		return _localctx;
 	}
 
 	@SuppressWarnings("CheckReturnValue")
@@ -2566,13 +2561,13 @@ public class MiniCParser extends Parser {
 	private IdentifiantContext identifiant(int _p) throws RecognitionException {
 		ParserRuleContext _parentctx = _ctx;
 		int _parentState = getState();
-		IdentifiantContext localctx = new IdentifiantContext(_ctx, _parentState);
-		IdentifiantContext _prevctx = localctx;
+		IdentifiantContext _localctx = new IdentifiantContext(_ctx, _parentState);
+		IdentifiantContext _prevctx = _localctx;
 		int _startState = 24;
-		enterRecursionRule(localctx, 24, RULE_identifiant, _p);
+		enterRecursionRule(_localctx, 24, RULE_identifiant, _p);
 		try {
 			int _alt;
-			enterOuterAlt(localctx, 1);
+			enterOuterAlt(_localctx, 1);
 			{
 			setState(292);
 			_errHandler.sync(this);
@@ -2611,11 +2606,11 @@ public class MiniCParser extends Parser {
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
-					_prevctx = localctx;
+					_prevctx = _localctx;
 					{
 					{
-					localctx = new IdentifiantContext(_parentctx, _parentState);
-					pushNewRecursionContext(localctx, _startState, RULE_identifiant);
+					_localctx = new IdentifiantContext(_parentctx, _parentState);
+					pushNewRecursionContext(_localctx, _startState, RULE_identifiant);
 					setState(294);
 					if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
 					setState(295);
@@ -2632,28 +2627,28 @@ public class MiniCParser extends Parser {
 			}
 		}
 		catch (RecognitionException re) {
-			localctx.exception = re;
+			_localctx.exception = re;
 			_errHandler.reportError(this, re);
 			_errHandler.recover(this, re);
 		}
 		finally {
 			unrollRecursionContexts(_parentctx);
 		}
-		return localctx;
+		return _localctx;
 	}
 
-	public boolean sempred(RuleContext localctx, int ruleIndex, int predIndex) {
+	public boolean sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
 		switch (ruleIndex) {
 		case 8:
-			return affectable_sempred((AffectableContext)localctx, predIndex);
+			return affectable_sempred((AffectableContext)_localctx, predIndex);
 		case 11:
-			return expression_sempred((ExpressionContext)localctx, predIndex);
+			return expression_sempred((ExpressionContext)_localctx, predIndex);
 		case 12:
-			return identifiant_sempred((IdentifiantContext)localctx, predIndex);
+			return identifiant_sempred((IdentifiantContext)_localctx, predIndex);
 		}
 		return true;
 	}
-	private boolean affectable_sempred(AffectableContext localctx, int predIndex) {
+	private boolean affectable_sempred(AffectableContext _localctx, int predIndex) {
 		switch (predIndex) {
 		case 0:
 			return precpred(_ctx, 3);
@@ -2662,7 +2657,7 @@ public class MiniCParser extends Parser {
 		}
 		return true;
 	}
-	private boolean expression_sempred(ExpressionContext localctx, int predIndex) {
+	private boolean expression_sempred(ExpressionContext _localctx, int predIndex) {
 		switch (predIndex) {
 		case 2:
 			return precpred(_ctx, 21);
@@ -2685,7 +2680,7 @@ public class MiniCParser extends Parser {
 		}
 		return true;
 	}
-	private boolean identifiant_sempred(IdentifiantContext localctx, int predIndex) {
+	private boolean identifiant_sempred(IdentifiantContext _localctx, int predIndex) {
 		switch (predIndex) {
 		case 11:
 			return precpred(_ctx, 4);

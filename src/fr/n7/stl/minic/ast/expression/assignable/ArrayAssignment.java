@@ -23,9 +23,9 @@ public class ArrayAssignment extends AbstractArray<AssignableExpression> impleme
 	 * Abstract Syntax Tree node.
 	 * 
 	 * @param array Abstract Syntax Tree for the array part in an array element
-	 *               assignment expression.
+	 *              assignment expression.
 	 * @param index Abstract Syntax Tree for the index part in an array element
-	 *               assignment expression.
+	 *              assignment expression.
 	 */
 	public ArrayAssignment(AssignableExpression array, AccessibleExpression index) {
 		super(array, index);
@@ -40,43 +40,43 @@ public class ArrayAssignment extends AbstractArray<AssignableExpression> impleme
 	@Override
 	public Fragment getCode(TAMFactory factory) {
 		Fragment fragment = factory.createFragment();
-		//variable array
-		if (array instanceof ArrayAssignment){
-			fragment.append(array.getCode(factory));
-		}else {
-			VariableAssignment var = (VariableAssignment) array;
+		// variable array
+		if (this.getArray() instanceof ArrayAssignment) {
+			fragment.append(this.getArray().getCode(factory));
+		} else {
+			VariableAssignment var = (VariableAssignment) this.getArray();
 			VariableDeclaration dec = (VariableDeclaration) var.getDeclaration();
-			fragment.add(factory.createLoad(dec.getRegister(), dec.getOffset(), array.getType().length()));
+			fragment.add(factory.createLoad(dec.getRegister(), dec.getOffset(), this.getArray().getType().length()));
 		}
-		//variable index
-		fragment.append(index.getCode(factory));
-		//taille des elements
-		fragment.add(factory.createLoadL(array.getType().length()));
+		// variable index
+		fragment.append(this.getIndex().getCode(factory));
+		// taille des elements
+		fragment.add(factory.createLoadL(this.getArray().getType().length()));
 		// indice*taille elem
 		fragment.add(Library.IMul);
 		// debut tableau + (indice*taille elem)
 		fragment.add(Library.IAdd);
 		// ecriture dans la case
-		fragment.add(factory.createStoreI(array.getType().length()));
+		fragment.add(factory.createStoreI(this.getArray().getType().length()));
 		fragment.addComment("Assignement");
 		return fragment;
 	}
 
 	public Fragment getAccessCode(TAMFactory factory) {
 		Fragment fragment = factory.createFragment();
-		//variable array
-		if (array instanceof ArrayAssignment){
-			fragment.append(array.getCode(factory));
-		}else {
-			VariableAssignment var = (VariableAssignment) array;
+		// variable array
+		if (this.getArray() instanceof ArrayAssignment) {
+			fragment.append(this.getArray().getCode(factory));
+		} else {
+			VariableAssignment var = (VariableAssignment) this.getArray();
 			VariableDeclaration dec = (VariableDeclaration) var.getDeclaration();
-			fragment.add(factory.createLoad(dec.getRegister(), dec.getOffset(), array.getType().length()));
+			fragment.add(factory.createLoad(dec.getRegister(), dec.getOffset(), this.getArray().getType().length()));
 		}
-		
-		//variable index
-		fragment.append(index.getCode(factory));
-		//taille des elements
-		fragment.add(factory.createLoadL(array.getType().length()));
+
+		// variable index
+		fragment.append(this.getIndex().getCode(factory));
+		// taille des elements
+		fragment.add(factory.createLoadL(this.getArray().getType().length()));
 		// indice*taille elem
 		fragment.add(Library.IMul);
 		// debut tableau + (indice*taille elem)

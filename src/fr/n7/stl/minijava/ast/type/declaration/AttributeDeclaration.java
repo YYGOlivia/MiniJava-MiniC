@@ -4,7 +4,7 @@ import fr.n7.stl.minic.ast.type.Type;
 
 public class AttributeDeclaration extends ClassElement {
 
-	protected Type type;
+	private Type type;
 
 	public AttributeDeclaration(String name, Type type) {
 		super(name);
@@ -18,6 +18,6 @@ public class AttributeDeclaration extends ClassElement {
 
 	@Override
 	public String toString() {
-		return this.accessRight + " " + type + " " + this.name + ";\n";
+		return this.getAccessRight() + " " + type + " " + this.getName() + ";\n";
 	}
 }

@@ -7,7 +7,7 @@ import fr.n7.stl.util.SemanticsUndefinedException;
 
 public class ClassType implements Type {
 
-	protected String name;
+	private String name;
 
 	public ClassType(String name) {
 		this.name = name;

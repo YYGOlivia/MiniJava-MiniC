@@ -26,7 +26,7 @@ public class First implements AccessibleExpression {
 	 * AST node for the expression whose value must whose first element is extracted
 	 * by the expression.
 	 */
-	protected AccessibleExpression target;
+	private AccessibleExpression target;
 
 	/**
 	 * Builds an Abstract Syntax Tree node for an expression extracting the first

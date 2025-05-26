@@ -10,13 +10,13 @@ import fr.n7.stl.util.SemanticsUndefinedException;
 
 public class MethodDeclaration extends ClassElement {
 
-	protected boolean concrete;
+	private boolean concrete;
 
-	protected List<ParameterDeclaration> parameters;
+	private List<ParameterDeclaration> parameters;
 
-	protected Block body;
+	private Block body;
 
-	protected Type type;
+	private Type type;
 
 	public MethodDeclaration(String name, Type type, List<ParameterDeclaration> parameter, Block body) {
 		super(name);
@@ -30,13 +30,17 @@ public class MethodDeclaration extends ClassElement {
 		this(name, type, parameter, null);
 	}
 
+	public boolean isConcrete() {
+		return this.concrete;
+	}
+
 	@Override
 	public String toString() {
 		String image = "";
 		if (!this.concrete) {
 			image += "abstract ";
 		}
-		image += this.accessRight + " " + this.type + " " + this.name + "( ";
+		image += this.getAccessRight() + " " + this.type + " " + this.getName() + "( ";
 		Iterator<ParameterDeclaration> iterator = this.parameters.iterator();
 		if (iterator.hasNext()) {
 			ParameterDeclaration parameter = iterator.next();

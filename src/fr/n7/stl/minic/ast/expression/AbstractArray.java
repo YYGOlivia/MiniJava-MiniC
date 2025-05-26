@@ -22,13 +22,13 @@ public abstract class AbstractArray<ArrayKind extends Expression> implements Exp
 	/**
 	 * AST node that represents the expression whose result is an array.
 	 */
-	protected ArrayKind array;
+	private ArrayKind array;
 
 	/**
 	 * AST node that represents the expression whose result is an integer value used
 	 * to index the array.
 	 */
-	protected AccessibleExpression index;
+	private AccessibleExpression index;
 
 	/**
 	 * Construction for the implementation of an array element access expression
@@ -42,6 +42,14 @@ public abstract class AbstractArray<ArrayKind extends Expression> implements Exp
 	public AbstractArray(ArrayKind array, AccessibleExpression index) {
 		this.array = array;
 		this.index = index;
+	}
+
+	public ArrayKind getArray() {
+		return this.array;
+	}
+
+	public AccessibleExpression getIndex() {
+		return this.index;
 	}
 
 	/*
@@ -103,7 +111,6 @@ public abstract class AbstractArray<ArrayKind extends Expression> implements Exp
 	public Type getType() {
 		Type arrayTrueType = NamedType.getTrueType(array);
 		if (!(arrayTrueType instanceof ArrayType)) {
-			Logger.warning("[AbstractArray] aïe aïe aïe");
 			return AtomicType.ErrorType;
 		}
 		return ((ArrayType) arrayTrueType).getType();

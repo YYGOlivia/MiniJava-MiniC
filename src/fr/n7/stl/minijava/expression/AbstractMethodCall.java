@@ -13,13 +13,13 @@ import fr.n7.stl.util.SemanticsUndefinedException;
 
 public abstract class AbstractMethodCall<ObjectKind extends Expression> implements Expression {
 
-	protected String name;
+	private String name;
 
-	protected MethodDeclaration declaration;
+	private MethodDeclaration declaration;
 
-	protected ObjectKind target;
+	private ObjectKind target;
 
-	protected List<AccessibleExpression> arguments;
+	private List<AccessibleExpression> arguments;
 
 	public AbstractMethodCall(ObjectKind target, String name, List<AccessibleExpression> arguments) {
 		this.target = target;

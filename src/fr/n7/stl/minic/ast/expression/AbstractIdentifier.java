@@ -13,7 +13,7 @@ public abstract class AbstractIdentifier implements Expression {
 	/**
 	 * Name of the variable.
 	 */
-	protected String name;
+	private String name;
 
 	/**
 	 * Creates a variable related expression Abstract Syntax Tree node.
@@ -22,6 +22,10 @@ public abstract class AbstractIdentifier implements Expression {
 	 */
 	public AbstractIdentifier(String name) {
 		this.name = name;
+	}
+
+	public String getName() {
+		return this.name;
 	}
 
 	/*

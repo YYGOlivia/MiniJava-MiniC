@@ -1,26 +1,22 @@
 // Generated from MiniJavaParser.g4 by ANTLR 4.13.1
 
 package fr.n7.stl.minijava.parser;
-import java.io.IOException;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.PrintWriter;
-import java.io.IOException;
-import fr.n7.stl.minic.ast.*;
-import fr.n7.stl.minic.ast.expression.*;
-import fr.n7.stl.minic.ast.expression.accessible.*;
-import fr.n7.stl.minic.ast.expression.allocation.*;
-import fr.n7.stl.minic.ast.expression.assignable.*;
-import fr.n7.stl.minic.ast.expression.value.*;
-import fr.n7.stl.minic.ast.instruction.*;
-import fr.n7.stl.minic.ast.instruction.declaration.*;
-import fr.n7.stl.minic.ast.scope.*;
-import fr.n7.stl.minic.ast.type.*;
-import fr.n7.stl.minic.ast.type.declaration.*;
-import fr.n7.stl.util.*;
-import fr.n7.stl.tam.ast.*;
-import fr.n7.stl.tam.ast.impl.*;
-import fr.n7.stl.minijava.ast.type.declaration.*;
+import fr.n7.stl.minic.ast.Block;
+import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
+import fr.n7.stl.minic.ast.expression.assignable.AssignableExpression;
+import fr.n7.stl.minic.ast.instruction.Instruction;
+import fr.n7.stl.minic.ast.instruction.declaration.ParameterDeclaration;
+import fr.n7.stl.minic.ast.scope.Declaration;
+import fr.n7.stl.minic.ast.type.AtomicType;
+import fr.n7.stl.minic.ast.type.FunctionType;
+import fr.n7.stl.minic.ast.type.Type;
+import fr.n7.stl.minijava.ast.type.declaration.AccessRight;
+import fr.n7.stl.minijava.ast.type.declaration.AttributeDeclaration;
+import fr.n7.stl.minijava.ast.type.declaration.ClassDeclaration;
+import fr.n7.stl.minijava.ast.type.declaration.ClassElement;
+import fr.n7.stl.minijava.ast.type.declaration.ConstructorDeclaration;
+import fr.n7.stl.minijava.ast.type.declaration.MainDeclaration;
+import fr.n7.stl.minijava.ast.type.declaration.MethodDeclaration;
 
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -39,18 +35,16 @@ public class MiniJavaParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		Egal=1, AccoladeOuvrante=2, AccoladeFermante=3, ParentheseOuvrante=4, 
-		ParentheseFermante=5, CrochetOuvrant=6, CrochetFermant=7, Point=8, PointInterrogation=9, 
-		DeuxPoint=10, Virgule=11, PointVirgule=12, Afficher=13, Si=14, Sinon=15, 
-		Retour=16, TantQue=17, Nouveau=18, Classe=19, Herite=20, Public=21, Prive=22, 
-		DeClasse=23, Definitif=24, Moi=25, Super=26, MethodePrincipale=27, Abstrait=28, 
+		Egal=1, AccOuv=2, AccFer=3, ParOuv=4, ParFer=5, CrochOuv=6, CrochFer=7, 
+		Pt=8, PtInterro=9, DeuxPt=10, Virgule=11, PtVirg=12, Afficher=13, Si=14, 
+		Sinon=15, Retour=16, TantQue=17, Nouveau=18, Classe=19, Herite=20, Public=21, 
+		Prive=22, Statique=23, Final=24, Moi=25, Super=26, MethodeMain=27, Abstrait=28, 
 		Protege=29, Asterisque=30, Oblique=31, PourCent=32, Plus=33, Moins=34, 
-		DoubleBarre=35, DoubleEsperluette=36, PointExclamation=37, Inferieur=38, 
-		Superieur=39, InferieurEgal=40, SuperieurEgal=41, DoubleEgal=42, ExclamationEgal=43, 
-		Esperluette=44, TypeEntier=45, TypeFlottant=46, TypeBooleen=47, TypeCaractere=48, 
-		TypeChaine=49, TypeVide=50, Vrai=51, Faux=52, Nul=53, Caractere=54, Chaine=55, 
-		Underscore=56, Identificateur=57, Entier=58, Flottant=59, CommentaireLigne=60, 
-		CommentaireBloc=61, WS=62;
+		Ou=35, Et=36, PtExclamation=37, Inf=38, Sup=39, InfEg=40, SupEg=41, DoubleEgal=42, 
+		Different=43, Esperluette=44, TypeEntier=45, TypeFlottant=46, TypeBooleen=47, 
+		TypeCaractere=48, TypeChaine=49, TypeVide=50, Vrai=51, Faux=52, Nul=53, 
+		Caractere=54, Chaine=55, Underscore=56, Ident=57, Entier=58, Flottant=59, 
+		CommentaireLigne=60, CommentaireBloc=61, WS=62;
 	public static final int
 		RULE_programme = 0, RULE_classes = 1, RULE_classe = 2, RULE_principale = 3, 
 		RULE_declaration = 4, RULE_elements = 5, RULE_accessRight = 6, RULE_element = 7, 
@@ -83,17 +77,16 @@ public class MiniJavaParser extends Parser {
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, "Egal", "AccoladeOuvrante", "AccoladeFermante", "ParentheseOuvrante", 
-			"ParentheseFermante", "CrochetOuvrant", "CrochetFermant", "Point", "PointInterrogation", 
-			"DeuxPoint", "Virgule", "PointVirgule", "Afficher", "Si", "Sinon", "Retour", 
-			"TantQue", "Nouveau", "Classe", "Herite", "Public", "Prive", "DeClasse", 
-			"Definitif", "Moi", "Super", "MethodePrincipale", "Abstrait", "Protege", 
-			"Asterisque", "Oblique", "PourCent", "Plus", "Moins", "DoubleBarre", 
-			"DoubleEsperluette", "PointExclamation", "Inferieur", "Superieur", "InferieurEgal", 
-			"SuperieurEgal", "DoubleEgal", "ExclamationEgal", "Esperluette", "TypeEntier", 
-			"TypeFlottant", "TypeBooleen", "TypeCaractere", "TypeChaine", "TypeVide", 
-			"Vrai", "Faux", "Nul", "Caractere", "Chaine", "Underscore", "Identificateur", 
-			"Entier", "Flottant", "CommentaireLigne", "CommentaireBloc", "WS"
+			null, "Egal", "AccOuv", "AccFer", "ParOuv", "ParFer", "CrochOuv", "CrochFer", 
+			"Pt", "PtInterro", "DeuxPt", "Virgule", "PtVirg", "Afficher", "Si", "Sinon", 
+			"Retour", "TantQue", "Nouveau", "Classe", "Herite", "Public", "Prive", 
+			"Statique", "Final", "Moi", "Super", "MethodeMain", "Abstrait", "Protege", 
+			"Asterisque", "Oblique", "PourCent", "Plus", "Moins", "Ou", "Et", "PtExclamation", 
+			"Inf", "Sup", "InfEg", "SupEg", "DoubleEgal", "Different", "Esperluette", 
+			"TypeEntier", "TypeFlottant", "TypeBooleen", "TypeCaractere", "TypeChaine", 
+			"TypeVide", "Vrai", "Faux", "Nul", "Caractere", "Chaine", "Underscore", 
+			"Ident", "Entier", "Flottant", "CommentaireLigne", "CommentaireBloc", 
+			"WS"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -262,11 +255,11 @@ public class MiniJavaParser extends Parser {
 		public Token heriteDe;
 		public ElementsContext lesElements;
 		public TerminalNode Classe() { return getToken(MiniJavaParser.Classe, 0); }
-		public TerminalNode AccoladeOuvrante() { return getToken(MiniJavaParser.AccoladeOuvrante, 0); }
-		public TerminalNode AccoladeFermante() { return getToken(MiniJavaParser.AccoladeFermante, 0); }
-		public List<TerminalNode> Identificateur() { return getTokens(MiniJavaParser.Identificateur); }
-		public TerminalNode Identificateur(int i) {
-			return getToken(MiniJavaParser.Identificateur, i);
+		public TerminalNode AccOuv() { return getToken(MiniJavaParser.AccOuv, 0); }
+		public TerminalNode AccFer() { return getToken(MiniJavaParser.AccFer, 0); }
+		public List<TerminalNode> Ident() { return getTokens(MiniJavaParser.Ident); }
+		public TerminalNode Ident(int i) {
+			return getToken(MiniJavaParser.Ident, i);
 		}
 		public ElementsContext elements() {
 			return getRuleContext(ElementsContext.class,0);
@@ -307,7 +300,7 @@ public class MiniJavaParser extends Parser {
 			setState(56);
 			match(Classe);
 			setState(57);
-			((ClasseContext)_localctx).leNom = match(Identificateur);
+			((ClasseContext)_localctx).leNom = match(Ident);
 			setState(60);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
@@ -316,16 +309,16 @@ public class MiniJavaParser extends Parser {
 				setState(58);
 				match(Herite);
 				setState(59);
-				((ClasseContext)_localctx).heriteDe = match(Identificateur);
+				((ClasseContext)_localctx).heriteDe = match(Ident);
 				}
 			}
 
 			setState(62);
-			match(AccoladeOuvrante);
+			match(AccOuv);
 			setState(63);
 			((ClasseContext)_localctx).lesElements = elements();
 			setState(64);
-			match(AccoladeFermante);
+			match(AccFer);
 			}
 		}
 		catch (RecognitionException re) {
@@ -351,20 +344,20 @@ public class MiniJavaParser extends Parser {
 			return getToken(MiniJavaParser.Public, i);
 		}
 		public TerminalNode Classe() { return getToken(MiniJavaParser.Classe, 0); }
-		public TerminalNode AccoladeOuvrante() { return getToken(MiniJavaParser.AccoladeOuvrante, 0); }
-		public TerminalNode DeClasse() { return getToken(MiniJavaParser.DeClasse, 0); }
+		public TerminalNode AccOuv() { return getToken(MiniJavaParser.AccOuv, 0); }
+		public TerminalNode Statique() { return getToken(MiniJavaParser.Statique, 0); }
 		public TerminalNode TypeVide() { return getToken(MiniJavaParser.TypeVide, 0); }
-		public TerminalNode MethodePrincipale() { return getToken(MiniJavaParser.MethodePrincipale, 0); }
-		public TerminalNode ParentheseOuvrante() { return getToken(MiniJavaParser.ParentheseOuvrante, 0); }
+		public TerminalNode MethodeMain() { return getToken(MiniJavaParser.MethodeMain, 0); }
+		public TerminalNode ParOuv() { return getToken(MiniJavaParser.ParOuv, 0); }
 		public TerminalNode TypeChaine() { return getToken(MiniJavaParser.TypeChaine, 0); }
-		public TerminalNode CrochetOuvrant() { return getToken(MiniJavaParser.CrochetOuvrant, 0); }
-		public TerminalNode CrochetFermant() { return getToken(MiniJavaParser.CrochetFermant, 0); }
-		public List<TerminalNode> Identificateur() { return getTokens(MiniJavaParser.Identificateur); }
-		public TerminalNode Identificateur(int i) {
-			return getToken(MiniJavaParser.Identificateur, i);
+		public TerminalNode CrochOuv() { return getToken(MiniJavaParser.CrochOuv, 0); }
+		public TerminalNode CrochFer() { return getToken(MiniJavaParser.CrochFer, 0); }
+		public List<TerminalNode> Ident() { return getTokens(MiniJavaParser.Ident); }
+		public TerminalNode Ident(int i) {
+			return getToken(MiniJavaParser.Ident, i);
 		}
-		public TerminalNode ParentheseFermante() { return getToken(MiniJavaParser.ParentheseFermante, 0); }
-		public TerminalNode AccoladeFermante() { return getToken(MiniJavaParser.AccoladeFermante, 0); }
+		public TerminalNode ParFer() { return getToken(MiniJavaParser.ParFer, 0); }
+		public TerminalNode AccFer() { return getToken(MiniJavaParser.AccFer, 0); }
 		public BlocContext bloc() {
 			return getRuleContext(BlocContext.class,0);
 		}
@@ -400,13 +393,13 @@ public class MiniJavaParser extends Parser {
 			setState(67);
 			match(Classe);
 			setState(68);
-			((PrincipaleContext)_localctx).leNom = match(Identificateur);
+			((PrincipaleContext)_localctx).leNom = match(Ident);
 			setState(69);
-			match(AccoladeOuvrante);
+			match(AccOuv);
 			setState(73);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while (_la==DeClasse) {
+			while (_la==Statique) {
 				{
 				{
 				setState(70);
@@ -421,27 +414,27 @@ public class MiniJavaParser extends Parser {
 			setState(76);
 			match(Public);
 			setState(77);
-			match(DeClasse);
+			match(Statique);
 			setState(78);
 			match(TypeVide);
 			setState(79);
-			match(MethodePrincipale);
+			match(MethodeMain);
 			setState(80);
-			match(ParentheseOuvrante);
+			match(ParOuv);
 			setState(81);
 			match(TypeChaine);
 			setState(82);
-			match(CrochetOuvrant);
+			match(CrochOuv);
 			setState(83);
-			match(CrochetFermant);
+			match(CrochFer);
 			setState(84);
-			match(Identificateur);
+			match(Ident);
 			setState(85);
-			match(ParentheseFermante);
+			match(ParFer);
 			setState(86);
 			((PrincipaleContext)_localctx).leCorps = bloc();
 			setState(87);
-			match(AccoladeFermante);
+			match(AccFer);
 			}
 		}
 		catch (RecognitionException re) {
@@ -473,7 +466,7 @@ public class MiniJavaParser extends Parser {
 	public static class MethodeMainContext extends DeclarationContext {
 		public SignatureContext laSignature;
 		public BlocContext leCorps;
-		public TerminalNode DeClasse() { return getToken(MiniJavaParser.DeClasse, 0); }
+		public TerminalNode Statique() { return getToken(MiniJavaParser.Statique, 0); }
 		public SignatureContext signature() {
 			return getRuleContext(SignatureContext.class,0);
 		}
@@ -492,21 +485,21 @@ public class MiniJavaParser extends Parser {
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class AttributMainContext extends DeclarationContext {
-		public Token estDefinitif;
+		public Token estFinal;
 		public TypeContext leType;
 		public Token leNom;
 		public ExpressionContext laValeur;
-		public TerminalNode DeClasse() { return getToken(MiniJavaParser.DeClasse, 0); }
+		public TerminalNode Statique() { return getToken(MiniJavaParser.Statique, 0); }
 		public TerminalNode Egal() { return getToken(MiniJavaParser.Egal, 0); }
-		public TerminalNode PointVirgule() { return getToken(MiniJavaParser.PointVirgule, 0); }
+		public TerminalNode PtVirg() { return getToken(MiniJavaParser.PtVirg, 0); }
 		public TypeContext type() {
 			return getRuleContext(TypeContext.class,0);
 		}
-		public TerminalNode Identificateur() { return getToken(MiniJavaParser.Identificateur, 0); }
+		public TerminalNode Ident() { return getToken(MiniJavaParser.Ident, 0); }
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
-		public TerminalNode Definitif() { return getToken(MiniJavaParser.Definitif, 0); }
+		public TerminalNode Final() { return getToken(MiniJavaParser.Final, 0); }
 		public AttributMainContext(DeclarationContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
@@ -531,7 +524,7 @@ public class MiniJavaParser extends Parser {
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(89);
-				match(DeClasse);
+				match(Statique);
 				setState(90);
 				((MethodeMainContext)_localctx).laSignature = signature();
 				setState(91);
@@ -543,27 +536,27 @@ public class MiniJavaParser extends Parser {
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(93);
-				match(DeClasse);
+				match(Statique);
 				setState(95);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				if (_la==Definitif) {
+				if (_la==Final) {
 					{
 					setState(94);
-					((AttributMainContext)_localctx).estDefinitif = match(Definitif);
+					((AttributMainContext)_localctx).estFinal = match(Final);
 					}
 				}
 
 				setState(97);
 				((AttributMainContext)_localctx).leType = type(0);
 				setState(98);
-				((AttributMainContext)_localctx).leNom = match(Identificateur);
+				((AttributMainContext)_localctx).leNom = match(Ident);
 				setState(99);
 				match(Egal);
 				setState(100);
 				((AttributMainContext)_localctx).laValeur = expression(0);
 				setState(101);
-				match(PointVirgule);
+				match(PtVirg);
 				}
 				break;
 			}
@@ -778,21 +771,21 @@ public class MiniJavaParser extends Parser {
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class AttributClasseContext extends AttributContext {
-		public Token estDefinitif;
+		public Token estFinal;
 		public TypeContext leType;
 		public Token leNom;
 		public ExpressionContext laValeur;
-		public TerminalNode DeClasse() { return getToken(MiniJavaParser.DeClasse, 0); }
+		public TerminalNode Statique() { return getToken(MiniJavaParser.Statique, 0); }
 		public TerminalNode Egal() { return getToken(MiniJavaParser.Egal, 0); }
-		public TerminalNode PointVirgule() { return getToken(MiniJavaParser.PointVirgule, 0); }
+		public TerminalNode PtVirg() { return getToken(MiniJavaParser.PtVirg, 0); }
 		public TypeContext type() {
 			return getRuleContext(TypeContext.class,0);
 		}
-		public TerminalNode Identificateur() { return getToken(MiniJavaParser.Identificateur, 0); }
+		public TerminalNode Ident() { return getToken(MiniJavaParser.Ident, 0); }
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
-		public TerminalNode Definitif() { return getToken(MiniJavaParser.Definitif, 0); }
+		public TerminalNode Final() { return getToken(MiniJavaParser.Final, 0); }
 		public AttributClasseContext(AttributContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
@@ -807,11 +800,11 @@ public class MiniJavaParser extends Parser {
 	public static class AttributObjetContext extends AttributContext {
 		public TypeContext leType;
 		public Token leNom;
-		public TerminalNode PointVirgule() { return getToken(MiniJavaParser.PointVirgule, 0); }
+		public TerminalNode PtVirg() { return getToken(MiniJavaParser.PtVirg, 0); }
 		public TypeContext type() {
 			return getRuleContext(TypeContext.class,0);
 		}
-		public TerminalNode Identificateur() { return getToken(MiniJavaParser.Identificateur, 0); }
+		public TerminalNode Ident() { return getToken(MiniJavaParser.Ident, 0); }
 		public AttributObjetContext(AttributContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
@@ -837,44 +830,44 @@ public class MiniJavaParser extends Parser {
 			case TypeCaractere:
 			case TypeChaine:
 			case TypeVide:
-			case Identificateur:
+			case Ident:
 				_localctx = new AttributObjetContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(119);
 				((AttributObjetContext)_localctx).leType = type(0);
 				setState(120);
-				((AttributObjetContext)_localctx).leNom = match(Identificateur);
+				((AttributObjetContext)_localctx).leNom = match(Ident);
 				setState(121);
-				match(PointVirgule);
+				match(PtVirg);
 				}
 				break;
-			case DeClasse:
+			case Statique:
 				_localctx = new AttributClasseContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(123);
-				match(DeClasse);
+				match(Statique);
 				setState(125);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				if (_la==Definitif) {
+				if (_la==Final) {
 					{
 					setState(124);
-					((AttributClasseContext)_localctx).estDefinitif = match(Definitif);
+					((AttributClasseContext)_localctx).estFinal = match(Final);
 					}
 				}
 
 				setState(127);
 				((AttributClasseContext)_localctx).leType = type(0);
 				setState(128);
-				((AttributClasseContext)_localctx).leNom = match(Identificateur);
+				((AttributClasseContext)_localctx).leNom = match(Ident);
 				setState(129);
 				match(Egal);
 				setState(130);
 				((AttributClasseContext)_localctx).laValeur = expression(0);
 				setState(131);
-				match(PointVirgule);
+				match(PtVirg);
 				}
 				break;
 			default:
@@ -910,14 +903,14 @@ public class MiniJavaParser extends Parser {
 	public static class MethodeClasseContext extends MethodeContext {
 		public SignatureContext laSignature;
 		public BlocContext leCorps;
-		public TerminalNode DeClasse() { return getToken(MiniJavaParser.DeClasse, 0); }
+		public TerminalNode Statique() { return getToken(MiniJavaParser.Statique, 0); }
 		public SignatureContext signature() {
 			return getRuleContext(SignatureContext.class,0);
 		}
 		public BlocContext bloc() {
 			return getRuleContext(BlocContext.class,0);
 		}
-		public TerminalNode Definitif() { return getToken(MiniJavaParser.Definitif, 0); }
+		public TerminalNode Final() { return getToken(MiniJavaParser.Final, 0); }
 		public MethodeClasseContext(MethodeContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
@@ -930,7 +923,7 @@ public class MiniJavaParser extends Parser {
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class MethodeObjetContext extends MethodeContext {
-		public Token estDefinitif;
+		public Token estFinal;
 		public SignatureContext laSignature;
 		public BlocContext leCorps;
 		public SignatureContext signature() {
@@ -939,7 +932,7 @@ public class MiniJavaParser extends Parser {
 		public BlocContext bloc() {
 			return getRuleContext(BlocContext.class,0);
 		}
-		public TerminalNode Definitif() { return getToken(MiniJavaParser.Definitif, 0); }
+		public TerminalNode Final() { return getToken(MiniJavaParser.Final, 0); }
 		public MethodeObjetContext(MethodeContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
@@ -954,7 +947,7 @@ public class MiniJavaParser extends Parser {
 	public static class MethodeAbstraiteContext extends MethodeContext {
 		public SignatureContext laSignature;
 		public TerminalNode Abstrait() { return getToken(MiniJavaParser.Abstrait, 0); }
-		public TerminalNode PointVirgule() { return getToken(MiniJavaParser.PointVirgule, 0); }
+		public TerminalNode PtVirg() { return getToken(MiniJavaParser.PtVirg, 0); }
 		public SignatureContext signature() {
 			return getRuleContext(SignatureContext.class,0);
 		}
@@ -977,24 +970,24 @@ public class MiniJavaParser extends Parser {
 			setState(152);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
-			case Definitif:
+			case Final:
 			case TypeEntier:
 			case TypeFlottant:
 			case TypeBooleen:
 			case TypeCaractere:
 			case TypeChaine:
 			case TypeVide:
-			case Identificateur:
+			case Ident:
 				_localctx = new MethodeObjetContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(136);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				if (_la==Definitif) {
+				if (_la==Final) {
 					{
 					setState(135);
-					((MethodeObjetContext)_localctx).estDefinitif = match(Definitif);
+					((MethodeObjetContext)_localctx).estFinal = match(Final);
 					}
 				}
 
@@ -1004,19 +997,19 @@ public class MiniJavaParser extends Parser {
 				((MethodeObjetContext)_localctx).leCorps = bloc();
 				}
 				break;
-			case DeClasse:
+			case Statique:
 				_localctx = new MethodeClasseContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(141);
-				match(DeClasse);
+				match(Statique);
 				setState(143);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				if (_la==Definitif) {
+				if (_la==Final) {
 					{
 					setState(142);
-					match(Definitif);
+					match(Final);
 					}
 				}
 
@@ -1035,7 +1028,7 @@ public class MiniJavaParser extends Parser {
 				setState(149);
 				((MethodeAbstraiteContext)_localctx).laSignature = signature();
 				setState(150);
-				match(PointVirgule);
+				match(PtVirg);
 				}
 				break;
 			default:
@@ -1059,12 +1052,12 @@ public class MiniJavaParser extends Parser {
 		public TypeContext leRetour;
 		public Token leNom;
 		public ParametresContext lesParametres;
-		public TerminalNode ParentheseOuvrante() { return getToken(MiniJavaParser.ParentheseOuvrante, 0); }
-		public TerminalNode ParentheseFermante() { return getToken(MiniJavaParser.ParentheseFermante, 0); }
+		public TerminalNode ParOuv() { return getToken(MiniJavaParser.ParOuv, 0); }
+		public TerminalNode ParFer() { return getToken(MiniJavaParser.ParFer, 0); }
 		public TypeContext type() {
 			return getRuleContext(TypeContext.class,0);
 		}
-		public TerminalNode Identificateur() { return getToken(MiniJavaParser.Identificateur, 0); }
+		public TerminalNode Ident() { return getToken(MiniJavaParser.Ident, 0); }
 		public ParametresContext parametres() {
 			return getRuleContext(ParametresContext.class,0);
 		}
@@ -1091,13 +1084,13 @@ public class MiniJavaParser extends Parser {
 			setState(154);
 			((SignatureContext)_localctx).leRetour = type(0);
 			setState(155);
-			((SignatureContext)_localctx).leNom = match(Identificateur);
+			((SignatureContext)_localctx).leNom = match(Ident);
 			setState(156);
-			match(ParentheseOuvrante);
+			match(ParOuv);
 			setState(157);
 			((SignatureContext)_localctx).lesParametres = parametres();
 			setState(158);
-			match(ParentheseFermante);
+			match(ParFer);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1117,9 +1110,9 @@ public class MiniJavaParser extends Parser {
 		public Token leNom;
 		public ParametresContext lesParametres;
 		public BlocContext leCorps;
-		public TerminalNode ParentheseOuvrante() { return getToken(MiniJavaParser.ParentheseOuvrante, 0); }
-		public TerminalNode ParentheseFermante() { return getToken(MiniJavaParser.ParentheseFermante, 0); }
-		public TerminalNode Identificateur() { return getToken(MiniJavaParser.Identificateur, 0); }
+		public TerminalNode ParOuv() { return getToken(MiniJavaParser.ParOuv, 0); }
+		public TerminalNode ParFer() { return getToken(MiniJavaParser.ParFer, 0); }
+		public TerminalNode Ident() { return getToken(MiniJavaParser.Ident, 0); }
 		public ParametresContext parametres() {
 			return getRuleContext(ParametresContext.class,0);
 		}
@@ -1147,13 +1140,13 @@ public class MiniJavaParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(160);
-			((ConstructeurContext)_localctx).leNom = match(Identificateur);
+			((ConstructeurContext)_localctx).leNom = match(Ident);
 			setState(161);
-			match(ParentheseOuvrante);
+			match(ParOuv);
 			setState(162);
 			((ConstructeurContext)_localctx).lesParametres = parametres();
 			setState(163);
-			match(ParentheseFermante);
+			match(ParFer);
 			setState(164);
 			((ConstructeurContext)_localctx).leCorps = bloc();
 			}
@@ -1174,8 +1167,8 @@ public class MiniJavaParser extends Parser {
 		public Block unBloc;
 		public InstructionContext instruction;
 		public List<InstructionContext> lesInstructions = new ArrayList<InstructionContext>();
-		public TerminalNode AccoladeOuvrante() { return getToken(MiniJavaParser.AccoladeOuvrante, 0); }
-		public TerminalNode AccoladeFermante() { return getToken(MiniJavaParser.AccoladeFermante, 0); }
+		public TerminalNode AccOuv() { return getToken(MiniJavaParser.AccOuv, 0); }
+		public TerminalNode AccFer() { return getToken(MiniJavaParser.AccFer, 0); }
 		public List<InstructionContext> instruction() {
 			return getRuleContexts(InstructionContext.class);
 		}
@@ -1204,7 +1197,7 @@ public class MiniJavaParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(166);
-			match(AccoladeOuvrante);
+			match(AccOuv);
 			setState(170);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
@@ -1221,7 +1214,7 @@ public class MiniJavaParser extends Parser {
 				_la = _input.LA(1);
 			}
 			setState(173);
-			match(AccoladeFermante);
+			match(AccFer);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1272,7 +1265,7 @@ public class MiniJavaParser extends Parser {
 			setState(184);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
-			case ParentheseFermante:
+			case ParFer:
 				enterOuterAlt(_localctx, 1);
 				{
 				}
@@ -1283,7 +1276,7 @@ public class MiniJavaParser extends Parser {
 			case TypeCaractere:
 			case TypeChaine:
 			case TypeVide:
-			case Identificateur:
+			case Ident:
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(176);
@@ -1331,7 +1324,7 @@ public class MiniJavaParser extends Parser {
 		public TypeContext type() {
 			return getRuleContext(TypeContext.class,0);
 		}
-		public TerminalNode Identificateur() { return getToken(MiniJavaParser.Identificateur, 0); }
+		public TerminalNode Ident() { return getToken(MiniJavaParser.Ident, 0); }
 		public ParametreContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -1355,7 +1348,7 @@ public class MiniJavaParser extends Parser {
 			setState(186);
 			((ParametreContext)_localctx).leType = type(0);
 			setState(187);
-			((ParametreContext)_localctx).leNom = match(Identificateur);
+			((ParametreContext)_localctx).leNom = match(Ident);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1386,11 +1379,11 @@ public class MiniJavaParser extends Parser {
 	@SuppressWarnings("CheckReturnValue")
 	public static class InstructionAppelMethodeImpliciteContext extends InstructionContext {
 		public Token leNom;
-		public ArgumentsContext lesArguments;
-		public TerminalNode ParentheseOuvrante() { return getToken(MiniJavaParser.ParentheseOuvrante, 0); }
-		public TerminalNode ParentheseFermante() { return getToken(MiniJavaParser.ParentheseFermante, 0); }
-		public TerminalNode PointVirgule() { return getToken(MiniJavaParser.PointVirgule, 0); }
-		public TerminalNode Identificateur() { return getToken(MiniJavaParser.Identificateur, 0); }
+		public ArgumentsContext args;
+		public TerminalNode ParOuv() { return getToken(MiniJavaParser.ParOuv, 0); }
+		public TerminalNode ParFer() { return getToken(MiniJavaParser.ParFer, 0); }
+		public TerminalNode PtVirg() { return getToken(MiniJavaParser.PtVirg, 0); }
+		public TerminalNode Ident() { return getToken(MiniJavaParser.Ident, 0); }
 		public ArgumentsContext arguments() {
 			return getRuleContext(ArgumentsContext.class,0);
 		}
@@ -1408,7 +1401,7 @@ public class MiniJavaParser extends Parser {
 	public static class InstructionReturnContext extends InstructionContext {
 		public ExpressionContext laValeur;
 		public TerminalNode Retour() { return getToken(MiniJavaParser.Retour, 0); }
-		public TerminalNode PointVirgule() { return getToken(MiniJavaParser.PointVirgule, 0); }
+		public TerminalNode PtVirg() { return getToken(MiniJavaParser.PtVirg, 0); }
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
@@ -1424,11 +1417,11 @@ public class MiniJavaParser extends Parser {
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class InstructionAppelConstructeurParentContext extends InstructionContext {
-		public ArgumentsContext lesArguments;
+		public ArgumentsContext args;
 		public TerminalNode Super() { return getToken(MiniJavaParser.Super, 0); }
-		public TerminalNode ParentheseOuvrante() { return getToken(MiniJavaParser.ParentheseOuvrante, 0); }
-		public TerminalNode ParentheseFermante() { return getToken(MiniJavaParser.ParentheseFermante, 0); }
-		public TerminalNode PointVirgule() { return getToken(MiniJavaParser.PointVirgule, 0); }
+		public TerminalNode ParOuv() { return getToken(MiniJavaParser.ParOuv, 0); }
+		public TerminalNode ParFer() { return getToken(MiniJavaParser.ParFer, 0); }
+		public TerminalNode PtVirg() { return getToken(MiniJavaParser.PtVirg, 0); }
 		public ArgumentsContext arguments() {
 			return getRuleContext(ArgumentsContext.class,0);
 		}
@@ -1444,12 +1437,12 @@ public class MiniJavaParser extends Parser {
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class InstructionSiSinonContext extends InstructionContext {
-		public ExpressionContext laCondition;
-		public BlocContext leBlocAlors;
-		public BlocContext leBlocSinon;
+		public ExpressionContext cond;
+		public BlocContext alors;
+		public BlocContext sinon;
 		public TerminalNode Si() { return getToken(MiniJavaParser.Si, 0); }
-		public TerminalNode ParentheseOuvrante() { return getToken(MiniJavaParser.ParentheseOuvrante, 0); }
-		public TerminalNode ParentheseFermante() { return getToken(MiniJavaParser.ParentheseFermante, 0); }
+		public TerminalNode ParOuv() { return getToken(MiniJavaParser.ParOuv, 0); }
+		public TerminalNode ParFer() { return getToken(MiniJavaParser.ParFer, 0); }
 		public TerminalNode Sinon() { return getToken(MiniJavaParser.Sinon, 0); }
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
@@ -1472,11 +1465,11 @@ public class MiniJavaParser extends Parser {
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class InstructionSiContext extends InstructionContext {
-		public ExpressionContext laCondition;
-		public BlocContext leBlocAlors;
+		public ExpressionContext cond;
+		public BlocContext alors;
 		public TerminalNode Si() { return getToken(MiniJavaParser.Si, 0); }
-		public TerminalNode ParentheseOuvrante() { return getToken(MiniJavaParser.ParentheseOuvrante, 0); }
-		public TerminalNode ParentheseFermante() { return getToken(MiniJavaParser.ParentheseFermante, 0); }
+		public TerminalNode ParOuv() { return getToken(MiniJavaParser.ParOuv, 0); }
+		public TerminalNode ParFer() { return getToken(MiniJavaParser.ParFer, 0); }
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
@@ -1497,7 +1490,7 @@ public class MiniJavaParser extends Parser {
 	public static class InstructionAffichageContext extends InstructionContext {
 		public ExpressionContext laValeur;
 		public TerminalNode Afficher() { return getToken(MiniJavaParser.Afficher, 0); }
-		public TerminalNode PointVirgule() { return getToken(MiniJavaParser.PointVirgule, 0); }
+		public TerminalNode PtVirg() { return getToken(MiniJavaParser.PtVirg, 0); }
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
@@ -1515,15 +1508,15 @@ public class MiniJavaParser extends Parser {
 	public static class InstructionAppelMethodeExpliciteContext extends InstructionContext {
 		public ExpressionContext lObjet;
 		public Token leNom;
-		public ArgumentsContext lesArguments;
-		public TerminalNode Point() { return getToken(MiniJavaParser.Point, 0); }
-		public TerminalNode ParentheseOuvrante() { return getToken(MiniJavaParser.ParentheseOuvrante, 0); }
-		public TerminalNode ParentheseFermante() { return getToken(MiniJavaParser.ParentheseFermante, 0); }
-		public TerminalNode PointVirgule() { return getToken(MiniJavaParser.PointVirgule, 0); }
+		public ArgumentsContext args;
+		public TerminalNode Pt() { return getToken(MiniJavaParser.Pt, 0); }
+		public TerminalNode ParOuv() { return getToken(MiniJavaParser.ParOuv, 0); }
+		public TerminalNode ParFer() { return getToken(MiniJavaParser.ParFer, 0); }
+		public TerminalNode PtVirg() { return getToken(MiniJavaParser.PtVirg, 0); }
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
-		public TerminalNode Identificateur() { return getToken(MiniJavaParser.Identificateur, 0); }
+		public TerminalNode Ident() { return getToken(MiniJavaParser.Ident, 0); }
 		public ArgumentsContext arguments() {
 			return getRuleContext(ArgumentsContext.class,0);
 		}
@@ -1539,11 +1532,11 @@ public class MiniJavaParser extends Parser {
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class InstructionAppelConstructeurAlternatifContext extends InstructionContext {
-		public ArgumentsContext lesArguments;
+		public ArgumentsContext args;
 		public TerminalNode Moi() { return getToken(MiniJavaParser.Moi, 0); }
-		public TerminalNode ParentheseOuvrante() { return getToken(MiniJavaParser.ParentheseOuvrante, 0); }
-		public TerminalNode ParentheseFermante() { return getToken(MiniJavaParser.ParentheseFermante, 0); }
-		public TerminalNode PointVirgule() { return getToken(MiniJavaParser.PointVirgule, 0); }
+		public TerminalNode ParOuv() { return getToken(MiniJavaParser.ParOuv, 0); }
+		public TerminalNode ParFer() { return getToken(MiniJavaParser.ParFer, 0); }
+		public TerminalNode PtVirg() { return getToken(MiniJavaParser.PtVirg, 0); }
 		public ArgumentsContext arguments() {
 			return getRuleContext(ArgumentsContext.class,0);
 		}
@@ -1563,11 +1556,11 @@ public class MiniJavaParser extends Parser {
 		public Token leNom;
 		public ExpressionContext laValeur;
 		public TerminalNode Egal() { return getToken(MiniJavaParser.Egal, 0); }
-		public TerminalNode PointVirgule() { return getToken(MiniJavaParser.PointVirgule, 0); }
+		public TerminalNode PtVirg() { return getToken(MiniJavaParser.PtVirg, 0); }
 		public TypeContext type() {
 			return getRuleContext(TypeContext.class,0);
 		}
-		public TerminalNode Identificateur() { return getToken(MiniJavaParser.Identificateur, 0); }
+		public TerminalNode Ident() { return getToken(MiniJavaParser.Ident, 0); }
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
@@ -1583,11 +1576,11 @@ public class MiniJavaParser extends Parser {
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class InstructionIterationContext extends InstructionContext {
-		public ExpressionContext laCondition;
+		public ExpressionContext cond;
 		public BlocContext leCorps;
 		public TerminalNode TantQue() { return getToken(MiniJavaParser.TantQue, 0); }
-		public TerminalNode ParentheseOuvrante() { return getToken(MiniJavaParser.ParentheseOuvrante, 0); }
-		public TerminalNode ParentheseFermante() { return getToken(MiniJavaParser.ParentheseFermante, 0); }
+		public TerminalNode ParOuv() { return getToken(MiniJavaParser.ParOuv, 0); }
+		public TerminalNode ParFer() { return getToken(MiniJavaParser.ParFer, 0); }
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
@@ -1609,7 +1602,7 @@ public class MiniJavaParser extends Parser {
 		public AffectableContext leRecepteur;
 		public ExpressionContext laValeur;
 		public TerminalNode Egal() { return getToken(MiniJavaParser.Egal, 0); }
-		public TerminalNode PointVirgule() { return getToken(MiniJavaParser.PointVirgule, 0); }
+		public TerminalNode PtVirg() { return getToken(MiniJavaParser.PtVirg, 0); }
 		public AffectableContext affectable() {
 			return getRuleContext(AffectableContext.class,0);
 		}
@@ -1641,13 +1634,13 @@ public class MiniJavaParser extends Parser {
 				setState(189);
 				((InstructionDeclarationContext)_localctx).leType = type(0);
 				setState(190);
-				((InstructionDeclarationContext)_localctx).leNom = match(Identificateur);
+				((InstructionDeclarationContext)_localctx).leNom = match(Ident);
 				setState(191);
 				match(Egal);
 				setState(192);
 				((InstructionDeclarationContext)_localctx).laValeur = expression(0);
 				setState(193);
-				match(PointVirgule);
+				match(PtVirg);
 				}
 				break;
 			case 2:
@@ -1661,7 +1654,7 @@ public class MiniJavaParser extends Parser {
 				setState(197);
 				((InstructionAffectationContext)_localctx).laValeur = expression(0);
 				setState(198);
-				match(PointVirgule);
+				match(PtVirg);
 				}
 				break;
 			case 3:
@@ -1673,7 +1666,7 @@ public class MiniJavaParser extends Parser {
 				setState(201);
 				((InstructionAffichageContext)_localctx).laValeur = expression(0);
 				setState(202);
-				match(PointVirgule);
+				match(PtVirg);
 				}
 				break;
 			case 4:
@@ -1683,17 +1676,17 @@ public class MiniJavaParser extends Parser {
 				setState(204);
 				match(Si);
 				setState(205);
-				match(ParentheseOuvrante);
+				match(ParOuv);
 				setState(206);
-				((InstructionSiSinonContext)_localctx).laCondition = expression(0);
+				((InstructionSiSinonContext)_localctx).cond = expression(0);
 				setState(207);
-				match(ParentheseFermante);
+				match(ParFer);
 				setState(208);
-				((InstructionSiSinonContext)_localctx).leBlocAlors = bloc();
+				((InstructionSiSinonContext)_localctx).alors = bloc();
 				setState(209);
 				match(Sinon);
 				setState(210);
-				((InstructionSiSinonContext)_localctx).leBlocSinon = bloc();
+				((InstructionSiSinonContext)_localctx).sinon = bloc();
 				}
 				break;
 			case 5:
@@ -1703,13 +1696,13 @@ public class MiniJavaParser extends Parser {
 				setState(212);
 				match(Si);
 				setState(213);
-				match(ParentheseOuvrante);
+				match(ParOuv);
 				setState(214);
-				((InstructionSiContext)_localctx).laCondition = expression(0);
+				((InstructionSiContext)_localctx).cond = expression(0);
 				setState(215);
-				match(ParentheseFermante);
+				match(ParFer);
 				setState(216);
-				((InstructionSiContext)_localctx).leBlocAlors = bloc();
+				((InstructionSiContext)_localctx).alors = bloc();
 				}
 				break;
 			case 6:
@@ -1721,7 +1714,7 @@ public class MiniJavaParser extends Parser {
 				setState(219);
 				((InstructionReturnContext)_localctx).laValeur = expression(0);
 				setState(220);
-				match(PointVirgule);
+				match(PtVirg);
 				}
 				break;
 			case 7:
@@ -1731,11 +1724,11 @@ public class MiniJavaParser extends Parser {
 				setState(222);
 				match(TantQue);
 				setState(223);
-				match(ParentheseOuvrante);
+				match(ParOuv);
 				setState(224);
-				((InstructionIterationContext)_localctx).laCondition = expression(0);
+				((InstructionIterationContext)_localctx).cond = expression(0);
 				setState(225);
-				match(ParentheseFermante);
+				match(ParFer);
 				setState(226);
 				((InstructionIterationContext)_localctx).leCorps = bloc();
 				}
@@ -1747,17 +1740,17 @@ public class MiniJavaParser extends Parser {
 				setState(228);
 				((InstructionAppelMethodeExpliciteContext)_localctx).lObjet = expression(0);
 				setState(229);
-				match(Point);
+				match(Pt);
 				setState(230);
-				((InstructionAppelMethodeExpliciteContext)_localctx).leNom = match(Identificateur);
+				((InstructionAppelMethodeExpliciteContext)_localctx).leNom = match(Ident);
 				setState(231);
-				match(ParentheseOuvrante);
+				match(ParOuv);
 				setState(232);
-				((InstructionAppelMethodeExpliciteContext)_localctx).lesArguments = arguments();
+				((InstructionAppelMethodeExpliciteContext)_localctx).args = arguments();
 				setState(233);
-				match(ParentheseFermante);
+				match(ParFer);
 				setState(234);
-				match(PointVirgule);
+				match(PtVirg);
 				}
 				break;
 			case 9:
@@ -1765,15 +1758,15 @@ public class MiniJavaParser extends Parser {
 				enterOuterAlt(_localctx, 9);
 				{
 				setState(236);
-				((InstructionAppelMethodeImpliciteContext)_localctx).leNom = match(Identificateur);
+				((InstructionAppelMethodeImpliciteContext)_localctx).leNom = match(Ident);
 				setState(237);
-				match(ParentheseOuvrante);
+				match(ParOuv);
 				setState(238);
-				((InstructionAppelMethodeImpliciteContext)_localctx).lesArguments = arguments();
+				((InstructionAppelMethodeImpliciteContext)_localctx).args = arguments();
 				setState(239);
-				match(ParentheseFermante);
+				match(ParFer);
 				setState(240);
-				match(PointVirgule);
+				match(PtVirg);
 				}
 				break;
 			case 10:
@@ -1783,13 +1776,13 @@ public class MiniJavaParser extends Parser {
 				setState(242);
 				match(Moi);
 				setState(243);
-				match(ParentheseOuvrante);
+				match(ParOuv);
 				setState(244);
-				((InstructionAppelConstructeurAlternatifContext)_localctx).lesArguments = arguments();
+				((InstructionAppelConstructeurAlternatifContext)_localctx).args = arguments();
 				setState(245);
-				match(ParentheseFermante);
+				match(ParFer);
 				setState(246);
-				match(PointVirgule);
+				match(PtVirg);
 				}
 				break;
 			case 11:
@@ -1799,13 +1792,13 @@ public class MiniJavaParser extends Parser {
 				setState(248);
 				match(Super);
 				setState(249);
-				match(ParentheseOuvrante);
+				match(ParOuv);
 				setState(250);
-				((InstructionAppelConstructeurParentContext)_localctx).lesArguments = arguments();
+				((InstructionAppelConstructeurParentContext)_localctx).args = arguments();
 				setState(251);
-				match(ParentheseFermante);
+				match(ParFer);
 				setState(252);
-				match(PointVirgule);
+				match(PtVirg);
 				}
 				break;
 			}
@@ -1907,7 +1900,7 @@ public class MiniJavaParser extends Parser {
 	@SuppressWarnings("CheckReturnValue")
 	public static class TypeClasseContext extends TypeContext {
 		public Token leNom;
-		public TerminalNode Identificateur() { return getToken(MiniJavaParser.Identificateur, 0); }
+		public TerminalNode Ident() { return getToken(MiniJavaParser.Ident, 0); }
 		public TypeClasseContext(TypeContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
@@ -1921,8 +1914,8 @@ public class MiniJavaParser extends Parser {
 	@SuppressWarnings("CheckReturnValue")
 	public static class TypeTableauContext extends TypeContext {
 		public TypeContext leTypeValeur;
-		public TerminalNode CrochetOuvrant() { return getToken(MiniJavaParser.CrochetOuvrant, 0); }
-		public TerminalNode CrochetFermant() { return getToken(MiniJavaParser.CrochetFermant, 0); }
+		public TerminalNode CrochOuv() { return getToken(MiniJavaParser.CrochOuv, 0); }
+		public TerminalNode CrochFer() { return getToken(MiniJavaParser.CrochFer, 0); }
 		public TypeContext type() {
 			return getRuleContext(TypeContext.class,0);
 		}
@@ -1970,13 +1963,13 @@ public class MiniJavaParser extends Parser {
 				((TypeAtomiqueContext)_localctx).leTypeAtomique = atomique();
 				}
 				break;
-			case Identificateur:
+			case Ident:
 				{
 				_localctx = new TypeClasseContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
 				setState(260);
-				((TypeClasseContext)_localctx).leNom = match(Identificateur);
+				((TypeClasseContext)_localctx).leNom = match(Ident);
 				}
 				break;
 			default:
@@ -1998,9 +1991,9 @@ public class MiniJavaParser extends Parser {
 					setState(263);
 					if (!(precpred(_ctx, 1))) throw new FailedPredicateException(this, "precpred(_ctx, 1)");
 					setState(264);
-					match(CrochetOuvrant);
+					match(CrochOuv);
 					setState(265);
-					match(CrochetFermant);
+					match(CrochFer);
 					}
 					} 
 				}
@@ -2036,31 +2029,17 @@ public class MiniJavaParser extends Parser {
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
-	public static class EcritureIdentificateurContext extends AffectableContext {
-		public Token lIdentificateur;
-		public TerminalNode Identificateur() { return getToken(MiniJavaParser.Identificateur, 0); }
-		public EcritureIdentificateurContext(AffectableContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MiniJavaParserListener ) ((MiniJavaParserListener)listener).enterEcritureIdentificateur(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MiniJavaParserListener ) ((MiniJavaParserListener)listener).exitEcritureIdentificateur(this);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
 	public static class EcritureAppelMethodeExpliciteContext extends AffectableContext {
 		public AffectableContext lObjet;
 		public Token leNom;
-		public ArgumentsContext lesArguments;
-		public TerminalNode Point() { return getToken(MiniJavaParser.Point, 0); }
-		public TerminalNode ParentheseOuvrante() { return getToken(MiniJavaParser.ParentheseOuvrante, 0); }
-		public TerminalNode ParentheseFermante() { return getToken(MiniJavaParser.ParentheseFermante, 0); }
+		public ArgumentsContext args;
+		public TerminalNode Pt() { return getToken(MiniJavaParser.Pt, 0); }
+		public TerminalNode ParOuv() { return getToken(MiniJavaParser.ParOuv, 0); }
+		public TerminalNode ParFer() { return getToken(MiniJavaParser.ParFer, 0); }
 		public AffectableContext affectable() {
 			return getRuleContext(AffectableContext.class,0);
 		}
-		public TerminalNode Identificateur() { return getToken(MiniJavaParser.Identificateur, 0); }
+		public TerminalNode Ident() { return getToken(MiniJavaParser.Ident, 0); }
 		public ArgumentsContext arguments() {
 			return getRuleContext(ArgumentsContext.class,0);
 		}
@@ -2092,8 +2071,8 @@ public class MiniJavaParser extends Parser {
 	public static class EcritureConversionContext extends AffectableContext {
 		public TypeContext leType;
 		public AffectableContext lAffectable;
-		public TerminalNode ParentheseOuvrante() { return getToken(MiniJavaParser.ParentheseOuvrante, 0); }
-		public TerminalNode ParentheseFermante() { return getToken(MiniJavaParser.ParentheseFermante, 0); }
+		public TerminalNode ParOuv() { return getToken(MiniJavaParser.ParOuv, 0); }
+		public TerminalNode ParFer() { return getToken(MiniJavaParser.ParFer, 0); }
 		public TypeContext type() {
 			return getRuleContext(TypeContext.class,0);
 		}
@@ -2113,10 +2092,10 @@ public class MiniJavaParser extends Parser {
 	@SuppressWarnings("CheckReturnValue")
 	public static class EcritureAppelMethodeImpliciteContext extends AffectableContext {
 		public Token leNom;
-		public ArgumentsContext lesArguments;
-		public TerminalNode ParentheseOuvrante() { return getToken(MiniJavaParser.ParentheseOuvrante, 0); }
-		public TerminalNode ParentheseFermante() { return getToken(MiniJavaParser.ParentheseFermante, 0); }
-		public TerminalNode Identificateur() { return getToken(MiniJavaParser.Identificateur, 0); }
+		public ArgumentsContext args;
+		public TerminalNode ParOuv() { return getToken(MiniJavaParser.ParOuv, 0); }
+		public TerminalNode ParFer() { return getToken(MiniJavaParser.ParFer, 0); }
+		public TerminalNode Ident() { return getToken(MiniJavaParser.Ident, 0); }
 		public ArgumentsContext arguments() {
 			return getRuleContext(ArgumentsContext.class,0);
 		}
@@ -2134,11 +2113,11 @@ public class MiniJavaParser extends Parser {
 	public static class EcritureAttributContext extends AffectableContext {
 		public AffectableContext lObjet;
 		public Token leNom;
-		public TerminalNode Point() { return getToken(MiniJavaParser.Point, 0); }
+		public TerminalNode Pt() { return getToken(MiniJavaParser.Pt, 0); }
 		public AffectableContext affectable() {
 			return getRuleContext(AffectableContext.class,0);
 		}
-		public TerminalNode Identificateur() { return getToken(MiniJavaParser.Identificateur, 0); }
+		public TerminalNode Ident() { return getToken(MiniJavaParser.Ident, 0); }
 		public EcritureAttributContext(AffectableContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
@@ -2147,6 +2126,20 @@ public class MiniJavaParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MiniJavaParserListener ) ((MiniJavaParserListener)listener).exitEcritureAttribut(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class EcritureIdentContext extends AffectableContext {
+		public Token lIdent;
+		public TerminalNode Ident() { return getToken(MiniJavaParser.Ident, 0); }
+		public EcritureIdentContext(AffectableContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaParserListener ) ((MiniJavaParserListener)listener).enterEcritureIdent(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaParserListener ) ((MiniJavaParserListener)listener).exitEcritureIdent(this);
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
@@ -2167,8 +2160,8 @@ public class MiniJavaParser extends Parser {
 	public static class EcritureTableauContext extends AffectableContext {
 		public AffectableContext leTableau;
 		public ExpressionContext lIndice;
-		public TerminalNode CrochetOuvrant() { return getToken(MiniJavaParser.CrochetOuvrant, 0); }
-		public TerminalNode CrochetFermant() { return getToken(MiniJavaParser.CrochetFermant, 0); }
+		public TerminalNode CrochOuv() { return getToken(MiniJavaParser.CrochOuv, 0); }
+		public TerminalNode CrochFer() { return getToken(MiniJavaParser.CrochFer, 0); }
 		public AffectableContext affectable() {
 			return getRuleContext(AffectableContext.class,0);
 		}
@@ -2206,12 +2199,12 @@ public class MiniJavaParser extends Parser {
 			switch ( getInterpreter().adaptivePredict(_input,19,_ctx) ) {
 			case 1:
 				{
-				_localctx = new EcritureIdentificateurContext(_localctx);
+				_localctx = new EcritureIdentContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
 
 				setState(272);
-				((EcritureIdentificateurContext)_localctx).lIdentificateur = match(Identificateur);
+				((EcritureIdentContext)_localctx).lIdent = match(Ident);
 				}
 				break;
 			case 2:
@@ -2220,11 +2213,11 @@ public class MiniJavaParser extends Parser {
 				_ctx = _localctx;
 				_prevctx = _localctx;
 				setState(273);
-				match(ParentheseOuvrante);
+				match(ParOuv);
 				setState(274);
 				((EcritureConversionContext)_localctx).leType = type(0);
 				setState(275);
-				match(ParentheseFermante);
+				match(ParFer);
 				setState(276);
 				((EcritureConversionContext)_localctx).lAffectable = affectable(6);
 				}
@@ -2235,13 +2228,13 @@ public class MiniJavaParser extends Parser {
 				_ctx = _localctx;
 				_prevctx = _localctx;
 				setState(278);
-				((EcritureAppelMethodeImpliciteContext)_localctx).leNom = match(Identificateur);
+				((EcritureAppelMethodeImpliciteContext)_localctx).leNom = match(Ident);
 				setState(279);
-				match(ParentheseOuvrante);
+				match(ParOuv);
 				setState(280);
-				((EcritureAppelMethodeImpliciteContext)_localctx).lesArguments = arguments();
+				((EcritureAppelMethodeImpliciteContext)_localctx).args = arguments();
 				setState(281);
-				match(ParentheseFermante);
+				match(ParFer);
 				}
 				break;
 			case 4:
@@ -2283,11 +2276,11 @@ public class MiniJavaParser extends Parser {
 						setState(287);
 						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
 						setState(288);
-						match(CrochetOuvrant);
+						match(CrochOuv);
 						setState(289);
 						((EcritureTableauContext)_localctx).lIndice = expression(0);
 						setState(290);
-						match(CrochetFermant);
+						match(CrochFer);
 						}
 						break;
 					case 2:
@@ -2298,9 +2291,9 @@ public class MiniJavaParser extends Parser {
 						setState(292);
 						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
 						setState(293);
-						match(Point);
+						match(Pt);
 						setState(294);
-						((EcritureAttributContext)_localctx).leNom = match(Identificateur);
+						((EcritureAttributContext)_localctx).leNom = match(Ident);
 						}
 						break;
 					case 3:
@@ -2311,15 +2304,15 @@ public class MiniJavaParser extends Parser {
 						setState(295);
 						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
 						setState(296);
-						match(Point);
+						match(Pt);
 						setState(297);
-						((EcritureAppelMethodeExpliciteContext)_localctx).leNom = match(Identificateur);
+						((EcritureAppelMethodeExpliciteContext)_localctx).leNom = match(Ident);
 						setState(298);
-						match(ParentheseOuvrante);
+						match(ParOuv);
 						setState(299);
-						((EcritureAppelMethodeExpliciteContext)_localctx).lesArguments = arguments();
+						((EcritureAppelMethodeExpliciteContext)_localctx).args = arguments();
 						setState(300);
-						match(ParentheseFermante);
+						match(ParFer);
 						}
 						break;
 					}
@@ -2439,23 +2432,23 @@ public class MiniJavaParser extends Parser {
 			setState(317);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
-			case ParentheseFermante:
+			case ParFer:
 				enterOuterAlt(_localctx, 1);
 				{
 				}
 				break;
-			case ParentheseOuvrante:
+			case ParOuv:
 			case Nouveau:
 			case Moi:
 			case Super:
 			case Moins:
-			case PointExclamation:
+			case PtExclamation:
 			case Vrai:
 			case Faux:
 			case Nul:
 			case Caractere:
 			case Chaine:
-			case Identificateur:
+			case Ident:
 			case Entier:
 			case Flottant:
 				enterOuterAlt(_localctx, 2);
@@ -2507,6 +2500,20 @@ public class MiniJavaParser extends Parser {
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
+	public static class LectureIdentContext extends ExpressionContext {
+		public Token leNom;
+		public TerminalNode Ident() { return getToken(MiniJavaParser.Ident, 0); }
+		public LectureIdentContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaParserListener ) ((MiniJavaParserListener)listener).enterLectureIdent(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaParserListener ) ((MiniJavaParserListener)listener).exitLectureIdent(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
 	public static class ExpressionOpposeeContext extends ExpressionContext {
 		public ExpressionContext leParametre;
 		public TerminalNode Moins() { return getToken(MiniJavaParser.Moins, 0); }
@@ -2526,11 +2533,11 @@ public class MiniJavaParser extends Parser {
 	@SuppressWarnings("CheckReturnValue")
 	public static class CreationObjetContext extends ExpressionContext {
 		public Token leNom;
-		public ArgumentsContext lesArguments;
+		public ArgumentsContext args;
 		public TerminalNode Nouveau() { return getToken(MiniJavaParser.Nouveau, 0); }
-		public TerminalNode ParentheseOuvrante() { return getToken(MiniJavaParser.ParentheseOuvrante, 0); }
-		public TerminalNode ParentheseFermante() { return getToken(MiniJavaParser.ParentheseFermante, 0); }
-		public TerminalNode Identificateur() { return getToken(MiniJavaParser.Identificateur, 0); }
+		public TerminalNode ParOuv() { return getToken(MiniJavaParser.ParOuv, 0); }
+		public TerminalNode ParFer() { return getToken(MiniJavaParser.ParFer, 0); }
+		public TerminalNode Ident() { return getToken(MiniJavaParser.Ident, 0); }
 		public ArgumentsContext arguments() {
 			return getRuleContext(ArgumentsContext.class,0);
 		}
@@ -2545,34 +2552,11 @@ public class MiniJavaParser extends Parser {
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
-	public static class ExpressionConditionelleContext extends ExpressionContext {
-		public ExpressionContext laCondition;
-		public ExpressionContext lExpressionAlors;
-		public ExpressionContext lExpressionSinon;
-		public TerminalNode PointInterrogation() { return getToken(MiniJavaParser.PointInterrogation, 0); }
-		public TerminalNode DeuxPoint() { return getToken(MiniJavaParser.DeuxPoint, 0); }
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-			return getRuleContext(ExpressionContext.class,i);
-		}
-		public ExpressionConditionelleContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MiniJavaParserListener ) ((MiniJavaParserListener)listener).enterExpressionConditionelle(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MiniJavaParserListener ) ((MiniJavaParserListener)listener).exitExpressionConditionelle(this);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
 	public static class LectureTableauContext extends ExpressionContext {
 		public ExpressionContext leTableau;
 		public ExpressionContext lIndice;
-		public TerminalNode CrochetOuvrant() { return getToken(MiniJavaParser.CrochetOuvrant, 0); }
-		public TerminalNode CrochetFermant() { return getToken(MiniJavaParser.CrochetFermant, 0); }
+		public TerminalNode CrochOuv() { return getToken(MiniJavaParser.CrochOuv, 0); }
+		public TerminalNode CrochFer() { return getToken(MiniJavaParser.CrochFer, 0); }
 		public List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
 		}
@@ -2592,10 +2576,10 @@ public class MiniJavaParser extends Parser {
 	@SuppressWarnings("CheckReturnValue")
 	public static class LectureAppelMethodeImpliciteContext extends ExpressionContext {
 		public Token leNom;
-		public ArgumentsContext lesArguments;
-		public TerminalNode ParentheseOuvrante() { return getToken(MiniJavaParser.ParentheseOuvrante, 0); }
-		public TerminalNode ParentheseFermante() { return getToken(MiniJavaParser.ParentheseFermante, 0); }
-		public TerminalNode Identificateur() { return getToken(MiniJavaParser.Identificateur, 0); }
+		public ArgumentsContext args;
+		public TerminalNode ParOuv() { return getToken(MiniJavaParser.ParOuv, 0); }
+		public TerminalNode ParFer() { return getToken(MiniJavaParser.ParFer, 0); }
+		public TerminalNode Ident() { return getToken(MiniJavaParser.Ident, 0); }
 		public ArgumentsContext arguments() {
 			return getRuleContext(ArgumentsContext.class,0);
 		}
@@ -2610,10 +2594,34 @@ public class MiniJavaParser extends Parser {
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
+	public static class ExprMultContext extends ExpressionContext {
+		public ExpressionContext gauche;
+		public Token op;
+		public ExpressionContext droite;
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
+		}
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
+		}
+		public TerminalNode Asterisque() { return getToken(MiniJavaParser.Asterisque, 0); }
+		public TerminalNode Oblique() { return getToken(MiniJavaParser.Oblique, 0); }
+		public TerminalNode PourCent() { return getToken(MiniJavaParser.PourCent, 0); }
+		public ExprMultContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaParserListener ) ((MiniJavaParserListener)listener).enterExprMult(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaParserListener ) ((MiniJavaParserListener)listener).exitExprMult(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
 	public static class ExpressionParentheseContext extends ExpressionContext {
 		public ExpressionContext lExpression;
-		public TerminalNode ParentheseOuvrante() { return getToken(MiniJavaParser.ParentheseOuvrante, 0); }
-		public TerminalNode ParentheseFermante() { return getToken(MiniJavaParser.ParentheseFermante, 0); }
+		public TerminalNode ParOuv() { return getToken(MiniJavaParser.ParOuv, 0); }
+		public TerminalNode ParFer() { return getToken(MiniJavaParser.ParFer, 0); }
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
@@ -2625,20 +2633,6 @@ public class MiniJavaParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MiniJavaParserListener ) ((MiniJavaParserListener)listener).exitExpressionParenthese(this);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class LectureIdentificateurContext extends ExpressionContext {
-		public Token leNom;
-		public TerminalNode Identificateur() { return getToken(MiniJavaParser.Identificateur, 0); }
-		public LectureIdentificateurContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MiniJavaParserListener ) ((MiniJavaParserListener)listener).enterLectureIdentificateur(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MiniJavaParserListener ) ((MiniJavaParserListener)listener).exitLectureIdentificateur(this);
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
@@ -2659,8 +2653,8 @@ public class MiniJavaParser extends Parser {
 		public TypeContext leType;
 		public ExpressionContext laTaille;
 		public TerminalNode Nouveau() { return getToken(MiniJavaParser.Nouveau, 0); }
-		public TerminalNode CrochetOuvrant() { return getToken(MiniJavaParser.CrochetOuvrant, 0); }
-		public TerminalNode CrochetFermant() { return getToken(MiniJavaParser.CrochetFermant, 0); }
+		public TerminalNode CrochOuv() { return getToken(MiniJavaParser.CrochOuv, 0); }
+		public TerminalNode CrochFer() { return getToken(MiniJavaParser.CrochFer, 0); }
 		public TypeContext type() {
 			return getRuleContext(TypeContext.class,0);
 		}
@@ -2678,14 +2672,37 @@ public class MiniJavaParser extends Parser {
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
+	public static class ExprAddContext extends ExpressionContext {
+		public ExpressionContext gauche;
+		public Token op;
+		public ExpressionContext droite;
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
+		}
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
+		}
+		public TerminalNode Plus() { return getToken(MiniJavaParser.Plus, 0); }
+		public TerminalNode Moins() { return getToken(MiniJavaParser.Moins, 0); }
+		public ExprAddContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaParserListener ) ((MiniJavaParserListener)listener).enterExprAdd(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaParserListener ) ((MiniJavaParserListener)listener).exitExprAdd(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
 	public static class LectureAttributContext extends ExpressionContext {
 		public ExpressionContext lObjet;
 		public Token leNom;
-		public TerminalNode Point() { return getToken(MiniJavaParser.Point, 0); }
+		public TerminalNode Pt() { return getToken(MiniJavaParser.Pt, 0); }
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
-		public TerminalNode Identificateur() { return getToken(MiniJavaParser.Identificateur, 0); }
+		public TerminalNode Ident() { return getToken(MiniJavaParser.Ident, 0); }
 		public LectureAttributContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
@@ -2712,8 +2729,8 @@ public class MiniJavaParser extends Parser {
 	@SuppressWarnings("CheckReturnValue")
 	public static class ExpressionConversionContext extends ExpressionContext {
 		public TypeContext leType;
-		public TerminalNode ParentheseOuvrante() { return getToken(MiniJavaParser.ParentheseOuvrante, 0); }
-		public TerminalNode ParentheseFermante() { return getToken(MiniJavaParser.ParentheseFermante, 0); }
+		public TerminalNode ParOuv() { return getToken(MiniJavaParser.ParOuv, 0); }
+		public TerminalNode ParFer() { return getToken(MiniJavaParser.ParFer, 0); }
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
@@ -2733,7 +2750,7 @@ public class MiniJavaParser extends Parser {
 	@SuppressWarnings("CheckReturnValue")
 	public static class ExpressionDisjonctionContext extends ExpressionContext {
 		public ExpressionContext gauche;
-		public Token operateur;
+		public Token op;
 		public ExpressionContext droite;
 		public List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
@@ -2741,7 +2758,7 @@ public class MiniJavaParser extends Parser {
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
-		public TerminalNode DoubleBarre() { return getToken(MiniJavaParser.DoubleBarre, 0); }
+		public TerminalNode Ou() { return getToken(MiniJavaParser.Ou, 0); }
 		public ExpressionDisjonctionContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
@@ -2755,7 +2772,7 @@ public class MiniJavaParser extends Parser {
 	@SuppressWarnings("CheckReturnValue")
 	public static class ExpressionConjonctionContext extends ExpressionContext {
 		public ExpressionContext gauche;
-		public Token operateur;
+		public Token op;
 		public ExpressionContext droite;
 		public List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
@@ -2763,7 +2780,7 @@ public class MiniJavaParser extends Parser {
 		public ExpressionContext expression(int i) {
 			return getRuleContext(ExpressionContext.class,i);
 		}
-		public TerminalNode DoubleEsperluette() { return getToken(MiniJavaParser.DoubleEsperluette, 0); }
+		public TerminalNode Et() { return getToken(MiniJavaParser.Et, 0); }
 		public ExpressionConjonctionContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
@@ -2772,54 +2789,6 @@ public class MiniJavaParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MiniJavaParserListener ) ((MiniJavaParserListener)listener).exitExpressionConjonction(this);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ExpressionComparaisonContext extends ExpressionContext {
-		public ExpressionContext gauche;
-		public Token operateur;
-		public ExpressionContext droite;
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-			return getRuleContext(ExpressionContext.class,i);
-		}
-		public TerminalNode Inferieur() { return getToken(MiniJavaParser.Inferieur, 0); }
-		public TerminalNode InferieurEgal() { return getToken(MiniJavaParser.InferieurEgal, 0); }
-		public TerminalNode Superieur() { return getToken(MiniJavaParser.Superieur, 0); }
-		public TerminalNode SuperieurEgal() { return getToken(MiniJavaParser.SuperieurEgal, 0); }
-		public ExpressionComparaisonContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MiniJavaParserListener ) ((MiniJavaParserListener)listener).enterExpressionComparaison(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MiniJavaParserListener ) ((MiniJavaParserListener)listener).exitExpressionComparaison(this);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ExpressionAdditiveContext extends ExpressionContext {
-		public ExpressionContext gauche;
-		public Token operateur;
-		public ExpressionContext droite;
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-			return getRuleContext(ExpressionContext.class,i);
-		}
-		public TerminalNode Plus() { return getToken(MiniJavaParser.Plus, 0); }
-		public TerminalNode Moins() { return getToken(MiniJavaParser.Moins, 0); }
-		public ExpressionAdditiveContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MiniJavaParserListener ) ((MiniJavaParserListener)listener).enterExpressionAdditive(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MiniJavaParserListener ) ((MiniJavaParserListener)listener).exitExpressionAdditive(this);
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
@@ -2836,9 +2805,57 @@ public class MiniJavaParser extends Parser {
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
+	public static class ExprComparContext extends ExpressionContext {
+		public ExpressionContext gauche;
+		public Token op;
+		public ExpressionContext droite;
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
+		}
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
+		}
+		public TerminalNode Inf() { return getToken(MiniJavaParser.Inf, 0); }
+		public TerminalNode InfEg() { return getToken(MiniJavaParser.InfEg, 0); }
+		public TerminalNode Sup() { return getToken(MiniJavaParser.Sup, 0); }
+		public TerminalNode SupEg() { return getToken(MiniJavaParser.SupEg, 0); }
+		public ExprComparContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaParserListener ) ((MiniJavaParserListener)listener).enterExprCompar(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaParserListener ) ((MiniJavaParserListener)listener).exitExprCompar(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class ExprCondContext extends ExpressionContext {
+		public ExpressionContext cond;
+		public ExpressionContext exprAlors;
+		public ExpressionContext exprSinon;
+		public TerminalNode PtInterro() { return getToken(MiniJavaParser.PtInterro, 0); }
+		public TerminalNode DeuxPt() { return getToken(MiniJavaParser.DeuxPt, 0); }
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
+		}
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
+		}
+		public ExprCondContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaParserListener ) ((MiniJavaParserListener)listener).enterExprCond(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MiniJavaParserListener ) ((MiniJavaParserListener)listener).exitExprCond(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
 	public static class ExpressionNegationContext extends ExpressionContext {
 		public ExpressionContext leParametre;
-		public TerminalNode PointExclamation() { return getToken(MiniJavaParser.PointExclamation, 0); }
+		public TerminalNode PtExclamation() { return getToken(MiniJavaParser.PtExclamation, 0); }
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
@@ -2850,30 +2867,6 @@ public class MiniJavaParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MiniJavaParserListener ) ((MiniJavaParserListener)listener).exitExpressionNegation(this);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ExpressionMultiplicativeContext extends ExpressionContext {
-		public ExpressionContext gauche;
-		public Token operateur;
-		public ExpressionContext droite;
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-			return getRuleContext(ExpressionContext.class,i);
-		}
-		public TerminalNode Asterisque() { return getToken(MiniJavaParser.Asterisque, 0); }
-		public TerminalNode Oblique() { return getToken(MiniJavaParser.Oblique, 0); }
-		public TerminalNode PourCent() { return getToken(MiniJavaParser.PourCent, 0); }
-		public ExpressionMultiplicativeContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MiniJavaParserListener ) ((MiniJavaParserListener)listener).enterExpressionMultiplicative(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MiniJavaParserListener ) ((MiniJavaParserListener)listener).exitExpressionMultiplicative(this);
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
@@ -2931,7 +2924,7 @@ public class MiniJavaParser extends Parser {
 	@SuppressWarnings("CheckReturnValue")
 	public static class ExpressionEgaliteContext extends ExpressionContext {
 		public ExpressionContext gauche;
-		public Token operateur;
+		public Token op;
 		public ExpressionContext droite;
 		public List<ExpressionContext> expression() {
 			return getRuleContexts(ExpressionContext.class);
@@ -2940,7 +2933,7 @@ public class MiniJavaParser extends Parser {
 			return getRuleContext(ExpressionContext.class,i);
 		}
 		public TerminalNode DoubleEgal() { return getToken(MiniJavaParser.DoubleEgal, 0); }
-		public TerminalNode ExclamationEgal() { return getToken(MiniJavaParser.ExclamationEgal, 0); }
+		public TerminalNode Different() { return getToken(MiniJavaParser.Different, 0); }
 		public ExpressionEgaliteContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
@@ -2955,14 +2948,14 @@ public class MiniJavaParser extends Parser {
 	public static class LectureAppelMethodeExpliciteContext extends ExpressionContext {
 		public ExpressionContext lobjet;
 		public Token leNom;
-		public ArgumentsContext lesArguments;
-		public TerminalNode Point() { return getToken(MiniJavaParser.Point, 0); }
-		public TerminalNode ParentheseOuvrante() { return getToken(MiniJavaParser.ParentheseOuvrante, 0); }
-		public TerminalNode ParentheseFermante() { return getToken(MiniJavaParser.ParentheseFermante, 0); }
+		public ArgumentsContext args;
+		public TerminalNode Pt() { return getToken(MiniJavaParser.Pt, 0); }
+		public TerminalNode ParOuv() { return getToken(MiniJavaParser.ParOuv, 0); }
+		public TerminalNode ParFer() { return getToken(MiniJavaParser.ParFer, 0); }
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
-		public TerminalNode Identificateur() { return getToken(MiniJavaParser.Identificateur, 0); }
+		public TerminalNode Ident() { return getToken(MiniJavaParser.Ident, 0); }
 		public ArgumentsContext arguments() {
 			return getRuleContext(ArgumentsContext.class,0);
 		}
@@ -3016,11 +3009,11 @@ public class MiniJavaParser extends Parser {
 				_prevctx = _localctx;
 
 				setState(320);
-				match(ParentheseOuvrante);
+				match(ParOuv);
 				setState(321);
 				((ExpressionParentheseContext)_localctx).lExpression = expression(0);
 				setState(322);
-				match(ParentheseFermante);
+				match(ParFer);
 				}
 				break;
 			case 2:
@@ -3029,13 +3022,13 @@ public class MiniJavaParser extends Parser {
 				_ctx = _localctx;
 				_prevctx = _localctx;
 				setState(324);
-				((LectureAppelMethodeImpliciteContext)_localctx).leNom = match(Identificateur);
+				((LectureAppelMethodeImpliciteContext)_localctx).leNom = match(Ident);
 				setState(325);
-				match(ParentheseOuvrante);
+				match(ParOuv);
 				setState(326);
-				((LectureAppelMethodeImpliciteContext)_localctx).lesArguments = arguments();
+				((LectureAppelMethodeImpliciteContext)_localctx).args = arguments();
 				setState(327);
-				match(ParentheseFermante);
+				match(ParFer);
 				}
 				break;
 			case 3:
@@ -3048,11 +3041,11 @@ public class MiniJavaParser extends Parser {
 				setState(330);
 				((CreationTableauContext)_localctx).leType = type(0);
 				setState(331);
-				match(CrochetOuvrant);
+				match(CrochOuv);
 				setState(332);
 				((CreationTableauContext)_localctx).laTaille = expression(0);
 				setState(333);
-				match(CrochetFermant);
+				match(CrochFer);
 				}
 				break;
 			case 4:
@@ -3063,13 +3056,13 @@ public class MiniJavaParser extends Parser {
 				setState(335);
 				match(Nouveau);
 				setState(336);
-				((CreationObjetContext)_localctx).leNom = match(Identificateur);
+				((CreationObjetContext)_localctx).leNom = match(Ident);
 				setState(337);
-				match(ParentheseOuvrante);
+				match(ParOuv);
 				setState(338);
-				((CreationObjetContext)_localctx).lesArguments = arguments();
+				((CreationObjetContext)_localctx).args = arguments();
 				setState(339);
-				match(ParentheseFermante);
+				match(ParFer);
 				}
 				break;
 			case 5:
@@ -3078,7 +3071,7 @@ public class MiniJavaParser extends Parser {
 				_ctx = _localctx;
 				_prevctx = _localctx;
 				setState(341);
-				match(PointExclamation);
+				match(PtExclamation);
 				setState(342);
 				((ExpressionNegationContext)_localctx).leParametre = expression(20);
 				}
@@ -3100,11 +3093,11 @@ public class MiniJavaParser extends Parser {
 				_ctx = _localctx;
 				_prevctx = _localctx;
 				setState(345);
-				match(ParentheseOuvrante);
+				match(ParOuv);
 				setState(346);
 				((ExpressionConversionContext)_localctx).leType = type(0);
 				setState(347);
-				match(ParentheseFermante);
+				match(ParFer);
 				setState(348);
 				expression(11);
 				}
@@ -3174,11 +3167,11 @@ public class MiniJavaParser extends Parser {
 				break;
 			case 15:
 				{
-				_localctx = new LectureIdentificateurContext(_localctx);
+				_localctx = new LectureIdentContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
 				setState(357);
-				((LectureIdentificateurContext)_localctx).leNom = match(Identificateur);
+				((LectureIdentContext)_localctx).leNom = match(Ident);
 				}
 				break;
 			case 16:
@@ -3214,16 +3207,16 @@ public class MiniJavaParser extends Parser {
 					switch ( getInterpreter().adaptivePredict(_input,25,_ctx) ) {
 					case 1:
 						{
-						_localctx = new ExpressionMultiplicativeContext(new ExpressionContext(_parentctx, _parentState));
-						((ExpressionMultiplicativeContext)_localctx).gauche = _prevctx;
+						_localctx = new ExprMultContext(new ExpressionContext(_parentctx, _parentState));
+						((ExprMultContext)_localctx).gauche = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(362);
 						if (!(precpred(_ctx, 18))) throw new FailedPredicateException(this, "precpred(_ctx, 18)");
 						setState(363);
-						((ExpressionMultiplicativeContext)_localctx).operateur = _input.LT(1);
+						((ExprMultContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 7516192768L) != 0)) ) {
-							((ExpressionMultiplicativeContext)_localctx).operateur = (Token)_errHandler.recoverInline(this);
+							((ExprMultContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						else {
 							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -3231,21 +3224,21 @@ public class MiniJavaParser extends Parser {
 							consume();
 						}
 						setState(364);
-						((ExpressionMultiplicativeContext)_localctx).droite = expression(19);
+						((ExprMultContext)_localctx).droite = expression(19);
 						}
 						break;
 					case 2:
 						{
-						_localctx = new ExpressionAdditiveContext(new ExpressionContext(_parentctx, _parentState));
-						((ExpressionAdditiveContext)_localctx).gauche = _prevctx;
+						_localctx = new ExprAddContext(new ExpressionContext(_parentctx, _parentState));
+						((ExprAddContext)_localctx).gauche = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(365);
 						if (!(precpred(_ctx, 17))) throw new FailedPredicateException(this, "precpred(_ctx, 17)");
 						setState(366);
-						((ExpressionAdditiveContext)_localctx).operateur = _input.LT(1);
+						((ExprAddContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==Plus || _la==Moins) ) {
-							((ExpressionAdditiveContext)_localctx).operateur = (Token)_errHandler.recoverInline(this);
+							((ExprAddContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						else {
 							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -3253,21 +3246,21 @@ public class MiniJavaParser extends Parser {
 							consume();
 						}
 						setState(367);
-						((ExpressionAdditiveContext)_localctx).droite = expression(18);
+						((ExprAddContext)_localctx).droite = expression(18);
 						}
 						break;
 					case 3:
 						{
-						_localctx = new ExpressionComparaisonContext(new ExpressionContext(_parentctx, _parentState));
-						((ExpressionComparaisonContext)_localctx).gauche = _prevctx;
+						_localctx = new ExprComparContext(new ExpressionContext(_parentctx, _parentState));
+						((ExprComparContext)_localctx).gauche = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(368);
 						if (!(precpred(_ctx, 16))) throw new FailedPredicateException(this, "precpred(_ctx, 16)");
 						setState(369);
-						((ExpressionComparaisonContext)_localctx).operateur = _input.LT(1);
+						((ExprComparContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 4123168604160L) != 0)) ) {
-							((ExpressionComparaisonContext)_localctx).operateur = (Token)_errHandler.recoverInline(this);
+							((ExprComparContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						else {
 							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -3275,7 +3268,7 @@ public class MiniJavaParser extends Parser {
 							consume();
 						}
 						setState(370);
-						((ExpressionComparaisonContext)_localctx).droite = expression(17);
+						((ExprComparContext)_localctx).droite = expression(17);
 						}
 						break;
 					case 4:
@@ -3286,10 +3279,10 @@ public class MiniJavaParser extends Parser {
 						setState(371);
 						if (!(precpred(_ctx, 15))) throw new FailedPredicateException(this, "precpred(_ctx, 15)");
 						setState(372);
-						((ExpressionEgaliteContext)_localctx).operateur = _input.LT(1);
+						((ExpressionEgaliteContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
-						if ( !(_la==DoubleEgal || _la==ExclamationEgal) ) {
-							((ExpressionEgaliteContext)_localctx).operateur = (Token)_errHandler.recoverInline(this);
+						if ( !(_la==DoubleEgal || _la==Different) ) {
+							((ExpressionEgaliteContext)_localctx).op = (Token)_errHandler.recoverInline(this);
 						}
 						else {
 							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
@@ -3308,7 +3301,7 @@ public class MiniJavaParser extends Parser {
 						setState(374);
 						if (!(precpred(_ctx, 14))) throw new FailedPredicateException(this, "precpred(_ctx, 14)");
 						setState(375);
-						((ExpressionConjonctionContext)_localctx).operateur = match(DoubleEsperluette);
+						((ExpressionConjonctionContext)_localctx).op = match(Et);
 						setState(376);
 						((ExpressionConjonctionContext)_localctx).droite = expression(15);
 						}
@@ -3321,26 +3314,26 @@ public class MiniJavaParser extends Parser {
 						setState(377);
 						if (!(precpred(_ctx, 13))) throw new FailedPredicateException(this, "precpred(_ctx, 13)");
 						setState(378);
-						((ExpressionDisjonctionContext)_localctx).operateur = match(DoubleBarre);
+						((ExpressionDisjonctionContext)_localctx).op = match(Ou);
 						setState(379);
 						((ExpressionDisjonctionContext)_localctx).droite = expression(14);
 						}
 						break;
 					case 7:
 						{
-						_localctx = new ExpressionConditionelleContext(new ExpressionContext(_parentctx, _parentState));
-						((ExpressionConditionelleContext)_localctx).laCondition = _prevctx;
+						_localctx = new ExprCondContext(new ExpressionContext(_parentctx, _parentState));
+						((ExprCondContext)_localctx).cond = _prevctx;
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(380);
 						if (!(precpred(_ctx, 12))) throw new FailedPredicateException(this, "precpred(_ctx, 12)");
 						setState(381);
-						match(PointInterrogation);
+						match(PtInterro);
 						setState(382);
-						((ExpressionConditionelleContext)_localctx).lExpressionAlors = expression(0);
+						((ExprCondContext)_localctx).exprAlors = expression(0);
 						setState(383);
-						match(DeuxPoint);
+						match(DeuxPt);
 						setState(384);
-						((ExpressionConditionelleContext)_localctx).lExpressionSinon = expression(13);
+						((ExprCondContext)_localctx).exprSinon = expression(13);
 						}
 						break;
 					case 8:
@@ -3351,9 +3344,9 @@ public class MiniJavaParser extends Parser {
 						setState(386);
 						if (!(precpred(_ctx, 26))) throw new FailedPredicateException(this, "precpred(_ctx, 26)");
 						setState(387);
-						match(Point);
+						match(Pt);
 						setState(388);
-						((LectureAttributContext)_localctx).leNom = match(Identificateur);
+						((LectureAttributContext)_localctx).leNom = match(Ident);
 						}
 						break;
 					case 9:
@@ -3364,15 +3357,15 @@ public class MiniJavaParser extends Parser {
 						setState(389);
 						if (!(precpred(_ctx, 25))) throw new FailedPredicateException(this, "precpred(_ctx, 25)");
 						setState(390);
-						match(Point);
+						match(Pt);
 						setState(391);
-						((LectureAppelMethodeExpliciteContext)_localctx).leNom = match(Identificateur);
+						((LectureAppelMethodeExpliciteContext)_localctx).leNom = match(Ident);
 						setState(392);
-						match(ParentheseOuvrante);
+						match(ParOuv);
 						setState(393);
-						((LectureAppelMethodeExpliciteContext)_localctx).lesArguments = arguments();
+						((LectureAppelMethodeExpliciteContext)_localctx).args = arguments();
 						setState(394);
-						match(ParentheseFermante);
+						match(ParFer);
 						}
 						break;
 					case 10:
@@ -3383,11 +3376,11 @@ public class MiniJavaParser extends Parser {
 						setState(396);
 						if (!(precpred(_ctx, 23))) throw new FailedPredicateException(this, "precpred(_ctx, 23)");
 						setState(397);
-						match(CrochetOuvrant);
+						match(CrochOuv);
 						setState(398);
 						((LectureTableauContext)_localctx).lIndice = expression(0);
 						setState(399);
-						match(CrochetFermant);
+						match(CrochFer);
 						}
 						break;
 					}

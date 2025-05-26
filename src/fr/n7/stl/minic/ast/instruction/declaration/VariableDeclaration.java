@@ -27,29 +27,29 @@ public class VariableDeclaration implements Declaration, Instruction {
 	/**
 	 * Name of the declared variable.
 	 */
-	protected String name;
+	private String name;
 
 	/**
 	 * AST node for the type of the declared variable.
 	 */
-	protected Type type;
+	private Type type;
 
 	/**
 	 * AST node for the initial value of the declared variable.
 	 */
-	protected Expression value;
+	private Expression value;
 
 	/**
 	 * Address register that contains the base address used to store the declared
 	 * variable.
 	 */
-	protected Register register;
+	private Register register;
 
 	/**
 	 * Offset from the base address used to store the declared variable
 	 * i.e. the size of the memory allocated to the previous declared variables
 	 */
-	protected int offset;
+	private int offset;
 
 	/**
 	 * Creates a variable declaration instruction node for the Abstract Syntax Tree.

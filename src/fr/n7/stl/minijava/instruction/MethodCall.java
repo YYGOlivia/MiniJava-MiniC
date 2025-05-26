@@ -16,17 +16,16 @@ import fr.n7.stl.util.SemanticsUndefinedException;
 
 public class MethodCall implements Instruction {
 
-	protected AccessibleExpression target;
+	private AccessibleExpression target;
 
-	protected String name;
+	private String name;
 
-	protected MethodDeclaration method;
+	private MethodDeclaration method;
 
-	protected List<AccessibleExpression> arguments;
+	private List<AccessibleExpression> arguments;
 
 	public MethodCall(AccessibleExpression target, String name, List<AccessibleExpression> arguments) {
 		this.name = name;
-		this.method = null;
 		this.target = target;
 		this.arguments = arguments;
 	}

@@ -17,7 +17,7 @@ import fr.n7.stl.tam.ast.TAMFactory;
  */
 public class VariableAccess extends AbstractAccess {
 
-	protected VariableDeclaration declaration;
+	private VariableDeclaration declaration;
 
 	/**
 	 * Creates a variable use expression Abstract Syntax Tree node.

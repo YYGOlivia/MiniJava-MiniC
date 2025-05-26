@@ -24,10 +24,10 @@ public class PartialPointerType extends PointerType implements PartialType {
 	 */
 	@Override
 	public Type complete(Type type) {
-		if (this.element == null) {
+		if (this.getElement() == null) {
 			return new PointerType(type);
 		} else {
-			return new PointerType(((PartialType) this.element).complete(type));
+			return new PointerType(((PartialType) this.getElement()).complete(type));
 		}
 	}
 
@@ -39,10 +39,10 @@ public class PartialPointerType extends PointerType implements PartialType {
 	 */
 	@Override
 	public void enrich(PartialType type) {
-		if (this.element == null) {
-			this.element = type;
+		if (this.getElement() == null) {
+			this.setElement(type);
 		} else {
-			((PartialType) this.element).enrich(type);
+			((PartialType) this.getElement()).enrich(type);
 		}
 	}
 

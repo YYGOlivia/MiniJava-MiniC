@@ -25,17 +25,17 @@ public class ConstantDeclaration implements Instruction, Declaration {
 	/**
 	 * Name of the constant
 	 */
-	protected String name;
+	private String name;
 
 	/**
 	 * AST node for the type of the constant
 	 */
-	protected Type type;
+	private Type type;
 
 	/**
 	 * AST node for the expression that computes the value of the constant
 	 */
-	protected Expression value;
+	private Expression value;
 
 	/**
 	 * Builds an AST node for a constant declaration

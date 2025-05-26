@@ -23,9 +23,9 @@ import fr.n7.stl.util.SemanticsUndefinedException;
  */
 public abstract class AbstractConversion<TargetType> implements Expression {
 
-	protected TargetType target;
-	protected Type type;
-	protected String name;
+	private TargetType target;
+	private Type type;
+	private String name;
 
 	public AbstractConversion(TargetType target, String type) {
 		this.target = target;

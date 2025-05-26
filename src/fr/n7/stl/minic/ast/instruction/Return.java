@@ -21,9 +21,9 @@ import java.security.InvalidParameterException;
  */
 public class Return implements Instruction {
 
-	protected Expression value;
+	private Expression value;
 
-	protected FunctionDeclaration function;
+	private FunctionDeclaration function;
 
 	public Return(Expression value) {
 		this.value = value;

@@ -9,7 +9,8 @@ import fr.n7.stl.util.SemanticsUndefinedException;
 public class ThisAssignment extends AbstractThis<AssignableExpression> implements AssignableExpression {
 
 	public ThisAssignment() {
-	throw new SemanticsUndefinedException("Semantics constructor is undefined in ThisAssignment.");
+		// rien à faire
+		// throw new SemanticsUndefinedException("Semantics constructor is undefined in ThisAssignment.");
 	}
 
 	@Override

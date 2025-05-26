@@ -14,9 +14,9 @@ import fr.n7.stl.util.SemanticsUndefinedException;
 
 public class ObjectAllocation implements AccessibleExpression, AssignableExpression {
 
-	protected String name;
+	private String name;
 
-	protected List<AccessibleExpression> arguments;
+	private List<AccessibleExpression> arguments;
 
 	public ObjectAllocation(String name, List<AccessibleExpression> arguments) {
 		this.name = name;

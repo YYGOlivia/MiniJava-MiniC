@@ -9,7 +9,6 @@ import fr.n7.stl.minic.ast.type.AtomicType;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
-import fr.n7.stl.util.Logger;
 
 /**
  * Implementation of the Abstract Syntax Tree node for an unary operation
@@ -86,7 +85,6 @@ public class UnaryExpression implements AccessibleExpression {
 					if (resultType.compatibleWith(AtomicType.BooleanType)) {
 						return resultType;
 					} else {
-						Logger.warning("Type error in unary expression : Negate parameter " + resultType);
 						return AtomicType.ErrorType;
 					}
 				}
@@ -94,7 +92,6 @@ public class UnaryExpression implements AccessibleExpression {
 					if (resultType.compatibleWith(AtomicType.FloatingType)) {
 						return resultType;
 					} else {
-						Logger.warning("Type error in unary expression : Opposite parameter " + resultType);
 						return AtomicType.ErrorType;
 					}
 				}

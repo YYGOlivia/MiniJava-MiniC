@@ -12,9 +12,17 @@ import fr.n7.stl.minic.ast.scope.HierarchicalScope;
  */
 public class ArrayType implements Type {
 
-	protected Type element;
+	private Type element;
 
 	public ArrayType(Type element) {
+		this.element = element;
+	}
+
+	public Type getElement() {
+		return this.element;
+	}
+
+	public void setElement(Type element) {
 		this.element = element;
 	}
 

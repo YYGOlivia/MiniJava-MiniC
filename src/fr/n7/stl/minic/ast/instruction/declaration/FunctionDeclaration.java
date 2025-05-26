@@ -26,17 +26,17 @@ public class FunctionDeclaration implements Instruction, Declaration {
 	/**
 	 * Name of the function
 	 */
-	protected String name;
+	private String name;
 
 	/**
 	 * AST node for the returned type of the function
 	 */
-	protected Type type;
+	private Type type;
 
 	/**
 	 * List of AST nodes for the formal parameters of the function
 	 */
-	protected List<ParameterDeclaration> parameters;
+	private List<ParameterDeclaration> parameters;
 
 	/**
 	 * @return the parameters
@@ -48,7 +48,7 @@ public class FunctionDeclaration implements Instruction, Declaration {
 	/**
 	 * AST node for the body of the function
 	 */
-	protected Block body;
+	private Block body;
 
 	/**
 	 * Builds an AST node for a function declaration

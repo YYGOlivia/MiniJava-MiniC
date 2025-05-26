@@ -16,18 +16,18 @@ public class ParameterDeclaration implements Declaration {
 	/**
 	 * Name of the formal parameter
 	 */
-	protected String name;
+	private String name;
 
 	/**
 	 * AST node for the type of the formal parameter
 	 */
-	protected Type type;
+	private Type type;
 
 	/**
 	 * Offset of the formal parameter in the list of parameters for the function
 	 * i.e. the size of the memory allocated to the previous parameters
 	 */
-	protected int offset;
+	private int offset;
 
 	/**
 	 * Builds an AST node for a formal parameter declaration

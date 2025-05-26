@@ -88,10 +88,8 @@ public class NamedType implements Type {
 		Type result = this.declaration.getType();
 		if (result instanceof NamedType) {
 			NamedType namedType = (NamedType) result;
-			Logger.warning("[NamedType] getType1 -> " + namedType.getType());
 			return namedType.getType();
 		} else {
-			Logger.warning("[NamedType] getType2 -> " + result);
 			return result;
 		}
 	}

@@ -25,8 +25,8 @@ import fr.n7.stl.util.Logger;
  */
 public class Iteration implements Instruction {
 
-	protected Expression condition;
-	protected Block body;
+	private Expression condition;
+	private Block body;
 
 	public Iteration(Expression condition, Block body) {
 		this.condition = condition;

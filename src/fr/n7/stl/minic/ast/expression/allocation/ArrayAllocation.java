@@ -20,8 +20,8 @@ import fr.n7.stl.tam.ast.TAMFactory;
  */
 public class ArrayAllocation implements AccessibleExpression, AssignableExpression {
 
-	protected Type element;
-	protected Expression size;
+	private Type element;
+	private Expression size;
 
 	public ArrayAllocation(Type element, Expression size) {
 		this.element = element;

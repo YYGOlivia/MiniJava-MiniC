@@ -18,9 +18,9 @@ import fr.n7.stl.util.Logger;
  */
 public abstract class AbstractField<RecordKind extends Expression> implements Expression {
 
-	protected RecordKind record;
-	protected String name;
-	protected FieldDeclaration field;
+	private RecordKind record;
+	private String name;
+	private FieldDeclaration field;
 
 	/**
 	 * Construction for the implementation of a record field access expression
@@ -33,6 +33,14 @@ public abstract class AbstractField<RecordKind extends Expression> implements Ex
 	public AbstractField(RecordKind record, String name) {
 		this.record = record;
 		this.name = name;
+	}
+
+	public RecordKind getRecord() {
+		return this.record;
+	}
+
+	public FieldDeclaration getField() {
+		return this.field;
 	}
 
 	/*

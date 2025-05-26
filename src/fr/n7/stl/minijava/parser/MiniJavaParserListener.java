@@ -1,26 +1,22 @@
 // Generated from MiniJavaParser.g4 by ANTLR 4.13.1
 
 package fr.n7.stl.minijava.parser;
-import java.io.IOException;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.PrintWriter;
-import java.io.IOException;
-import fr.n7.stl.minic.ast.*;
-import fr.n7.stl.minic.ast.expression.*;
-import fr.n7.stl.minic.ast.expression.accessible.*;
-import fr.n7.stl.minic.ast.expression.allocation.*;
-import fr.n7.stl.minic.ast.expression.assignable.*;
-import fr.n7.stl.minic.ast.expression.value.*;
-import fr.n7.stl.minic.ast.instruction.*;
-import fr.n7.stl.minic.ast.instruction.declaration.*;
-import fr.n7.stl.minic.ast.scope.*;
-import fr.n7.stl.minic.ast.type.*;
-import fr.n7.stl.minic.ast.type.declaration.*;
-import fr.n7.stl.util.*;
-import fr.n7.stl.tam.ast.*;
-import fr.n7.stl.tam.ast.impl.*;
-import fr.n7.stl.minijava.ast.type.declaration.*;
+import fr.n7.stl.minic.ast.Block;
+import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
+import fr.n7.stl.minic.ast.expression.assignable.AssignableExpression;
+import fr.n7.stl.minic.ast.instruction.Instruction;
+import fr.n7.stl.minic.ast.instruction.declaration.ParameterDeclaration;
+import fr.n7.stl.minic.ast.scope.Declaration;
+import fr.n7.stl.minic.ast.type.AtomicType;
+import fr.n7.stl.minic.ast.type.FunctionType;
+import fr.n7.stl.minic.ast.type.Type;
+import fr.n7.stl.minijava.ast.type.declaration.AccessRight;
+import fr.n7.stl.minijava.ast.type.declaration.AttributeDeclaration;
+import fr.n7.stl.minijava.ast.type.declaration.ClassDeclaration;
+import fr.n7.stl.minijava.ast.type.declaration.ClassElement;
+import fr.n7.stl.minijava.ast.type.declaration.ConstructorDeclaration;
+import fr.n7.stl.minijava.ast.type.declaration.MainDeclaration;
+import fr.n7.stl.minijava.ast.type.declaration.MethodDeclaration;
 
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -412,18 +408,6 @@ public interface MiniJavaParserListener extends ParseTreeListener {
 	 */
 	void exitTypeTableau(MiniJavaParser.TypeTableauContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code ecritureIdentificateur}
-	 * labeled alternative in {@link MiniJavaParser#affectable}.
-	 * @param ctx the parse tree
-	 */
-	void enterEcritureIdentificateur(MiniJavaParser.EcritureIdentificateurContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ecritureIdentificateur}
-	 * labeled alternative in {@link MiniJavaParser#affectable}.
-	 * @param ctx the parse tree
-	 */
-	void exitEcritureIdentificateur(MiniJavaParser.EcritureIdentificateurContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code ecritureAppelMethodeExplicite}
 	 * labeled alternative in {@link MiniJavaParser#affectable}.
 	 * @param ctx the parse tree
@@ -484,6 +468,18 @@ public interface MiniJavaParserListener extends ParseTreeListener {
 	 */
 	void exitEcritureAttribut(MiniJavaParser.EcritureAttributContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code ecritureIdent}
+	 * labeled alternative in {@link MiniJavaParser#affectable}.
+	 * @param ctx the parse tree
+	 */
+	void enterEcritureIdent(MiniJavaParser.EcritureIdentContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ecritureIdent}
+	 * labeled alternative in {@link MiniJavaParser#affectable}.
+	 * @param ctx the parse tree
+	 */
+	void exitEcritureIdent(MiniJavaParser.EcritureIdentContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code ecritureSuper}
 	 * labeled alternative in {@link MiniJavaParser#affectable}.
 	 * @param ctx the parse tree
@@ -540,6 +536,18 @@ public interface MiniJavaParserListener extends ParseTreeListener {
 	 */
 	void exitExpressionCharacter(MiniJavaParser.ExpressionCharacterContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code lectureIdent}
+	 * labeled alternative in {@link MiniJavaParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterLectureIdent(MiniJavaParser.LectureIdentContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code lectureIdent}
+	 * labeled alternative in {@link MiniJavaParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitLectureIdent(MiniJavaParser.LectureIdentContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code expressionOpposee}
 	 * labeled alternative in {@link MiniJavaParser#expression}.
 	 * @param ctx the parse tree
@@ -563,18 +571,6 @@ public interface MiniJavaParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitCreationObjet(MiniJavaParser.CreationObjetContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code expressionConditionelle}
-	 * labeled alternative in {@link MiniJavaParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterExpressionConditionelle(MiniJavaParser.ExpressionConditionelleContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code expressionConditionelle}
-	 * labeled alternative in {@link MiniJavaParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitExpressionConditionelle(MiniJavaParser.ExpressionConditionelleContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code lectureTableau}
 	 * labeled alternative in {@link MiniJavaParser#expression}.
@@ -600,6 +596,18 @@ public interface MiniJavaParserListener extends ParseTreeListener {
 	 */
 	void exitLectureAppelMethodeImplicite(MiniJavaParser.LectureAppelMethodeImpliciteContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code exprMult}
+	 * labeled alternative in {@link MiniJavaParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterExprMult(MiniJavaParser.ExprMultContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code exprMult}
+	 * labeled alternative in {@link MiniJavaParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitExprMult(MiniJavaParser.ExprMultContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code expressionParenthese}
 	 * labeled alternative in {@link MiniJavaParser#expression}.
 	 * @param ctx the parse tree
@@ -611,18 +619,6 @@ public interface MiniJavaParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitExpressionParenthese(MiniJavaParser.ExpressionParentheseContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code lectureIdentificateur}
-	 * labeled alternative in {@link MiniJavaParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterLectureIdentificateur(MiniJavaParser.LectureIdentificateurContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code lectureIdentificateur}
-	 * labeled alternative in {@link MiniJavaParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitLectureIdentificateur(MiniJavaParser.LectureIdentificateurContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code lectureThis}
 	 * labeled alternative in {@link MiniJavaParser#expression}.
@@ -647,6 +643,18 @@ public interface MiniJavaParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitCreationTableau(MiniJavaParser.CreationTableauContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code exprAdd}
+	 * labeled alternative in {@link MiniJavaParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterExprAdd(MiniJavaParser.ExprAddContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code exprAdd}
+	 * labeled alternative in {@link MiniJavaParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitExprAdd(MiniJavaParser.ExprAddContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code lectureAttribut}
 	 * labeled alternative in {@link MiniJavaParser#expression}.
@@ -708,30 +716,6 @@ public interface MiniJavaParserListener extends ParseTreeListener {
 	 */
 	void exitExpressionConjonction(MiniJavaParser.ExpressionConjonctionContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code expressionComparaison}
-	 * labeled alternative in {@link MiniJavaParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterExpressionComparaison(MiniJavaParser.ExpressionComparaisonContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code expressionComparaison}
-	 * labeled alternative in {@link MiniJavaParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitExpressionComparaison(MiniJavaParser.ExpressionComparaisonContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code expressionAdditive}
-	 * labeled alternative in {@link MiniJavaParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterExpressionAdditive(MiniJavaParser.ExpressionAdditiveContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code expressionAdditive}
-	 * labeled alternative in {@link MiniJavaParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitExpressionAdditive(MiniJavaParser.ExpressionAdditiveContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code expressionTrue}
 	 * labeled alternative in {@link MiniJavaParser#expression}.
 	 * @param ctx the parse tree
@@ -744,6 +728,30 @@ public interface MiniJavaParserListener extends ParseTreeListener {
 	 */
 	void exitExpressionTrue(MiniJavaParser.ExpressionTrueContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code exprCompar}
+	 * labeled alternative in {@link MiniJavaParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterExprCompar(MiniJavaParser.ExprComparContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code exprCompar}
+	 * labeled alternative in {@link MiniJavaParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitExprCompar(MiniJavaParser.ExprComparContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code exprCond}
+	 * labeled alternative in {@link MiniJavaParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterExprCond(MiniJavaParser.ExprCondContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code exprCond}
+	 * labeled alternative in {@link MiniJavaParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitExprCond(MiniJavaParser.ExprCondContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code expressionNegation}
 	 * labeled alternative in {@link MiniJavaParser#expression}.
 	 * @param ctx the parse tree
@@ -755,18 +763,6 @@ public interface MiniJavaParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitExpressionNegation(MiniJavaParser.ExpressionNegationContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code expressionMultiplicative}
-	 * labeled alternative in {@link MiniJavaParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterExpressionMultiplicative(MiniJavaParser.ExpressionMultiplicativeContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code expressionMultiplicative}
-	 * labeled alternative in {@link MiniJavaParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitExpressionMultiplicative(MiniJavaParser.ExpressionMultiplicativeContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code expressionFalse}
 	 * labeled alternative in {@link MiniJavaParser#expression}.

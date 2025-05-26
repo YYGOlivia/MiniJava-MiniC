@@ -16,9 +16,9 @@ import fr.n7.stl.util.SemanticsUndefinedException;
 
 public class SuperCall implements Instruction {
 
-	protected ConstructorDeclaration constructor;
+	private ConstructorDeclaration constructor;
 
-	protected List<AccessibleExpression> arguments;
+	private List<AccessibleExpression> arguments;
 
 	public SuperCall(List<AccessibleExpression> arguments) {
 		this.arguments = arguments;

@@ -24,8 +24,8 @@ import fr.n7.stl.util.Logger;
  */
 public class Assignment implements Instruction, Expression {
 
-	protected Expression value;
-	protected AssignableExpression assignable;
+	private Expression value;
+	private AssignableExpression assignable;
 
 	/**
 	 * Create an assignment instruction implementation from the assignable

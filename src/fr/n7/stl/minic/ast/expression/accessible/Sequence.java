@@ -24,7 +24,7 @@ public class Sequence implements AccessibleExpression {
 	/**
 	 * List of AST nodes of the expressions computing the values in the sequence.
 	 */
-	protected List<AccessibleExpression> values;
+	private List<AccessibleExpression> values;
 
 	/**
 	 * Builds an Abstract Syntax Tree node for an expression building a sequence of

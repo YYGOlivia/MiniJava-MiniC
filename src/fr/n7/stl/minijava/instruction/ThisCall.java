@@ -16,9 +16,9 @@ import fr.n7.stl.util.SemanticsUndefinedException;
 
 public class ThisCall implements Instruction {
 
-	protected ConstructorDeclaration constructor;
+	private ConstructorDeclaration constructor;
 
-	protected List<AccessibleExpression> arguments;
+	private List<AccessibleExpression> arguments;
 
 	public ThisCall(List<AccessibleExpression> arguments) {
 		this.arguments = arguments;

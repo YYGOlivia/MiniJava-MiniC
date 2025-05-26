@@ -36,14 +36,14 @@ public class PointerAccess extends AbstractPointer<AccessibleExpression> impleme
 	public Fragment getCode(TAMFactory factory) {
 		// LOAD (size) pos_memoire[LB]
 		Fragment fragment = factory.createFragment();
-		fragment.append(pointer.getCode(factory));
-		fragment.add(factory.createLoadI(pointer.getType().length()));
+		fragment.append(this.getPointer().getCode(factory));
+		fragment.add(factory.createLoadI(this.getPointer().getType().length()));
 		return fragment;
 	}
 
 	@Override
 	public String toString() {
-		return "* " + this.pointer.toString();
+		return "* " + this.getPointer().toString();
 	}
 
 }

@@ -19,18 +19,16 @@ public class MiniJavaLexer extends Lexer {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		Egal=1, AccoladeOuvrante=2, AccoladeFermante=3, ParentheseOuvrante=4, 
-		ParentheseFermante=5, CrochetOuvrant=6, CrochetFermant=7, Point=8, PointInterrogation=9, 
-		DeuxPoint=10, Virgule=11, PointVirgule=12, Afficher=13, Si=14, Sinon=15, 
-		Retour=16, TantQue=17, Nouveau=18, Classe=19, Herite=20, Public=21, Prive=22, 
-		DeClasse=23, Definitif=24, Moi=25, Super=26, MethodePrincipale=27, Abstrait=28, 
+		Egal=1, AccOuv=2, AccFer=3, ParOuv=4, ParFer=5, CrochOuv=6, CrochFer=7, 
+		Pt=8, PtInterro=9, DeuxPt=10, Virgule=11, PtVirg=12, Afficher=13, Si=14, 
+		Sinon=15, Retour=16, TantQue=17, Nouveau=18, Classe=19, Herite=20, Public=21, 
+		Prive=22, Statique=23, Final=24, Moi=25, Super=26, MethodeMain=27, Abstrait=28, 
 		Protege=29, Asterisque=30, Oblique=31, PourCent=32, Plus=33, Moins=34, 
-		DoubleBarre=35, DoubleEsperluette=36, PointExclamation=37, Inferieur=38, 
-		Superieur=39, InferieurEgal=40, SuperieurEgal=41, DoubleEgal=42, ExclamationEgal=43, 
-		Esperluette=44, TypeEntier=45, TypeFlottant=46, TypeBooleen=47, TypeCaractere=48, 
-		TypeChaine=49, TypeVide=50, Vrai=51, Faux=52, Nul=53, Caractere=54, Chaine=55, 
-		Underscore=56, Identificateur=57, Entier=58, Flottant=59, CommentaireLigne=60, 
-		CommentaireBloc=61, WS=62;
+		Ou=35, Et=36, PtExclamation=37, Inf=38, Sup=39, InfEg=40, SupEg=41, DoubleEgal=42, 
+		Different=43, Esperluette=44, TypeEntier=45, TypeFlottant=46, TypeBooleen=47, 
+		TypeCaractere=48, TypeChaine=49, TypeVide=50, Vrai=51, Faux=52, Nul=53, 
+		Caractere=54, Chaine=55, Underscore=56, Ident=57, Entier=58, Flottant=59, 
+		CommentaireLigne=60, CommentaireBloc=61, WS=62;
 	public static String[] channelNames = {
 		"DEFAULT_TOKEN_CHANNEL", "HIDDEN"
 	};
@@ -41,17 +39,16 @@ public class MiniJavaLexer extends Lexer {
 
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"Egal", "AccoladeOuvrante", "AccoladeFermante", "ParentheseOuvrante", 
-			"ParentheseFermante", "CrochetOuvrant", "CrochetFermant", "Point", "PointInterrogation", 
-			"DeuxPoint", "Virgule", "PointVirgule", "Afficher", "Si", "Sinon", "Retour", 
-			"TantQue", "Nouveau", "Classe", "Herite", "Public", "Prive", "DeClasse", 
-			"Definitif", "Moi", "Super", "MethodePrincipale", "Abstrait", "Protege", 
-			"Asterisque", "Oblique", "PourCent", "Plus", "Moins", "DoubleBarre", 
-			"DoubleEsperluette", "PointExclamation", "Inferieur", "Superieur", "InferieurEgal", 
-			"SuperieurEgal", "DoubleEgal", "ExclamationEgal", "Esperluette", "TypeEntier", 
-			"TypeFlottant", "TypeBooleen", "TypeCaractere", "TypeChaine", "TypeVide", 
-			"Vrai", "Faux", "Nul", "Caractere", "Chaine", "Underscore", "Identificateur", 
-			"Entier", "Flottant", "CommentaireLigne", "CommentaireBloc", "WS"
+			"Egal", "AccOuv", "AccFer", "ParOuv", "ParFer", "CrochOuv", "CrochFer", 
+			"Pt", "PtInterro", "DeuxPt", "Virgule", "PtVirg", "Afficher", "Si", "Sinon", 
+			"Retour", "TantQue", "Nouveau", "Classe", "Herite", "Public", "Prive", 
+			"Statique", "Final", "Moi", "Super", "MethodeMain", "Abstrait", "Protege", 
+			"Asterisque", "Oblique", "PourCent", "Plus", "Moins", "Ou", "Et", "PtExclamation", 
+			"Inf", "Sup", "InfEg", "SupEg", "DoubleEgal", "Different", "Esperluette", 
+			"TypeEntier", "TypeFlottant", "TypeBooleen", "TypeCaractere", "TypeChaine", 
+			"TypeVide", "Vrai", "Faux", "Nul", "Caractere", "Chaine", "Underscore", 
+			"Ident", "Entier", "Flottant", "CommentaireLigne", "CommentaireBloc", 
+			"WS"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
@@ -71,17 +68,16 @@ public class MiniJavaLexer extends Lexer {
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, "Egal", "AccoladeOuvrante", "AccoladeFermante", "ParentheseOuvrante", 
-			"ParentheseFermante", "CrochetOuvrant", "CrochetFermant", "Point", "PointInterrogation", 
-			"DeuxPoint", "Virgule", "PointVirgule", "Afficher", "Si", "Sinon", "Retour", 
-			"TantQue", "Nouveau", "Classe", "Herite", "Public", "Prive", "DeClasse", 
-			"Definitif", "Moi", "Super", "MethodePrincipale", "Abstrait", "Protege", 
-			"Asterisque", "Oblique", "PourCent", "Plus", "Moins", "DoubleBarre", 
-			"DoubleEsperluette", "PointExclamation", "Inferieur", "Superieur", "InferieurEgal", 
-			"SuperieurEgal", "DoubleEgal", "ExclamationEgal", "Esperluette", "TypeEntier", 
-			"TypeFlottant", "TypeBooleen", "TypeCaractere", "TypeChaine", "TypeVide", 
-			"Vrai", "Faux", "Nul", "Caractere", "Chaine", "Underscore", "Identificateur", 
-			"Entier", "Flottant", "CommentaireLigne", "CommentaireBloc", "WS"
+			null, "Egal", "AccOuv", "AccFer", "ParOuv", "ParFer", "CrochOuv", "CrochFer", 
+			"Pt", "PtInterro", "DeuxPt", "Virgule", "PtVirg", "Afficher", "Si", "Sinon", 
+			"Retour", "TantQue", "Nouveau", "Classe", "Herite", "Public", "Prive", 
+			"Statique", "Final", "Moi", "Super", "MethodeMain", "Abstrait", "Protege", 
+			"Asterisque", "Oblique", "PourCent", "Plus", "Moins", "Ou", "Et", "PtExclamation", 
+			"Inf", "Sup", "InfEg", "SupEg", "DoubleEgal", "Different", "Esperluette", 
+			"TypeEntier", "TypeFlottant", "TypeBooleen", "TypeCaractere", "TypeChaine", 
+			"TypeVide", "Vrai", "Faux", "Nul", "Caractere", "Chaine", "Underscore", 
+			"Ident", "Entier", "Flottant", "CommentaireLigne", "CommentaireBloc", 
+			"WS"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();

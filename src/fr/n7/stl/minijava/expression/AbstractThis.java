@@ -9,7 +9,8 @@ import fr.n7.stl.util.SemanticsUndefinedException;
 public abstract class AbstractThis<ObjectKind extends Expression> implements Expression {
 
 	public AbstractThis() {
-		throw new SemanticsUndefinedException("Semantics constructor is undefined in AbstractThis.");
+		// rien à faire
+		// throw new SemanticsUndefinedException("Semantics constructor is undefined in AbstractThis.");
 	}
 
 	@Override

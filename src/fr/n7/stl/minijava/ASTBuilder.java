@@ -74,13 +74,13 @@ import fr.n7.stl.minijava.parser.MiniJavaParser.EcritureAppelMethodeExpliciteCon
 import fr.n7.stl.minijava.parser.MiniJavaParser.EcritureAppelMethodeImpliciteContext;
 import fr.n7.stl.minijava.parser.MiniJavaParser.EcritureAttributContext;
 import fr.n7.stl.minijava.parser.MiniJavaParser.EcritureConversionContext;
-import fr.n7.stl.minijava.parser.MiniJavaParser.EcritureIdentificateurContext;
+import fr.n7.stl.minijava.parser.MiniJavaParser.EcritureIdentContext;
 import fr.n7.stl.minijava.parser.MiniJavaParser.EcritureSuperContext;
 import fr.n7.stl.minijava.parser.MiniJavaParser.EcritureTableauContext;
 import fr.n7.stl.minijava.parser.MiniJavaParser.EcritureThisContext;
 import fr.n7.stl.minijava.parser.MiniJavaParser.ElementContext;
 import fr.n7.stl.minijava.parser.MiniJavaParser.ElementsContext;
-import fr.n7.stl.minijava.parser.MiniJavaParser.ExpressionConditionelleContext;
+import fr.n7.stl.minijava.parser.MiniJavaParser.ExprCondContext;
 import fr.n7.stl.minijava.parser.MiniJavaParser.ExpressionOpposeeContext;
 import fr.n7.stl.minijava.parser.MiniJavaParser.InstructionAppelConstructeurAlternatifContext;
 import fr.n7.stl.minijava.parser.MiniJavaParser.InstructionAppelConstructeurParentContext;
@@ -89,7 +89,7 @@ import fr.n7.stl.minijava.parser.MiniJavaParser.InstructionAppelMethodeImplicite
 import fr.n7.stl.minijava.parser.MiniJavaParser.InstructionIterationContext;
 import fr.n7.stl.minijava.parser.MiniJavaParser.InstructionSiContext;
 import fr.n7.stl.minijava.parser.MiniJavaParser.LectureAttributContext;
-import fr.n7.stl.minijava.parser.MiniJavaParser.LectureIdentificateurContext;
+import fr.n7.stl.minijava.parser.MiniJavaParser.LectureIdentContext;
 import fr.n7.stl.minijava.parser.MiniJavaParser.LectureSuperContext;
 import fr.n7.stl.minijava.parser.MiniJavaParser.LectureTableauContext;
 import fr.n7.stl.minijava.parser.MiniJavaParser.LectureThisContext;
@@ -238,7 +238,7 @@ public class ASTBuilder extends MiniJavaParserBaseListener {
         String leNom = ctx.leNom.getText();
         Type leType = ctx.leType.unType;
         AccessibleExpression laValeur = ctx.laValeur.uneExpression;
-        if (ctx.estDefinitif != null) {
+        if (ctx.estFinal != null) {
             ctx.uneDeclaration = new ConstantDeclaration(leNom, leType, laValeur);
         } else {
             ctx.uneDeclaration = new VariableDeclaration(leNom, leType, laValeur);
@@ -384,18 +384,18 @@ public class ASTBuilder extends MiniJavaParserBaseListener {
 
     @Override
     public void exitInstructionSi(InstructionSiContext ctx) {
-        ctx.uneInstruction = new Conditional(ctx.laCondition.uneExpression, ctx.leBlocAlors.unBloc);
+        ctx.uneInstruction = new Conditional(ctx.cond.uneExpression, ctx.alors.unBloc);
     }
 
     @Override
     public void exitInstructionSiSinon(MiniJavaParser.InstructionSiSinonContext ctx) {
-        ctx.uneInstruction = new Conditional(ctx.laCondition.uneExpression, ctx.leBlocAlors.unBloc,
-                ctx.leBlocSinon.unBloc);
+        ctx.uneInstruction = new Conditional(ctx.cond.uneExpression, ctx.alors.unBloc,
+                ctx.sinon.unBloc);
     }
 
     @Override
     public void exitInstructionIteration(InstructionIterationContext ctx) {
-        ctx.uneInstruction = new Iteration(ctx.laCondition.uneExpression, ctx.leCorps.unBloc);
+        ctx.uneInstruction = new Iteration(ctx.cond.uneExpression, ctx.leCorps.unBloc);
     }
 
     @Override
@@ -406,22 +406,22 @@ public class ASTBuilder extends MiniJavaParserBaseListener {
     @Override
     public void exitInstructionAppelMethodeExplicite(InstructionAppelMethodeExpliciteContext ctx) {
         ctx.uneInstruction = new MethodCall(ctx.lObjet.uneExpression, ctx.leNom.getText(),
-                ctx.lesArguments.desArguments);
+                ctx.args.desArguments);
     }
 
     @Override
     public void exitInstructionAppelMethodeImplicite(InstructionAppelMethodeImpliciteContext ctx) {
-        ctx.uneInstruction = new MethodCall(ctx.leNom.getText(), ctx.lesArguments.desArguments);
+        ctx.uneInstruction = new MethodCall(ctx.leNom.getText(), ctx.args.desArguments);
     }
 
     @Override
     public void exitInstructionAppelConstructeurAlternatif(InstructionAppelConstructeurAlternatifContext ctx) {
-        ctx.uneInstruction = new ThisCall(ctx.lesArguments.desArguments);
+        ctx.uneInstruction = new ThisCall(ctx.args.desArguments);
     }
 
     @Override
     public void exitInstructionAppelConstructeurParent(InstructionAppelConstructeurParentContext ctx) {
-        ctx.uneInstruction = new SuperCall(ctx.lesArguments.desArguments);
+        ctx.uneInstruction = new SuperCall(ctx.args.desArguments);
     }
 
     @Override
@@ -477,8 +477,8 @@ public class ASTBuilder extends MiniJavaParserBaseListener {
     }
 
     @Override
-    public void exitEcritureIdentificateur(EcritureIdentificateurContext ctx) {
-        ctx.uneExpressionAffectable = new VariableAssignment(ctx.lIdentificateur.getText());
+    public void exitEcritureIdent(EcritureIdentContext ctx) {
+        ctx.uneExpressionAffectable = new VariableAssignment(ctx.lIdent.getText());
     }
 
     @Override
@@ -501,12 +501,12 @@ public class ASTBuilder extends MiniJavaParserBaseListener {
     @Override
     public void exitEcritureAppelMethodeExplicite(EcritureAppelMethodeExpliciteContext ctx) {
         ctx.uneExpressionAffectable = new MethodCallAssignment(ctx.lObjet.uneExpressionAffectable, ctx.leNom.getText(),
-                ctx.lesArguments.desArguments);
+                ctx.args.desArguments);
     }
 
     @Override
     public void exitEcritureAppelMethodeImplicite(EcritureAppelMethodeImpliciteContext ctx) {
-        ctx.uneExpressionAffectable = new MethodCallAssignment(ctx.leNom.getText(), ctx.lesArguments.desArguments);
+        ctx.uneExpressionAffectable = new MethodCallAssignment(ctx.leNom.getText(), ctx.args.desArguments);
     }
 
     @Override
@@ -530,43 +530,43 @@ public class ASTBuilder extends MiniJavaParserBaseListener {
     }
 
     @Override
-    public void exitLectureIdentificateur(LectureIdentificateurContext ctx) {
+    public void exitLectureIdent(LectureIdentContext ctx) {
         ctx.uneExpression = new IdentifierAccess(ctx.leNom.getText());
     }
 
     @Override
-    public void exitExpressionAdditive(MiniJavaParser.ExpressionAdditiveContext ctx) {
-        BinaryOperator operateur;
-        switch (ctx.operateur.getText()) {
+    public void exitExprAdd(MiniJavaParser.ExprAddContext ctx) {
+        BinaryOperator op;
+        switch (ctx.op.getText()) {
             case "+":
-                operateur = BinaryOperator.Add;
+                op = BinaryOperator.Add;
                 break;
             case "-":
-                operateur = BinaryOperator.Substract;
+                op = BinaryOperator.Substract;
                 break;
             default:
                 throw new RuntimeException("Unknown operator");
         }
-        ctx.uneExpression = new BinaryExpression(ctx.gauche.uneExpression, operateur, ctx.droite.uneExpression);
+        ctx.uneExpression = new BinaryExpression(ctx.gauche.uneExpression, op, ctx.droite.uneExpression);
     }
 
     @Override
-    public void exitExpressionMultiplicative(MiniJavaParser.ExpressionMultiplicativeContext ctx) {
-        BinaryOperator operateur;
-        switch (ctx.operateur.getText()) {
+    public void exitExprMult(MiniJavaParser.ExprMultContext ctx) {
+        BinaryOperator op;
+        switch (ctx.op.getText()) {
             case "*":
-                operateur = BinaryOperator.Multiply;
+                op = BinaryOperator.Multiply;
                 break;
             case "/":
-                operateur = BinaryOperator.Divide;
+                op = BinaryOperator.Divide;
                 break;
             case "%":
-                operateur = BinaryOperator.Modulo;
+                op = BinaryOperator.Modulo;
                 break;
             default:
                 throw new RuntimeException("Unkonwn operator");
         }
-        ctx.uneExpression = new BinaryExpression(ctx.gauche.uneExpression, operateur, ctx.droite.uneExpression);
+        ctx.uneExpression = new BinaryExpression(ctx.gauche.uneExpression, op, ctx.droite.uneExpression);
     }
 
     @Override
@@ -581,9 +581,9 @@ public class ASTBuilder extends MiniJavaParserBaseListener {
     }
 
     @Override
-    public void exitExpressionConditionelle(ExpressionConditionelleContext ctx) {
-        ctx.uneExpression = new AccessibleConditional(ctx.laCondition.uneExpression, ctx.lExpressionAlors.uneExpression,
-                ctx.lExpressionSinon.uneExpression);
+    public void exitExprCond(ExprCondContext ctx) {
+        ctx.uneExpression = new AccessibleConditional(ctx.cond.uneExpression, ctx.exprAlors.uneExpression,
+                ctx.exprSinon.uneExpression);
     }
 
     @Override
@@ -628,40 +628,40 @@ public class ASTBuilder extends MiniJavaParserBaseListener {
 
     @Override
     public void exitExpressionEgalite(MiniJavaParser.ExpressionEgaliteContext ctx) {
-        BinaryOperator operator;
-        switch (ctx.operateur.getText()) {
+        BinaryOperator op;
+        switch (ctx.op.getText()) {
             case "==":
-                operator = BinaryOperator.Equals;
+                op = BinaryOperator.Equals;
                 break;
             case "!=":
-                operator = BinaryOperator.Different;
+                op = BinaryOperator.Different;
                 break;
             default:
                 throw new RuntimeException("Unkonwn operator");
         }
-        ctx.uneExpression = new BinaryExpression(ctx.gauche.uneExpression, operator, ctx.droite.uneExpression);
+        ctx.uneExpression = new BinaryExpression(ctx.gauche.uneExpression, op, ctx.droite.uneExpression);
     }
 
     @Override
-    public void exitExpressionComparaison(MiniJavaParser.ExpressionComparaisonContext ctx) {
-        BinaryOperator operator;
-        switch (ctx.operateur.getText()) {
+    public void exitExprCompar(MiniJavaParser.ExprComparContext ctx) {
+        BinaryOperator op;
+        switch (ctx.op.getText()) {
             case "<":
-                operator = BinaryOperator.Lesser;
+                op = BinaryOperator.Lesser;
                 break;
             case "<=":
-                operator = BinaryOperator.LesserOrEqual;
+                op = BinaryOperator.LesserOrEqual;
                 break;
             case ">":
-                operator = BinaryOperator.Greater;
+                op = BinaryOperator.Greater;
                 break;
             case ">=":
-                operator = BinaryOperator.GreaterOrEqual;
+                op = BinaryOperator.GreaterOrEqual;
                 break;
             default:
                 throw new RuntimeException("Unkonwn operator");
         }
-        ctx.uneExpression = new BinaryExpression(ctx.gauche.uneExpression, operator, ctx.droite.uneExpression);
+        ctx.uneExpression = new BinaryExpression(ctx.gauche.uneExpression, op, ctx.droite.uneExpression);
     }
 
     @Override
@@ -692,12 +692,12 @@ public class ASTBuilder extends MiniJavaParserBaseListener {
     @Override
     public void exitLectureAppelMethodeExplicite(MiniJavaParser.LectureAppelMethodeExpliciteContext ctx) {
         ctx.uneExpression = new MethodCallAccess(ctx.lobjet.uneExpression, ctx.leNom.getText(),
-                ctx.lesArguments.desArguments);
+                ctx.args.desArguments);
     }
 
     @Override
     public void exitLectureAppelMethodeImplicite(MiniJavaParser.LectureAppelMethodeImpliciteContext ctx) {
-        ctx.uneExpression = new MethodCallAccess(ctx.leNom.getText(), ctx.lesArguments.desArguments);
+        ctx.uneExpression = new MethodCallAccess(ctx.leNom.getText(), ctx.args.desArguments);
     }
 
     @Override
@@ -707,7 +707,7 @@ public class ASTBuilder extends MiniJavaParserBaseListener {
 
     @Override
     public void exitCreationObjet(MiniJavaParser.CreationObjetContext ctx) {
-        ctx.uneExpression = new ObjectAllocation(ctx.leNom.getText(), ctx.lesArguments.desArguments);
+        ctx.uneExpression = new ObjectAllocation(ctx.leNom.getText(), ctx.args.desArguments);
     }
 
 }

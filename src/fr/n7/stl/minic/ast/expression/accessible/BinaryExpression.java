@@ -26,18 +26,18 @@ public class BinaryExpression implements AccessibleExpression {
 	 * AST node for the expression whose value is the left parameter for the binary
 	 * expression.
 	 */
-	protected AccessibleExpression left;
+	private AccessibleExpression left;
 
 	/**
 	 * AST node for the expression whose value is the left parameter for the binary
 	 * expression.
 	 */
-	protected AccessibleExpression right;
+	private AccessibleExpression right;
 
 	/**
 	 * Binary operator computed by the Binary Expression.
 	 */
-	protected BinaryOperator operator;
+	private BinaryOperator operator;
 
 	/**
 	 * Builds a binary expression Abstract Syntax Tree node from the left and right

@@ -3,11 +3,6 @@ options { tokenVocab=MiniCLexer; }
 
 @header {
 package fr.n7.stl.minic.parser;
-import java.io.IOException;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.PrintWriter;
-import java.io.IOException;
 import fr.n7.stl.minic.ast.Block;
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.expression.assignable.AssignableExpression;

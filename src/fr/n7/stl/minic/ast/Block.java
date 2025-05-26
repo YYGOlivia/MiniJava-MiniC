@@ -31,7 +31,7 @@ public class Block {
 	/**
 	 * Sequence of instructions contained in a block.
 	 */
-	protected List<Instruction> instructions;
+	private List<Instruction> instructions;
 
 	/**
 	 * Constructor for a block.

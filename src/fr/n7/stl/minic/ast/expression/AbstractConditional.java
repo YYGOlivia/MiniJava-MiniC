@@ -22,19 +22,19 @@ public class AbstractConditional<ExpressionKind extends Expression> implements E
 	 * AST node for the expression whose value is the condition for the conditional
 	 * expression.
 	 */
-	protected Expression condition;
+	private Expression condition;
 
 	/**
 	 * AST node for the expression whose value is the then parameter for the
 	 * conditional expression.
 	 */
-	protected ExpressionKind thenExpression;
+	private ExpressionKind thenExpression;
 
 	/**
 	 * AST node for the expression whose value is the else parameter for the
 	 * conditional expression.
 	 */
-	protected ExpressionKind elseExpression;
+	private ExpressionKind elseExpression;
 
 	/**
 	 * Builds a binary expression Abstract Syntax Tree node from the left and right

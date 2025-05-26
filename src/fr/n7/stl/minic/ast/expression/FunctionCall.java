@@ -29,19 +29,19 @@ public class FunctionCall implements AccessibleExpression {
 	 * Name of the called function.
 	 * TODO : Should be an expression.
 	 */
-	protected String name;
+	private String name;
 
 	/**
 	 * Declaration of the called function after name resolution.
 	 * TODO : Should rely on the VariableUse class.
 	 */
-	protected FunctionDeclaration function;
+	private FunctionDeclaration function;
 
 	/**
 	 * List of AST nodes that computes the values of the parameters for the function
 	 * call.
 	 */
-	protected List<AccessibleExpression> arguments;
+	private List<AccessibleExpression> arguments;
 
 	/**
 	 * @param name      : Name of the called function.
