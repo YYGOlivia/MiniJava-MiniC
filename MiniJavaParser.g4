@@ -1,146 +1,189 @@
 parser grammar MiniJavaParser;
-options {
-	tokenVocab = MiniJavaLexer;
-}
+options { tokenVocab=MiniJavaLexer; }
 
 @header {
-    package fr.n7.stl.minijava.parser;
-	import fr.n7.stl.minijava.ast.Block;
-	import fr.n7.stl.minijava.ast.type.AtomicType;
-	import fr.n7.stl.minijava.ast.type.Type;
-	import fr.n7.stl.minijava.ast.instruction.declaration.clazz.Modifier;
-	import fr.n7.stl.minijava.ast.instruction.declaration.clazz.ClassDeclaration;
-	import fr.n7.stl.minijava.ast.instruction.declaration.clazz.AttributeDeclaration;
-	import fr.n7.stl.minijava.ast.instruction.declaration.clazz.ConstructorDeclaration;
-	import fr.n7.stl.minijava.ast.instruction.declaration.clazz.MethodDeclaration;
-	import fr.n7.stl.minijava.ast.instruction.declaration.clazz.Definition;
-	import fr.n7.stl.minijava.ast.instruction.Instruction;
-	import fr.n7.stl.minijava.ast.instruction.declaration.ParameterDeclaration;
-	import fr.n7.stl.minijava.ast.expression.Expression;
+package fr.n7.stl.minijava.parser;
+import java.io.IOException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.PrintWriter;
+import java.io.IOException;
+import fr.n7.stl.minic.ast.*;
+import fr.n7.stl.minic.ast.expression.*;
+import fr.n7.stl.minic.ast.expression.accessible.*;
+import fr.n7.stl.minic.ast.expression.allocation.*;
+import fr.n7.stl.minic.ast.expression.assignable.*;
+import fr.n7.stl.minic.ast.expression.value.*;
+import fr.n7.stl.minic.ast.instruction.*;
+import fr.n7.stl.minic.ast.instruction.declaration.*;
+import fr.n7.stl.minic.ast.scope.*;
+import fr.n7.stl.minic.ast.type.*;
+import fr.n7.stl.minic.ast.type.declaration.*;
+import fr.n7.stl.util.*;
+import fr.n7.stl.tam.ast.*;
+import fr.n7.stl.tam.ast.impl.*;
+import fr.n7.stl.minijava.ast.type.declaration.*;
 }
 
-programme
-	returns[List<ClassDeclaration> classes]: classe*;
+programme : lesClasses=classes laPrincipale=principale;
 
-classe
-	returns[ClassDeclaration c]:
-	mod = (Publique | Abstrait)? DefClasse name = Identificateur (
-		Etend parent = Identificateur
-	)? AccoladeOuvrante defs += definition* AccoladeFermante;
+classes returns [List<ClassDeclaration> desClasses]:
+    lesClasses+=classe*;
 
-definition
-	returns[Definition def]:
-	(Publique | Protege | Prive) (
-		constructeur
-		| methode
-		| attribut
-	);
+classe returns [ClassDeclaration uneClasse]:
+    estAbstraite=Abstrait? Classe leNom=Identificateur (Herite heriteDe=Identificateur)? AccoladeOuvrante lesElements=elements AccoladeFermante;
 
-constructeur
-	returns[ConstructorDeclaration c]:
-	Identificateur ParOuv parametres ParFer corps;
+principale returns [MainDeclaration unPrincipal]:
+    Public Classe leNom=Identificateur AccoladeOuvrante
+    	lesDeclarations+=declaration*
+        Public DeClasse TypeVide MethodePrincipale ParentheseOuvrante TypeChaine CrochetOuvrant CrochetFermant Identificateur ParentheseFermante 
+        leCorps=bloc
+    AccoladeFermante;
+    
+declaration returns [Declaration uneDeclaration]:
+	DeClasse laSignature=signature leCorps=bloc #methodeMain
+	| DeClasse estDefinitif=Definitif? leType=type leNom=Identificateur Egal laValeur=expression PointVirgule #attributMain
+;
 
-methode
-	returns[MethodDeclaration m]:
-	Statique? entete corps // int getA(...){...}
-	| Abstrait entete PtVirg; // abstract int getA(...);
+elements returns [List<ClassElement> desElements]:
+    lesElements+=element*;
 
-attribut
-	returns[AttributeDeclaration a]:
-	Statique isFinal = Final? type Identificateur Egal expr PtVirg // static final int a = 0;
-	| type Identificateur PtVirg; // int a;
+accessRight returns [AccessRight unDroit]:
+    Public | Protege | Prive;
 
-entete: type Identificateur ParOuv parametres ParFer;
+element returns [ClassElement unElement]:
+    leDroit=accessRight (attribut | methode | constructeur);
 
-corps:
-	// {...}
-	AccoladeOuvrante instr* AccoladeFermante;
+attribut returns [AttributeDeclaration unAttribut]:
+      leType=type leNom=Identificateur PointVirgule #attributObjet
+    | DeClasse estDefinitif=Definitif? leType=type leNom=Identificateur Egal laValeur=expression PointVirgule #attributClasse
+;
 
-parametres
-	returns[List<ParameterDeclaration> l]:
-	//vide
-	| type1 = type ident = Identificateur (
-		Virg suiteType += type suiteIdent = Identificateur
-	)*; // int a, int b
+methode returns [MethodDeclaration uneMethode]:
+	estDefinitif=Definitif? laSignature=signature leCorps=bloc #methodeObjet
+    | DeClasse Definitif? laSignature=signature leCorps=bloc #methodeClasse
+    | Abstrait laSignature=signature PointVirgule #methodeAbstraite
+;
 
-instr
-	returns[Instruction i]:
-	// if(cond){instructions}
-	Si ParOuv expr ParFer alors = corps
-	// if(cond){instructions} else{instructions}
-	| Si ParOuv expr ParFer alors = corps Sinon sinon = corps
-	// while(cond){instructions}
-	| TantQue ParOuv expr ParFer body = corps
-	// for (ass | decl; expr; ass) {...}
-	| Pour ParOuv (assignation | declLocale) PtVirg expr PtVirg assignation ParFer body = corps
-	// for (int i : array) {...}
-	| Pour ParOuv type Identificateur DeuxPoint expr ParFer body = corps
-	| Retour expr PtVirg // return expr;
-	| declLocale PtVirg
-	| assignation PtVirg;
+signature returns [FunctionType uneSignature]:
+    leRetour=type leNom=Identificateur ParentheseOuvrante lesParametres=parametres ParentheseFermante;
 
-expr
-	returns[Expression e]:
-	ParOuv expr ParFer /* (expr) */				# exprParenthesee
-	| expr Point Identificateur /* expr.id */	# exprAttribute
-	/* expr.id(expr1, expr2, ...) */
-	| expr Point Identificateur ParOuv expressions? ParFer # exprMethodCall
-	/* new id(expr1, expr2, ...) */
-	| Nouveau Identificateur ParOuv expressions? ParFer										# exprConstructorCall
-	| expr CrochOuv expr CrochFer /* expr[expr] */											# exprArrayAccess
-	| PointExclamation droite = expr /* !expr */											# exprNot
-	| Moins droite = expr /*  -expr */														# exprOposite
-	| gauche = expr op = (Asterisque | Oblique | PourCent) droite = expr /* expr * expr*/	# exprMult
-	| gauche = expr op = (Plus | Moins) droite = expr /* expr + expr*/						# exprAdd
-	| gauche = expr op = (Inf | Sup | InfEg | SupEg) droite = expr /* expr < expr*/			# exprIneq
-	| gauche = expr op = (DoubleEgal | Different) droite = expr /* expr == expr*/			# exprEq
-	| gauche = expr op = Et droite = expr /* expr && expr*/									# exprAnd
-	| gauche = expr op = Ou droite = expr /* expr || expr*/									# exprOr
-	| cond = expr PtInterro alors = expr DeuxPoint sinon = expr /* expr ? expr : expr*/		# exprCond
-	| AccoladeOuvrante expressions AccoladeFermante /* {expr1, expr2, ...}*/				# exprSequence
-	| expressionConstante /* true | false | null ...*/										# exprConstante
-	| Ceci Point Identificateur /* this.id*/												# exprThis
-	/* this.id(expr1, ...)*/
-	| Ceci Point Identificateur ParOuv expressions? ParFer # exprThisMethodCall;
-declLocale:
-	// final int a = 0
-	Final? type Identificateur (Egal expr)?;
+constructeur returns [ConstructorDeclaration unConstructeur]:
+    leNom=Identificateur ParentheseOuvrante lesParametres=parametres ParentheseFermante leCorps=bloc;
 
-assignation:
-	// id = expr | id.attribut = expr | id[expr] = expr
-	assignable Egal expr;
+bloc returns [Block unBloc]: 
+	AccoladeOuvrante lesInstructions += instruction* AccoladeFermante;
 
-assignable:
-	Identificateur // id
-	| assignable Point Identificateur // id.attribut
-	| assignable CrochOuv expr CrochFer; // id[expr]
+// Liste de declarations de paramètres séparées par une virgule, peut être vide.
+parametres returns [List<ParameterDeclaration> desParametres]:
+    /* vide */ 
+    | lesParametres+=parametre (Virgule lesParametres+=parametre)*
+;
 
-expressions
-	returns[List<Expression> l]:
-	premiere = expr (Virg suite += expr)*; // expr1, expr2, ...
+parametre returns [ParameterDeclaration unParametre]:
+	leType=type leNom=Identificateur
+;
 
-type
-	returns[Type t]:
-	atomique					# typeAtomic // int
-	| Identificateur			# typeNamed // A
-	| type CrochOuv CrochFer	# typeArray; // int[]
+instruction returns [Instruction uneInstruction]: 
+    leType=type leNom=Identificateur Egal laValeur=expression PointVirgule #instructionDeclaration
 
-atomique
-	returns[AtomicType t]:
-	TypeEntier
-	| TypeFlottant
-	| TypeBooleen
-	| TypeCaractere
-	| TypeChaine
-	| TypeVide;
+    | leRecepteur=affectable Egal laValeur=expression PointVirgule #instructionAffectation
+    
+    | Afficher laValeur=expression PointVirgule #instructionAffichage
+    | Si ParentheseOuvrante laCondition=expression ParentheseFermante leBlocAlors=bloc Sinon leBlocSinon=bloc #instructionSiSinon
+    | Si ParentheseOuvrante laCondition=expression ParentheseFermante leBlocAlors=bloc #instructionSi
+    | Retour laValeur=expression PointVirgule #instructionReturn
+    | TantQue ParentheseOuvrante laCondition=expression ParentheseFermante leCorps=bloc #instructionIteration
+    
+    | lObjet=expression Point leNom=Identificateur ParentheseOuvrante lesArguments=arguments ParentheseFermante PointVirgule #instructionAppelMethodeExplicite
+    | leNom=Identificateur ParentheseOuvrante lesArguments=arguments ParentheseFermante PointVirgule #instructionAppelMethodeImplicite
+    | Moi ParentheseOuvrante lesArguments=arguments ParentheseFermante PointVirgule #instructionAppelConstructeurAlternatif
+    | Super ParentheseOuvrante lesArguments=arguments ParentheseFermante PointVirgule #instructionAppelConstructeurParent
+;
 
-expressionConstante
-	returns[Expression e]:
-	Vrai				# exprTrue
-	| Faux				# exprFalse
-	| Entier			# exprInt
-	| Flottant			# exprFloat
-	| Caractere			# exprCharacter
-	| Chaine			# exprString
-	| Nul				# exprNull
-	| Identificateur	# exprAccess;
+atomique returns [AtomicType unTypeAtomique]:
+    TypeEntier
+    | TypeFlottant
+    | TypeBooleen
+    | TypeCaractere
+    | TypeChaine
+    | TypeVide
+;
+
+type returns [Type unType]:
+    leTypeAtomique=atomique #typeAtomique
+    | leNom=Identificateur #typeClasse
+    | leTypeValeur=type CrochetOuvrant CrochetFermant #typeTableau
+;
+
+affectable returns [AssignableExpression uneExpressionAffectable]:
+    lIdentificateur=Identificateur  #ecritureIdentificateur
+    
+    | leTableau=affectable CrochetOuvrant lIndice=expression CrochetFermant #ecritureTableau
+    
+    | ParentheseOuvrante leType=type ParentheseFermante lAffectable=affectable #ecritureConversion
+    
+    | lObjet=affectable Point leNom=Identificateur #ecritureAttribut
+    
+    | lObjet=affectable Point leNom=Identificateur ParentheseOuvrante lesArguments=arguments ParentheseFermante #ecritureAppelMethodeExplicite
+    
+    | leNom=Identificateur ParentheseOuvrante lesArguments=arguments ParentheseFermante #ecritureAppelMethodeImplicite
+    
+    | leMoi=Moi #ecritureThis
+    
+    | leSuper=Super #ecritureSuper
+
+;
+
+// Liste d'expressions séparées par une virgule, ne peut pas être vide
+expressions returns [List<AccessibleExpression> desExpressions]:
+    lesExpressions+=expression (Virgule lesExpressions+=expression)*;
+
+// Liste d'expressions séparées par une virgule, peut être vide
+arguments returns [List<AccessibleExpression> desArguments]:
+    /* Vide */ 
+    | lesExpressions=expressions 
+;
+
+// Les expressions vont du plus prioritaire (en haut) au moins prioritaire (en bas).
+expression returns [AccessibleExpression uneExpression]:
+    ParentheseOuvrante lExpression=expression ParentheseFermante #expressionParenthese
+    
+    | lObjet=expression Point leNom=Identificateur #lectureAttribut
+    
+    | lobjet=expression Point leNom=Identificateur ParentheseOuvrante lesArguments=arguments ParentheseFermante #lectureAppelMethodeExplicite
+    
+    | leNom=Identificateur ParentheseOuvrante lesArguments=arguments ParentheseFermante #lectureAppelMethodeImplicite
+    
+    | leTableau=expression CrochetOuvrant lIndice=expression CrochetFermant #lectureTableau
+    
+    | Nouveau leType=type CrochetOuvrant laTaille=expression CrochetFermant #creationTableau
+    | Nouveau leNom=Identificateur ParentheseOuvrante lesArguments=arguments ParentheseFermante #creationObjet
+    
+    | PointExclamation leParametre=expression #expressionNegation
+    | Moins leParametre=expression #expressionOpposee
+    
+    | gauche=expression operateur=(Asterisque | Oblique | PourCent) droite=expression #expressionMultiplicative
+    | gauche=expression operateur=(Plus | Moins) droite=expression #expressionAdditive
+    | gauche=expression operateur=(Inferieur | InferieurEgal | Superieur | SuperieurEgal) droite=expression #expressionComparaison
+    | gauche=expression operateur=(DoubleEgal | ExclamationEgal) droite=expression #expressionEgalite
+    | gauche=expression operateur=DoubleEsperluette droite=expression #expressionConjonction
+    | gauche=expression operateur=DoubleBarre droite=expression #expressionDisjonction
+    | laCondition=expression PointInterrogation lExpressionAlors=expression DeuxPoint lExpressionSinon=expression #expressionConditionelle
+
+    | ParentheseOuvrante leType=type ParentheseFermante expression #expressionConversion
+    
+    | Vrai #expressionTrue
+    | Faux #expressionFalse
+    | Entier #expressionInt
+    | Flottant #expresionFloat
+    | Caractere #expressionCharacter
+    | Chaine #expressionString
+    | Nul #expressionNull
+    | leNom=Identificateur #lectureIdentificateur
+    
+    | Moi #lectureThis
+    | Super #lectureSuper
+
+;
+

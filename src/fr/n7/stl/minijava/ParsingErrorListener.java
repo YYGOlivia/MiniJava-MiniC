@@ -22,5 +22,4 @@ public class ParsingErrorListener extends BaseErrorListener {
     public boolean hasError() {
         return this.hasError;
     }
-
 }
