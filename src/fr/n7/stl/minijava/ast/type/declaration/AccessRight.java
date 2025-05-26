@@ -8,13 +8,13 @@ public enum AccessRight {
 	public String toString() {
 		switch (this) {
 			case PUBLIC:
-				return "public ";
+				return "public";
 			case PACKAGE:
 				return "";
 			case PROTECTED:
-				return "protected ";
+				return "protected";
 			case PRIVATE:
-				return "private ";
+				return "private";
 			default:
 				throw new IllegalArgumentException("The default case should never be triggered.");
 		}

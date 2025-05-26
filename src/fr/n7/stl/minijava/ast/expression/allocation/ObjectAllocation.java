@@ -1,58 +1,52 @@
-package fr.n7.stl.minijava.expression;
+package fr.n7.stl.minijava.ast.expression.allocation;
 
 import java.util.Iterator;
 import java.util.List;
 
-import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
+import fr.n7.stl.minic.ast.expression.assignable.AssignableExpression;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.Type;
-import fr.n7.stl.minijava.ast.type.declaration.MethodDeclaration;
+import fr.n7.stl.tam.ast.Fragment;
+import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.SemanticsUndefinedException;
 
-public abstract class AbstractMethodCall<ObjectKind extends Expression> implements Expression {
+public class ObjectAllocation implements AccessibleExpression, AssignableExpression {
 
 	private String name;
 
-	private MethodDeclaration declaration;
-
-	private ObjectKind target;
-
 	private List<AccessibleExpression> arguments;
 
-	public AbstractMethodCall(ObjectKind target, String name, List<AccessibleExpression> arguments) {
-		this.target = target;
+	public ObjectAllocation(String name, List<AccessibleExpression> arguments) {
 		this.name = name;
 		this.arguments = arguments;
 	}
 
-	public AbstractMethodCall(String name, List<AccessibleExpression> arguments) {
-		this(null, name, arguments);
-	}
-
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
-		throw new SemanticsUndefinedException("Semantics collect is undefined in AbstractMethodCall.");
+		throw new SemanticsUndefinedException("Semantics collect is undefined in ObjectAllocation.");
 	}
 
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
-		throw new SemanticsUndefinedException("Semantics resolve is undefined in AbstractMethodCall.");
+		throw new SemanticsUndefinedException("Semantics resolve is undefined in ObjectAllocation.");
 	}
 
 	@Override
 	public Type getType() {
-		throw new SemanticsUndefinedException("Semantics getType is undefined in AbstractMethodCall.");
+		throw new SemanticsUndefinedException("Semantics getType is undefined in ObjectAllocation.");
+	}
+
+	@Override
+	public Fragment getCode(TAMFactory factory) {
+		throw new SemanticsUndefinedException("Semantics getCode is undefined in ObjectAllocation.");
 	}
 
 	@Override
 	public String toString() {
 		String image = "";
-		if (this.target != null) {
-			image += this.target + ".";
-		}
-		image += this.name + "( ";
+		image += "new " + this.name + "( ";
 		Iterator<AccessibleExpression> iterator = this.arguments.iterator();
 		if (iterator.hasNext()) {
 			AccessibleExpression argument = iterator.next();

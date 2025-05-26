@@ -40,7 +40,7 @@ public class MethodDeclaration extends ClassElement {
 		if (!this.concrete) {
 			image += "abstract ";
 		}
-		image += this.getAccessRight() + " " + this.type + " " + this.getName() + "( ";
+		image += this.getAccessRight() + " " + this.getElementKind() + " " + this.type + " " + this.getName() + "( ";
 		Iterator<ParameterDeclaration> iterator = this.parameters.iterator();
 		if (iterator.hasNext()) {
 			ParameterDeclaration parameter = iterator.next();

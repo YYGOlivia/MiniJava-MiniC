@@ -1,5 +1,12 @@
 class A {
-    public void setV(int v) {
+
+    public static int v = 1;
+    public int b;
+
+    public static void setV(int v) {
+    }
+
+    public void setB(int v) {
     }
 }
 

@@ -1,4 +1,4 @@
-package fr.n7.stl.minijava.expression;
+package fr.n7.stl.minijava.ast.expression;
 
 import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.scope.Declaration;

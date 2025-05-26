@@ -1,9 +1,9 @@
-package fr.n7.stl.minijava.expression.accessible;
+package fr.n7.stl.minijava.ast.expression.accessible;
 
 import java.util.List;
 
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
-import fr.n7.stl.minijava.expression.AbstractMethodCall;
+import fr.n7.stl.minijava.ast.expression.AbstractMethodCall;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.SemanticsUndefinedException;

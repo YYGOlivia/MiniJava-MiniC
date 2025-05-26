@@ -18,6 +18,6 @@ public class AttributeDeclaration extends ClassElement {
 
 	@Override
 	public String toString() {
-		return this.getAccessRight() + " " + type + " " + this.getName() + ";\n";
+		return this.getAccessRight() + " " + this.getElementKind() + " " + type + " " + this.getName() + ";\n";
 	}
 }

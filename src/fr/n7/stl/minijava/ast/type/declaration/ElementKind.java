@@ -11,7 +11,7 @@ public enum ElementKind {
 			case OBJECT:
 				return "";
 			case CLASS:
-				return "static ";
+				return "static";
 			default:
 				throw new IllegalArgumentException("The default case should never be triggered.");
 		}

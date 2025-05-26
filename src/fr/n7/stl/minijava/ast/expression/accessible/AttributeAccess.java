@@ -1,10 +1,10 @@
-package fr.n7.stl.minijava.expression.accessible;
+package fr.n7.stl.minijava.ast.expression.accessible;
 
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.Type;
-import fr.n7.stl.minijava.expression.AbstractAttribute;
+import fr.n7.stl.minijava.ast.expression.AbstractAttribute;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.SemanticsUndefinedException;

@@ -4,6 +4,9 @@ import fr.n7.stl.minic.ast.scope.Declaration;
 
 public abstract class ClassElement implements Declaration {
 
+	/**
+	 * élément de classe ou d'instance
+	 */
 	private ElementKind elementKind;
 
 	private AccessRight accessRight;

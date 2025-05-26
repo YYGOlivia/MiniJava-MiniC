@@ -1,4 +1,4 @@
-package fr.n7.stl.minijava.instruction;
+package fr.n7.stl.minijava.ast.instruction;
 
 import java.util.Iterator;
 import java.util.List;

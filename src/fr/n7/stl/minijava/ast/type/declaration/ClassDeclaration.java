@@ -78,8 +78,12 @@ public class ClassDeclaration implements Instruction, Declaration {
 			if (element instanceof MethodDeclaration) {
 				MethodDeclaration method = (MethodDeclaration) element;
 				if (this.concrete && !method.isConcrete()) {
-					Logger.error("[ClassDeclaration] Class " + this.name + " is concrete but contains abstract method "
+					Logger.error("[ClassDeclaration] Concrete class " + this.name + " cannot contain abstract method "
 							+ method.getName());
+				}
+			} else if (element instanceof ConstructorDeclaration) {
+				if (!this.concrete) {
+					Logger.error("[ClassDeclaration] Abstract class " + this.name + " cannot have a constructor.");
 				}
 			}
 		}
