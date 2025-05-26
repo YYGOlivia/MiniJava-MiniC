@@ -7,6 +7,7 @@ import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.minijava.expression.AbstractAttribute;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
+import fr.n7.stl.util.SemanticsUndefinedException;
 
 public class AttributeAccess extends AbstractAttribute<AccessibleExpression> implements AccessibleExpression {
 
@@ -16,26 +17,22 @@ public class AttributeAccess extends AbstractAttribute<AccessibleExpression> imp
 
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
-		// TODO Auto-generated method stub
-		return false;
+		throw new SemanticsUndefinedException("Semantics collect is undefined in AttributeAccess.");
 	}
 
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
-		// TODO Auto-generated method stub
-		return false;
+		throw new SemanticsUndefinedException("Semantics resolve is undefined in AttributeAccess.");
 	}
 
 	@Override
 	public Type getType() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new SemanticsUndefinedException("Semantics getType is undefined in AttributeAccess.");
 	}
 
 	@Override
 	public Fragment getCode(TAMFactory factory) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new SemanticsUndefinedException("Semantics getCode is undefined in AttributeAccess.");
 	}
 
 }

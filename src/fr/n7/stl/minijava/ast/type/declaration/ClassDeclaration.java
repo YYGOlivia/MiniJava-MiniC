@@ -62,17 +62,17 @@ public class ClassDeclaration implements Instruction, Declaration {
 
 	@Override
 	public boolean checkType() {
-		throw new SemanticsUndefinedException("Semantics check type is undefined in ClassDeclaration.");
+		throw new SemanticsUndefinedException("Semantics checkType is undefined in ClassDeclaration.");
 	}
 
 	@Override
 	public int allocateMemory(Register register, int offset) {
-		throw new SemanticsUndefinedException("Semantics allocation memory is undefined in ClassDeclaration.");
+		throw new SemanticsUndefinedException("Semantics allocatememory is undefined in ClassDeclaration.");
 	}
 
 	@Override
 	public Fragment getCode(TAMFactory factory) {
-		throw new SemanticsUndefinedException("Semantics get code is undefined in ClassDeclaration.");
+		throw new SemanticsUndefinedException("Semantics getCode is undefined in ClassDeclaration.");
 	}
 
 	@Override
@@ -82,8 +82,7 @@ public class ClassDeclaration implements Instruction, Declaration {
 
 	@Override
 	public Type getType() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new SemanticsUndefinedException("Semantics getCode is undefined in ClassDeclaration.");
 	}
 
 	@Override

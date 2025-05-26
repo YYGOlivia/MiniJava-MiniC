@@ -10,6 +10,7 @@ import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
+import fr.n7.stl.util.SemanticsUndefinedException;
 
 public class ObjectAllocation implements AccessibleExpression, AssignableExpression {
 
@@ -24,26 +25,22 @@ public class ObjectAllocation implements AccessibleExpression, AssignableExpress
 
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
-		// TODO Auto-generated method stub
-		return false;
+		throw new SemanticsUndefinedException("Semantics collect is undefined in ObjectAllocation.");
 	}
 
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
-		// TODO Auto-generated method stub
-		return false;
+		throw new SemanticsUndefinedException("Semantics resolve is undefined in ObjectAllocation.");
 	}
 
 	@Override
 	public Type getType() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new SemanticsUndefinedException("Semantics getType is undefined in ObjectAllocation.");
 	}
 
 	@Override
 	public Fragment getCode(TAMFactory factory) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new SemanticsUndefinedException("Semantics getCode is undefined in ObjectAllocation.");
 	}
 
 	@Override

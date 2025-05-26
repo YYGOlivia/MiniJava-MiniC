@@ -4,6 +4,7 @@ import fr.n7.stl.minic.ast.expression.assignable.AssignableExpression;
 import fr.n7.stl.minijava.expression.AbstractAttribute;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
+import fr.n7.stl.util.SemanticsUndefinedException;
 
 public class AttributeAssignment extends AbstractAttribute<AssignableExpression> implements AssignableExpression {
 
@@ -13,8 +14,7 @@ public class AttributeAssignment extends AbstractAttribute<AssignableExpression>
 
 	@Override
 	public Fragment getCode(TAMFactory factory) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new SemanticsUndefinedException("Semantics getCode is undefined in AttributeAssignment.");
 	}
 
 }

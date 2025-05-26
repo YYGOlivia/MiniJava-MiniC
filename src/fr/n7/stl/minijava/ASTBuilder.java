@@ -122,7 +122,7 @@ public class ASTBuilder extends MiniJavaParserBaseListener {
      * Start the compile phase : collect, resolve, memory allocation and
      * code generation.
      */
-    public void startCompilation() {
+    public void startCompilation(boolean generateCode) {
         for (ClassDeclaration c : this.classes) {
             System.out.println(c);
         }
@@ -160,6 +160,11 @@ public class ASTBuilder extends MiniJavaParserBaseListener {
             return;
         }
         System.out.println("Type verification succeeded.");
+
+        if (!generateCode) {
+            System.out.println("Skipping code generation.");
+            return;
+        }
 
         System.out.println("Code generation ...");
         for (ClassDeclaration c : this.classes) {

@@ -6,6 +6,7 @@ import java.util.List;
 import fr.n7.stl.minic.ast.Block;
 import fr.n7.stl.minic.ast.instruction.declaration.ParameterDeclaration;
 import fr.n7.stl.minic.ast.type.Type;
+import fr.n7.stl.util.SemanticsUndefinedException;
 
 public class ConstructorDeclaration extends ClassElement {
 
@@ -39,7 +40,6 @@ public class ConstructorDeclaration extends ClassElement {
 
 	@Override
 	public Type getType() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new SemanticsUndefinedException("Semantics getType is undefined in ConstructorDeclaration.");
 	}
 }

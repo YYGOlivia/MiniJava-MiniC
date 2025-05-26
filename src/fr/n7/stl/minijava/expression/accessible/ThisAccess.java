@@ -4,6 +4,7 @@ import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minijava.expression.AbstractThis;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
+import fr.n7.stl.util.SemanticsUndefinedException;
 
 public class ThisAccess extends AbstractThis<AccessibleExpression> implements AccessibleExpression {
 
@@ -13,8 +14,7 @@ public class ThisAccess extends AbstractThis<AccessibleExpression> implements Ac
 
 	@Override
 	public Fragment getCode(TAMFactory factory) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new SemanticsUndefinedException("Semantics getCode is undefined in ThisAccess.");
 	}
 
 }

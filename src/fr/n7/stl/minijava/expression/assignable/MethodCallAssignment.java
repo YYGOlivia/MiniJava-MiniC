@@ -7,6 +7,7 @@ import fr.n7.stl.minic.ast.expression.assignable.AssignableExpression;
 import fr.n7.stl.minijava.expression.AbstractMethodCall;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
+import fr.n7.stl.util.SemanticsUndefinedException;
 
 public class MethodCallAssignment extends AbstractMethodCall<AssignableExpression> implements AssignableExpression {
 
@@ -20,8 +21,7 @@ public class MethodCallAssignment extends AbstractMethodCall<AssignableExpressio
 
 	@Override
 	public Fragment getCode(TAMFactory factory) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new SemanticsUndefinedException("Semantics getCode is undefined in MethodCallAssignment.");
 	}
 
 }

@@ -6,6 +6,7 @@ import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minijava.expression.AbstractMethodCall;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
+import fr.n7.stl.util.SemanticsUndefinedException;
 
 public class MethodCallAccess extends AbstractMethodCall<AccessibleExpression> implements AccessibleExpression {
 
@@ -19,8 +20,7 @@ public class MethodCallAccess extends AbstractMethodCall<AccessibleExpression> i
 
 	@Override
 	public Fragment getCode(TAMFactory factory) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new SemanticsUndefinedException("Semantics getCode is undefined in MethodCallAccess.");
 	}
 
 }

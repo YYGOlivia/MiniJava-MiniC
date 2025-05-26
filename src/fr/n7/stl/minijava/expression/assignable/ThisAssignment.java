@@ -4,17 +4,17 @@ import fr.n7.stl.minic.ast.expression.assignable.AssignableExpression;
 import fr.n7.stl.minijava.expression.AbstractThis;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
+import fr.n7.stl.util.SemanticsUndefinedException;
 
 public class ThisAssignment extends AbstractThis<AssignableExpression> implements AssignableExpression {
 
 	public ThisAssignment() {
-		// TODO Auto-generated constructor stub
+	throw new SemanticsUndefinedException("Semantics constructor is undefined in ThisAssignment.");
 	}
 
 	@Override
 	public Fragment getCode(TAMFactory factory) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new SemanticsUndefinedException("Semantics getCode is undefined in ThisAssignment.");
 	}
 
 }

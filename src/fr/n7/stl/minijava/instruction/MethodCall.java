@@ -12,6 +12,7 @@ import fr.n7.stl.minijava.ast.type.declaration.MethodDeclaration;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
+import fr.n7.stl.util.SemanticsUndefinedException;
 
 public class MethodCall implements Instruction {
 
@@ -36,38 +37,32 @@ public class MethodCall implements Instruction {
 
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
-		// TODO Auto-generated method stub
-		return false;
+		throw new SemanticsUndefinedException("Semantics collect is undefined in MethodCall.");
 	}
 
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope, FunctionDeclaration container) {
-		// TODO Auto-generated method stub
-		return false;
+		throw new SemanticsUndefinedException("Semantics collect is undefined in MethodCall.");
 	}
 
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
-		// TODO Auto-generated method stub
-		return false;
+		throw new SemanticsUndefinedException("Semantics resolve is undefined in MethodCall.");
 	}
 
 	@Override
 	public boolean checkType() {
-		// TODO Auto-generated method stub
-		return false;
+		throw new SemanticsUndefinedException("Semantics checkType is undefined in MethodCall.");
 	}
 
 	@Override
 	public int allocateMemory(Register register, int offset) {
-		// TODO Auto-generated method stub
-		return 0;
+		throw new SemanticsUndefinedException("Semantics allocateMemory is undefined in MethodCall.");
 	}
 
 	@Override
 	public Fragment getCode(TAMFactory factory) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new SemanticsUndefinedException("Semantics getCode is undefined in MethodCall.");
 	}
 
 	@Override
