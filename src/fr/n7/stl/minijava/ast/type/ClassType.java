@@ -4,14 +4,24 @@ import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.AtomicType;
 import fr.n7.stl.minic.ast.type.Type;
+import fr.n7.stl.minijava.ast.type.declaration.ClassDeclaration;
+import fr.n7.stl.util.Logger;
 import fr.n7.stl.util.SemanticsUndefinedException;
 
 public class ClassType implements Type {
 
 	private String name;
 
+	private ClassDeclaration declaration;
+
+	
+
 	public ClassType(String name) {
 		this.name = name;
+	}
+	
+	public void setDeclaration(ClassDeclaration decclaration){
+		this.declaration = declaration;
 	}
 
 	@Override
@@ -25,8 +35,18 @@ public class ClassType implements Type {
 
 	@Override
 	public boolean compatibleWith(Type other) {
-		// faut gérer l'héritage
-		throw new SemanticsUndefinedException("Semantics merge is undefined in ClassType.");
+		if (!(other instanceof ClassType)){
+			Logger.error("[ClassType] " + other.toString() +" is not a class");
+		}
+		ClassType otherClass = (ClassType) other;
+		ClassDeclaration ancestor = declaration.getAncestor();
+		boolean compatible = this.name.equals(otherClass.name);
+		while (ancestor!= null && !compatible){
+			ancestor = ancestor.getAncestor();
+			compatible = ancestor.getName().equals(otherClass.name);
+		}
+		return compatible;
+		//throw new SemanticsUndefinedException("Semantics merge is undefined in ClassType.");
 
 	}
 

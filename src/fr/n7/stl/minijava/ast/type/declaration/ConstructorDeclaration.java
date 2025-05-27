@@ -1,12 +1,13 @@
 package fr.n7.stl.minijava.ast.type.declaration;
 
-import java.util.Iterator;
-import java.util.List;
-
 import fr.n7.stl.minic.ast.Block;
 import fr.n7.stl.minic.ast.instruction.declaration.ParameterDeclaration;
+import fr.n7.stl.minic.ast.type.AtomicType;
 import fr.n7.stl.minic.ast.type.Type;
-import fr.n7.stl.util.SemanticsUndefinedException;
+import fr.n7.stl.minijava.ast.type.ClassType;
+import fr.n7.stl.util.Logger;
+import java.util.Iterator;
+import java.util.List;
 
 public class ConstructorDeclaration extends ClassElement {
 
@@ -38,6 +39,11 @@ public class ConstructorDeclaration extends ClassElement {
 
 	@Override
 	public Type getType() {
-		throw new SemanticsUndefinedException("Semantics getType is undefined in ConstructorDeclaration.");
+		if (super.getElementKind()!=ElementKind.OBJECT){
+			Logger.error("[ConstructorDeclaration] " + getName() + " is not an object");
+		}
+		Logger.warning("[ConstructorDeclaration] AUCUNE IDEE DE CE QU4IL SE PASSE APRES CE POINT");
+		return AtomicType.VoidType;
+		//throw new SemanticsUndefinedException("Semantics getType is undefined in ConstructorDeclaration.");
 	}
 }

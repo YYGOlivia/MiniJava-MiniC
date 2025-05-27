@@ -3,8 +3,6 @@
  */
 package fr.n7.stl.minijava.ast.type.declaration;
 
-import java.util.List;
-
 import fr.n7.stl.minic.ast.instruction.Instruction;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
@@ -16,6 +14,7 @@ import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.Logger;
 import fr.n7.stl.util.SemanticsUndefinedException;
+import java.util.List;
 
 /**
  * 
@@ -31,6 +30,10 @@ public class ClassDeclaration implements Instruction, Declaration {
 	private String ancestor;
 
 	private ClassDeclaration ancestorClass;
+
+	public ClassDeclaration getAncestor(){
+		return ancestorClass;
+	}
 
 	/**
 	 * 
@@ -55,8 +58,8 @@ public class ClassDeclaration implements Instruction, Declaration {
 
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
-		if (!scope.accepts(this)) {
-			Logger.error("[ClassDeclaration] Declaration of class " + this.name + " is not accepted in scope");
+		if (scope.knows(name)) {
+			Logger.error("[ClassDeclaration] The name " + this.name + " is already used");
 		}
 		scope.register(this);
 
@@ -127,7 +130,9 @@ public class ClassDeclaration implements Instruction, Declaration {
 
 	@Override
 	public Type getType() {
-		return new ClassType(name);
+		ClassType type = new ClassType(name);
+		type.setDeclaration(this);
+		return type;
 	}
 
 	@Override

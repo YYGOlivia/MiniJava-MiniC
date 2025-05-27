@@ -1,12 +1,10 @@
 package fr.n7.stl.minijava.ast.type.declaration;
 
-import java.util.Iterator;
-import java.util.List;
-
 import fr.n7.stl.minic.ast.Block;
 import fr.n7.stl.minic.ast.instruction.declaration.ParameterDeclaration;
 import fr.n7.stl.minic.ast.type.Type;
-import fr.n7.stl.util.SemanticsUndefinedException;
+import java.util.Iterator;
+import java.util.List;
 
 public class MethodDeclaration extends ClassElement {
 
@@ -61,7 +59,7 @@ public class MethodDeclaration extends ClassElement {
 
 	@Override
 	public Type getType() {
-		throw new SemanticsUndefinedException("Semantics getType is undefined in MethodDeclaration.");
+		return type;
 	}
 
 }
