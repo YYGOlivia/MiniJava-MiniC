@@ -14,12 +14,12 @@
 	</path>
 
 	<target name="generate">
-		<mkdir dir="${java}/fr/n7/stl/minijava/parser"/>
+		<mkdir dir="${java}/fr/n7/stl/minijava/parser" />
 		<java classname="org.antlr.v4.Tool" classpath="tools/antlr-4.13.1-complete.jar:$CLASSPATH">
 			<arg value="-o" />
-            <arg value="${java}/fr/n7/stl/minijava/parser"/>
-            <arg value="MiniJavaLexer.g4" />
-            <arg value="MiniJavaParser.g4" />
+			<arg value="${java}/fr/n7/stl/minijava/parser" />
+			<arg value="MiniJavaLexer.g4" />
+			<arg value="MiniJavaParser.g4" />
 		</java>
 	</target>
 
@@ -45,7 +45,7 @@
 		</java>
 	</target>
 
-		<!-- Vérifier et générer le code TAM -->
+	<!-- Vérifier et générer le code TAM -->
 	<target name="compile-tam" depends="compile">
 		<java classname="fr.n7.stl.minijava.Driver" failonerror="true">
 			<classpath>
@@ -58,8 +58,42 @@
 		</java>
 	</target>
 
+	<!-- Lancer la vérification de tous les programmes test -->
+	<target name="test-verify" depends="compile, test-clean">
+		<java classname="fr.n7.stl.minijava.TestRunner" failonerror="true">
+			<classpath>
+				<pathelement location="${classes}" />
+				<pathelement location="${tools}/commons-lang3-3.7.jar" />
+				<pathelement location="${tools}/commons-text-1.2.jar" />
+				<pathelement location="${tools}/antlr-4.13.1-complete.jar" />
+			</classpath>
+			<arg value="--verify" />
+		</java>
+	</target>
+
+	<!-- Lancer la compilation de tous les programmes de test-->
+	<target name="test-compile" depends="compile, test-clean">
+		<java classname="fr.n7.stl.minijava.TestRunner" failonerror="true">
+			<classpath>
+				<pathelement location="${classes}" />
+				<pathelement location="${tools}/commons-lang3-3.7.jar" />
+				<pathelement location="${tools}/commons-text-1.2.jar" />
+				<pathelement location="${tools}/antlr-4.13.1-complete.jar" />
+			</classpath>
+		</java>
+	</target>
+
 	<target name="clean">
 		<delete dir="${classes}" />
 		<delete dir="${result}" />
+	</target>
+
+	<target name="test-clean">
+		<delete>
+			<fileset dir="src/test/minijava/">
+				<include name="error/**/*.tam" />
+				<include name="success/**/*.tam" />
+			</fileset>
+		</delete>
 	</target>
 </project>

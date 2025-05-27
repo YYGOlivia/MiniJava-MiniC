@@ -1,4 +1,4 @@
-package fr.n7.stl.minic;
+package fr.n7.stl.minijava;
 
 import java.io.File;
 import java.io.OutputStream;
@@ -10,7 +10,7 @@ import java.util.List;
 
 public class TestRunner {
 
-    private static final String TEST_DIR = "src/test/minic/";
+    private static final String TEST_DIR = "src/test/minijava/";
     private static final String ERROR_DIR = TEST_DIR + "error/";
     private static final String SUCCESS_DIR = TEST_DIR + "success/";
     private static boolean generateCode;

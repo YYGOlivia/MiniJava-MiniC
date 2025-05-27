@@ -93,7 +93,7 @@
 	</target>
 
 	<!-- Lancer la vérification de tous les programmes test -->
-	<target name="test-verify" depends="compile">
+	<target name="test-verify" depends="compile, test-clean">
 		<java classname="fr.n7.stl.minic.TestRunner" failonerror="true">
 			<classpath>
 				<pathelement location="${classes}" />
@@ -106,7 +106,7 @@
 	</target>
 
 	<!-- Lancer la compilation de tous les programmes de test-->
-	<target name="test" depends="compile">
+	<target name="test-compile" depends="compile, test-clean">
 		<java classname="fr.n7.stl.minic.TestRunner" failonerror="true">
 			<classpath>
 				<pathelement location="${classes}" />
@@ -117,4 +117,12 @@
 		</java>
 	</target>
 
+	<target name="test-clean">
+		<delete>
+			<fileset dir="src/test/minic/">
+				<include name="error/**/*.tam" />
+				<include name="success/**/*.tam" />
+			</fileset>
+		</delete>
+	</target>
 </project>

@@ -1,5 +1,0 @@
-PUSH 3
-LOADL 1
-STORE (3) 0[SB]
-HALT
-
