@@ -1,0 +1,12 @@
+public class MainDoubleMethod {
+    static void foo() {
+    }
+
+    // Légal, deux méthodes de même noms mais de signatures différentes
+    static void foo(int i) {
+    }
+
+    public static void main(String[] args) {
+
+    }
+}

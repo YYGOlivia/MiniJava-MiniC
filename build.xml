@@ -55,11 +55,11 @@
 
 	<!-- Générer le code Java à partir des grammaires ANTLR -->
 	<target name="generate">
-		<mkdir dir="${java}/fr/n7/stl/minic/parser" />
+		<mkdir dir="${java}/minic/parser" />
 		<java classname="org.antlr.v4.Tool" classpath="tools/antlr-4.13.1-complete.jar:$CLASSPATH"
 			failonerror="true">
 			<arg value="-o" />
-			<arg value="${java}/fr/n7/stl/minic/parser" />
+			<arg value="${java}/minic/parser" />
 			<arg value="MiniCLexer.g4" />
 			<arg value="MiniCParser.g4" />
 		</java>

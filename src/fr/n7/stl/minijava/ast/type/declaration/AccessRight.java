@@ -2,7 +2,22 @@ package fr.n7.stl.minijava.ast.type.declaration;
 
 public enum AccessRight {
 
-	PUBLIC, PACKAGE, PROTECTED, PRIVATE;
+	/**
+	 * Pour une méthode ou un attribut public.
+	 */
+	PUBLIC,
+	/**
+	 * Pour une méthode ou un attribut package-private (par défaut).
+	 */
+	PACKAGE,
+	/**
+	 * Pour une méthode ou un attribut protégé.
+	 */
+	PROTECTED,
+	/**
+	 * Pour une méthode ou un attribut privé.
+	 */
+	PRIVATE;
 
 	@Override
 	public String toString() {

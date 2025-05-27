@@ -33,26 +33,25 @@ public class MainDeclaration implements Instruction {
 
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
-		if (scope.knows(name)){
+		if (scope.knows(name)) {
 			Logger.error("[MainDeclaration] The class " + name + " already exists in the scope.");
 		}
 		boolean okDecl = true;
-		for(Declaration decl : declarations){
-			if (decl instanceof FunctionDeclaration){
+		for (Declaration decl : declarations) {
+			if (decl instanceof FunctionDeclaration) {
 				FunctionDeclaration fonct = (FunctionDeclaration) decl;
 				okDecl = okDecl && fonct.collectAndPartialResolve(scope);
-			}else if (decl instanceof ConstantDeclaration){
+			} else if (decl instanceof ConstantDeclaration) {
 				ConstantDeclaration cons = (ConstantDeclaration) decl;
 				okDecl = okDecl && cons.collectAndPartialResolve(scope);
-			}else if (decl instanceof VariableDeclaration){
+			} else if (decl instanceof VariableDeclaration) {
 				VariableDeclaration var = (VariableDeclaration) decl;
 				okDecl = okDecl && var.collectAndPartialResolve(scope);
-			}else {
+			} else {
 				Logger.error("[MainDeclaration] " + decl.getName() + " is neither a method or an attribute");
 			}
 		}
 		return okDecl && main.collectAndPartialResolve(scope);
-		//throw new SemanticsUndefinedException("Semantics collect is undefined in MainDeclaration.");
 	}
 
 	@Override
@@ -63,12 +62,45 @@ public class MainDeclaration implements Instruction {
 
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
-		throw new SemanticsUndefinedException("Semantics resolve is undefined in MainDeclaration.");
+		if (scope.knows(name)) {
+			Logger.error("[MainDeclaration] The class " + name + " already exists in the scope.");
+		}
+		boolean okDecl = true;
+		for (Declaration decl : declarations) {
+			if (decl instanceof FunctionDeclaration) {
+				FunctionDeclaration fonct = (FunctionDeclaration) decl;
+				okDecl = okDecl && fonct.completeResolve(scope);
+			} else if (decl instanceof ConstantDeclaration) {
+				ConstantDeclaration cons = (ConstantDeclaration) decl;
+				okDecl = okDecl && cons.completeResolve(scope);
+			} else if (decl instanceof VariableDeclaration) {
+				VariableDeclaration var = (VariableDeclaration) decl;
+				okDecl = okDecl && var.completeResolve(scope);
+			} else {
+				Logger.error("[MainDeclaration] " + decl.getName() + " is neither a method or an attribute");
+			}
+		}
+		return okDecl && main.collectAndPartialResolve(scope);
 	}
 
 	@Override
 	public boolean checkType() {
-		throw new SemanticsUndefinedException("Semantics checkType is undefined in MainDeclaration.");
+		boolean okDecl = true;
+		for (Declaration decl : declarations) {
+			if (decl instanceof FunctionDeclaration) {
+				FunctionDeclaration fonct = (FunctionDeclaration) decl;
+				okDecl = okDecl && fonct.checkType();
+			} else if (decl instanceof ConstantDeclaration) {
+				ConstantDeclaration cons = (ConstantDeclaration) decl;
+				okDecl = okDecl && cons.checkType();
+			} else if (decl instanceof VariableDeclaration) {
+				VariableDeclaration var = (VariableDeclaration) decl;
+				okDecl = okDecl && var.checkType();
+			} else {
+				Logger.error("[MainDeclaration] " + decl.getName() + " is neither a method or an attribute");
+			}
+		}
+		return okDecl && main.checkType();
 	}
 
 	@Override
