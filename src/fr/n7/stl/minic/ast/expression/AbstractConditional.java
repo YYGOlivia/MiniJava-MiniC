@@ -110,7 +110,21 @@ public class AbstractConditional<ExpressionKind extends Expression> implements E
 	 */
 	@Override
 	public Fragment getCode(TAMFactory factory) {
-		throw new SemanticsUndefinedException("Semantics getCode is undefined in ConditionalExpression.");
-	}
+		int lNum = factory.createLabelNumber();
+
+		Fragment fragAbsCond = factory.createFragment();
+		fragAbsCond.append(this.condition.getCode(factory));
+		fragAbsCond.add(factory.createJumpIf("if" + lNum, 1));
+		fragAbsCond.append(this.elseExpression.getCode(factory));
+		fragAbsCond.add(factory.createJump("fi" + lNum));
+
+		Fragment fragAbsCondIf = factory.createFragment();
+		fragAbsCondIf.append(this.thenExpression.getCode(factory));
+		fragAbsCondIf.addPrefix("if" + lNum);
+		fragAbsCondIf.addSuffix("fi" + lNum);
+
+		fragAbsCond.append(fragAbsCondIf);
+
+		return fragAbsCond;	}
 
 }
