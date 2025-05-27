@@ -10,12 +10,13 @@ public abstract class AbstractThis<ObjectKind extends Expression> implements Exp
 
 	public AbstractThis() {
 		// rien à faire
-		// throw new SemanticsUndefinedException("Semantics constructor is undefined in AbstractThis.");
+		// throw new SemanticsUndefinedException("Semantics constructor is undefined in
+		// AbstractThis.");
 	}
 
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
-throw new SemanticsUndefinedException("Semantics collect is undefined in AbstractThis.");
+		throw new SemanticsUndefinedException("Semantics collect is undefined in AbstractThis.");
 	}
 
 	@Override

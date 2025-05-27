@@ -15,8 +15,7 @@
 
 ## MiniJava
 
-- `ant j-generate` : génère le parser ANTLR depuis les fichiers .g4
-- `ant j-verify -Dfile=program.java` : vérifie la syntaxe et la sémantique du fichier sans générer de code TAM
+toupareil, mais avec `ant -f minijava-build.xml`
 
 ### TAM
 

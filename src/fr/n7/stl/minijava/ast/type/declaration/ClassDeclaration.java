@@ -30,6 +30,8 @@ public class ClassDeclaration implements Instruction, Declaration {
 
 	private String ancestor;
 
+	private ClassDeclaration ancestorClass;
+
 	/**
 	 * 
 	 */
@@ -69,7 +71,7 @@ public class ClassDeclaration implements Instruction, Declaration {
 				Logger.error("[ClassDeclaration] Class " + this.name + " cannot extend non-class " + this.ancestor);
 			}
 
-			ClassDeclaration ancestorClass = (ClassDeclaration) scope.get(this.ancestor);
+			this.ancestorClass = (ClassDeclaration) scope.get(this.ancestor);
 			// Une classe abstraite ne peut pas étendre une classe concrète
 			if (!this.concrete && ancestorClass.concrete) {
 				Logger.error(
@@ -87,9 +89,6 @@ public class ClassDeclaration implements Instruction, Declaration {
 							+ method.getName());
 				}
 			} else if (element instanceof ConstructorDeclaration) {
-				if (!this.concrete) {
-					Logger.error("[ClassDeclaration] Abstract class " + this.name + " cannot have a constructor.");
-				}
 			}
 		}
 		return true;
