@@ -1,0 +1,12 @@
+class A {
+}
+
+class A {
+    // Erreur: double définition de la classe A
+}
+
+public class DoubleClass {
+
+    public static void main(String[] args) {
+    }
+}

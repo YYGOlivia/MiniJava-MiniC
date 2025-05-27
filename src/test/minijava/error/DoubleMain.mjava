@@ -1,0 +1,9 @@
+class DoubleMain {
+}
+
+public class DoubleMain {
+    // Erreur: classe principale a le même nom que classe déjà définie
+    public static void main(String[] args) {
+
+    }
+}

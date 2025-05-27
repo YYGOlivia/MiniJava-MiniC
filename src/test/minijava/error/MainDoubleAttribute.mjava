@@ -1,0 +1,8 @@
+public class MainDoubleAttribute {
+    static int i = 1;
+    static final int i = 2; // Erreur: redéclaration de la variable i
+
+    public static void main(String[] args) {
+
+    }
+}

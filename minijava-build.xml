@@ -1,6 +1,6 @@
 <project name="MiniJavaCompiler" default="compile" basedir=".">
 
-	<property name="java" location="src" />
+	<property name="java" location="src/fr/n7/stl" />
 	<property name="classes" location="bin/cls" />
 	<property name="result" location="bin/jar" />
 	<property name="lib" location="lib" />

@@ -1,0 +1,11 @@
+class A {
+    // public int i = 1; // illégal d'initialiser un attribut d'instance
+    public int i;
+}
+
+public class AttributeAccess {
+
+    public static void main(String[] args) {
+
+    }
+}

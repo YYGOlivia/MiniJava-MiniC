@@ -1,0 +1,8 @@
+public class MainAttributeTest {
+
+    static int i = 1;
+
+    public static void main(String[] args) {
+        int j = i;
+    }
+}

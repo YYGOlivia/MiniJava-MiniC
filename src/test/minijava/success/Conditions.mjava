@@ -1,0 +1,16 @@
+public class Conditions {
+    public static void main(String[] args) {
+        int x = 10;
+        int y = 20;
+
+        if (x < y) {
+            print "y is bigger";
+        } else {
+            print "x is bigger or equal";
+        }
+
+        boolean test = true && false || true;
+        int result = test ? 1 : 0;
+        print result;
+    }
+}

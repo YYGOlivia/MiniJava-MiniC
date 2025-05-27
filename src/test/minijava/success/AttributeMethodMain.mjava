@@ -1,0 +1,11 @@
+public class AttributeMethodMain {
+    static int i = 1;
+
+    static int i() { // Sans Erreur: méthode du même nom que l'attribut
+        return i;
+    }
+
+    public static void main(String[] args) {
+
+    }
+}
