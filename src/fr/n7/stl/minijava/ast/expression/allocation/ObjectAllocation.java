@@ -8,6 +8,7 @@ import fr.n7.stl.minic.ast.expression.assignable.AssignableExpression;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.Type;
+import fr.n7.stl.minijava.ast.type.ClassType;
 import fr.n7.stl.minijava.ast.type.declaration.ClassDeclaration;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
@@ -19,6 +20,9 @@ public class ObjectAllocation implements AccessibleExpression, AssignableExpress
 	private String name;
 
 	private List<AccessibleExpression> arguments;
+
+	//added
+	private Type type;
 
 	public ObjectAllocation(String name, List<AccessibleExpression> arguments) {
 		this.name = name;
@@ -37,21 +41,40 @@ public class ObjectAllocation implements AccessibleExpression, AssignableExpress
 		if (!classDeclaration.isConcrete()) {
 			Logger.error("[ObjectAllocation] Class " + this.name + " is abstract and cannot be instantiated.");
 		}
+		if (this.type==null){
+			ClassType newType = new ClassType(name);
+			newType.setDeclaration(classDeclaration);
+			this.type = newType;
+		}
 		// TODO: vérifier qu'un constructeur compatible existe
 
 		boolean okArgs = this.arguments.stream().allMatch(arg -> arg.collectAndPartialResolve(scope));
-
 		return okArgs;
 	}
 
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
-		throw new SemanticsUndefinedException("Semantics resolve is undefined in ObjectAllocation.");
+		if (!scope.knows(this.name)) {
+			Logger.error("[ObjectAllocation] Class " + this.name + " is not known in scope.");
+		}
+		if (!(scope.get(this.name) instanceof ClassDeclaration)) {
+			Logger.error("[ObjectAllocation] " + this.name + " is not a class.");
+		}
+		ClassDeclaration classDeclaration = (ClassDeclaration) scope.get(this.name);
+		if (!classDeclaration.isConcrete()) {
+			Logger.error("[ObjectAllocation] Class " + this.name + " is abstract and cannot be instantiated.");
+		}
+		// TODO: vérifier qu'un constructeur compatible existe
+
+		boolean okArgs = this.arguments.stream().allMatch(arg -> arg.completeResolve(scope));
+		return okArgs;
+		//throw new SemanticsUndefinedException("Semantics resolve is undefined in ObjectAllocation.");
 	}
 
 	@Override
 	public Type getType() {
-		throw new SemanticsUndefinedException("Semantics getType is undefined in ObjectAllocation.");
+		return type;
+		//throw new SemanticsUndefinedException("Semantics getType is undefined in ObjectAllocation.");
 	}
 
 	@Override

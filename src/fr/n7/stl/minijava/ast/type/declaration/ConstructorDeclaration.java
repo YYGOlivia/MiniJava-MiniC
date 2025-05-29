@@ -15,6 +15,11 @@ public class ConstructorDeclaration extends ClassElement {
 
 	private Block body;
 
+	//added
+	// public Block getBody(){
+	// 	return body;
+	// }
+
 	public ConstructorDeclaration(String name, List<ParameterDeclaration> parameter, Block body) {
 		super(name);
 		this.parameters = parameter;

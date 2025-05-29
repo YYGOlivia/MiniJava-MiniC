@@ -20,7 +20,7 @@ public class ClassType implements Type {
 		this.name = name;
 	}
 	
-	public void setDeclaration(ClassDeclaration decclaration){
+	public void setDeclaration(ClassDeclaration declaration){
 		this.declaration = declaration;
 	}
 
@@ -39,11 +39,11 @@ public class ClassType implements Type {
 			Logger.error("[ClassType] " + other.toString() +" is not a class");
 		}
 		ClassType otherClass = (ClassType) other;
-		ClassDeclaration ancestor = declaration.getAncestor();
+		ClassDeclaration ancestor = this.declaration.getAncestor();
 		boolean compatible = this.name.equals(otherClass.name);
 		while (ancestor!= null && !compatible){
-			ancestor = ancestor.getAncestor();
 			compatible = ancestor.getName().equals(otherClass.name);
+			ancestor = ancestor.getAncestor();
 		}
 		return compatible;
 		//throw new SemanticsUndefinedException("Semantics merge is undefined in ClassType.");
@@ -68,7 +68,15 @@ public class ClassType implements Type {
 
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
-		throw new SemanticsUndefinedException("Semantics resolve is undefined in ClassType.");
+		if (!scope.knows(name)){
+			Logger.error("[ClassType] " + name + " isn't registered in the scope");
+			return false;
+		}
+		if (declaration == null){
+			this.declaration = (ClassDeclaration) scope.get(name);
+		}
+		return true;
+		//throw new SemanticsUndefinedException("Semantics resolve is undefined in ClassType.");
 	}
 
 	public String toString() {

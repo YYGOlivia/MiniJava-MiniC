@@ -7,6 +7,7 @@ import fr.n7.stl.minic.ast.instruction.Instruction;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
+import fr.n7.stl.minic.ast.scope.SymbolTable;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.minijava.ast.type.ClassType;
 import fr.n7.stl.tam.ast.Fragment;
@@ -84,6 +85,17 @@ public class ClassDeclaration implements Instruction, Declaration {
 			// TODO: ajouter les ClassElement de l'ancêtre ?
 		}
 
+		SymbolTable classScope = new SymbolTable();
+		// Premier parcours pour ajouter les elements au scope de la classe
+		// for (ClassElement element : this.elements) {
+		// 	if (!classScope.accepts(element)){
+		// 		Logger.error("[ClassDeclaration] The element " + element.getName() + " is already declared in class " + this.name);
+		// 	}
+		// 	classScope.register(element);
+		// }
+		// boolean okElems = true;
+
+		//Second parcours pour resolve et verifier abstract methods
 		for (ClassElement element : this.elements) {
 			if (element instanceof MethodDeclaration) {
 				MethodDeclaration method = (MethodDeclaration) element;
@@ -91,8 +103,13 @@ public class ClassDeclaration implements Instruction, Declaration {
 					Logger.error("[ClassDeclaration] Concrete class " + this.name + " cannot contain abstract method "
 							+ method.getName());
 				}
-			} else if (element instanceof ConstructorDeclaration) {
-			}
+				// okElems = okElems && (!method.isConcrete() || method.getBody().collectAndPartialResolve(classScope));
+			} 
+			// else if (element instanceof ConstructorDeclaration) {
+			// 	ConstructorDeclaration constructor = (ConstructorDeclaration) element;
+			// 	okElems = okElems && constructor.getBody().collectAndPartialResolve(classScope);
+			// }
+			//Rien besoinde collect si c'est un attribut
 		}
 		return true;
 	}
@@ -105,12 +122,18 @@ public class ClassDeclaration implements Instruction, Declaration {
 
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
-		throw new SemanticsUndefinedException("Semantics resolve is undefined in ClassDeclaration.");
+		//TODO method.getBody().completResolve()
+		return true;
+		//throw new SemanticsUndefinedException("Semantics resolve is undefined in ClassDeclaration.");
 	}
 
 	@Override
 	public boolean checkType() {
-		throw new SemanticsUndefinedException("Semantics checkType is undefined in ClassDeclaration.");
+		if (ancestor!=null){
+			return  ancestorClass.checkType();
+		}
+		return true;
+		//throw new SemanticsUndefinedException("Semantics checkType is undefined in ClassDeclaration.");
 	}
 
 	@Override
