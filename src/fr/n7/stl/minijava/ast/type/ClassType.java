@@ -47,6 +47,7 @@ public class ClassType implements Type {
 		}
 		return compatible;
 		//throw new SemanticsUndefinedException("Semantics merge is undefined in ClassType.");
+		  
 
 	}
 
