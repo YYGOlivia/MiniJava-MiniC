@@ -57,6 +57,12 @@ public class ClassDeclaration implements Instruction, Declaration {
 		return this.concrete;
 	}
 
+	//added
+	public ClassElement getElement(String name){
+		ClassElement el =  elements.stream().filter((e) -> e.getName().equals(name)).findFirst().orElse(null);
+		return el;
+	}
+
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
 		if (scope.knows(name)) {
@@ -123,6 +129,7 @@ public class ClassDeclaration implements Instruction, Declaration {
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
 		//TODO method.getBody().completResolve()
+		
 		return true;
 		//throw new SemanticsUndefinedException("Semantics resolve is undefined in ClassDeclaration.");
 	}

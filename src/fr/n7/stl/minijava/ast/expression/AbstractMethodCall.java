@@ -1,15 +1,14 @@
 package fr.n7.stl.minijava.ast.expression;
 
-import java.util.Iterator;
-import java.util.List;
-
 import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.minijava.ast.type.declaration.MethodDeclaration;
-import fr.n7.stl.util.SemanticsUndefinedException;
+import fr.n7.stl.util.Logger;
+import java.util.Iterator;
+import java.util.List;
 
 public abstract class AbstractMethodCall<ObjectKind extends Expression> implements Expression {
 
@@ -33,17 +32,40 @@ public abstract class AbstractMethodCall<ObjectKind extends Expression> implemen
 
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
-		throw new SemanticsUndefinedException("Semantics collect is undefined in AbstractMethodCall.");
+		if (!scope.knows(name)){
+			Logger.error("[AbstractMethodCall] The method " + name + " is not declared");
+		}
+		this.declaration = (MethodDeclaration) scope.get(name);
+		boolean argsOk = arguments.stream().allMatch(arg -> arg.collectAndPartialResolve(scope));
+		if (target==null){
+			//Appel methode statique
+			return argsOk;
+		}
+		boolean targetOk = target.collectAndPartialResolve(scope);
+		return targetOk && argsOk;
+		//throw new SemanticsUndefinedException("Semantics collect is undefined in AbstractMethodCall.");
 	}
 
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
-		throw new SemanticsUndefinedException("Semantics resolve is undefined in AbstractMethodCall.");
+		if (!scope.knows(name)){
+			Logger.error("[AbstractMethodCall] The method " + name + " is not declared");
+		}
+		this.declaration = (MethodDeclaration) scope.get(name);
+		boolean argsOk = arguments.stream().allMatch(arg -> arg.completeResolve(scope));
+		if (target==null){
+			//Appel methode statique
+			return argsOk;
+		}
+		boolean targetOk = target.completeResolve(scope);
+		return targetOk && argsOk;
+		//throw new SemanticsUndefinedException("Semantics resolve is undefined in AbstractMethodCall.");
 	}
 
 	@Override
 	public Type getType() {
-		throw new SemanticsUndefinedException("Semantics getType is undefined in AbstractMethodCall.");
+		return declaration.getType();
+		//throw new SemanticsUndefinedException("Semantics getType is undefined in AbstractMethodCall.");
 	}
 
 	@Override

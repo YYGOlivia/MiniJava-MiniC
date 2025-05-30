@@ -17,17 +17,20 @@ public class AttributeAccess extends AbstractAttribute<AccessibleExpression> imp
 
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
-		throw new SemanticsUndefinedException("Semantics collect is undefined in AttributeAccess.");
+		return super.collectAndPartialResolve(scope);
+		// throw new SemanticsUndefinedException("Semantics collect is undefined in AttributeAccess.");
 	}
 
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
-		throw new SemanticsUndefinedException("Semantics resolve is undefined in AttributeAccess.");
+		return super.completeResolve(scope);
+		//throw new SemanticsUndefinedException("Semantics resolve is undefined in AttributeAccess.");
 	}
 
 	@Override
 	public Type getType() {
-		throw new SemanticsUndefinedException("Semantics getType is undefined in AttributeAccess.");
+		return super.getType();
+		//throw new SemanticsUndefinedException("Semantics getType is undefined in AttributeAccess.");
 	}
 
 	@Override

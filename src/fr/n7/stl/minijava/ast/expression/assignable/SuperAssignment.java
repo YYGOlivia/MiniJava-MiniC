@@ -9,7 +9,8 @@ import fr.n7.stl.util.SemanticsUndefinedException;
 public class SuperAssignment extends AbstractSuper<AssignableExpression> implements AssignableExpression {
 
 	public SuperAssignment() {
-		throw new SemanticsUndefinedException("Semantics constructor is undefined in SuperAssignment.");
+		// rien a faire non plus ? 
+		//throw new SemanticsUndefinedException("Semantics constructor is undefined in SuperAssignment.");
 	}
 
 	@Override

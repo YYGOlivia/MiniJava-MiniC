@@ -4,14 +4,20 @@ import java.util.Iterator;
 import java.util.List;
 
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
+import fr.n7.stl.minic.ast.expression.accessible.IdentifierAccess;
 import fr.n7.stl.minic.ast.instruction.Instruction;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
+import fr.n7.stl.minijava.ast.type.declaration.AttributeDeclaration;
+import fr.n7.stl.minijava.ast.type.declaration.ClassDeclaration;
+import fr.n7.stl.minijava.ast.type.declaration.ClassElement;
+import fr.n7.stl.minijava.ast.type.declaration.ElementKind;
 import fr.n7.stl.minijava.ast.type.declaration.MethodDeclaration;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
+import fr.n7.stl.util.Logger;
 import fr.n7.stl.util.SemanticsUndefinedException;
 
 public class MethodCall implements Instruction {
@@ -36,7 +42,49 @@ public class MethodCall implements Instruction {
 
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
-		throw new SemanticsUndefinedException("Semantics collect is undefined in MethodCall.");
+		boolean okArgs = arguments.stream().allMatch(a -> a.collectAndPartialResolve(scope));
+		if (target==null){
+			//methode statique
+			if (!scope.contains(name)){
+				Logger.error("[MethodCall] The method " + name + " is not defined");
+			}
+			this.method = (MethodDeclaration) scope.get(name);
+			// Pas besoin vérifier statique car si dans le scope elle est soit statique soit on est dans la classe
+			return true;
+		}
+
+		target.collectAndPartialResolve(scope);
+		if (target instanceof IdentifierAccess){
+			IdentifierAccess id = (IdentifierAccess) target;
+			boolean isStatic = id.getExpression()==null;
+			Declaration cDecl;
+			if (isStatic){
+				cDecl = scope.get(id.getName());
+			}else{
+				cDecl = scope.get(id.getExpression().getDeclaration().getType().toString());
+			}
+			if (!(cDecl instanceof ClassDeclaration)){
+				Logger.error("[MethodCall] The object " + target.toString() + " is not an instance of a class");
+			}
+			ClassDeclaration classDecl = (ClassDeclaration) cDecl;	
+			ClassElement elem = classDecl.getElement(name);
+			if (elem==null){
+				Logger.error("[MethodCall] The method " + name + " is not declared in class "+ classDecl.getName());
+			}
+			this.method = (MethodDeclaration) elem;
+
+			boolean methodStatic = method.getElementKind()==ElementKind.CLASS;
+			if (isStatic && !methodStatic){
+				Logger.error("[MethodCall] The method " + name + " is not static (cannot be called on a class)");
+			}else if (!isStatic && methodStatic){
+				Logger.error("[MethodCall] The method " + name + " is static (cannot be called on an object)");
+			}
+			//TODO vérifier les acces
+		} else{
+			Logger.error("[MethodCall] The object " + target.toString() + " is not an identifier");
+		}
+		return okArgs;
+		//throw new SemanticsUndefinedException("Semantics collect is undefined in MethodCall.");
 	}
 
 	@Override
