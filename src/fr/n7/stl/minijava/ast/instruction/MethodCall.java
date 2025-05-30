@@ -7,6 +7,7 @@ import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.expression.accessible.IdentifierAccess;
 import fr.n7.stl.minic.ast.instruction.Instruction;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
+import fr.n7.stl.minic.ast.instruction.declaration.ParameterDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minijava.ast.type.declaration.AttributeDeclaration;
@@ -19,6 +20,7 @@ import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.Logger;
 import fr.n7.stl.util.SemanticsUndefinedException;
+import java.util.ArrayList;
 
 public class MethodCall implements Instruction {
 
@@ -45,12 +47,12 @@ public class MethodCall implements Instruction {
 		boolean okArgs = arguments.stream().allMatch(a -> a.collectAndPartialResolve(scope));
 		if (target==null){
 			//methode statique
-			if (!scope.contains(name)){
+			if (!scope.knows(name)){
 				Logger.error("[MethodCall] The method " + name + " is not defined");
 			}
 			this.method = (MethodDeclaration) scope.get(name);
 			// Pas besoin vérifier statique car si dans le scope elle est soit statique soit on est dans la classe
-			return true;
+			return okArgs;
 		}
 
 		target.collectAndPartialResolve(scope);
@@ -80,6 +82,7 @@ public class MethodCall implements Instruction {
 				Logger.error("[MethodCall] The method " + name + " is static (cannot be called on an object)");
 			}
 			//TODO vérifier les acces
+
 		} else{
 			Logger.error("[MethodCall] The object " + target.toString() + " is not an identifier");
 		}

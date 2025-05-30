@@ -24,6 +24,10 @@ public class Foo {
         A a = new A();
         A b = new B();
         int c = a.b;
-        A.setB(c);
+        a.setB(c);
+        A.setV(3);
+        int x = A.v;
+        m();
+
     }
 }

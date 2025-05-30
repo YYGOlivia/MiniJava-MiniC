@@ -37,18 +37,18 @@ public class MainDeclaration implements Instruction {
 		if (scope.knows(name)) {
 			Logger.error("[MainDeclaration] The class " + name + " already exists in the scope.");
 		}
-		SymbolTable mainScope = new SymbolTable(scope);
+		//SymbolTable mainScope = new SymbolTable(scope);
 		boolean okDecl = true;
 		for (Declaration decl : declarations) {
 			if (decl instanceof FunctionDeclaration) {
 				FunctionDeclaration fonct = (FunctionDeclaration) decl;
-				okDecl = okDecl && fonct.collectAndPartialResolve(mainScope);
+				okDecl = okDecl && fonct.collectAndPartialResolve(scope);
 			} else if (decl instanceof ConstantDeclaration) {
 				ConstantDeclaration cons = (ConstantDeclaration) decl;
-				okDecl = okDecl && cons.collectAndPartialResolve(mainScope);
+				okDecl = okDecl && cons.collectAndPartialResolve(scope);
 			} else if (decl instanceof VariableDeclaration) {
 				VariableDeclaration var = (VariableDeclaration) decl;
-				okDecl = okDecl && var.collectAndPartialResolve(mainScope);
+				okDecl = okDecl && var.collectAndPartialResolve(scope);
 			} else {
 				Logger.error("[MainDeclaration] " + decl.getName() + " is neither a method or an attribute");
 			}
@@ -67,18 +67,18 @@ public class MainDeclaration implements Instruction {
 		if (scope.knows(name)) {
 			Logger.error("[MainDeclaration] The class " + name + " already exists in the scope.");
 		}
-		SymbolTable mainScope = new SymbolTable(scope);
+		//SymbolTable mainScope = new SymbolTable(scope);
 		boolean okDecl = true;
 		for (Declaration decl : declarations) {
 			if (decl instanceof FunctionDeclaration) {
 				FunctionDeclaration fonct = (FunctionDeclaration) decl;
-				okDecl = okDecl && fonct.completeResolve(mainScope);
+				okDecl = okDecl && fonct.completeResolve(scope);
 			} else if (decl instanceof ConstantDeclaration) {
 				ConstantDeclaration cons = (ConstantDeclaration) decl;
-				okDecl = okDecl && cons.completeResolve(mainScope);
+				okDecl = okDecl && cons.completeResolve(scope);
 			} else if (decl instanceof VariableDeclaration) {
 				VariableDeclaration var = (VariableDeclaration) decl;
-				okDecl = okDecl && var.completeResolve(mainScope);
+				okDecl = okDecl && var.completeResolve(scope);
 			} else {
 				Logger.error("[MainDeclaration] " + decl.getName() + " is neither a method or an attribute");
 			}

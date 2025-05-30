@@ -1,5 +1,6 @@
 package fr.n7.stl.minijava.ast.expression;
 
+
 import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.expression.accessible.IdentifierAccess;
 import fr.n7.stl.minic.ast.scope.Declaration;
@@ -8,6 +9,7 @@ import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.minijava.ast.type.declaration.AttributeDeclaration;
 import fr.n7.stl.minijava.ast.type.declaration.ClassDeclaration;
 import fr.n7.stl.minijava.ast.type.declaration.ClassElement;
+import fr.n7.stl.minijava.ast.type.declaration.ElementKind;
 import fr.n7.stl.util.Logger;
 
 public abstract class AbstractAttribute<ObjectKind extends Expression> implements Expression {
@@ -23,22 +25,47 @@ public abstract class AbstractAttribute<ObjectKind extends Expression> implement
 
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
+		if (object==null){
+			//attribut statique
+			if (!scope.contains(name)){
+				Logger.error("[AbstractAttribute] The attribute " + name + " is not defined");
+			}
+			this.attribute = (AttributeDeclaration) scope.get(name);
+			// Pas besoin vérifier statique car si dans le scope il est soit statique soit on est dans la classe
+			return true;
+		}
+
 		object.collectAndPartialResolve(scope);
-		if (!(object instanceof IdentifierAccess)){
-			Logger.error("[AbstracAttribute] The object " + object.toString() + " is not an identifier");
+		if (object instanceof IdentifierAccess){
+			IdentifierAccess id = (IdentifierAccess) object;
+			boolean isStatic = id.getExpression()==null;
+			Declaration cDecl;
+			if (isStatic){
+				cDecl = scope.get(id.getName());
+			}else{
+				cDecl = scope.get(id.getExpression().getDeclaration().getType().toString());
+			}
+			if (!(cDecl instanceof ClassDeclaration)){
+				Logger.error("[AbstractAttribute] The object " + object.toString() + " is not an instance of a class");
+			}
+			ClassDeclaration classDecl = (ClassDeclaration) cDecl;	
+			ClassElement elem = classDecl.getElement(name);
+			if (elem==null){
+				Logger.error("[AbstractAttribute] The attribute " + name + " is not declared in class "+ classDecl.getName());
+			}
+			this.attribute = (AttributeDeclaration) elem;
+
+			boolean methodStatic = attribute.getElementKind()==ElementKind.CLASS;
+			if (isStatic && !methodStatic){
+				Logger.error("[AbstractAttribute] The attribute " + name + " is not static (cannot be called on a class)");
+			}else if (!isStatic && methodStatic){
+				Logger.error("[AbstractAttribute] The attribute " + name + " is static (cannot be called on an object)");
+			}
+			//TODO vérifier les acces
+
+		} else{
+			Logger.error("[AbstractAttribute] The attribute " + object.toString() + " is not an identifier");
 		}
-		IdentifierAccess id = (IdentifierAccess) object;
-		Declaration decl = id.getExpression().getDeclaration();
-		Declaration cDecl = scope.get(decl.getType().toString());
-		if (!(cDecl instanceof ClassDeclaration)){
-			Logger.error("[AbstracAttribute] The object " + object.toString() + " is not an instance of a class");
-		}
-		ClassDeclaration classDecl = (ClassDeclaration) cDecl;	
-		ClassElement elem = classDecl.getElement(name);
-		if (elem==null){
-			Logger.error("[AbstracAttribute] The attribute " + name + " is not declared in class "+ classDecl.getName());
-		}
-		this.attribute = (AttributeDeclaration) elem;
 
 		//TODO : verifier les acces 
 		// comment savoir si on est dans le main, ou dans une classe lors de l'appel ?

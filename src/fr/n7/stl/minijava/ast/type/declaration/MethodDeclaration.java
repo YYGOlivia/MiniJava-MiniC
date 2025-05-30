@@ -1,10 +1,13 @@
 package fr.n7.stl.minijava.ast.type.declaration;
 
 import fr.n7.stl.minic.ast.Block;
+import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.instruction.declaration.ParameterDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.Type;
+
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -15,6 +18,10 @@ public class MethodDeclaration extends ClassElement {
 	private List<ParameterDeclaration> parameters;
 
 	private Block body;
+
+	public Block getBody(){
+		return body;
+	}
 
 	//added
 	// public boolean resolve(HierarchicalScope<Declaration> scope){
