@@ -1,5 +1,6 @@
 package fr.n7.stl.minijava.ast.instruction;
 
+import fr.n7.stl.minic.ast.expression.FunctionCall;
 import java.util.Iterator;
 import java.util.List;
 
@@ -31,6 +32,8 @@ public class MethodCall implements Instruction {
 	private MethodDeclaration method;
 
 	private List<AccessibleExpression> arguments;
+
+	private FunctionCall fonction;
 
 	public MethodCall(AccessibleExpression target, String name, List<AccessibleExpression> arguments) {
 		this.name = name;
@@ -82,10 +85,13 @@ public class MethodCall implements Instruction {
 				Logger.error("[MethodCall] The method " + name + " is static (cannot be called on an object)");
 			}
 			//TODO vérifier les acces
-
+			new FunctionCall(name, arguments);
+			FunctionDeclaration fDecl = method.getFunction(classDecl.getName() + "." + name, classDecl.getType());
+			scope.register(fDecl);
 		} else{
 			Logger.error("[MethodCall] The object " + target.toString() + " is not an identifier");
 		}
+
 		return okArgs;
 		//throw new SemanticsUndefinedException("Semantics collect is undefined in MethodCall.");
 	}

@@ -102,6 +102,7 @@ public class ClassDeclaration implements Instruction, Declaration {
 		// boolean okElems = true;
 
 		//Second parcours pour resolve et verifier abstract methods
+		//boolean okElems = true;
 		for (ClassElement element : this.elements) {
 			if (element instanceof MethodDeclaration) {
 				MethodDeclaration method = (MethodDeclaration) element;
@@ -109,7 +110,7 @@ public class ClassDeclaration implements Instruction, Declaration {
 					Logger.error("[ClassDeclaration] Concrete class " + this.name + " cannot contain abstract method "
 							+ method.getName());
 				}
-				// okElems = okElems && (!method.isConcrete() || method.getBody().collectAndPartialResolve(classScope));
+				//okElems = okElems && (!method.isConcrete() || method.resolve(classScope));
 			} 
 			// else if (element instanceof ConstructorDeclaration) {
 			// 	ConstructorDeclaration constructor = (ConstructorDeclaration) element;

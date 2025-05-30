@@ -5,6 +5,7 @@ import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.instruction.declaration.ParameterDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
+import fr.n7.stl.minic.ast.scope.SymbolTable;
 import fr.n7.stl.minic.ast.type.Type;
 
 import java.util.ArrayList;
@@ -23,14 +24,13 @@ public class MethodDeclaration extends ClassElement {
 		return body;
 	}
 
-	//added
-	// public boolean resolve(HierarchicalScope<Declaration> scope){
-	// 	SymbolTable bodyScope = new SymbolTable(scope);
-	// 	for (ParameterDeclaration param : parameters){
-	//		
-	// 	}
-	// 	return 
-	// }
+	public FunctionDeclaration getFunction(String name, Type classType){
+		ParameterDeclaration self = new ParameterDeclaration("this", classType);
+		List<ParameterDeclaration> args = parameters;
+		args.add(0, self);
+		FunctionDeclaration f = new FunctionDeclaration(name, type, args, body);
+		return f;
+	}
 
 	private Type type;
 

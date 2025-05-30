@@ -27,7 +27,7 @@ public abstract class AbstractAttribute<ObjectKind extends Expression> implement
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
 		if (object==null){
 			//attribut statique
-			if (!scope.contains(name)){
+			if (!scope.knows(name)){
 				Logger.error("[AbstractAttribute] The attribute " + name + " is not defined");
 			}
 			this.attribute = (AttributeDeclaration) scope.get(name);
@@ -62,8 +62,9 @@ public abstract class AbstractAttribute<ObjectKind extends Expression> implement
 				Logger.error("[AbstractAttribute] The attribute " + name + " is static (cannot be called on an object)");
 			}
 			//TODO vérifier les acces
-
-		} else{
+			
+		}else{
+			Logger.warning(object.getClass().toString());
 			Logger.error("[AbstractAttribute] The attribute " + object.toString() + " is not an identifier");
 		}
 
