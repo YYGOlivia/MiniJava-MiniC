@@ -6,6 +6,7 @@ import java.util.List;
 
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.expression.accessible.IdentifierAccess;
+import fr.n7.stl.minic.ast.expression.accessible.ParameterAccess;
 import fr.n7.stl.minic.ast.instruction.Instruction;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.instruction.declaration.ParameterDeclaration;
@@ -33,7 +34,7 @@ public class MethodCall implements Instruction {
 
 	private List<AccessibleExpression> arguments;
 
-	private FunctionCall fonction;
+	private FunctionCall function;
 
 	public MethodCall(AccessibleExpression target, String name, List<AccessibleExpression> arguments) {
 		this.name = name;
@@ -85,9 +86,13 @@ public class MethodCall implements Instruction {
 				Logger.error("[MethodCall] The method " + name + " is static (cannot be called on an object)");
 			}
 			//TODO vérifier les acces
-			new FunctionCall(name, arguments);
 			FunctionDeclaration fDecl = method.getFunction(classDecl.getName() + "." + name, classDecl.getType());
 			scope.register(fDecl);
+			List<AccessibleExpression> params = new ArrayList<>(arguments);
+			params.add(0,target);
+			this.function = new FunctionCall(fDecl.getName(), arguments);
+			function.collectAndPartialResolve(scope);
+			Logger.warning(scope.toString());
 		} else{
 			Logger.error("[MethodCall] The object " + target.toString() + " is not an identifier");
 		}

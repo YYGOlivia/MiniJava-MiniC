@@ -26,7 +26,7 @@ public class MethodDeclaration extends ClassElement {
 
 	public FunctionDeclaration getFunction(String name, Type classType){
 		ParameterDeclaration self = new ParameterDeclaration("this", classType);
-		List<ParameterDeclaration> args = parameters;
+		List<ParameterDeclaration> args = new ArrayList<>(parameters);
 		args.add(0, self);
 		FunctionDeclaration f = new FunctionDeclaration(name, type, args, body);
 		return f;
