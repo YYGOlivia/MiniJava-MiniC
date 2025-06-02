@@ -32,7 +32,7 @@ public class ClassDeclaration implements Instruction, Declaration {
 
 	private ClassDeclaration ancestorClass;
 
-	public ClassDeclaration getAncestor(){
+	public ClassDeclaration getAncestor() {
 		return ancestorClass;
 	}
 
@@ -44,6 +44,10 @@ public class ClassDeclaration implements Instruction, Declaration {
 		this.name = name;
 		this.ancestor = ancestor;
 		this.elements = elements;
+
+		for (ClassElement elt : this.elements) {
+			elt.setClassDeclaration(this);
+		}
 	}
 
 	/**
@@ -57,9 +61,9 @@ public class ClassDeclaration implements Instruction, Declaration {
 		return this.concrete;
 	}
 
-	//added
-	public ClassElement getElement(String name){
-		ClassElement el =  elements.stream().filter((e) -> e.getName().equals(name)).findFirst().orElse(null);
+	// added
+	public ClassElement getElement(String name) {
+		ClassElement el = elements.stream().filter((e) -> e.getName().equals(name)).findFirst().orElse(null);
 		return el;
 	}
 
@@ -94,15 +98,16 @@ public class ClassDeclaration implements Instruction, Declaration {
 		SymbolTable classScope = new SymbolTable();
 		// Premier parcours pour ajouter les elements au scope de la classe
 		// for (ClassElement element : this.elements) {
-		// 	if (!classScope.accepts(element)){
-		// 		Logger.error("[ClassDeclaration] The element " + element.getName() + " is already declared in class " + this.name);
-		// 	}
-		// 	classScope.register(element);
+		// if (!classScope.accepts(element)){
+		// Logger.error("[ClassDeclaration] The element " + element.getName() + " is
+		// already declared in class " + this.name);
+		// }
+		// classScope.register(element);
 		// }
 		// boolean okElems = true;
 
-		//Second parcours pour resolve et verifier abstract methods
-		//boolean okElems = true;
+		// Second parcours pour resolve et verifier abstract methods
+		// boolean okElems = true;
 		for (ClassElement element : this.elements) {
 			if (element instanceof MethodDeclaration) {
 				MethodDeclaration method = (MethodDeclaration) element;
@@ -110,13 +115,14 @@ public class ClassDeclaration implements Instruction, Declaration {
 					Logger.error("[ClassDeclaration] Concrete class " + this.name + " cannot contain abstract method "
 							+ method.getName());
 				}
-				//okElems = okElems && (!method.isConcrete() || method.resolve(classScope));
-			} 
+				// okElems = okElems && (!method.isConcrete() || method.resolve(classScope));
+			}
 			// else if (element instanceof ConstructorDeclaration) {
-			// 	ConstructorDeclaration constructor = (ConstructorDeclaration) element;
-			// 	okElems = okElems && constructor.getBody().collectAndPartialResolve(classScope);
+			// ConstructorDeclaration constructor = (ConstructorDeclaration) element;
+			// okElems = okElems &&
+			// constructor.getBody().collectAndPartialResolve(classScope);
 			// }
-			//Rien besoinde collect si c'est un attribut
+			// Rien besoinde collect si c'est un attribut
 		}
 		return true;
 	}
@@ -129,19 +135,21 @@ public class ClassDeclaration implements Instruction, Declaration {
 
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
-		//TODO method.getBody().completResolve()
-		
+		// TODO method.getBody().completResolve()
+
 		return true;
-		//throw new SemanticsUndefinedException("Semantics resolve is undefined in ClassDeclaration.");
+		// throw new SemanticsUndefinedException("Semantics resolve is undefined in
+		// ClassDeclaration.");
 	}
 
 	@Override
 	public boolean checkType() {
-		if (ancestor!=null){
-			return  ancestorClass.checkType();
+		if (ancestor != null) {
+			return ancestorClass.checkType();
 		}
 		return true;
-		//throw new SemanticsUndefinedException("Semantics checkType is undefined in ClassDeclaration.");
+		// throw new SemanticsUndefinedException("Semantics checkType is undefined in
+		// ClassDeclaration.");
 	}
 
 	@Override

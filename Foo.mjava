@@ -16,10 +16,12 @@ class B extends A {
 }
 
 public class Foo {
-    
+
     static void m() {
     }
-    static int n=6;
+
+    static int n = 6;
+
     public static void main(String[] args) {
         A a = new A();
         A b = new B();
@@ -27,7 +29,7 @@ public class Foo {
         a.setB(c);
         A.setV(3);
         int x = A.v;
-        m();
+        // m();
 
     }
 }

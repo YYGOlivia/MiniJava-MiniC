@@ -221,7 +221,9 @@ public class ASTBuilder extends MiniJavaParserBaseListener {
         Type leType = ctx.laSignature.leRetour.unType;
         List<ParameterDeclaration> lesParametres = ctx.laSignature.lesParametres.desParametres;
         Block leCorps = ctx.leCorps.unBloc;
-        ctx.uneDeclaration = new FunctionDeclaration(leNom, leType, lesParametres, leCorps);
+        // ctx.uneDeclaration = new FunctionDeclaration(leNom, leType, lesParametres,
+        // leCorps);
+        ctx.uneDeclaration = new MethodDeclaration(leNom, leType, lesParametres, leCorps);
     }
 
     @Override

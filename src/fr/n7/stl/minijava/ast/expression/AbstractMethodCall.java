@@ -2,6 +2,7 @@ package fr.n7.stl.minijava.ast.expression;
 
 import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
+import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.Type;
@@ -32,40 +33,44 @@ public abstract class AbstractMethodCall<ObjectKind extends Expression> implemen
 
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
-		if (!scope.knows(name)){
+		if (!scope.knows(name)) {
 			Logger.error("[AbstractMethodCall] The method " + name + " is not declared");
 		}
+
 		this.declaration = (MethodDeclaration) scope.get(name);
 		boolean argsOk = arguments.stream().allMatch(arg -> arg.collectAndPartialResolve(scope));
-		if (target==null){
-			//Appel methode statique
+		if (target == null) {
+			// Appel methode statique
 			return argsOk;
 		}
 		boolean targetOk = target.collectAndPartialResolve(scope);
 		return targetOk && argsOk;
-		//throw new SemanticsUndefinedException("Semantics collect is undefined in AbstractMethodCall.");
 	}
 
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
-		if (!scope.knows(name)){
+		if (!scope.knows(name)) {
 			Logger.error("[AbstractMethodCall] The method " + name + " is not declared");
 		}
+
+		if (scope.get(name) instanceof FunctionDeclaration) {
+			FunctionDeclaration funDecl = ((FunctionDeclaration) scope.get(name));
+
+		}
+
 		this.declaration = (MethodDeclaration) scope.get(name);
 		boolean argsOk = arguments.stream().allMatch(arg -> arg.completeResolve(scope));
-		if (target==null){
-			//Appel methode statique
+		if (target == null) {
+			// Appel methode statique
 			return argsOk;
 		}
 		boolean targetOk = target.completeResolve(scope);
 		return targetOk && argsOk;
-		//throw new SemanticsUndefinedException("Semantics resolve is undefined in AbstractMethodCall.");
 	}
 
 	@Override
 	public Type getType() {
 		return declaration.getType();
-		//throw new SemanticsUndefinedException("Semantics getType is undefined in AbstractMethodCall.");
 	}
 
 	@Override

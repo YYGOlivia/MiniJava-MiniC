@@ -7,6 +7,7 @@ import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.scope.SymbolTable;
 import fr.n7.stl.minic.ast.type.Type;
+import fr.n7.stl.util.Logger;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -20,17 +21,7 @@ public class MethodDeclaration extends ClassElement {
 
 	private Block body;
 
-	public Block getBody(){
-		return body;
-	}
-
-	public FunctionDeclaration getFunction(String name, Type classType){
-		ParameterDeclaration self = new ParameterDeclaration("this", classType);
-		List<ParameterDeclaration> args = new ArrayList<>(parameters);
-		args.add(0, self);
-		FunctionDeclaration f = new FunctionDeclaration(name, type, args, body);
-		return f;
-	}
+	private FunctionDeclaration function;
 
 	private Type type;
 
@@ -44,6 +35,49 @@ public class MethodDeclaration extends ClassElement {
 
 	public MethodDeclaration(String name, Type type, List<ParameterDeclaration> parameter) {
 		this(name, type, parameter, null);
+	}
+
+	public Block getBody() {
+		return body;
+	}
+
+	@Override
+	public void setClassDeclaration(ClassDeclaration classDecl) {
+		super.setClassDeclaration(classDecl);
+		List<ParameterDeclaration> funcParams = new ArrayList<>(this.parameters);
+		if (this.getElementKind() == ElementKind.OBJECT) {
+			// paramètre "this" uniquement si méthode d'instance
+			ParameterDeclaration self = new ParameterDeclaration("this", classDecl.getType());
+			funcParams.add(0, self);
+		}
+		this.function = new FunctionDeclaration(this.getName(), type, funcParams, body);
+	}
+
+	public FunctionDeclaration getFunction() {
+		return this.function;
+	}
+
+	@Override
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
+
+		SymbolTable functionScope = new SymbolTable(scope);
+		for (ParameterDeclaration paramDecl : this.parameters) {
+			if (!functionScope.accepts(paramDecl)) {
+				Logger.error("[MethodDeclaration] The parameter " + paramDecl.getName()
+						+ " is already declared in the method " + this.getName());
+				return false;
+			}
+			functionScope.register(paramDecl);
+		}
+		boolean okType = type.completeResolve(scope);
+		boolean okBody = this.body.collectAndPartialResolve(scope, this.function);
+		return okBody && okType;
+	}
+
+	@Override
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'completeResolve'");
 	}
 
 	public boolean isConcrete() {
@@ -79,5 +113,4 @@ public class MethodDeclaration extends ClassElement {
 	public Type getType() {
 		return type;
 	}
-
 }

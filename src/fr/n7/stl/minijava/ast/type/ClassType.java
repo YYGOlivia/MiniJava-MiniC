@@ -14,13 +14,11 @@ public class ClassType implements Type {
 
 	private ClassDeclaration declaration;
 
-	
-
 	public ClassType(String name) {
 		this.name = name;
 	}
-	
-	public void setDeclaration(ClassDeclaration declaration){
+
+	public void setDeclaration(ClassDeclaration declaration) {
 		this.declaration = declaration;
 	}
 
@@ -35,19 +33,17 @@ public class ClassType implements Type {
 
 	@Override
 	public boolean compatibleWith(Type other) {
-		if (!(other instanceof ClassType)){
-			Logger.error("[ClassType] " + other.toString() +" is not a class");
+		if (!(other instanceof ClassType)) {
+			Logger.error("[ClassType] " + other.toString() + " is not a class");
 		}
 		ClassType otherClass = (ClassType) other;
 		ClassDeclaration ancestor = this.declaration.getAncestor();
 		boolean compatible = this.name.equals(otherClass.name);
-		while (ancestor!= null && !compatible){
+		while (ancestor != null && !compatible) {
 			compatible = ancestor.getName().equals(otherClass.name);
 			ancestor = ancestor.getAncestor();
 		}
 		return compatible;
-		//throw new SemanticsUndefinedException("Semantics merge is undefined in ClassType.");
-		  
 
 	}
 
@@ -58,6 +54,7 @@ public class ClassType implements Type {
 		} else if (other.compatibleWith(this)) {
 			return this;
 		} else {
+			Logger.warning("[ClassType] merge is not quite implemented for ClassType, returning ErrorType.");
 			return AtomicType.ErrorType;
 		}
 	}
@@ -69,15 +66,14 @@ public class ClassType implements Type {
 
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
-		if (!scope.knows(name)){
+		if (!scope.knows(name)) {
 			Logger.error("[ClassType] " + name + " isn't registered in the scope");
 			return false;
 		}
-		if (declaration == null){
+		if (declaration == null) {
 			this.declaration = (ClassDeclaration) scope.get(name);
 		}
 		return true;
-		//throw new SemanticsUndefinedException("Semantics resolve is undefined in ClassType.");
 	}
 
 	public String toString() {

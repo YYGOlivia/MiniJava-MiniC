@@ -99,6 +99,15 @@ public class BinaryExpression implements AccessibleExpression {
 			Logger.warning("Type error in binary expression : Merged parameters " + left + " " + right);
 		}
 		switch (this.operator) {
+			case And:
+			case Or: {
+				if (resultType.compatibleWith(AtomicType.BooleanType)) {
+					return resultType;
+				} else {
+					Logger.warning("Type error in binary expression : " + this.operator + " parameter " + resultType);
+					return AtomicType.ErrorType;
+				}
+			}
 			case Add: {
 				if (resultType.compatibleWith(AtomicType.FloatingType)
 						|| resultType.compatibleWith(AtomicType.StringType)) {
@@ -158,7 +167,7 @@ public class BinaryExpression implements AccessibleExpression {
 	@Override
 	public Fragment getCode(TAMFactory factory) {
 		Fragment result = this.left.getCode(factory);
-		//result.addComment(this.toString());
+		// result.addComment(this.toString());
 		/*
 		 * if (this.left instanceof AccessibleExpression) {
 		 * result.add(factory.createLoadI(this.left.getType().length())); }

@@ -5,6 +5,8 @@ import java.util.List;
 
 import fr.n7.stl.minic.ast.Block;
 import fr.n7.stl.minic.ast.instruction.declaration.ParameterDeclaration;
+import fr.n7.stl.minic.ast.scope.Declaration;
+import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.AtomicType;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.util.Logger;
@@ -15,9 +17,9 @@ public class ConstructorDeclaration extends ClassElement {
 
 	private Block body;
 
-	//added
+	// added
 	// public Block getBody(){
-	// 	return body;
+	// return body;
 	// }
 
 	public ConstructorDeclaration(String name, List<ParameterDeclaration> parameter, Block body) {
@@ -28,6 +30,18 @@ public class ConstructorDeclaration extends ClassElement {
 
 	public List<ParameterDeclaration> getParams() {
 		return this.parameters;
+	}
+
+	@Override
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'collectAndPartialResolve'");
+	}
+
+	@Override
+	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'completeResolve'");
 	}
 
 	@Override

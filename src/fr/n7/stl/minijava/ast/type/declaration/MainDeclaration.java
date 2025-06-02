@@ -40,9 +40,9 @@ public class MainDeclaration implements Instruction {
 		SymbolTable mainScope = new SymbolTable(scope);
 		boolean okDecl = true;
 		for (Declaration decl : declarations) {
-			if (decl instanceof FunctionDeclaration) {
-				FunctionDeclaration fonct = (FunctionDeclaration) decl;
-				okDecl = okDecl && fonct.collectAndPartialResolve(mainScope);
+			if (decl instanceof MethodDeclaration) {
+				MethodDeclaration fonct = (MethodDeclaration) decl;
+				okDecl = okDecl;// TODO && fonct.collectAndPartialResolve(mainScope);
 			} else if (decl instanceof ConstantDeclaration) {
 				ConstantDeclaration cons = (ConstantDeclaration) decl;
 				okDecl = okDecl && cons.collectAndPartialResolve(mainScope);
@@ -70,9 +70,9 @@ public class MainDeclaration implements Instruction {
 		SymbolTable mainScope = new SymbolTable(scope);
 		boolean okDecl = true;
 		for (Declaration decl : declarations) {
-			if (decl instanceof FunctionDeclaration) {
-				FunctionDeclaration fonct = (FunctionDeclaration) decl;
-				okDecl = okDecl && fonct.completeResolve(mainScope);
+			if (decl instanceof MethodDeclaration) {
+				MethodDeclaration fonct = (MethodDeclaration) decl;
+				okDecl = okDecl;// && fonct.completeResolve(mainScope);
 			} else if (decl instanceof ConstantDeclaration) {
 				ConstantDeclaration cons = (ConstantDeclaration) decl;
 				okDecl = okDecl && cons.completeResolve(mainScope);

@@ -49,56 +49,63 @@ public class MethodCall implements Instruction {
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
 		boolean okArgs = arguments.stream().allMatch(a -> a.collectAndPartialResolve(scope));
-		if (target==null){
-			//methode statique
-			if (!scope.knows(name)){
+		if (target == null) {
+			// methode statique
+			if (!scope.knows(name)) {
 				Logger.error("[MethodCall] The method " + name + " is not defined");
 			}
-			this.method = (MethodDeclaration) scope.get(name);
-			// Pas besoin vérifier statique car si dans le scope elle est soit statique soit on est dans la classe
+			if (scope.get(name) instanceof FunctionDeclaration) {
+				// Appel sur une fonction du Main, c'est pas une FunctionDeclaration
+				this.function = new FunctionCall(name, arguments);
+				this.function.collectAndPartialResolve(scope);
+			} else {
+				this.method = (MethodDeclaration) scope.get(name);
+			}
+			// Pas besoin vérifier statique car si dans le scope elle est soit statique soit
+			// on est dans la classe
 			return okArgs;
 		}
 
 		target.collectAndPartialResolve(scope);
-		if (target instanceof IdentifierAccess){
-			IdentifierAccess id = (IdentifierAccess) target;
-			boolean isStatic = id.getExpression()==null;
-			Declaration cDecl;
-			if (isStatic){
-				cDecl = scope.get(id.getName());
-			}else{
-				cDecl = scope.get(id.getExpression().getDeclaration().getType().toString());
-			}
-			if (!(cDecl instanceof ClassDeclaration)){
-				Logger.error("[MethodCall] The object " + target.toString() + " is not an instance of a class");
-			}
-			ClassDeclaration classDecl = (ClassDeclaration) cDecl;	
-			ClassElement elem = classDecl.getElement(name);
-			if (elem==null){
-				Logger.error("[MethodCall] The method " + name + " is not declared in class "+ classDecl.getName());
-			}
-			this.method = (MethodDeclaration) elem;
-
-			boolean methodStatic = method.getElementKind()==ElementKind.CLASS;
-			if (isStatic && !methodStatic){
-				Logger.error("[MethodCall] The method " + name + " is not static (cannot be called on a class)");
-			}else if (!isStatic && methodStatic){
-				Logger.error("[MethodCall] The method " + name + " is static (cannot be called on an object)");
-			}
-			//TODO vérifier les acces
-			FunctionDeclaration fDecl = method.getFunction(classDecl.getName() + "." + name, classDecl.getType());
-			scope.register(fDecl);
-			List<AccessibleExpression> params = new ArrayList<>(arguments);
-			params.add(0,target);
-			this.function = new FunctionCall(fDecl.getName(), arguments);
-			function.collectAndPartialResolve(scope);
-			Logger.warning(scope.toString());
-		} else{
+		if (!(target instanceof IdentifierAccess)) {
 			Logger.error("[MethodCall] The object " + target.toString() + " is not an identifier");
 		}
 
+		IdentifierAccess id = (IdentifierAccess) target;
+		boolean isStatic = id.getExpression() == null;
+		Declaration cDecl;
+		if (isStatic) {
+			cDecl = scope.get(id.getName());
+		} else {
+			cDecl = scope.get(id.getExpression().getDeclaration().getType().toString());
+		}
+		if (!(cDecl instanceof ClassDeclaration)) {
+			Logger.error("[MethodCall] The object " + target.toString() + " is not an instance of a class");
+		}
+
+		ClassDeclaration classDecl = (ClassDeclaration) cDecl;
+		ClassElement elem = classDecl.getElement(name);
+		if (elem == null) {
+			Logger.error("[MethodCall] The method " + name + " is not declared in class " + classDecl.getName());
+		}
+		this.method = (MethodDeclaration) elem;
+
+		boolean methodStatic = method.getElementKind() == ElementKind.CLASS;
+		if (isStatic && !methodStatic) {
+			Logger.error("[MethodCall] The method " + name + " is not static (cannot be called on a class)");
+		} else if (!isStatic && methodStatic) {
+			Logger.error("[MethodCall] The method " + name + " is static (cannot be called on an object)");
+		}
+		// TODO vérifier les acces
+		FunctionDeclaration fDecl = method.getFunction();
+		scope.register(fDecl);
+		List<AccessibleExpression> params = new ArrayList<>(arguments);
+		params.add(0, target);
+		this.function = new FunctionCall(fDecl.getName(), arguments);
+		function.collectAndPartialResolve(scope);
+		Logger.warning(scope.toString());
+
 		return okArgs;
-		//throw new SemanticsUndefinedException("Semantics collect is undefined in MethodCall.");
 	}
 
 	@Override
@@ -113,6 +120,7 @@ public class MethodCall implements Instruction {
 
 	@Override
 	public boolean checkType() {
+		// vérifier le type de this.function si != null
 		throw new SemanticsUndefinedException("Semantics checkType is undefined in MethodCall.");
 	}
 
