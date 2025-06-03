@@ -95,7 +95,13 @@ public class ClassDeclaration implements Instruction, Declaration {
 			// TODO: ajouter les ClassElement de l'ancêtre ?
 		}
 
+		// Scope de la classe
 		SymbolTable classScope = new SymbolTable();
+		// Ajout de "this" dans la classe
+		String trueName = this.name;
+		this.name = "this";
+		classScope.register(this);
+		this.name = trueName;
 		// Premier parcours pour ajouter les elements au scope de la classe
 		// for (ClassElement element : this.elements) {
 		// if (!classScope.accepts(element)){
@@ -107,7 +113,7 @@ public class ClassDeclaration implements Instruction, Declaration {
 		// boolean okElems = true;
 
 		// Second parcours pour resolve et verifier abstract methods
-		// boolean okElems = true;
+		boolean okElems = true;
 		for (ClassElement element : this.elements) {
 			if (element instanceof MethodDeclaration) {
 				MethodDeclaration method = (MethodDeclaration) element;
@@ -115,7 +121,7 @@ public class ClassDeclaration implements Instruction, Declaration {
 					Logger.error("[ClassDeclaration] Concrete class " + this.name + " cannot contain abstract method "
 							+ method.getName());
 				}
-				// okElems = okElems && (!method.isConcrete() || method.resolve(classScope));
+				okElems = okElems && (!method.isConcrete() || method.collectAndPartialResolve(classScope));
 			}
 			// else if (element instanceof ConstructorDeclaration) {
 			// ConstructorDeclaration constructor = (ConstructorDeclaration) element;

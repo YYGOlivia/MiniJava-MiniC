@@ -7,10 +7,12 @@ import fr.n7.stl.minic.ast.type.Type;
 public class AttributeDeclaration extends ClassElement {
 
 	private Type type;
+	private boolean isFinal;
 
 	public AttributeDeclaration(String name, Type type) {
 		super(name);
 		this.type = type;
+		//TODO ajouter isFinal
 	}
 
 	@Override
@@ -28,6 +30,10 @@ public class AttributeDeclaration extends ClassElement {
 	@Override
 	public Type getType() {
 		return this.type;
+	}
+
+	public boolean isFinal(){
+		return isFinal;
 	}
 
 	@Override

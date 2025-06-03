@@ -6,6 +6,7 @@ import fr.n7.stl.minic.ast.expression.accessible.IdentifierAccess;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.Type;
+import fr.n7.stl.minijava.ast.expression.assignable.ThisAssignment;
 import fr.n7.stl.minijava.ast.type.declaration.AttributeDeclaration;
 import fr.n7.stl.minijava.ast.type.declaration.ClassDeclaration;
 import fr.n7.stl.minijava.ast.type.declaration.ClassElement;
@@ -63,6 +64,18 @@ public abstract class AbstractAttribute<ObjectKind extends Expression> implement
 			}
 			//TODO vérifier les acces
 			
+		}else if (object instanceof ThisAssignment){
+			ThisAssignment thisAssignment = (ThisAssignment) object;
+			ClassDeclaration cDecl = thisAssignment.getClassDeclaration();	
+			ClassElement elem = cDecl.getElement(name);
+			if (elem==null){
+				Logger.error("[AbstractAttribute] The attribute " + name + " is not declared in class "+ cDecl.getName());
+			}
+			this.attribute = (AttributeDeclaration) elem;
+			//pas besoin de vérifier les accès puisqu'on est dans la classe
+
+			//TODO eventuellement vérifier final OU rajouter collect dans AttributeAccess et Assignement
+
 		}else{
 			Logger.warning(object.getClass().toString());
 			Logger.error("[AbstractAttribute] The attribute " + object.toString() + " is not an identifier");

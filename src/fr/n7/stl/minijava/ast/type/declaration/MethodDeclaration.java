@@ -8,7 +8,6 @@ import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.scope.SymbolTable;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.util.Logger;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -70,7 +69,7 @@ public class MethodDeclaration extends ClassElement {
 			functionScope.register(paramDecl);
 		}
 		boolean okType = type.completeResolve(scope);
-		boolean okBody = this.body.collectAndPartialResolve(scope, this.function);
+		boolean okBody = this.body.collectAndPartialResolve(functionScope, this.function);
 		return okBody && okType;
 	}
 
