@@ -4,6 +4,7 @@
 package fr.n7.stl.minijava.ast.type.declaration;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import fr.n7.stl.minic.ast.instruction.Instruction;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
@@ -79,7 +80,7 @@ public class ClassDeclaration implements Instruction, Declaration {
 		return elements.stream()
 				.filter((e) -> e.getName().equals(name) && e instanceof MethodDeclaration)
 				.map((e) -> (MethodDeclaration) e)
-				.toList();
+				.collect(Collectors.toList());
 	}
 
 	/**
@@ -89,7 +90,7 @@ public class ClassDeclaration implements Instruction, Declaration {
 		return elements.stream()
 				.filter((e) -> e instanceof ConstructorDeclaration)
 				.map((e) -> (ConstructorDeclaration) e)
-				.toList();
+				.collect(Collectors.toList());
 	}
 
 	@Override
