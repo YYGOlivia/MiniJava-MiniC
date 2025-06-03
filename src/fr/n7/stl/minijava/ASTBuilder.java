@@ -292,12 +292,13 @@ public class ASTBuilder extends MiniJavaParserBaseListener {
 
     @Override
     public void exitAttributObjet(AttributObjetContext ctx) {
-        ctx.unAttribut = new AttributeDeclaration(ctx.leNom.getText(), ctx.leType.unType);
+        ctx.unAttribut = new AttributeDeclaration(ctx.leNom.getText(), ctx.leType.unType, false);
     }
 
     @Override
     public void exitAttributClasse(AttributClasseContext ctx) {
-        ctx.unAttribut = new AttributeDeclaration(ctx.leNom.getText(), ctx.leType.unType);
+        boolean isFinal = ctx.estFinal != null;
+        ctx.unAttribut = new AttributeDeclaration(ctx.leNom.getText(), ctx.leType.unType, isFinal);
         ctx.unAttribut.setElementKind(ElementKind.CLASS);
     }
 

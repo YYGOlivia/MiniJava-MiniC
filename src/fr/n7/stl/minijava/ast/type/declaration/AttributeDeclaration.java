@@ -9,10 +9,10 @@ public class AttributeDeclaration extends ClassElement {
 	private Type type;
 	private boolean isFinal;
 
-	public AttributeDeclaration(String name, Type type) {
+	public AttributeDeclaration(String name, Type type, boolean isFinal) {
 		super(name);
 		this.type = type;
-		//TODO ajouter isFinal
+		this.isFinal = isFinal;
 	}
 
 	@Override
@@ -32,7 +32,7 @@ public class AttributeDeclaration extends ClassElement {
 		return this.type;
 	}
 
-	public boolean isFinal(){
+	public boolean isFinal() {
 		return isFinal;
 	}
 
