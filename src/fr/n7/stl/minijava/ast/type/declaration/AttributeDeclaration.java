@@ -1,5 +1,6 @@
 package fr.n7.stl.minijava.ast.type.declaration;
 
+import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.Type;
@@ -8,11 +9,13 @@ public class AttributeDeclaration extends ClassElement {
 
 	private Type type;
 	private boolean isFinal;
+	private Expression value;
 
-	public AttributeDeclaration(String name, Type type, boolean isFinal) {
+	public AttributeDeclaration(String name, Type type, boolean isFinal, Expression value) {
 		super(name);
 		this.type = type;
 		this.isFinal = isFinal;
+		this.value = value;
 	}
 
 	@Override
@@ -33,7 +36,11 @@ public class AttributeDeclaration extends ClassElement {
 	}
 
 	public boolean isFinal() {
-		return isFinal;
+		return this.isFinal;
+	}
+
+	public Expression getValue() {
+		return this.value;
 	}
 
 	@Override
