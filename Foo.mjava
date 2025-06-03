@@ -1,10 +1,10 @@
 class A {
 
-    public static int v = 1;
+    public static final int v = 1;
     public int b;
 
-    public static void setV(int v) {
-        int a = 3;
+    public static void setV(int a) {
+        int x = this.v;
     }
 
     public void setB(int b) {
