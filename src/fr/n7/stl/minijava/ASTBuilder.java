@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import fr.n7.stl.minic.ast.Block;
+import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleConditional;
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleConversion;
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
@@ -32,7 +33,6 @@ import fr.n7.stl.minic.ast.instruction.Iteration;
 import fr.n7.stl.minic.ast.instruction.Printer;
 import fr.n7.stl.minic.ast.instruction.Return;
 import fr.n7.stl.minic.ast.instruction.declaration.ConstantDeclaration;
-import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.instruction.declaration.ParameterDeclaration;
 import fr.n7.stl.minic.ast.instruction.declaration.VariableDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
@@ -292,12 +292,14 @@ public class ASTBuilder extends MiniJavaParserBaseListener {
 
     @Override
     public void exitAttributObjet(AttributObjetContext ctx) {
-        ctx.unAttribut = new AttributeDeclaration(ctx.leNom.getText(), ctx.leType.unType);
+        ctx.unAttribut = new AttributeDeclaration(ctx.leNom.getText(), ctx.leType.unType, false, null);
     }
 
     @Override
     public void exitAttributClasse(AttributClasseContext ctx) {
-        ctx.unAttribut = new AttributeDeclaration(ctx.leNom.getText(), ctx.leType.unType);
+        boolean isFinal = ctx.estFinal != null;
+        Expression value = ctx.laValeur.uneExpression;
+        ctx.unAttribut = new AttributeDeclaration(ctx.leNom.getText(), ctx.leType.unType, isFinal, value);
         ctx.unAttribut.setElementKind(ElementKind.CLASS);
     }
 
