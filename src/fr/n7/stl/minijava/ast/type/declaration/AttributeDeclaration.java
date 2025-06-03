@@ -9,6 +9,7 @@ public class AttributeDeclaration extends ClassElement {
 	private Type type;
 	private boolean isFinal;
 
+
 	public AttributeDeclaration(String name, Type type) {
 		super(name);
 		this.type = type;

@@ -17,7 +17,7 @@ public abstract class AbstractAttribute<ObjectKind extends Expression> implement
 
 	private ObjectKind object;
 	private String name;
-	private AttributeDeclaration attribute;
+	protected AttributeDeclaration attribute;
 
 	public AbstractAttribute(ObjectKind object, String name) {
 		this.object = object;

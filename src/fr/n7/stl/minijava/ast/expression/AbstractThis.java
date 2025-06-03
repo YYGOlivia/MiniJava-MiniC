@@ -12,7 +12,6 @@ public abstract class AbstractThis<ObjectKind extends Expression> implements Exp
 
 	//added
 	private ObjectKind object; // pour mettre l'instance de la classe ?
-
 	private ClassDeclaration classDeclaration;
 
 	public AbstractThis() {
