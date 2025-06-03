@@ -115,9 +115,6 @@ public class MethodCall implements Instruction {
 		}
 		this.method = equalMethod != null ? equalMethod : compatibleMethod;
 
-		// TODO: trouver la méthode qui a la signature la plus proche
-		this.method = methods.get(0);
-
 		boolean methodStatic = method.getElementKind() == ElementKind.CLASS;
 		if (isStatic && !methodStatic) {
 			Logger.error("[MethodCall] The method " + name + " is not static (cannot be called on a class)");

@@ -8,9 +8,12 @@ import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.scope.SymbolTable;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.util.Logger;
+import fr.n7.stl.util.SemanticsUndefinedException;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MethodDeclaration extends ClassElement {
 
@@ -52,6 +55,16 @@ public class MethodDeclaration extends ClassElement {
 		this.function = new FunctionDeclaration(this.getName(), type, funcParams, body);
 	}
 
+	/**
+	 * Renvoie la signature de la méthode sous la forme nom(type1,type2,...)
+	 */
+	public String getSignature() {
+		String paramString = this.parameters.stream()
+				.map(p -> p.getType().toString())
+				.collect(Collectors.joining(","));
+		return this.getName() + "(" + paramString + ")";
+	}
+
 	public FunctionDeclaration getFunction() {
 		return this.function;
 	}
@@ -60,15 +73,17 @@ public class MethodDeclaration extends ClassElement {
 		return this.parameters;
 	}
 
+		public boolean isConcrete() {
+		return this.concrete;
+	}
+
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
-
 		SymbolTable functionScope = new SymbolTable(scope);
 		for (ParameterDeclaration paramDecl : this.parameters) {
 			if (!functionScope.accepts(paramDecl)) {
 				Logger.error("[MethodDeclaration] The parameter " + paramDecl.getName()
 						+ " is already declared in the method " + this.getName());
-				return false;
 			}
 			functionScope.register(paramDecl);
 		}
@@ -79,12 +94,12 @@ public class MethodDeclaration extends ClassElement {
 
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'completeResolve'");
+		throw new SemanticsUndefinedException("Semantics resolve is undefined in MethodDeclaration.");
 	}
 
-	public boolean isConcrete() {
-		return this.concrete;
+	@Override
+	public boolean checkType() {
+		throw new SemanticsUndefinedException("Semantics checkType is undefined in MethodDeclaration.");
 	}
 
 	@Override

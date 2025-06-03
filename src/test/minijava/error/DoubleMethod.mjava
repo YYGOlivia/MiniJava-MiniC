@@ -1,0 +1,21 @@
+class A {
+    public int foo() {
+    }
+
+    // Erreur: deux méthodes de même nom et même signature
+    public void foo() {
+    }
+
+    // Erreur: deux méthodes de même nom et même signature
+    private boolean bar(int a) {
+    }
+
+    protected static A bar(int b) {
+    }
+}
+
+public class DoubleMethod {
+
+    public static void main(String[] args) {
+    }
+}

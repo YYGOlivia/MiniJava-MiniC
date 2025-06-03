@@ -10,6 +10,10 @@ import fr.n7.stl.util.SemanticsUndefinedException;
 
 public class ClassType implements Type {
 
+	/**
+	 * Nom du type de classe.
+	 * Il identifie la classe dans le programme.
+	 */
 	private String name;
 
 	private ClassDeclaration declaration;
@@ -34,7 +38,7 @@ public class ClassType implements Type {
 	@Override
 	public boolean compatibleWith(Type other) {
 		if (!(other instanceof ClassType)) {
-			Logger.error("[ClassType] " + other.toString() + " is not a class");
+			return false;
 		}
 		ClassType otherClass = (ClassType) other;
 		ClassDeclaration ancestor = this.declaration.getAncestor();

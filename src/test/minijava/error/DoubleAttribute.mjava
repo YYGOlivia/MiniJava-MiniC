@@ -1,0 +1,9 @@
+class A {
+    public int x;
+    public bool x; // Erreur: deux attributs de même nom
+}
+
+public class DoubleAttribute {
+    public static void main(String[] args) {
+    }
+}
