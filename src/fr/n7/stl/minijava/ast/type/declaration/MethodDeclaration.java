@@ -56,6 +56,10 @@ public class MethodDeclaration extends ClassElement {
 		return this.function;
 	}
 
+	public List<ParameterDeclaration> getParameters() {
+		return this.parameters;
+	}
+
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
 

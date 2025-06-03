@@ -5,6 +5,7 @@ package fr.n7.stl.minijava.ast.type.declaration;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import fr.n7.stl.minic.ast.instruction.Instruction;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
@@ -19,9 +20,6 @@ import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.Logger;
 import fr.n7.stl.util.SemanticsUndefinedException;
 
-/**
- * 
- */
 public class ClassDeclaration implements Instruction, Declaration {
 
 	private List<ClassElement> elements;
@@ -74,12 +72,15 @@ public class ClassDeclaration implements Instruction, Declaration {
 	}
 
 	/**
-	 * Renvoie la liste des méthodes de nom "name" de la classe.
+	 * Renvoie la liste des méthodes de nom <code>name</code> et de nombre de
+	 * paramètre <code>nbparam</code> de la classe.
 	 */
-	public List<MethodDeclaration> getMethods(String name) {
-		return elements.stream()
-				.filter((e) -> e.getName().equals(name) && e instanceof MethodDeclaration)
-				.map((e) -> (MethodDeclaration) e)
+	public List<MethodDeclaration> getMethods(String name, int nbParams) {
+		Stream<MethodDeclaration> methods = elements.stream()
+				.filter((e) -> e instanceof MethodDeclaration)
+				.map((e) -> (MethodDeclaration) e);
+		return methods.filter((e) -> e.getName().equals(name))
+				.filter((e) -> e.getParameters().size() == nbParams)
 				.collect(Collectors.toList());
 	}
 

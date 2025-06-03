@@ -3,6 +3,7 @@ package fr.n7.stl.minijava.ast.instruction;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import fr.n7.stl.minic.ast.expression.FunctionCall;
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
@@ -11,6 +12,7 @@ import fr.n7.stl.minic.ast.instruction.Instruction;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
+import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.minijava.ast.type.declaration.ClassDeclaration;
 import fr.n7.stl.minijava.ast.type.declaration.ElementKind;
 import fr.n7.stl.minijava.ast.type.declaration.MethodDeclaration;
@@ -80,10 +82,39 @@ public class MethodCall implements Instruction {
 		}
 
 		ClassDeclaration classDecl = (ClassDeclaration) cDecl;
-		List<MethodDeclaration> methods = classDecl.getMethods(name);
+		List<MethodDeclaration> methods = classDecl.getMethods(name, this.arguments.size());
 		if (methods.isEmpty()) {
-			Logger.error("[MethodCall] The method " + name + " is not declared in class " + classDecl.getName());
+			Logger.error("[MethodCall] The class " + classDecl.getName() + " does not have a method named " + name
+					+ " with " + this.arguments.size() + " parameters");
 		}
+
+		MethodDeclaration equalMethod = null; // méthode avec les mêmes types de paramètres
+		MethodDeclaration compatibleMethod = null; // méthode avec des types compatibles
+		for (MethodDeclaration m : methods) {
+			boolean equalTypes = true;
+			boolean compatibleTypes = true;
+			for (int i = 0; i < this.arguments.size(); i++) {
+				Type funcParamType = m.getParameters().get(i).getType();
+				Type argType = this.arguments.get(i).getType();
+				equalTypes = equalTypes && argType.equalsTo(funcParamType);
+				compatibleTypes = compatibleTypes && argType.compatibleWith(funcParamType);
+			}
+			if (equalTypes) {
+				equalMethod = m;
+			}
+			if (compatibleTypes) {
+				compatibleMethod = m;
+			}
+		}
+		// Erreur si aucune méthode trouvée
+		if (equalMethod == null && compatibleMethod == null) {
+			List<String> argString = this.arguments.stream()
+					.map(x -> x.getType().toString()).collect(Collectors.toList());
+			Logger.error("[MethodCall] The class " + classDecl.getName() + " does not have a method named "
+					+ name + " compatible with the arguments " + argString);
+		}
+		this.method = equalMethod != null ? equalMethod : compatibleMethod;
+
 		// TODO: trouver la méthode qui a la signature la plus proche
 		this.method = methods.get(0);
 
@@ -96,7 +127,8 @@ public class MethodCall implements Instruction {
 		// TODO vérifier les acces
 		FunctionDeclaration fDecl = method.getFunction();
 		scope.register(fDecl);
-		List<AccessibleExpression> params = new ArrayList<>(arguments);
+		List<AccessibleExpression> params = new ArrayList<>(
+				arguments);
 		params.add(0, target);
 		this.function = new FunctionCall(fDecl.getName(), arguments);
 		function.collectAndPartialResolve(scope);
