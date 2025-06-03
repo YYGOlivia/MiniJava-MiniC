@@ -3,13 +3,12 @@
  */
 package fr.n7.stl.tam.ast.impl;
 
-import java.util.List;
-import java.util.Optional;
-
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.tam.ast.TAMInstruction;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Implementation of the factory to build a TAM program AST.
@@ -378,6 +377,18 @@ public class TAMFactoryImpl implements TAMFactory {
 	public int createLabelNumber() {
 		labelNumber++;
 		return labelNumber;
+	}
+
+	private int offset = 0;
+
+	@Override
+	public void setOffset(int off){
+		this.offset = off;
+	}
+
+	@Override
+	public int getOffset(){
+		return offset;
 	}
 
 }

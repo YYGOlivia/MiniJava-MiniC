@@ -254,4 +254,8 @@ public interface TAMFactory {
 
 	public int createLabelNumber();
 
+	public void setOffset(int off);
+
+	public int getOffset();
+
 }

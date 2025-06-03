@@ -84,4 +84,8 @@ public class FragmentImpl implements Fragment {
 		}
 	}
 
+	public int getSize(){
+		return instructions.size();
+	}
+
 }

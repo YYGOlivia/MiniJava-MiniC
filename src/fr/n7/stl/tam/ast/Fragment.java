@@ -50,4 +50,6 @@ public interface Fragment {
 	 */
 	public void append(Fragment fragment);
 
+	public int getSize();
+
 }
