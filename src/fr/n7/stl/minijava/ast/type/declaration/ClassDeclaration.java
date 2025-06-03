@@ -3,6 +3,8 @@
  */
 package fr.n7.stl.minijava.ast.type.declaration;
 
+import java.util.List;
+
 import fr.n7.stl.minic.ast.instruction.Instruction;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
@@ -15,7 +17,6 @@ import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.Logger;
 import fr.n7.stl.util.SemanticsUndefinedException;
-import java.util.List;
 
 /**
  * 
@@ -61,10 +62,34 @@ public class ClassDeclaration implements Instruction, Declaration {
 		return this.concrete;
 	}
 
-	// added
-	public ClassElement getElement(String name) {
-		ClassElement el = elements.stream().filter((e) -> e.getName().equals(name)).findFirst().orElse(null);
-		return el;
+	/**
+	 * Renvoie l'attribut de nom "name" de la classe et null si l'attribut n'existe
+	 * pas.
+	 */
+	public AttributeDeclaration getAttribute(String name) {
+		return elements.stream()
+				.filter((e) -> e.getName().equals(name) && e instanceof AttributeDeclaration)
+				.map((e) -> (AttributeDeclaration) e).findFirst().orElse(null);
+	}
+
+	/**
+	 * Renvoie la liste des méthodes de nom "name" de la classe.
+	 */
+	public List<MethodDeclaration> getMethods(String name) {
+		return elements.stream()
+				.filter((e) -> e.getName().equals(name) && e instanceof MethodDeclaration)
+				.map((e) -> (MethodDeclaration) e)
+				.toList();
+	}
+
+	/**
+	 * Renvoie la liste des constructeurs de la classe.
+	 */
+	public List<ConstructorDeclaration> getConstructors() {
+		return elements.stream()
+				.filter((e) -> e instanceof ConstructorDeclaration)
+				.map((e) -> (ConstructorDeclaration) e)
+				.toList();
 	}
 
 	@Override

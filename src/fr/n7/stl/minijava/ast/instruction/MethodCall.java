@@ -1,20 +1,17 @@
 package fr.n7.stl.minijava.ast.instruction;
 
-import fr.n7.stl.minic.ast.expression.FunctionCall;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import fr.n7.stl.minic.ast.expression.FunctionCall;
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.expression.accessible.IdentifierAccess;
-import fr.n7.stl.minic.ast.expression.accessible.ParameterAccess;
 import fr.n7.stl.minic.ast.instruction.Instruction;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
-import fr.n7.stl.minic.ast.instruction.declaration.ParameterDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
-import fr.n7.stl.minijava.ast.type.declaration.AttributeDeclaration;
 import fr.n7.stl.minijava.ast.type.declaration.ClassDeclaration;
-import fr.n7.stl.minijava.ast.type.declaration.ClassElement;
 import fr.n7.stl.minijava.ast.type.declaration.ElementKind;
 import fr.n7.stl.minijava.ast.type.declaration.MethodDeclaration;
 import fr.n7.stl.tam.ast.Fragment;
@@ -22,7 +19,6 @@ import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.Logger;
 import fr.n7.stl.util.SemanticsUndefinedException;
-import java.util.ArrayList;
 
 public class MethodCall implements Instruction {
 
@@ -84,11 +80,12 @@ public class MethodCall implements Instruction {
 		}
 
 		ClassDeclaration classDecl = (ClassDeclaration) cDecl;
-		ClassElement elem = classDecl.getElement(name);
-		if (elem == null) {
+		List<MethodDeclaration> methods = classDecl.getMethods(name);
+		if (methods.isEmpty()) {
 			Logger.error("[MethodCall] The method " + name + " is not declared in class " + classDecl.getName());
 		}
-		this.method = (MethodDeclaration) elem;
+		// TODO: trouver la méthode qui a la signature la plus proche
+		this.method = methods.get(0);
 
 		boolean methodStatic = method.getElementKind() == ElementKind.CLASS;
 		if (isStatic && !methodStatic) {
