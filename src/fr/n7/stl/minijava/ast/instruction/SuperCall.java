@@ -6,6 +6,7 @@ import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.instruction.declaration.ParameterDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
+import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.minijava.ast.type.ClassType;
 import fr.n7.stl.minijava.ast.type.declaration.ClassDeclaration;
 import fr.n7.stl.minijava.ast.type.declaration.ConstructorDeclaration;
@@ -74,7 +75,30 @@ public class SuperCall implements Instruction {
 
 	@Override
 	public boolean checkType() {
-		throw new SemanticsUndefinedException("Semantics checkType is undefined in SuperCall.");
+		boolean okLen = this.arguments.size() == this.constructor.getParams().size();
+		if (!okLen) {
+			Logger.error("[SuperCall] Wrong number of arguments for constructor "
+					+ this.constructor.getName() + " call (expected " +
+					this.constructor.getParams().size() + " got " +
+					this.arguments.size() + ").");
+		}
+
+		boolean ok = true;
+		for (int i = 0; i < arguments.size(); i++) {
+			Type paramType = this.constructor.getParams().get(i).getType();
+			Type argType = this.arguments.get(i).getType();
+			ok = ok && argType.compatibleWith(paramType);
+		}
+		if (!ok) {
+			List<String> paramString = this.constructor.getParams().stream()
+					.map(x -> x.getType().toString()).collect(Collectors.toList());
+			List<String> argString = this.arguments.stream().map(x -> x.getType().toString())
+					.collect(Collectors.toList());
+			Logger.error("[SuperCall] Wrong type of arguments for constructor " +
+					this.constructor.getName() + " call (expected "
+					+ paramString + " got " + argString + ").");
+		}
+		return ok && okLen;
 	}
 
 	@Override
