@@ -1,9 +1,5 @@
 package fr.n7.stl.minijava.ast.instruction;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.instruction.Instruction;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
@@ -16,6 +12,9 @@ import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.Logger;
 import fr.n7.stl.util.SemanticsUndefinedException;
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ThisCall implements Instruction {
 
@@ -84,7 +83,9 @@ public class ThisCall implements Instruction {
 
 	@Override
 	public int allocateMemory(Register register, int offset) {
-		throw new SemanticsUndefinedException("Semantics allocateMemory is undefined in ThisCall.");
+		//throw new SemanticsUndefinedException("Semantics allocateMemory is undefined in ThisCall.");
+		// pas vraiment besoin d'allouer de la mémoire ? 
+		return 0;
 	}
 
 	@Override

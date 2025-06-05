@@ -218,13 +218,19 @@ public class ClassDeclaration implements Instruction, Declaration {
 
 	@Override
 	public int allocateMemory(Register register, int offset) {
-		int off = 0;
+		int classOff = offset; // pour les elements statiques stockés directement dans SB
+		int objOff = 0; // pour les éléments dynamiques stockés dans les instances 
 		//Instancie les offsets : ex class Chien{int poids, method grossir} -> poids offset 0, grossir offset 1
 		// appel methode grossir -> adresse objet + offset (1)
 		for (ClassElement elem : elements) { // liste triée 
-			off += elem.allocateMemory(register, off);
+			if (elem.getElementKind()==ElementKind.CLASS){
+				classOff += elem.allocateMemory(register, classOff);
+			}else{
+				objOff += elem.allocateMemory(null, objOff); // register inutilisé 
+			}
+			
 		}
-		return 0; // Pas d'off
+		return classOff - offset; // on retire le offset de base puisqu'en dehors on va additionner 
 		//throw new SemanticsUndefinedException("Semantics allocatememory is undefined in ClassDeclaration.");
 	}
 

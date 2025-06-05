@@ -1,8 +1,5 @@
 package fr.n7.stl.minijava.ast.instruction;
 
-import java.util.Iterator;
-import java.util.List;
-
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.instruction.Instruction;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
@@ -13,6 +10,8 @@ import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.SemanticsUndefinedException;
+import java.util.Iterator;
+import java.util.List;
 
 public class SuperCall implements Instruction {
 
@@ -46,7 +45,9 @@ public class SuperCall implements Instruction {
 
 	@Override
 	public int allocateMemory(Register register, int offset) {
-		throw new SemanticsUndefinedException("Semantics allocateMemory is undefined in SuperCall.");
+		//throw new SemanticsUndefinedException("Semantics allocateMemory is undefined in SuperCall.");
+		// pas vraiment besoin d'allouer de la mémoire ? 
+		return 0;
 	}
 
 	@Override

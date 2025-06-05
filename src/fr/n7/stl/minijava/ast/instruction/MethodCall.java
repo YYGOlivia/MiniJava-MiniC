@@ -152,7 +152,9 @@ public class MethodCall implements Instruction {
 
 	@Override
 	public int allocateMemory(Register register, int offset) {
-		throw new SemanticsUndefinedException("Semantics allocateMemory is undefined in MethodCall.");
+		//throw new SemanticsUndefinedException("Semantics allocateMemory is undefined in MethodCall.");
+		// pas vraiment besoin d'allouer de la mémoire ? 
+		return 0;
 	}
 
 	@Override
