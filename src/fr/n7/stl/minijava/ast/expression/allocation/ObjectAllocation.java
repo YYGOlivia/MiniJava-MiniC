@@ -2,6 +2,7 @@ package fr.n7.stl.minijava.ast.expression.allocation;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.expression.assignable.AssignableExpression;
@@ -10,7 +11,10 @@ import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.minijava.ast.type.ClassType;
 import fr.n7.stl.minijava.ast.type.declaration.ClassDeclaration;
+import fr.n7.stl.minijava.ast.type.declaration.ConstructorDeclaration;
 import fr.n7.stl.tam.ast.Fragment;
+import fr.n7.stl.tam.ast.Library;
+import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.Logger;
 import fr.n7.stl.util.SemanticsUndefinedException;
@@ -20,6 +24,8 @@ public class ObjectAllocation implements AccessibleExpression, AssignableExpress
 	private String name;
 
 	private List<AccessibleExpression> arguments;
+	
+	private ConstructorDeclaration constructor;
 
 	//added
 	private Type type;
@@ -79,9 +85,27 @@ public class ObjectAllocation implements AccessibleExpression, AssignableExpress
 
 	@Override
 	public Fragment getCode(TAMFactory factory) {
-		throw new SemanticsUndefinedException("Semantics getCode is undefined in ObjectAllocation.");
+		Fragment fragObjAll = factory.createFragment();
+		for (AccessibleExpression arg : this.arguments) {
+			fragObjAll.append(arg.getCode(factory));
+		}
+		fragObjAll.add(factory.createLoadL(((ClassType) this.type).getDeclaration().getObjectSize()));
+		fragObjAll.add(Library.MAlloc);
+		fragObjAll.add(factory.createCall(this.getConstructorSignature(), Register.SB));
+		return fragObjAll;
+//		throw new SemanticsUndefinedException("Semantics getCode is undefined in ObjectAllocation.");
 	}
 
+	private String getConstructorSignature() {
+		if (this.constructor == null) {
+		String paramstring = this.arguments.stream()
+				.map(p -> p.getType().toString())
+				.collect(Collectors.joining(","));
+		return this.name + "(" + paramstring + ")";
+		}
+		return this.constructor.getSignature();
+	}
+	
 	@Override
 	public String toString() {
 		String image = "";

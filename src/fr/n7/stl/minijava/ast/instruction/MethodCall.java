@@ -17,6 +17,7 @@ import fr.n7.stl.minijava.ast.type.declaration.ClassDeclaration;
 import fr.n7.stl.minijava.ast.type.declaration.ElementKind;
 import fr.n7.stl.minijava.ast.type.declaration.MethodDeclaration;
 import fr.n7.stl.tam.ast.Fragment;
+import fr.n7.stl.tam.ast.Library;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.Logger;
@@ -159,7 +160,21 @@ public class MethodCall implements Instruction {
 
 	@Override
 	public Fragment getCode(TAMFactory factory) {
-		throw new SemanticsUndefinedException("Semantics getCode is undefined in MethodCall.");
+		Fragment fragMethAss = factory.createFragment();
+		for (AccessibleExpression arg : this.arguments) {
+			fragMethAss.append(arg.getCode(factory));
+		}
+		if (this.target == null) {//Appel à une methode statique
+			fragMethAss.add(factory.createCall(this.method.getName(), Register.LB));
+		} else {//Appel à une methode d'instance
+			fragMethAss.append(this.target.getCode(factory));
+			fragMethAss.add(factory.createLoadL(0));
+			fragMethAss.add(factory.createLoad(Register.ST, -2, 1));
+			fragMethAss.add(factory.createLoadL(this.method.getOffset()));
+			fragMethAss.add(Library.IAdd);
+			fragMethAss.add(factory.createCallI());
+		}	
+		return fragMethAss;
 	}
 
 	@Override

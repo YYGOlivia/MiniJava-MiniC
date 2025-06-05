@@ -8,7 +8,9 @@ import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.scope.SymbolTable;
 import fr.n7.stl.minic.ast.type.AtomicType;
 import fr.n7.stl.minic.ast.type.Type;
+import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
+import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.Logger;
 import fr.n7.stl.util.SemanticsUndefinedException;
 import java.util.ArrayList;
@@ -104,5 +106,9 @@ public class ConstructorDeclaration extends ClassElement {
 		}
 		Logger.warning("[ConstructorDeclaration] AUCUNE IDEE DE CE QU'IL SE PASSE APRES CE POINT");
 		return AtomicType.VoidType;
+	}
+
+	public Fragment getCode(TAMFactory factory) {
+		throw new SemanticsUndefinedException("Semantics getcode is undefined in ConstructorDeclaration.");
 	}
 }

@@ -7,7 +7,9 @@ import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.scope.SymbolTable;
 import fr.n7.stl.minic.ast.type.Type;
+import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
+import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.Logger;
 import fr.n7.stl.util.SemanticsUndefinedException;
 import java.util.ArrayList;
@@ -26,6 +28,8 @@ public class MethodDeclaration extends ClassElement {
 	private FunctionDeclaration function;
 
 	private Type type;
+
+	public int tamAdress;
 
 	public MethodDeclaration(String name, Type type, List<ParameterDeclaration> parameter, Block body) {
 		super(name);
@@ -140,4 +144,5 @@ public class MethodDeclaration extends ClassElement {
 	public Type getType() {
 		return type;
 	}
+
 }

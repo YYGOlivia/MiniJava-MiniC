@@ -84,6 +84,7 @@ public class FragmentImpl implements Fragment {
 		}
 	}
 
+	@Override
 	public int getSize(){
 		return instructions.size();
 	}

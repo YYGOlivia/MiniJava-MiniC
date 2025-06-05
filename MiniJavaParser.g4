@@ -184,8 +184,7 @@ expression
 		/* (expr) */
 	| lObjet = expression Pt leNom = Ident									# lectureAttribut
 		/* expr.id */
-	| lobjet = expression Pt leNom = Ident ParOuv args = arguments ParFer	#
-		lectureAppelMethodeExplicite
+	| lobjet = expression Pt leNom = Ident ParOuv args = arguments ParFer	# lectureAppelMethodeExplicite
 		/* axpr.id(args) */
 	| leNom = Ident ParOuv args = arguments ParFer										# lectureAppelMethodeImplicite
 		/* id(args) */

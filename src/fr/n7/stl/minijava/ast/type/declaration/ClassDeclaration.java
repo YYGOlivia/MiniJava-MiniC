@@ -1,4 +1,4 @@
-/**
+	/**
  * 
  */
 package fr.n7.stl.minijava.ast.type.declaration;
@@ -41,6 +41,8 @@ public class ClassDeclaration implements Instruction, Declaration {
 	private ClassDeclaration ancestorClass;
 
 	private ClassType type;
+	
+	public int tamAddress;
 
 	private int objectSize;
 
@@ -251,9 +253,31 @@ public class ClassDeclaration implements Instruction, Declaration {
 
 	@Override
 	public Fragment getCode(TAMFactory factory) {
-		throw new SemanticsUndefinedException("Semantics getCode is undefined in ClassDeclaration.");
+		Fragment fragClass = factory.createFragment();
+		Fragment fragAux = factory.createFragment();
+		for (MethodDeclaration meth : this.methods) {
+			if (meth.getElementKind() == ElementKind.OBJECT) {
+				//si la methode est statique
+				fragAux = meth.getFunction().getCode(factory);
+				fragAux.addPrefix(meth.getName());
+				fragAux.addComment("methode statique" + meth.getSignature());
+				fragClass.append(fragAux);
+			} else if (meth.isConcrete()) {
+				meth.tamAdress = fragClass.getSize() + this.tamAddress;
+				fragAux = meth.getFunction().getCode(factory);
+				fragAux.addComment("methode " + meth.getName());
+				fragClass.append(fragAux);
+			}
+		}
+		for (ConstructorDeclaration con : this.constructors) {
+			fragAux = con.getCode(factory);
+			fragAux.addPrefix(con.getSignature());
+			fragAux.addComment("constructeur" + con.getSignature());
+			fragClass.append(fragAux);
+		}
+		return fragClass;
 	}
-
+	
 	@Override
 	public String getName() {
 		return this.name;

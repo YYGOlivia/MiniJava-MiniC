@@ -164,7 +164,9 @@ public class ASTBuilder extends MiniJavaParserBaseListener {
 
         TAMFactory factory = new TAMFactoryImpl();
         Fragment f = factory.createFragment();
+        f.add(factory.createJump("main body"));
         for (ClassDeclaration c : this.classes) {
+        	c.tamAddress = f.getSize();
             f.append(c.getCode(factory));
         }
         f.append(this.main.getCode(factory));
