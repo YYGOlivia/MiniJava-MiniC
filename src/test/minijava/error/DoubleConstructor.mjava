@@ -1,0 +1,17 @@
+class A {
+    public A() {
+    }
+
+    public A(int a) {
+    }
+
+    // Erreur: deux constructeurs de mêmes signatures
+    private A(int b) {
+    }
+}
+
+public class DoubleConstructor {
+
+    public static void main(String[] args) {
+    }
+}

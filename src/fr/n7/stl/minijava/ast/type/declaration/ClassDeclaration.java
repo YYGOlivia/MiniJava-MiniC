@@ -3,9 +3,12 @@
  */
 package fr.n7.stl.minijava.ast.type.declaration;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import fr.n7.stl.minic.ast.instruction.Instruction;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
@@ -24,6 +27,12 @@ public class ClassDeclaration implements Instruction, Declaration {
 
 	private List<ClassElement> elements;
 
+	private List<AttributeDeclaration> attributes;
+
+	private List<MethodDeclaration> methods;
+
+	private List<ConstructorDeclaration> constructors;
+
 	private boolean concrete;
 
 	private String name;
@@ -32,27 +41,38 @@ public class ClassDeclaration implements Instruction, Declaration {
 
 	private ClassDeclaration ancestorClass;
 
+	private ClassType type;
+
 	public ClassDeclaration getAncestor() {
 		return ancestorClass;
 	}
 
-	/**
-	 * 
-	 */
 	public ClassDeclaration(boolean concrete, String name, String ancestor, List<ClassElement> elements) {
 		this.concrete = concrete;
 		this.name = name;
 		this.ancestor = ancestor;
 		this.elements = elements;
+		this.attributes = new ArrayList<>();
+		this.methods = new ArrayList<>();
+		this.constructors = new ArrayList<>();
+
+		this.type = new ClassType(name);
+		this.type.setDeclaration(this);
 
 		for (ClassElement elt : this.elements) {
 			elt.setClassDeclaration(this);
+			if (elt instanceof AttributeDeclaration) {
+				attributes.add((AttributeDeclaration) elt);
+			} else if (elt instanceof MethodDeclaration) {
+				methods.add((MethodDeclaration) elt);
+			} else if (elt instanceof ConstructorDeclaration) {
+				constructors.add((ConstructorDeclaration) elt);
+			} else {
+				Logger.error("[ClassDeclaration] Unknown ClassElement type: " + elt.getClass().getSimpleName());
+			}
 		}
 	}
 
-	/**
-	 * 
-	 */
 	public ClassDeclaration(boolean concrete, String name, List<ClassElement> elements) {
 		this(concrete, name, null, elements);
 	}
@@ -66,9 +86,9 @@ public class ClassDeclaration implements Instruction, Declaration {
 	 * pas.
 	 */
 	public AttributeDeclaration getAttribute(String name) {
-		return elements.stream()
-				.filter((e) -> e.getName().equals(name) && e instanceof AttributeDeclaration)
-				.map((e) -> (AttributeDeclaration) e).findFirst().orElse(null);
+		return this.attributes.stream()
+				.filter((e) -> e.getName().equals(name))
+				.findFirst().orElse(null);
 	}
 
 	/**
@@ -76,10 +96,8 @@ public class ClassDeclaration implements Instruction, Declaration {
 	 * paramètre <code>nbparam</code> de la classe.
 	 */
 	public List<MethodDeclaration> getMethods(String name, int nbParams) {
-		Stream<MethodDeclaration> methods = elements.stream()
-				.filter((e) -> e instanceof MethodDeclaration)
-				.map((e) -> (MethodDeclaration) e);
-		return methods.filter((e) -> e.getName().equals(name))
+		return this.methods.stream()
+				.filter((e) -> e.getName().equals(name))
 				.filter((e) -> e.getParameters().size() == nbParams)
 				.collect(Collectors.toList());
 	}
@@ -88,10 +106,7 @@ public class ClassDeclaration implements Instruction, Declaration {
 	 * Renvoie la liste des constructeurs de la classe.
 	 */
 	public List<ConstructorDeclaration> getConstructors() {
-		return elements.stream()
-				.filter((e) -> e instanceof ConstructorDeclaration)
-				.map((e) -> (ConstructorDeclaration) e)
-				.collect(Collectors.toList());
+		return this.constructors;
 	}
 
 	@Override
@@ -101,8 +116,9 @@ public class ClassDeclaration implements Instruction, Declaration {
 		}
 		scope.register(this);
 
+		// vérification de l'ancêtre
 		if (ancestor != null) {
-			// Faut que l'ancêtre soit connue dans le scope
+			// Faut que l'ancêtre soit connu dans le scope
 			if (!scope.knows(this.ancestor)) {
 				Logger.error("[ClassDeclaration] Class " + this.name + " cannot extend unknown class " + this.ancestor);
 			}
@@ -124,40 +140,58 @@ public class ClassDeclaration implements Instruction, Declaration {
 
 		// Scope de la classe
 		SymbolTable classScope = new SymbolTable();
+
 		// Ajout de "this" dans la classe
 		String trueName = this.name;
 		this.name = "this";
 		classScope.register(this);
 		this.name = trueName;
-		// Premier parcours pour ajouter les elements au scope de la classe
-		// for (ClassElement element : this.elements) {
-		// if (!classScope.accepts(element)){
-		// Logger.error("[ClassDeclaration] The element " + element.getName() + " is
-		// already declared in class " + this.name);
-		// }
-		// classScope.register(element);
-		// }
-		// boolean okElems = true;
 
-		// Second parcours pour resolve et verifier abstract methods
-		boolean okElems = true;
-		for (ClassElement element : this.elements) {
-			if (element instanceof MethodDeclaration) {
-				MethodDeclaration method = (MethodDeclaration) element;
-				if (this.concrete && !method.isConcrete()) {
-					Logger.error("[ClassDeclaration] Concrete class " + this.name + " cannot contain abstract method "
-							+ method.getName());
-				}
-				okElems = okElems && (!method.isConcrete() || method.collectAndPartialResolve(classScope));
-			}
-			// else if (element instanceof ConstructorDeclaration) {
-			// ConstructorDeclaration constructor = (ConstructorDeclaration) element;
-			// okElems = okElems &&
-			// constructor.getBody().collectAndPartialResolve(classScope);
-			// }
-			// Rien besoinde collect si c'est un attribut
+		// ajout du type de la classe dans le scope
+		classScope.register(this);
+
+		boolean okElements = this.elements.stream()
+				.allMatch((e) -> e.collectAndPartialResolve(classScope));
+
+		// vérif unicité des noms d'attributs
+		List<String> attributeNames = this.attributes.stream()
+				.map(e -> e.getName()).collect(Collectors.toList());
+		Set<String> duplicates = attributeNames.stream()
+				.filter(e -> Collections.frequency(attributeNames, e) > 1)
+				.collect(Collectors.toSet());
+		if (!duplicates.isEmpty()) {
+			Logger.error("[ClassDeclaration] The class " + this.name + " has duplicate attributes: " + duplicates);
 		}
-		return true;
+
+		// vérif unicité des (noms, signature) des méthodes
+		Set<String> methodSignatures = new HashSet<>();
+		Set<String> duplicateMethods = new HashSet<>();
+		for (MethodDeclaration m : this.methods) {
+			String signature = m.getSignature();
+			if (!methodSignatures.add(signature)) {
+				duplicateMethods.add(signature);
+			}
+		}
+		if (!duplicateMethods.isEmpty()) {
+			Logger.error("[ClassDeclaration] The class " + this.name + " has duplicate method signatures: "
+					+ duplicateMethods);
+		}
+
+		// vérif unicité des constructeurs
+		Set<String> constructorSignatures = new HashSet<>();
+		Set<String> duplicateConstructors = new HashSet<>();
+		for (ConstructorDeclaration c : this.constructors) {
+			String signature = c.getSignature();
+			if (!constructorSignatures.add(signature)) {
+				duplicateConstructors.add(signature);
+			}
+		}
+		if (!duplicateConstructors.isEmpty()) {
+			Logger.error("[ClassDeclaration] The class " + this.name + " has duplicate constructor signatures: "
+					+ duplicateConstructors);
+		}
+
+		return okElements;
 	}
 
 	@Override
@@ -177,12 +211,10 @@ public class ClassDeclaration implements Instruction, Declaration {
 
 	@Override
 	public boolean checkType() {
-		if (ancestor != null) {
-			return ancestorClass.checkType();
-		}
-		return true;
-		// throw new SemanticsUndefinedException("Semantics checkType is undefined in
-		// ClassDeclaration.");
+		boolean okAncestor = ancestorClass == null || ancestorClass.checkType();
+		boolean okElements = this.elements.stream()
+				.allMatch((e) -> e.checkType());
+		return okAncestor && okElements;
 	}
 
 	@Override
@@ -202,9 +234,7 @@ public class ClassDeclaration implements Instruction, Declaration {
 
 	@Override
 	public Type getType() {
-		ClassType type = new ClassType(name);
-		type.setDeclaration(this);
-		return type;
+		return this.type;
 	}
 
 	@Override

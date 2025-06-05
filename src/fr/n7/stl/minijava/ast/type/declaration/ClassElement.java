@@ -30,6 +30,8 @@ public abstract class ClassElement implements Declaration {
 
 	public abstract boolean completeResolve(HierarchicalScope<Declaration> scope);
 
+	public abstract boolean checkType();
+
 	public ElementKind getElementKind() {
 		return this.elementKind;
 	}

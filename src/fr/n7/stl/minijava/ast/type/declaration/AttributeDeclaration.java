@@ -4,6 +4,8 @@ import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.Type;
+import fr.n7.stl.util.Logger;
+import fr.n7.stl.util.SemanticsUndefinedException;
 
 public class AttributeDeclaration extends ClassElement {
 
@@ -20,14 +22,31 @@ public class AttributeDeclaration extends ClassElement {
 
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'collectAndPartialResolve'");
+		if (this.value == null) {
+			return true;
+		}
+		return this.value.collectAndPartialResolve(scope);
 	}
 
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'completeResolve'");
+		throw new SemanticsUndefinedException("Semantics resolve is undefined in AttributeDeclaration.");
+	}
+
+	@Override
+	public boolean checkType() {
+		if (this.value == null) {
+			return true;
+		}
+		// check compatibility
+		Type valueType = this.value.getType();
+		if (!this.type.compatibleWith(valueType)) {
+			Logger.error("[AttributeDeclaration] The type " + valueType +
+					" is not compatible with the declared type of " +
+					this.getName() + " (" + this.type + ").");
+		}
+		return true;
+
 	}
 
 	@Override

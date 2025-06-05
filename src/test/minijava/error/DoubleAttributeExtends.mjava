@@ -1,0 +1,12 @@
+class A {
+    public int x;
+}
+
+class B extends A {
+    public boolean x; // Erreur: deux attributs de même nom
+}
+
+public class DoubleAttributeExtends {
+    public static void main(String[] args) {
+    }
+}
