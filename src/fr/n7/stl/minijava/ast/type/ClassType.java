@@ -6,7 +6,6 @@ import fr.n7.stl.minic.ast.type.AtomicType;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.minijava.ast.type.declaration.ClassDeclaration;
 import fr.n7.stl.util.Logger;
-import fr.n7.stl.util.SemanticsUndefinedException;
 
 public class ClassType implements Type {
 
@@ -65,7 +64,7 @@ public class ClassType implements Type {
 
 	@Override
 	public int length() {
-		throw new SemanticsUndefinedException("Semantics length is undefined in ClassType.");
+		return 1; // size de l'adresse d'un objet
 	}
 
 	@Override

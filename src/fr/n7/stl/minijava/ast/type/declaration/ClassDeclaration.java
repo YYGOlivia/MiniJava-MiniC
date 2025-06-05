@@ -42,6 +42,8 @@ public class ClassDeclaration implements Instruction, Declaration {
 
 	private ClassType type;
 
+	private int objectSize;
+
 	public ClassDeclaration getAncestor() {
 		return ancestorClass;
 	}
@@ -58,18 +60,31 @@ public class ClassDeclaration implements Instruction, Declaration {
 		this.type = new ClassType(name);
 		this.type.setDeclaration(this);
 
+		int objSize = 0;
+
 		for (ClassElement elt : this.elements) {
 			elt.setClassDeclaration(this);
 			if (elt instanceof AttributeDeclaration) {
 				attributes.add((AttributeDeclaration) elt);
+				if (elt.getElementKind() != ElementKind.CLASS){
+					objSize +=elt.getType().length(); // ajoute taille de l'attribut (si pas statique)
+				}	
 			} else if (elt instanceof MethodDeclaration) {
 				methods.add((MethodDeclaration) elt);
+				if (elt.getElementKind() != ElementKind.CLASS && elt.getAccessRight()!=AccessRight.PRIVATE){
+					objSize +=1; // ajoute taille adresse methode si pas statique et pas privée
+				}
 			} else if (elt instanceof ConstructorDeclaration) {
 				constructors.add((ConstructorDeclaration) elt);
+				// on ajoute pas à la taille car constructeurs stockés dans classe et pas objet
 			} else {
 				Logger.error("[ClassDeclaration] Unknown ClassElement type: " + elt.getClass().getSimpleName());
 			}
 		}
+	}
+
+	public int getObjectSize(){
+		return objectSize;
 	}
 
 	public ClassDeclaration(boolean concrete, String name, List<ClassElement> elements) {
