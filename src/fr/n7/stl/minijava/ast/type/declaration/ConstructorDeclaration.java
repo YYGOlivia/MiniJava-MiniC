@@ -24,7 +24,6 @@ public class ConstructorDeclaration extends ClassElement {
 
 	private Block body;
 	private FunctionDeclaration function;
-	private int tamAddress;
 
 	public ConstructorDeclaration(String name, List<ParameterDeclaration> parameter, Block body) {
 		super(name);
@@ -37,7 +36,6 @@ public class ConstructorDeclaration extends ClassElement {
 		super.setClassDeclaration(classDecl);
 		List<ParameterDeclaration> funcParams = new ArrayList<>(this.parameters);
 		this.function = new FunctionDeclaration(this.getName(), AtomicType.VoidType, funcParams, body);
-		//VoidType va peut être faire des pb pour le getCode 
 	}
 
 	public List<ParameterDeclaration> getParams() {
@@ -61,7 +59,7 @@ public class ConstructorDeclaration extends ClassElement {
 			}
 			constructorScope.register(paramDecl);
 		}
-		boolean okBody = body.collectAndPartialResolve(constructorScope);
+		boolean okBody = body.collectAndPartialResolve(constructorScope, this.function);
 		return okBody;
 	}
 

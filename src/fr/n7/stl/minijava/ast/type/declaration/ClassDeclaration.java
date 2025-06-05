@@ -125,6 +125,10 @@ public class ClassDeclaration implements Instruction, Declaration {
 		return this.constructors;
 	}
 
+	public ConstructorDeclaration findConstructor(String signature){
+		return constructors.stream().filter(c -> c.getSignature().equals(signature)).findAny().orElse(null);
+	}
+
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
 		if (scope.knows(name)) {

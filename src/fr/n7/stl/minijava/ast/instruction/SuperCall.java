@@ -3,15 +3,20 @@ package fr.n7.stl.minijava.ast.instruction;
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.instruction.Instruction;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
+import fr.n7.stl.minic.ast.instruction.declaration.ParameterDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
+import fr.n7.stl.minijava.ast.type.ClassType;
+import fr.n7.stl.minijava.ast.type.declaration.ClassDeclaration;
 import fr.n7.stl.minijava.ast.type.declaration.ConstructorDeclaration;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
+import fr.n7.stl.util.Logger;
 import fr.n7.stl.util.SemanticsUndefinedException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class SuperCall implements Instruction {
 
@@ -19,18 +24,47 @@ public class SuperCall implements Instruction {
 
 	private List<AccessibleExpression> arguments;
 
+	private ClassDeclaration classDeclaration;
+
 	public SuperCall(List<AccessibleExpression> arguments) {
 		this.arguments = arguments;
 	}
 
+	public String getSignature(String className) {
+		String paramstring = this.arguments.stream()
+				.map(p -> p.getType().toString())
+				.collect(Collectors.joining(","));
+		return className + "(" + paramstring + ")";
+	}
+
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
-		throw new SemanticsUndefinedException("Semantics collect is undefined in SuperCall.");
+		Logger.error("[SuperCall] super constructor cannot be called outside a method or constructor.");
+		return false;
 	}
 
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope, FunctionDeclaration container) {
-		throw new SemanticsUndefinedException("Semantics collect is undefined in SuperCall.");
+		boolean okArgs = true;
+		for (AccessibleExpression arg : this.arguments) {
+			okArgs = okArgs && arg.collectAndPartialResolve(scope);
+		}
+		ParameterDeclaration obj = container.getParameters().get(0); //On récupère le this
+		if (obj.getType() instanceof ClassType){
+			Logger.error("[SuperCall] The first argument of " + container.getName() + " is not an instance of a class");
+		}
+		ClassType classType = (ClassType) obj.getType();
+		//classDelaration -> la classe dans laquelle le constructeur est appelé
+		classDeclaration = classType.getDeclaration();
+		ClassDeclaration ancestor = classDeclaration.getAncestor();
+		while (ancestor!=null && constructor==null){
+			constructor = ancestor.findConstructor(getSignature(ancestor.getName()));
+			ancestor = ancestor.getAncestor();
+		}
+		if (constructor==null){
+			Logger.error("[SuperCall] The ancestors of class " + classDeclaration.getName() + " don't have any constructor matching the signature " + getSignature("super"));
+		}
+		return okArgs;
 	}
 
 	@Override
