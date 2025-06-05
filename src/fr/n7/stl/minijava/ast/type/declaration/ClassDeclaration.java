@@ -271,7 +271,7 @@ public class ClassDeclaration implements Instruction, Declaration {
 		}
 		for (ConstructorDeclaration con : this.constructors) {
 			fragAux = con.getCode(factory);
-			fragAux.addPrefix(con.getSignature());
+//			fragAux.addPrefix(con.getSignature());
 			fragAux.addComment("constructeur" + con.getSignature());
 			fragClass.append(fragAux);
 		}
