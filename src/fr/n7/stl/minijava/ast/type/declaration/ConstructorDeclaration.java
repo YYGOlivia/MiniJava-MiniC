@@ -24,6 +24,7 @@ public class ConstructorDeclaration extends ClassElement {
 
 	private Block body;
 	private FunctionDeclaration function;
+	private int tamAddress;
 
 	public ConstructorDeclaration(String name, List<ParameterDeclaration> parameter, Block body) {
 		super(name);
@@ -109,6 +110,12 @@ public class ConstructorDeclaration extends ClassElement {
 	}
 
 	public Fragment getCode(TAMFactory factory) {
-		throw new SemanticsUndefinedException("Semantics getcode is undefined in ConstructorDeclaration.");
+		//this.tamAddress = factory.getOffset(); // on récupère l'adresse à laquelle on est -> Pas besoin car etiquette
+		Fragment frag = factory.createFragment();
+		frag.append(function.getCode(factory));
+		frag.addPrefix(getSignature());
+		//Pas de return dans le corps du constructor donc on ajoute à la main
+		frag.add(factory.createReturn(1, parameters.size() + 1)); // +1 pour l'adresse de l'objet
+		return frag;
 	}
 }

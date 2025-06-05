@@ -11,7 +11,6 @@ import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.Logger;
-import fr.n7.stl.util.SemanticsUndefinedException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -90,7 +89,11 @@ public class ThisCall implements Instruction {
 
 	@Override
 	public Fragment getCode(TAMFactory factory) {
-		throw new SemanticsUndefinedException("Semantics getCode is undefined in ThisCall.");
+		// appel constructeur 
+		Fragment frag = factory.createFragment();
+		frag.add(factory.createCall(constructor.getSignature(), Register.SB)); // Appel au constructeur
+		return frag;
+		//throw new SemanticsUndefinedException("Semantics getCode is undefined in ThisCall.");
 	}
 
 	@Override

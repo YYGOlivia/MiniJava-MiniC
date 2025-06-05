@@ -14,7 +14,6 @@ import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.Logger;
-import fr.n7.stl.util.SemanticsUndefinedException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -83,6 +82,7 @@ public class ClassDeclaration implements Instruction, Declaration {
 				Logger.error("[ClassDeclaration] Unknown ClassElement type: " + elt.getClass().getSimpleName());
 			}
 		}
+		this.objectSize = objSize;
 	}
 
 	public int getObjectSize(){

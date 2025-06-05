@@ -52,7 +52,11 @@ public class SuperCall implements Instruction {
 
 	@Override
 	public Fragment getCode(TAMFactory factory) {
-		throw new SemanticsUndefinedException("Semantics getCode is undefined in SuperCall.");
+		// appel constructeur 
+		Fragment frag = factory.createFragment();
+		frag.add(factory.createCall(constructor.getSignature(), Register.SB)); // Appel au constructeur
+		return frag;
+		//throw new SemanticsUndefinedException("Semantics getCode is undefined in SuperCall.");
 	}
 
 	@Override
