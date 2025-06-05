@@ -1,34 +1,40 @@
 package fr.n7.stl.minijava.ast.type.declaration;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import fr.n7.stl.minic.ast.Block;
+import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.instruction.declaration.ParameterDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.scope.SymbolTable;
 import fr.n7.stl.minic.ast.type.AtomicType;
 import fr.n7.stl.minic.ast.type.Type;
+import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.util.Logger;
 import fr.n7.stl.util.SemanticsUndefinedException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ConstructorDeclaration extends ClassElement {
 
 	private List<ParameterDeclaration> parameters;
 
 	private Block body;
-
-	// added
-	// public Block getBody(){
-	// return body;
-	// }
+	private FunctionDeclaration function;
 
 	public ConstructorDeclaration(String name, List<ParameterDeclaration> parameter, Block body) {
 		super(name);
 		this.parameters = parameter;
 		this.body = body;
+	}
+
+	@Override
+	public void setClassDeclaration(ClassDeclaration classDecl) {
+		super.setClassDeclaration(classDecl);
+		List<ParameterDeclaration> funcParams = new ArrayList<>(this.parameters);
+		this.function = new FunctionDeclaration(this.getName(), AtomicType.VoidType, funcParams, body);
+		//VoidType va peut être faire des pb pour le getCode 
 	}
 
 	public List<ParameterDeclaration> getParams() {
@@ -65,6 +71,14 @@ public class ConstructorDeclaration extends ClassElement {
 	public boolean checkType() {
 		throw new SemanticsUndefinedException("Semantics checkType is undefined in ConstructorDeclaration.");
 	}
+
+	@Override
+    public int allocateMemory(Register register, int offset) {
+		// register nécessaire puisque stocké dans la classe
+        this.register = register;
+		this.offset = offset;
+		return this.function.allocateMemory(register, offset); //void type donc 0 -> a changer si pb
+    }
 
 	@Override
 	public String toString() {

@@ -108,7 +108,24 @@ public class MainDeclaration implements Instruction {
 
 	@Override
 	public int allocateMemory(Register register, int offset) {
-		throw new SemanticsUndefinedException("Semantics allocateMemory is undefined in MainDeclaration.");
+		int off = 0;
+		for (Declaration d : declarations){
+			if (d instanceof FunctionDeclaration) {
+				FunctionDeclaration fonct = (FunctionDeclaration) d;
+				off += fonct.allocateMemory(register, off);
+			} else if (d instanceof ConstantDeclaration) {
+				ConstantDeclaration cons = (ConstantDeclaration) d;
+				off += cons.allocateMemory(register, off);
+			} else if (d instanceof VariableDeclaration) {
+				VariableDeclaration var = (VariableDeclaration) d;
+				off += var.allocateMemory(register, off);
+			} else {
+				//Ne devrait pas arriver
+				Logger.error("[MainDeclaration] " + d.getName() + " is neither a method or an attribute");
+			}
+		}
+		main.allocateMemory(register, off);
+		return off; // Pas très utile puisque rien en du main
 	}
 
 	@Override

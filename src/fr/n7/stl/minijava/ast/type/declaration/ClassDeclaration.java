@@ -3,13 +3,6 @@
  */
 package fr.n7.stl.minijava.ast.type.declaration;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import fr.n7.stl.minic.ast.instruction.Instruction;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
@@ -22,6 +15,12 @@ import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.Logger;
 import fr.n7.stl.util.SemanticsUndefinedException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ClassDeclaration implements Instruction, Declaration {
 
@@ -219,7 +218,14 @@ public class ClassDeclaration implements Instruction, Declaration {
 
 	@Override
 	public int allocateMemory(Register register, int offset) {
-		throw new SemanticsUndefinedException("Semantics allocatememory is undefined in ClassDeclaration.");
+		int off = 0;
+		//Instancie les offsets : ex class Chien{int poids, method grossir} -> poids offset 0, grossir offset 1
+		// appel methode grossir -> adresse objet + offset (1)
+		for (ClassElement elem : elements) { // liste triée 
+			off += elem.allocateMemory(register, off);
+		}
+		return 0; // Pas d'off
+		//throw new SemanticsUndefinedException("Semantics allocatememory is undefined in ClassDeclaration.");
 	}
 
 	@Override

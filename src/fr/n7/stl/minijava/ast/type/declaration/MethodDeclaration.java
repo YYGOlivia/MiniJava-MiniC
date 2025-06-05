@@ -7,9 +7,9 @@ import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.scope.SymbolTable;
 import fr.n7.stl.minic.ast.type.Type;
+import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.util.Logger;
 import fr.n7.stl.util.SemanticsUndefinedException;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -101,6 +101,15 @@ public class MethodDeclaration extends ClassElement {
 	public boolean checkType() {
 		throw new SemanticsUndefinedException("Semantics checkType is undefined in MethodDeclaration.");
 	}
+
+	@Override
+    public int allocateMemory(Register register, int offset) {
+		// register utile uniquement si static (static -> dans classe)
+		this.register = register;
+		this.offset = offset;
+        return this.function.allocateMemory(register, offset); // return 0;
+    }
+	
 
 	@Override
 	public String toString() {

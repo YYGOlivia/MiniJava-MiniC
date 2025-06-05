@@ -2,6 +2,7 @@ package fr.n7.stl.minijava.ast.type.declaration;
 
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
+import fr.n7.stl.tam.ast.Register;
 
 public abstract class ClassElement implements Declaration {
 
@@ -15,6 +16,9 @@ public abstract class ClassElement implements Declaration {
 	private String name;
 
 	private ClassDeclaration classDeclaration;
+
+	protected Register register;
+    protected int offset;
 
 	public ClassElement(ElementKind elementKind, AccessRight accessRight, String name) {
 		this.elementKind = elementKind;
@@ -31,6 +35,8 @@ public abstract class ClassElement implements Declaration {
 	public abstract boolean completeResolve(HierarchicalScope<Declaration> scope);
 
 	public abstract boolean checkType();
+
+	public abstract int allocateMemory(Register register, int offset);
 
 	public ElementKind getElementKind() {
 		return this.elementKind;
@@ -59,5 +65,13 @@ public abstract class ClassElement implements Declaration {
 	@Override
 	public String getName() {
 		return this.name;
+	}
+
+	public Register getRegister() {
+		return this.register;
+	}
+	
+	public int getOffset() {
+		return this.offset;
 	}
 }

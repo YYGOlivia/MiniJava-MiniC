@@ -200,13 +200,10 @@ public class FunctionDeclaration implements Instruction, Declaration {
 	public int allocateMemory(Register register, int offset) {
 		int off = 0;
 		for (ParameterDeclaration paramDecl : this.parameters) {
-			off += paramDecl.getType().length();
-		}
-		body.allocateMemory(Register.LB, off + 1);
-		for (ParameterDeclaration paramDecl : this.parameters) {
+			off -= paramDecl.getType().length(); //ATENTION possible pb pour this -> size=1 car adresse mais peut être ClassType.length !=1
 			paramDecl.setOffset(off);
-			off -= paramDecl.getType().length();
 		}
+		body.allocateMemory(Register.LB, 0);
 		return 0;
 	}
 

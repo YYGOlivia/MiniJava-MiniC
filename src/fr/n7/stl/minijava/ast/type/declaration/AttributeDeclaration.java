@@ -4,6 +4,7 @@ import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.Type;
+import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.util.Logger;
 import fr.n7.stl.util.SemanticsUndefinedException;
 
@@ -48,6 +49,14 @@ public class AttributeDeclaration extends ClassElement {
 		return true;
 
 	}
+
+	@Override
+    public int allocateMemory(Register register, int offset) {
+		// register utile uniquement si static (static -> dans classe)
+        this.register = register;
+		this.offset = offset;
+		return type.length();
+    }
 
 	@Override
 	public Type getType() {
