@@ -18,15 +18,21 @@ public class AttributeAssignment extends AbstractAttribute<AssignableExpression>
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
 		super.collectAndPartialResolve(scope);
-		if (super.attribute.isFinal()){
-			Logger.error("[AttributeAssignment] The attribute " + attribute.getName() + " is final.");
+		if (this.getAttribute().isFinal()) {
+			Logger.error("[AttributeAssignment] The attribute " + getAttribute().getName()
+					+ " is final is final and cannot be assigned.");
 		}
 		return true;
 	}
 
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
-		throw new SemanticsUndefinedException("Semantics resolve is undefined in AttributeAssignement.");
+		super.completeResolve(scope);
+		if (this.getAttribute().isFinal()) {
+			Logger.error("[AttributeAssignment] The attribute " + getAttribute().getName()
+					+ " is final is final and cannot be assigned.");
+		}
+		return true;
 	}
 
 	@Override

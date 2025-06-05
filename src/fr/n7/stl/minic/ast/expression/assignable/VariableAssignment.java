@@ -5,7 +5,7 @@ package fr.n7.stl.minic.ast.expression.assignable;
 
 import fr.n7.stl.minic.ast.expression.AbstractIdentifier;
 import fr.n7.stl.minic.ast.instruction.declaration.ParameterDeclaration;
-import fr.n7.stl.minic.ast.instruction.declaration.VariableDeclaration;
+import fr.n7.stl.minic.ast.instruction.declaration.VariableDeclarationI;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.Type;
@@ -23,7 +23,7 @@ import fr.n7.stl.util.Logger;
  */
 public class VariableAssignment extends AbstractIdentifier implements AssignableExpression {
 
-	private VariableDeclaration declaration;
+	private VariableDeclarationI declaration;
 
 	/**
 	 * Creates a variable assignment expression Abstract Syntax Tree node.
@@ -45,8 +45,8 @@ public class VariableAssignment extends AbstractIdentifier implements Assignable
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
 		if (((HierarchicalScope<Declaration>) scope).knows(this.getName())) {
 			Declaration declaration = scope.get(this.getName());
-			if (declaration instanceof VariableDeclaration) {
-				this.declaration = ((VariableDeclaration) declaration);
+			if (declaration instanceof VariableDeclarationI) {
+				this.declaration = ((VariableDeclarationI) declaration);
 				return true;
 			} else if (declaration instanceof ParameterDeclaration) {
 				Logger.error("[VariableAssignement] The parameter " + this.getName() + " is is not assignable.");

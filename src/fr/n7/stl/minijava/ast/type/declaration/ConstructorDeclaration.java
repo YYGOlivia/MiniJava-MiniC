@@ -34,7 +34,7 @@ public class ConstructorDeclaration extends ClassElement {
 		super.setClassDeclaration(classDecl);
 		List<ParameterDeclaration> funcParams = new ArrayList<>(this.parameters);
 		this.function = new FunctionDeclaration(this.getName(), AtomicType.VoidType, funcParams, body);
-		//VoidType va peut être faire des pb pour le getCode 
+		// VoidType va peut être faire des pb pour le getCode
 	}
 
 	public List<ParameterDeclaration> getParams() {
@@ -50,6 +50,11 @@ public class ConstructorDeclaration extends ClassElement {
 
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
+		if (!this.getName().equals(this.getClassDeclaration().getName())) {
+			Logger.error("[ConstructorDeclaration] The constructor name --" + this.getName()
+					+ "-- does not match the class name" + this.getClassDeclaration().getName() + ".");
+		}
+
 		SymbolTable constructorScope = new SymbolTable(scope);
 		for (ParameterDeclaration paramDecl : this.parameters) {
 			if (!constructorScope.accepts(paramDecl)) {
@@ -58,7 +63,7 @@ public class ConstructorDeclaration extends ClassElement {
 			}
 			constructorScope.register(paramDecl);
 		}
-		boolean okBody = body.collectAndPartialResolve(constructorScope);
+		boolean okBody = body.collectAndPartialResolve(constructorScope, this.function);
 		return okBody;
 	}
 
@@ -69,16 +74,17 @@ public class ConstructorDeclaration extends ClassElement {
 
 	@Override
 	public boolean checkType() {
-		throw new SemanticsUndefinedException("Semantics checkType is undefined in ConstructorDeclaration.");
+		boolean okBody = body.checkType();
+		return okBody;
 	}
 
 	@Override
-    public int allocateMemory(Register register, int offset) {
+	public int allocateMemory(Register register, int offset) {
 		// register nécessaire puisque stocké dans la classe
-        this.register = register;
+		this.register = register;
 		this.offset = offset;
-		return this.function.allocateMemory(register, offset); //void type donc 0 -> a changer si pb
-    }
+		return this.function.allocateMemory(register, offset); // void type donc 0 -> a changer si pb
+	}
 
 	@Override
 	public String toString() {

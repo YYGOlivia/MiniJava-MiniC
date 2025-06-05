@@ -1,45 +1,45 @@
 class A {
 	public int v;
-	
+
 	public void setV(int _v) {
 		this.v = _v;
 	}
-	
+
 	public int getV() {
 		return this.v;
 	}
-	
+
 	public A() {
-		this( -1 );
+		this(-1);
 	}
-	
+
 	public A(int _v) {
 		this.v = _v;
 	}
-	
+
 }
 
 class B extends A {
 	protected int w;
-	
-	public void setW( int _w) {
+
+	public void setW(int _w) {
 		this.w = _w;
 	}
-	
-	public B( int _v, int _w) {
-		super( _v );
+
+	public B(int _v, int _w) {
+		// super( _v );
 		this.w = _w;
 	}
-	
+
 	public B() {
-		this( -1, -2);
+		this(-1, -2);
 	}
-	
+
 }
 
-public class Main {
+public class Input {
 
-	static final int CST  = 1;
+	static final int CST = 1;
 
 	static int succ(int i) {
 		return i + 1;
@@ -66,4 +66,3 @@ public class Main {
 		
 	}
 }
-		

@@ -1,6 +1,7 @@
 package fr.n7.stl.minijava.ast.type.declaration;
 
 import fr.n7.stl.minic.ast.expression.Expression;
+import fr.n7.stl.minic.ast.instruction.declaration.VariableDeclarationI;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.Type;
@@ -8,7 +9,7 @@ import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.util.Logger;
 import fr.n7.stl.util.SemanticsUndefinedException;
 
-public class AttributeDeclaration extends ClassElement {
+public class AttributeDeclaration extends ClassElement implements VariableDeclarationI {
 
 	private Type type;
 	private boolean isFinal;
@@ -23,10 +24,9 @@ public class AttributeDeclaration extends ClassElement {
 
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
-		if (this.value == null) {
-			return true;
-		}
-		return this.value.collectAndPartialResolve(scope);
+		boolean okType = this.type.completeResolve(scope);
+		boolean okValue = (value == null) || value.collectAndPartialResolve(scope);
+		return okType && okValue;
 	}
 
 	@Override
@@ -51,12 +51,12 @@ public class AttributeDeclaration extends ClassElement {
 	}
 
 	@Override
-    public int allocateMemory(Register register, int offset) {
+	public int allocateMemory(Register register, int offset) {
 		// register utile uniquement si static (static -> dans classe)
-        this.register = register;
+		this.register = register;
 		this.offset = offset;
 		return type.length();
-    }
+	}
 
 	@Override
 	public Type getType() {

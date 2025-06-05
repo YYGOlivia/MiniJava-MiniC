@@ -43,11 +43,21 @@ public class MethodDeclaration extends ClassElement {
 		return body;
 	}
 
+	/**
+	 * Définit la déclaration de la classe dans laquelle se trouve la méthode. Si
+	 * classDecl est <code>null</code>, la méthode est une fonction globale (dans la
+	 * "classe"
+	 * principale).
+	 */
 	@Override
 	public void setClassDeclaration(ClassDeclaration classDecl) {
+		if (classDecl == null) {
+			this.function = new FunctionDeclaration(this.getName(), type, this.parameters, this.body);
+			return;
+		}
 		super.setClassDeclaration(classDecl);
 		List<ParameterDeclaration> funcParams = new ArrayList<>(this.parameters);
-		if (this.getElementKind() == ElementKind.OBJECT) {
+		if (!this.isStatic()) {
 			// paramètre "this" uniquement si méthode d'instance
 			ParameterDeclaration self = new ParameterDeclaration("this", classDecl.getType());
 			funcParams.add(0, self);
@@ -69,11 +79,11 @@ public class MethodDeclaration extends ClassElement {
 		return this.function;
 	}
 
-	public List<ParameterDeclaration> getParameters() {
+	public List<ParameterDeclaration> getParams() {
 		return this.parameters;
 	}
 
-		public boolean isConcrete() {
+	public boolean isConcrete() {
 		return this.concrete;
 	}
 
@@ -88,28 +98,37 @@ public class MethodDeclaration extends ClassElement {
 			functionScope.register(paramDecl);
 		}
 		boolean okType = type.completeResolve(scope);
-		boolean okBody = this.body.collectAndPartialResolve(functionScope, this.function);
+		boolean okBody = body == null || body.collectAndPartialResolve(functionScope, this.function);
 		return okBody && okType;
 	}
 
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
-		throw new SemanticsUndefinedException("Semantics resolve is undefined in MethodDeclaration.");
+		SymbolTable functionScope = new SymbolTable(scope);
+		for (ParameterDeclaration paramDecl : this.parameters) {
+			if (!functionScope.accepts(paramDecl)) {
+				Logger.error("[MethodDeclaration] The parameter " + paramDecl.getName()
+						+ " is already declared in the method " + this.getName());
+			}
+			functionScope.register(paramDecl);
+		}
+		boolean okType = type.completeResolve(scope);
+		boolean okBody = body == null || body.completeResolve(functionScope);
+		return okBody && okType;
 	}
 
 	@Override
 	public boolean checkType() {
-		throw new SemanticsUndefinedException("Semantics checkType is undefined in MethodDeclaration.");
+		return this.body.checkType();
 	}
 
 	@Override
-    public int allocateMemory(Register register, int offset) {
+	public int allocateMemory(Register register, int offset) {
 		// register utile uniquement si static (static -> dans classe)
 		this.register = register;
 		this.offset = offset;
-        return this.function.allocateMemory(register, offset); // return 0;
-    }
-	
+		return this.function.allocateMemory(register, offset); // return 0;
+	}
 
 	@Override
 	public String toString() {

@@ -1,8 +1,6 @@
-/**
- * 
- */
 package fr.n7.stl.minijava.ast.type.declaration;
 
+import fr.n7.stl.minic.ast.Block;
 import fr.n7.stl.minic.ast.instruction.Instruction;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
@@ -66,13 +64,13 @@ public class ClassDeclaration implements Instruction, Declaration {
 			elt.setClassDeclaration(this);
 			if (elt instanceof AttributeDeclaration) {
 				attributes.add((AttributeDeclaration) elt);
-				if (elt.getElementKind() != ElementKind.CLASS){
-					objSize +=elt.getType().length(); // ajoute taille de l'attribut (si pas statique)
-				}	
+				if (!elt.isStatic()) {
+					objSize += elt.getType().length(); // ajoute taille de l'attribut (si pas statique)
+				}
 			} else if (elt instanceof MethodDeclaration) {
 				methods.add((MethodDeclaration) elt);
-				if (elt.getElementKind() != ElementKind.CLASS && elt.getAccessRight()!=AccessRight.PRIVATE){
-					objSize +=1; // ajoute taille adresse methode si pas statique et pas privée
+				if (!elt.isStatic() && elt.getAccessRight() != AccessRight.PRIVATE) {
+					objSize += 1; // ajoute taille adresse methode si pas statique et pas privée
 				}
 			} else if (elt instanceof ConstructorDeclaration) {
 				constructors.add((ConstructorDeclaration) elt);
@@ -81,9 +79,17 @@ public class ClassDeclaration implements Instruction, Declaration {
 				Logger.error("[ClassDeclaration] Unknown ClassElement type: " + elt.getClass().getSimpleName());
 			}
 		}
+
+		if (this.constructors.isEmpty()) {
+			// Si pas de constructeur, on en ajoute un sans paramètre
+			ConstructorDeclaration c = new ConstructorDeclaration(this.name, new ArrayList<>(), new Block(List.of()));
+			this.elements.add(c);
+			this.constructors.add(c);
+			c.setClassDeclaration(this);
+		}
 	}
 
-	public int getObjectSize(){
+	public int getObjectSize() {
 		return objectSize;
 	}
 
@@ -112,7 +118,7 @@ public class ClassDeclaration implements Instruction, Declaration {
 	public List<MethodDeclaration> getMethods(String name, int nbParams) {
 		return this.methods.stream()
 				.filter((e) -> e.getName().equals(name))
-				.filter((e) -> e.getParameters().size() == nbParams)
+				.filter((e) -> e.getParams().size() == nbParams)
 				.collect(Collectors.toList());
 	}
 
@@ -125,11 +131,6 @@ public class ClassDeclaration implements Instruction, Declaration {
 
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
-		if (scope.knows(name)) {
-			Logger.error("[ClassDeclaration] The name " + this.name + " is already used");
-		}
-		scope.register(this);
-
 		// vérification de l'ancêtre
 		if (ancestor != null) {
 			// Faut que l'ancêtre soit connu dans le scope
@@ -152,8 +153,9 @@ public class ClassDeclaration implements Instruction, Declaration {
 			// TODO: ajouter les ClassElement de l'ancêtre ?
 		}
 
-		// Scope de la classe
-		SymbolTable classScope = new SymbolTable();
+		// Scope de la classe, contient le scope global pour avoir connaissance des
+		// classes
+		SymbolTable classScope = new SymbolTable(scope);
 
 		// Ajout de "this" dans la classe
 		String trueName = this.name;
@@ -161,8 +163,12 @@ public class ClassDeclaration implements Instruction, Declaration {
 		classScope.register(this);
 		this.name = trueName;
 
-		// ajout du type de la classe dans le scope
-		classScope.register(this);
+		// ajout des attributs de classe
+		for (AttributeDeclaration attr : this.attributes) {
+			if (attr.isStatic()) {
+				classScope.register(attr);
+			}
+		}
 
 		boolean okElements = this.elements.stream()
 				.allMatch((e) -> e.collectAndPartialResolve(classScope));
@@ -216,7 +222,7 @@ public class ClassDeclaration implements Instruction, Declaration {
 
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
-		// TODO method.getBody().completResolve()
+		// TODO method.getBody().completeResolve()
 
 		return true;
 		// throw new SemanticsUndefinedException("Semantics resolve is undefined in
@@ -234,19 +240,21 @@ public class ClassDeclaration implements Instruction, Declaration {
 	@Override
 	public int allocateMemory(Register register, int offset) {
 		int classOff = offset; // pour les elements statiques stockés directement dans SB
-		int objOff = 0; // pour les éléments dynamiques stockés dans les instances 
-		//Instancie les offsets : ex class Chien{int poids, method grossir} -> poids offset 0, grossir offset 1
+		int objOff = 0; // pour les éléments dynamiques stockés dans les instances
+		// Instancie les offsets : ex class Chien{int poids, method grossir} -> poids
+		// offset 0, grossir offset 1
 		// appel methode grossir -> adresse objet + offset (1)
-		for (ClassElement elem : elements) { // liste triée 
-			if (elem.getElementKind()==ElementKind.CLASS){
+		for (ClassElement elem : elements) { // liste triée
+			if (elem.getElementKind() == ElementKind.CLASS) {
 				classOff += elem.allocateMemory(register, classOff);
-			}else{
-				objOff += elem.allocateMemory(null, objOff); // register inutilisé 
+			} else {
+				objOff += elem.allocateMemory(null, objOff); // register inutilisé
 			}
-			
+
 		}
-		return classOff - offset; // on retire le offset de base puisqu'en dehors on va additionner 
-		//throw new SemanticsUndefinedException("Semantics allocatememory is undefined in ClassDeclaration.");
+		return classOff - offset; // on retire le offset de base puisqu'en dehors on va additionner
+		// throw new SemanticsUndefinedException("Semantics allocatememory is undefined
+		// in ClassDeclaration.");
 	}
 
 	@Override

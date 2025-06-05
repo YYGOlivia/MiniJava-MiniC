@@ -10,7 +10,7 @@ import fr.n7.stl.util.SemanticsUndefinedException;
 
 public abstract class AbstractThis<ObjectKind extends Expression> implements Expression {
 
-	//added
+	// added
 	private ObjectKind object; // pour mettre l'instance de la classe ?
 	private ClassDeclaration classDeclaration;
 
@@ -20,20 +20,21 @@ public abstract class AbstractThis<ObjectKind extends Expression> implements Exp
 		// AbstractThis.");
 	}
 
-	public ClassDeclaration getClassDeclaration(){
+	public ClassDeclaration getClassDeclaration() {
 		return classDeclaration;
 	}
 
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
 		Declaration classDecl = scope.get("this");
-		if (classDecl instanceof ClassDeclaration){
+		if (classDecl instanceof ClassDeclaration) {
 			this.classDeclaration = (ClassDeclaration) classDecl;
-		}else{
+		} else {
 			Logger.error("[AbstractThis] Tried to call \"this\" outside a class");
 		}
 		return true;
-		//throw new SemanticsUndefinedException("Semantics collect is undefined in AbstractThis.");
+		// throw new SemanticsUndefinedException("Semantics collect is undefined in
+		// AbstractThis.");
 	}
 
 	@Override
@@ -43,7 +44,7 @@ public abstract class AbstractThis<ObjectKind extends Expression> implements Exp
 
 	@Override
 	public Type getType() {
-		throw new SemanticsUndefinedException("Semantics getType is undefined in AbstractThis.");
+		return this.classDeclaration.getType();
 	}
 
 	@Override
