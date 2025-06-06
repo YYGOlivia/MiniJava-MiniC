@@ -35,6 +35,7 @@ public class MethodCallAssignment extends AbstractMethodCall<AssignableExpressio
 			fragMethAss.add(factory.createLoad(Register.ST, -2, 1));
 			fragMethAss.add(factory.createLoadL(this.declaration.getOffset()));
 			fragMethAss.add(Library.IAdd);
+			fragMethAss.add(factory.createLoadI(1));
 			fragMethAss.add(factory.createCallI());
 		}	
 		return fragMethAss;

@@ -162,6 +162,10 @@ public class ClassDeclaration implements Instruction, Declaration {
 		return this.constructors;
 	}
 
+	public List<ClassElement> getAccessibleElements(){
+		return elements.stream().filter(e -> e.getAccessRight()!=AccessRight.PRIVATE).collect(Collectors.toList());
+	}
+
 	public ConstructorDeclaration findConstructor(String signature){
 		return constructors.stream().filter(c -> c.getSignature().equals(signature)).findAny().orElse(null);
 	}
@@ -277,16 +281,19 @@ public class ClassDeclaration implements Instruction, Declaration {
 	@Override
 	public int allocateMemory(Register register, int offset) {
 		this.offset = offset; // pour les elements statiques stockés directement dans SB
-		int classOff = offset;
+		int classOff = 0;
 		int objOff = 0; // pour les éléments dynamiques stockés dans les instances
 		// Instancie les offsets : ex class Chien{int poids, method grossir} -> poids
 		// offset 0, grossir offset 1
 		// appel methode grossir -> adresse objet + offset (1)
 		for (ClassElement elem : elements) { // liste triée
 			if (elem.getElementKind() == ElementKind.CLASS) {
+				
 				classOff += elem.allocateMemory(register, classOff);
+				Logger.warning(elem.getName() + " " + elem.getOffset());
 			} else {
 				objOff += elem.allocateMemory(null, objOff); // register inutilisé
+				Logger.warning(elem.getName() + " " + elem.getOffset());
 			}
 
 		}
@@ -329,6 +336,7 @@ public class ClassDeclaration implements Instruction, Declaration {
 			if (meth.isConcrete()) {
 				fragAux = meth.getFunction().getCode(factory);
 				fragAux.addPrefix(this.name + "_" + meth.getSignature());
+				fragAux.add(factory.createReturn(0, meth.getParams().size()));
 				fragClass.append(fragAux);
 			}
 		}

@@ -34,6 +34,7 @@ public class MethodCallAccess extends AbstractMethodCall<AccessibleExpression> i
 			fragMethAcc.add(factory.createLoad(Register.ST, -2, 1));
 			fragMethAcc.add(factory.createLoadL(this.declaration.getOffset()));
 			fragMethAcc.add(Library.IAdd);
+			fragMethAcc.add(factory.createLoadI(1));
 			fragMethAcc.add(factory.createCallI());
 		}
 		return fragMethAcc;

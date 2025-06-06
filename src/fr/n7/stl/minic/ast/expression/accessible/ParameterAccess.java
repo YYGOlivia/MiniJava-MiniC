@@ -47,7 +47,7 @@ public class ParameterAccess extends AbstractAccess {
 	@Override
 	public Fragment getCode(TAMFactory factory) {
 		Fragment fragment = factory.createFragment();
-		int pos = -declaration.getOffset();
+		int pos = declaration.getOffset();
 		int size = declaration.getType().length();
 		fragment.add(factory.createLoad(Register.LB, pos, size));
 		return fragment;

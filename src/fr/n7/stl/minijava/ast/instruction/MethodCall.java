@@ -160,12 +160,17 @@ public class MethodCall implements Instruction {
 		if (this.target == null) {//Appel à une methode statique
 			fragMethAss.add(factory.createCall(this.method.getSignature(), Register.LB));
 		} else {//Appel à une methode d'instance
-			fragMethAss.append(this.target.getCode(factory));
-			fragMethAss.add(factory.createLoadL(0));
-			fragMethAss.add(factory.createLoad(Register.ST, -2, 1));
-			fragMethAss.add(factory.createLoadL(this.method.getOffset()));
-			fragMethAss.add(Library.IAdd);
-			fragMethAss.add(factory.createCallI());
+			if (target instanceof IdentifierAccess && ((IdentifierAccess) target).getExpression() instanceof ClassAccess){
+				fragMethAss.add(factory.createCall(target.toString() + "_" + this.method.getSignature(), Register.LB));
+			}else{
+				fragMethAss.append(this.target.getCode(factory));
+				fragMethAss.add(factory.createLoadL(0));
+				fragMethAss.add(factory.createLoad(Register.ST, -2, 1));
+				fragMethAss.add(factory.createLoadL(this.method.getOffset()));
+				fragMethAss.add(Library.IAdd);
+				fragMethAss.add(factory.createLoadI(1));
+				fragMethAss.add(factory.createCallI());
+			}
 		}	
 		return fragMethAss;
 	}

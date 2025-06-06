@@ -39,7 +39,8 @@ public abstract class AbstractThis<ObjectKind extends Expression> implements Exp
 
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
-		throw new SemanticsUndefinedException("Semantics resolve is undefined in AbstractThis.");
+		//throw new SemanticsUndefinedException("Semantics resolve is undefined in AbstractThis.");
+		return true;
 	}
 
 	@Override

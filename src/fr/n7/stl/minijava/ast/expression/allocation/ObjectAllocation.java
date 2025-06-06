@@ -6,8 +6,12 @@ import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.minijava.ast.type.ClassType;
+import fr.n7.stl.minijava.ast.type.declaration.AttributeDeclaration;
 import fr.n7.stl.minijava.ast.type.declaration.ClassDeclaration;
+import fr.n7.stl.minijava.ast.type.declaration.ClassElement;
 import fr.n7.stl.minijava.ast.type.declaration.ConstructorDeclaration;
+import fr.n7.stl.minijava.ast.type.declaration.ElementKind;
+import fr.n7.stl.minijava.ast.type.declaration.MethodDeclaration;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Library;
 import fr.n7.stl.tam.ast.Register;
@@ -107,6 +111,20 @@ public class ObjectAllocation implements AccessibleExpression, AssignableExpress
 		}
 		fragObjAll.add(factory.createLoadL(((ClassType) this.type).getDeclaration().getObjectSize()));
 		fragObjAll.add(Library.MAlloc);
+		for (ClassElement e : type.getDeclaration().getAccessibleElements()){
+			//normalement triés dans le bon order
+			if (e.getElementKind()==ElementKind.OBJECT){
+				if (e instanceof MethodDeclaration){
+					MethodDeclaration m = (MethodDeclaration) e;
+					fragObjAll.add(factory.createLoadA(name + "_" + m.getSignature()));
+				}else if (e instanceof AttributeDeclaration){
+					//On instancie les attributs à 0 par defaut
+					fragObjAll.add(factory.createLoadL(0));
+				}
+			}
+		}
+		fragObjAll.add(factory.createLoad(Register.ST, -(type.getDeclaration().getObjectSize() + 1), 1));
+		fragObjAll.add(factory.createStoreI(type.getDeclaration().getObjectSize()));
 		fragObjAll.add(factory.createCall(this.getConstructorSignature(), Register.SB));
 		
 		return fragObjAll;
