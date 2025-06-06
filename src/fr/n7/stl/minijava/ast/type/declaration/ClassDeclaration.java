@@ -24,30 +24,59 @@ import java.util.stream.Collectors;
 public class ClassDeclaration implements Instruction, Declaration {
 
 	private List<ClassElement> elements;
-
 	private List<AttributeDeclaration> attributes;
-
 	private List<MethodDeclaration> methods;
-
 	private List<ConstructorDeclaration> constructors;
-
 	private boolean concrete;
-
 	private String name;
-
 	private String ancestor;
-
 	private ClassDeclaration ancestorClass;
-
 	private ClassType type;
-	
 	public int tamAddress;
-
 	private int objectSize;
 
 	public ClassDeclaration getAncestor() {
 		return ancestorClass;
 	}
+
+	private List<ClassElement> heritage;
+
+	public List<ClassElement> getHeritage(){
+		return heritage;
+	}
+
+	private void constructionTransmission(){
+		if (ancestor!=null){
+			heritage.addAll(ancestorClass.getHeritage()); // On recupère l'héritage du parent (dans l'ordre)
+			attributes.addAll(ancestorClass.getHeritage()
+				.stream()
+				.filter(e -> e instanceof AttributeDeclaration)
+				.map(e-> (AttributeDeclaration) e).collect(Collectors.toList()));
+			methods.addAll(ancestorClass.getHeritage()
+				.stream()
+				.filter(e -> e instanceof MethodDeclaration)
+				.map(e-> (MethodDeclaration) e).collect(Collectors.toList()));
+		}
+		heritage.addAll(attributes.stream().filter(a -> a.getAccessRight()!=AccessRight.PRIVATE).collect(Collectors.toList()));
+		List<MethodDeclaration> toAdd = methods.stream().filter(m -> m.getAccessRight()!=AccessRight.PRIVATE).collect(Collectors.toList());
+		for (MethodDeclaration m : toAdd){
+			ClassElement toReplace = heritage.stream()
+				.filter(elem -> 
+					(elem instanceof MethodDeclaration && 
+					((MethodDeclaration) elem).getSignature() == m.getSignature()))
+				.findAny().orElse(null);
+			if (toReplace ==null){
+				heritage.add(m); //si ne redéfinit pas une methode du parent on l'ajoute a la fin
+			}else{
+				heritage.set(heritage.indexOf(toReplace), m); // sinon remplace methode parent par méthode enfant
+			}
+		}
+		List<ClassElement> privates = elements.stream().filter(e -> e.getAccessRight()==AccessRight.PRIVATE).collect(Collectors.toList());
+		elements.clear();
+		elements.addAll(heritage);
+		elements.addAll(privates);
+	}
+		
 
 	public ClassDeclaration(boolean concrete, String name, String ancestor, List<ClassElement> elements) {
 		this.concrete = concrete;
@@ -57,6 +86,7 @@ public class ClassDeclaration implements Instruction, Declaration {
 		this.attributes = new ArrayList<>();
 		this.methods = new ArrayList<>();
 		this.constructors = new ArrayList<>();
+		this.heritage = new ArrayList<>();
 
 		this.type = new ClassType(name);
 		this.type.setDeclaration(this);
@@ -157,9 +187,9 @@ public class ClassDeclaration implements Instruction, Declaration {
 				Logger.error(
 						"[ClassDeclaration]" + this.name + " is abstract but extends concrete class " + this.ancestor);
 			}
-
-			// TODO: ajouter les ClassElement de l'ancêtre ?
 		}
+		constructionTransmission(); //on construit l'héritage avant d'ajouter les elements des parents
+		Logger.warning(elements.toString());
 
 		// Scope de la classe, contient le scope global pour avoir connaissance des
 		// classes
@@ -303,7 +333,7 @@ public class ClassDeclaration implements Instruction, Declaration {
 				// meth.tamAdress = fragClass.getSize() + this.tamAddress;
 				// Logger.warning(meth.getName() + meth.tamAdress);
 				fragAux = meth.getFunction().getCode(factory);
-				fragAux.addPrefix(meth.getSignature());
+				fragAux.addPrefix(this.name + "_" + meth.getSignature());
 				fragClass.append(fragAux);
 			}
 		}

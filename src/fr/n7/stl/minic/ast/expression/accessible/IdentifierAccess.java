@@ -80,7 +80,7 @@ public class IdentifierAccess extends AbstractIdentifier implements AccessibleEx
 			this.expression = new ParameterAccess((ParameterDeclaration) declaration);
 
 		} else if (declaration instanceof ClassDeclaration) {
-			// Rien a faire
+			this.expression = new ClassAccess((ClassDeclaration) declaration);
 		} else {
 			Logger.error("[IdentifierAccess] Declaration of " + this.getName()
 					+ " refers to neither variable, constant or parameter.");

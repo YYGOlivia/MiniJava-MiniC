@@ -11,20 +11,41 @@ LOAD (1) -1[ST]
 STORE (1) 0[SB]
 STOREI (1)
 JUMP fin_A
-setV_int_
+A_setV_int_
 LOADL 8
-STORE (1) 0[SB]
-setB_int_
+STORE (1) 1[SB]
+A_setB_int_
 LOAD (1) 2[LB]
 LOAD (1) -1[LB]
-LOADL 0
+LOADL 1
 SUBR IAdd
 STOREI (1)
 A__
 LOAD (1) -1[LB]
 RETURN (1) 1
 fin_A
+PUSH 1
+LOADL 1
+LOADL 1
+SUBR MAlloc
+LOAD (1) -1[ST]
+STORE (1) 0[SB]
+STOREI (1)
+LOADL 1
+SUBR MAlloc
+LOAD (1) -1[ST]
+STORE (1) 0[SB]
+STOREI (1)
 JUMP fin_B
+B_setV_int_
+LOADL 8
+STORE (1) 1[SB]
+B_setB_int_
+LOAD (1) 2[LB]
+LOAD (1) -1[LB]
+LOADL 1
+SUBR IAdd
+STOREI (1)
 B__
 LOAD (1) -1[LB]
 RETURN (1) 1
@@ -45,16 +66,24 @@ CALL (SB) B__
 STORE (1) 2[SB]
 PUSH 1
 LOAD (1) 1[SB]
-LOADL 0
+LOADL 1
 SUBR IAdd
 LOADI (1)
 STORE (1) 3[SB]
-LOAD (1) 3[SB]
+LOADL 7
 LOAD (1) 1[SB]
 LOADL 0
 LOAD (1) -2[ST]
-LOADL 1
+LOADL 2
 SUBR IAdd
 CALLI
+LOADL 3
+LOAD (1) 0[SB]
+LOADL 0
+LOAD (1) -2[ST]
+LOADL 2
+SUBR IAdd
+CALLI
+CALL (LB) m__
 HALT
 

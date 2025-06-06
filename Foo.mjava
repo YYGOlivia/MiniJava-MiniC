@@ -27,8 +27,8 @@ public class Foo {
         A b = new B();
         int c = a.b;
         a.setB(7);
-        //A.setV(3);
-        // m();
+        A.setV(3);
+        m();
 
     }
 }

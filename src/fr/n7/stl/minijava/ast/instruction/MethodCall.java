@@ -8,6 +8,7 @@ import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.Type;
+import fr.n7.stl.minijava.ast.expression.accessible.ClassAccess;
 import fr.n7.stl.minijava.ast.type.declaration.ClassDeclaration;
 import fr.n7.stl.minijava.ast.type.declaration.MethodDeclaration;
 import fr.n7.stl.tam.ast.Fragment;
@@ -68,13 +69,8 @@ public class MethodCall implements Instruction {
 		}
 
 		IdentifierAccess id = (IdentifierAccess) target;
-		boolean isStatic = id.getExpression() == null;
-		Declaration cDecl;
-		if (isStatic) {
-			cDecl = scope.get(id.getName());
-		} else {
-			cDecl = scope.get(id.getExpression().getDeclaration().getType().toString());
-		}
+		Declaration cDecl = scope.get(id.getExpression().getDeclaration().getType().toString());
+		boolean isStatic = id.getExpression() instanceof ClassAccess;
 		if (!(cDecl instanceof ClassDeclaration)) {
 			Logger.error("[MethodCall] The object " + target.toString() + " is not an instance of a class");
 		}
