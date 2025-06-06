@@ -50,6 +50,11 @@ public interface Fragment {
 	 */
 	public void append(Fragment fragment);
 
+	/**
+	 * return the current fragment size
+	 * 
+	 * @return the fragment size (a.k.a the current TAM instruction address)
+	 */
 	public int getSize();
 
 }

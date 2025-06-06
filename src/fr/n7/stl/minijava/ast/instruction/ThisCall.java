@@ -3,15 +3,17 @@ package fr.n7.stl.minijava.ast.instruction;
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.instruction.Instruction;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
+import fr.n7.stl.minic.ast.instruction.declaration.ParameterDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.Type;
+import fr.n7.stl.minijava.ast.type.ClassType;
+import fr.n7.stl.minijava.ast.type.declaration.ClassDeclaration;
 import fr.n7.stl.minijava.ast.type.declaration.ConstructorDeclaration;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.Logger;
-import fr.n7.stl.util.SemanticsUndefinedException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,6 +23,8 @@ public class ThisCall implements Instruction {
 	private ConstructorDeclaration constructor;
 
 	private List<AccessibleExpression> arguments;
+	
+	private ClassDeclaration classDeclaration;
 
 	public ThisCall(List<AccessibleExpression> arguments) {
 		this.arguments = arguments;
@@ -28,11 +32,15 @@ public class ThisCall implements Instruction {
 
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
-		boolean okArgs = true;
-		for (AccessibleExpression arg : this.arguments) {
-			okArgs = okArgs && arg.collectAndPartialResolve(scope);
-		}
-		return okArgs;
+		Logger.error("[ThisCall] super constructor cannot be called outside a method or constructor.");
+		return false;
+	}
+
+	public String getSignature(String className) {
+		String paramstring = this.arguments.stream()
+				.map(p -> p.getType().toString())
+				.collect(Collectors.joining(","));
+		return className + "(" + paramstring + ")";
 	}
 
 	@Override
@@ -40,6 +48,16 @@ public class ThisCall implements Instruction {
 		boolean okArgs = true;
 		for (AccessibleExpression arg : this.arguments) {
 			okArgs = okArgs && arg.collectAndPartialResolve(scope);
+		}
+		ParameterDeclaration obj = container.getParameters().get(0); //On récupère le this
+		if (obj.getType() instanceof ClassType){
+			Logger.error("[ThisCall] The first argument of " + container.getName() + " is not an instance of a class");
+		}
+		ClassType classType = (ClassType) obj.getType();
+		classDeclaration = classType.getDeclaration();
+		constructor = classDeclaration.findConstructor(getSignature(classDeclaration.getName()));
+		if (constructor==null){
+			Logger.error("[ThisCall] The class " + classDeclaration.getName() + " doesn't have any constructor matching the signature " + getSignature(classDeclaration.getName()));
 		}
 		return okArgs;
 	}
@@ -90,7 +108,11 @@ public class ThisCall implements Instruction {
 
 	@Override
 	public Fragment getCode(TAMFactory factory) {
-		throw new SemanticsUndefinedException("Semantics getCode is undefined in ThisCall.");
+		// appel constructeur 
+		Fragment frag = factory.createFragment();
+		frag.add(factory.createCall(constructor.getSignature(), Register.SB)); // Appel au constructeur
+		return frag;
+		//throw new SemanticsUndefinedException("Semantics getCode is undefined in ThisCall.");
 	}
 
 	@Override

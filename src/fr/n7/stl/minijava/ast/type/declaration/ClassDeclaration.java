@@ -1,3 +1,4 @@
+
 package fr.n7.stl.minijava.ast.type.declaration;
 
 import fr.n7.stl.minic.ast.Block;
@@ -12,7 +13,6 @@ import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.Logger;
-import fr.n7.stl.util.SemanticsUndefinedException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -39,6 +39,8 @@ public class ClassDeclaration implements Instruction, Declaration {
 	private ClassDeclaration ancestorClass;
 
 	private ClassType type;
+	
+	public int tamAddress;
 
 	private int objectSize;
 
@@ -127,6 +129,10 @@ public class ClassDeclaration implements Instruction, Declaration {
 	 */
 	public List<ConstructorDeclaration> getConstructors() {
 		return this.constructors;
+	}
+
+	public ConstructorDeclaration findConstructor(String signature){
+		return constructors.stream().filter(c -> c.getSignature().equals(signature)).findAny().orElse(null);
 	}
 
 	@Override
@@ -259,9 +265,31 @@ public class ClassDeclaration implements Instruction, Declaration {
 
 	@Override
 	public Fragment getCode(TAMFactory factory) {
-		throw new SemanticsUndefinedException("Semantics getCode is undefined in ClassDeclaration.");
+		Fragment fragClass = factory.createFragment();
+		Fragment fragAux = factory.createFragment();
+		for (MethodDeclaration meth : this.methods) {
+			if (meth.getElementKind() == ElementKind.OBJECT) {
+				//si la methode est statique
+				fragAux = meth.getFunction().getCode(factory);
+				fragAux.addPrefix(meth.getName());
+				fragAux.addComment("methode statique" + meth.getSignature());
+				fragClass.append(fragAux);
+			} else if (meth.isConcrete()) {
+				meth.tamAdress = fragClass.getSize() + this.tamAddress;
+				fragAux = meth.getFunction().getCode(factory);
+				fragAux.addComment("methode " + meth.getName());
+				fragClass.append(fragAux);
+			}
+		}
+		for (ConstructorDeclaration con : this.constructors) {
+			fragAux = con.getCode(factory);
+//			fragAux.addPrefix(con.getSignature());
+			fragAux.addComment("constructeur" + con.getSignature());
+			fragClass.append(fragAux);
+		}
+		return fragClass;
 	}
-
+	
 	@Override
 	public String getName() {
 		return this.name;

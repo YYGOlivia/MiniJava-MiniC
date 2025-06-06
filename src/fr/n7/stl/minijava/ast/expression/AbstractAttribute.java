@@ -12,7 +12,7 @@ import fr.n7.stl.util.Logger;
 
 public abstract class AbstractAttribute<ObjectKind extends Expression> implements Expression {
 
-	private ObjectKind object;
+	protected ObjectKind object;
 	private String name;
 	private AttributeDeclaration attribute;
 

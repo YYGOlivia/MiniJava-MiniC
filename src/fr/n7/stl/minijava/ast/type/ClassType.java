@@ -24,6 +24,10 @@ public class ClassType implements Type {
 	public void setDeclaration(ClassDeclaration declaration) {
 		this.declaration = declaration;
 	}
+	
+	public ClassDeclaration getDeclaration() {
+		return this.declaration;
+	}
 
 	public ClassDeclaration getDeclaration() {
 		return this.declaration;

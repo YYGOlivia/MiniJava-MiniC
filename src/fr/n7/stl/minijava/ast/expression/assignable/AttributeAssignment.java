@@ -5,6 +5,7 @@ import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minijava.ast.expression.AbstractAttribute;
 import fr.n7.stl.tam.ast.Fragment;
+import fr.n7.stl.tam.ast.Library;
 import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.Logger;
 import fr.n7.stl.util.SemanticsUndefinedException;
@@ -37,7 +38,12 @@ public class AttributeAssignment extends AbstractAttribute<AssignableExpression>
 
 	@Override
 	public Fragment getCode(TAMFactory factory) {
-		throw new SemanticsUndefinedException("Semantics getCode is undefined in AttributeAssignment.");
+		Fragment fragAttAss = factory.createFragment();
+		fragAttAss.append(this.object.getCode(factory));
+		fragAttAss.add(factory.createLoadL(this.attribute.getOffset()));
+		fragAttAss.add(Library.IAdd);
+		fragAttAss.add(factory.createStoreI(this.attribute.getType().length()));
+		return fragAttAss;
 	}
 
 }

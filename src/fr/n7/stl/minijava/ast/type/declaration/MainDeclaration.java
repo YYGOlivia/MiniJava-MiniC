@@ -138,7 +138,20 @@ public class MainDeclaration implements Instruction {
 
 	@Override
 	public Fragment getCode(TAMFactory factory) {
-		throw new SemanticsUndefinedException("Semantics getCode is undefined in MainDeclaration.");
+		Fragment fragMain = factory.createFragment();
+		Fragment fragFunAux = factory.createFragment();
+		for (Declaration decl : this.declarations) {
+			if (decl instanceof MethodDeclaration) {
+				fragFunAux = ((MethodDeclaration) decl).getFunction().getCode(factory);
+				fragFunAux.addPrefix(((MethodDeclaration) decl).getFunction().getName());
+				fragMain.append(fragFunAux);
+			}
+		}
+		fragMain.addComment("main function");
+		Fragment fragMainBody = this.main.getCode(factory);
+		fragMainBody.addPrefix("main body");
+		fragMain.append(fragMainBody);
+		return fragMain;
 	}
 
 	public String getName() {

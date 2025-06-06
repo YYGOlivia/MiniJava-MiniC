@@ -16,9 +16,9 @@ public abstract class AbstractMethodCall<ObjectKind extends Expression> implemen
 
 	private String name;
 
-	private MethodDeclaration declaration;
+	protected MethodDeclaration declaration;
 
-	private ObjectKind target;
+	protected ObjectKind target;
 
 	private List<AccessibleExpression> arguments;
 
@@ -76,7 +76,7 @@ public abstract class AbstractMethodCall<ObjectKind extends Expression> implemen
 			image += this.target + ".";
 		}
 		image += this.name + "(";
-		Iterator<AccessibleExpression> iterator = this.arguments.iterator();
+		Iterator<AccessibleExpression> iterator = this.getArguments().iterator();
 		if (iterator.hasNext()) {
 			AccessibleExpression argument = iterator.next();
 			image += argument;
@@ -87,6 +87,13 @@ public abstract class AbstractMethodCall<ObjectKind extends Expression> implemen
 		}
 		image += ")";
 		return image;
+	}
+
+	/**
+	 * @return the arguments
+	 */
+	public List<AccessibleExpression> getArguments() {
+		return arguments;
 	}
 
 }

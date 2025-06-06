@@ -8,7 +8,9 @@ import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.scope.SymbolTable;
 import fr.n7.stl.minic.ast.type.AtomicType;
 import fr.n7.stl.minic.ast.type.Type;
+import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
+import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.Logger;
 import fr.n7.stl.util.SemanticsUndefinedException;
 import java.util.ArrayList;
@@ -34,7 +36,6 @@ public class ConstructorDeclaration extends ClassElement {
 		super.setClassDeclaration(classDecl);
 		List<ParameterDeclaration> funcParams = new ArrayList<>(this.parameters);
 		this.function = new FunctionDeclaration(this.getName(), AtomicType.VoidType, funcParams, body);
-		// VoidType va peut être faire des pb pour le getCode
 	}
 
 	public List<ParameterDeclaration> getParams() {
@@ -110,5 +111,15 @@ public class ConstructorDeclaration extends ClassElement {
 		}
 		Logger.warning("[ConstructorDeclaration] AUCUNE IDEE DE CE QU'IL SE PASSE APRES CE POINT");
 		return AtomicType.VoidType;
+	}
+
+	public Fragment getCode(TAMFactory factory) {
+		//this.tamAddress = factory.getOffset(); // on récupère l'adresse à laquelle on est -> Pas besoin car etiquette
+		Fragment frag = factory.createFragment();
+		frag.append(function.getCode(factory));
+		frag.addPrefix(getSignature());
+		//Pas de return dans le corps du constructor donc on ajoute à la main
+		frag.add(factory.createReturn(1, parameters.size() + 1)); // +1 pour l'adresse de l'objet
+		return frag;
 	}
 }
