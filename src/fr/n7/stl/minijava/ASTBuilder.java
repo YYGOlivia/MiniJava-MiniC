@@ -98,6 +98,7 @@ import fr.n7.stl.minijava.parser.MiniJavaParser.MethodeClasseContext;
 import fr.n7.stl.minijava.parser.MiniJavaParser.MethodeMainContext;
 import fr.n7.stl.minijava.parser.MiniJavaParser.MethodeObjetContext;
 import fr.n7.stl.minijava.parser.MiniJavaParser.ParametreContext;
+import fr.n7.stl.minijava.parser.MiniJavaParser.ParametresContext;
 import fr.n7.stl.minijava.parser.MiniJavaParser.PrincipaleContext;
 import fr.n7.stl.minijava.parser.MiniJavaParser.ProgrammeContext;
 import fr.n7.stl.minijava.parser.MiniJavaParser.SignatureContext;
@@ -107,6 +108,7 @@ import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.tam.ast.impl.TAMFactoryImpl;
+import fr.n7.stl.util.Logger;
 
 public class ASTBuilder extends MiniJavaParserBaseListener {
 
@@ -128,6 +130,14 @@ public class ASTBuilder extends MiniJavaParserBaseListener {
         }
         System.out.println(this.main);
         SymbolTable tds = new SymbolTable();
+
+        // Register les classes
+        for (ClassDeclaration c : this.classes) {
+            if (!tds.accepts(c)) {
+                Logger.error("[ASTBuilder] The name " + c.getName() + " is already used");
+            }
+            tds.register(c);
+        }
 
         boolean okCollect = this.classes.stream().allMatch(c -> c.collectAndPartialResolve(tds));
         okCollect = okCollect && this.main.collectAndPartialResolve(tds);
@@ -223,8 +233,6 @@ public class ASTBuilder extends MiniJavaParserBaseListener {
         Type leType = ctx.laSignature.leRetour.unType;
         List<ParameterDeclaration> lesParametres = ctx.laSignature.lesParametres.desParametres;
         Block leCorps = ctx.leCorps.unBloc;
-        // ctx.uneDeclaration = new FunctionDeclaration(leNom, leType, lesParametres,
-        // leCorps);
         ctx.uneDeclaration = new MethodDeclaration(leNom, leType, lesParametres, leCorps);
     }
 
@@ -309,7 +317,8 @@ public class ASTBuilder extends MiniJavaParserBaseListener {
     public void exitMethodeObjet(MethodeObjetContext ctx) {
         String leNom = ctx.laSignature.leNom.getText();
         Type leType = ctx.laSignature.leRetour.unType;
-        List<ParameterDeclaration> lesParametres = ctx.laSignature.lesParametres.desParametres;
+        ParametresContext ctxParam = ctx.laSignature.lesParametres;
+        List<ParameterDeclaration> lesParametres = ctxParam == null ? List.of() : ctxParam.desParametres;
         Block leCorps = ctx.leCorps.unBloc;
         ctx.uneMethode = new MethodDeclaration(leNom, leType, lesParametres, leCorps);
     }

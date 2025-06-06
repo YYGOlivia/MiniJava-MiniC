@@ -1,0 +1,14 @@
+class A {
+
+}
+
+class B extends A {
+
+}
+
+public class Extends {
+
+    public static void main(String[] args) {
+        A a = new B();
+    }
+}

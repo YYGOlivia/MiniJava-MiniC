@@ -1,7 +1,7 @@
 package fr.n7.stl.minijava;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.NoSuchFileException;
 
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
@@ -49,8 +49,9 @@ public class Driver {
                 } else {
                     astBuilder.startCompilation(generateCode);
                 }
-            } catch (FileNotFoundException e) {
+            } catch (NoSuchFileException e) {
                 System.err.println("File : " + name + " not found");
+                System.exit(1);
             } catch (IOException e) {
                 e.printStackTrace();
             }

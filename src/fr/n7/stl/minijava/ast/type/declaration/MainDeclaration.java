@@ -30,6 +30,13 @@ public class MainDeclaration implements Instruction {
 		this.name = name;
 		this.declarations = declarations;
 		this.main = main;
+
+		// construire les functions associés aux méthodes de la classe principale
+		for (Declaration d : declarations) {
+			if (d instanceof MethodDeclaration) {
+				((MethodDeclaration) d).setClassDeclaration(null);
+			}
+		}
 	}
 
 	@Override
@@ -41,8 +48,8 @@ public class MainDeclaration implements Instruction {
 		boolean okDecl = true;
 		for (Declaration decl : declarations) {
 			if (decl instanceof MethodDeclaration) {
-				MethodDeclaration fonct = (MethodDeclaration) decl;
-				okDecl = okDecl;// TODO && fonct.collectAndPartialResolve(mainScope);
+				MethodDeclaration m = (MethodDeclaration) decl;
+				okDecl = okDecl && m.collectAndPartialResolve(mainScope);
 			} else if (decl instanceof ConstantDeclaration) {
 				ConstantDeclaration cons = (ConstantDeclaration) decl;
 				okDecl = okDecl && cons.collectAndPartialResolve(mainScope);
@@ -52,6 +59,7 @@ public class MainDeclaration implements Instruction {
 			} else {
 				Logger.error("[MainDeclaration] " + decl.getName() + " is neither a method or an attribute");
 			}
+			scope.register(decl);
 		}
 		return okDecl && main.collectAndPartialResolve(mainScope);
 	}
@@ -71,8 +79,8 @@ public class MainDeclaration implements Instruction {
 		boolean okDecl = true;
 		for (Declaration decl : declarations) {
 			if (decl instanceof MethodDeclaration) {
-				MethodDeclaration fonct = (MethodDeclaration) decl;
-				okDecl = okDecl;// && fonct.completeResolve(mainScope);
+				MethodDeclaration m = (MethodDeclaration) decl;
+				okDecl = okDecl && m.completeResolve(mainScope);
 			} else if (decl instanceof ConstantDeclaration) {
 				ConstantDeclaration cons = (ConstantDeclaration) decl;
 				okDecl = okDecl && cons.completeResolve(mainScope);
@@ -90,9 +98,9 @@ public class MainDeclaration implements Instruction {
 	public boolean checkType() {
 		boolean okDecl = true;
 		for (Declaration decl : declarations) {
-			if (decl instanceof FunctionDeclaration) {
-				FunctionDeclaration fonct = (FunctionDeclaration) decl;
-				okDecl = okDecl && fonct.checkType();
+			if (decl instanceof MethodDeclaration) {
+				MethodDeclaration m = (MethodDeclaration) decl;
+				okDecl = okDecl && m.checkType();
 			} else if (decl instanceof ConstantDeclaration) {
 				ConstantDeclaration cons = (ConstantDeclaration) decl;
 				okDecl = okDecl && cons.checkType();
@@ -109,7 +117,7 @@ public class MainDeclaration implements Instruction {
 	@Override
 	public int allocateMemory(Register register, int offset) {
 		int off = 0;
-		for (Declaration d : declarations){
+		for (Declaration d : declarations) {
 			if (d instanceof FunctionDeclaration) {
 				FunctionDeclaration fonct = (FunctionDeclaration) d;
 				off += fonct.allocateMemory(register, off);
@@ -120,7 +128,7 @@ public class MainDeclaration implements Instruction {
 				VariableDeclaration var = (VariableDeclaration) d;
 				off += var.allocateMemory(register, off);
 			} else {
-				//Ne devrait pas arriver
+				// Ne devrait pas arriver
 				Logger.error("[MainDeclaration] " + d.getName() + " is neither a method or an attribute");
 			}
 		}

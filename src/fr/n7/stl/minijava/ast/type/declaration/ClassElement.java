@@ -18,7 +18,7 @@ public abstract class ClassElement implements Declaration {
 	private ClassDeclaration classDeclaration;
 
 	protected Register register;
-    protected int offset;
+	protected int offset;
 
 	public ClassElement(ElementKind elementKind, AccessRight accessRight, String name) {
 		this.elementKind = elementKind;
@@ -67,10 +67,14 @@ public abstract class ClassElement implements Declaration {
 		return this.name;
 	}
 
+	public boolean isStatic() {
+		return this.elementKind == ElementKind.CLASS;
+	}
+
 	public Register getRegister() {
 		return this.register;
 	}
-	
+
 	public int getOffset() {
 		return this.offset;
 	}

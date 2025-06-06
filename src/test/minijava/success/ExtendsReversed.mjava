@@ -1,14 +1,14 @@
-class A {
+class A extends B {
 
 }
 
-class B extends A {
+class B {
 
 }
 
 public class ExtendsTest {
 
     public static void main(String[] args) {
-        A a = new B();
+        B b = new A();
     }
 }

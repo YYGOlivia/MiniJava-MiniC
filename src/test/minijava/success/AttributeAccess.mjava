@@ -1,11 +1,33 @@
 class A {
+
+    public B b;
     // public int i = 1; // illégal d'initialiser un attribut d'instance
     public int i;
+    public static final int j = 2;
+
+    public A(int i) {
+        this.i = i;
+        this.b = new B(i);
+    }
+}
+
+class B {
+    private A a;
+
+    public B(int i) {
+        this.a = new A(i);
+    }
+
+    public void foo() {
+        int r = this.a.i;
+        this.a = new A(r);
+        this.a.i = 1;
+        this.a.b = new B(this.a.i);
+    }
 }
 
 public class AttributeAccess {
 
     public static void main(String[] args) {
-
     }
 }

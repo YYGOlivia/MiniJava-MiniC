@@ -29,6 +29,10 @@ public class ClassType implements Type {
 		return this.declaration;
 	}
 
+	public ClassDeclaration getDeclaration() {
+		return this.declaration;
+	}
+
 	@Override
 	public boolean equalsTo(Type other) {
 		if (!(other instanceof ClassType)) {

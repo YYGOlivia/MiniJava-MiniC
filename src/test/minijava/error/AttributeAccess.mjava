@@ -1,0 +1,14 @@
+class A {
+    // public int i = 1; // illégal d'initialiser un attribut d'instance
+    public int i;
+
+    public void foo() {
+        boolean i = this.i; // Erreur de type
+    }
+}
+
+public class AttributeAccess {
+
+    public static void main(String[] args) {
+    }
+}

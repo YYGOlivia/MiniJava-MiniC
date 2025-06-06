@@ -22,7 +22,7 @@ import fr.n7.stl.util.Logger;
  * @author Marc Pantel
  *
  */
-public class VariableDeclaration implements Declaration, Instruction {
+public class VariableDeclaration implements VariableDeclarationI, Instruction {
 
 	/**
 	 * Name of the declared variable.

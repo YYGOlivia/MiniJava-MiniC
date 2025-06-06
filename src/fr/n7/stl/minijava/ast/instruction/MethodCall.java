@@ -84,18 +84,17 @@ public class MethodCall implements Instruction {
 
 		ClassDeclaration classDecl = (ClassDeclaration) cDecl;
 		List<MethodDeclaration> methods = classDecl.getMethods(name, this.arguments.size());
-		if (methods.isEmpty()) {
-			Logger.error("[MethodCall] The class " + classDecl.getName() + " does not have a method named " + name
-					+ " with " + this.arguments.size() + " parameters");
-		}
 
 		MethodDeclaration equalMethod = null; // méthode avec les mêmes types de paramètres
 		MethodDeclaration compatibleMethod = null; // méthode avec des types compatibles
 		for (MethodDeclaration m : methods) {
+			if (m.getParams().size() != this.arguments.size()) {
+				continue; // le nombre de paramètres ne correspond pas
+			}
 			boolean equalTypes = true;
 			boolean compatibleTypes = true;
 			for (int i = 0; i < this.arguments.size(); i++) {
-				Type funcParamType = m.getParameters().get(i).getType();
+				Type funcParamType = m.getParams().get(i).getType();
 				Type argType = this.arguments.get(i).getType();
 				equalTypes = equalTypes && argType.equalsTo(funcParamType);
 				compatibleTypes = compatibleTypes && argType.compatibleWith(funcParamType);
@@ -116,10 +115,9 @@ public class MethodCall implements Instruction {
 		}
 		this.method = equalMethod != null ? equalMethod : compatibleMethod;
 
-		boolean methodStatic = method.getElementKind() == ElementKind.CLASS;
-		if (isStatic && !methodStatic) {
+		if (isStatic && !method.isStatic()) {
 			Logger.error("[MethodCall] The method " + name + " is not static (cannot be called on a class)");
-		} else if (!isStatic && methodStatic) {
+		} else if (!isStatic && method.isStatic()) {
 			Logger.error("[MethodCall] The method " + name + " is static (cannot be called on an object)");
 		}
 		// TODO vérifier les acces
@@ -153,8 +151,9 @@ public class MethodCall implements Instruction {
 
 	@Override
 	public int allocateMemory(Register register, int offset) {
-		//throw new SemanticsUndefinedException("Semantics allocateMemory is undefined in MethodCall.");
-		// pas vraiment besoin d'allouer de la mémoire ? 
+		// throw new SemanticsUndefinedException("Semantics allocateMemory is undefined
+		// in MethodCall.");
+		// pas vraiment besoin d'allouer de la mémoire ?
 		return 0;
 	}
 
