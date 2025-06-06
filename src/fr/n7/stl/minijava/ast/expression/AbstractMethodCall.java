@@ -24,7 +24,7 @@ public abstract class AbstractMethodCall<ObjectKind extends Expression> implemen
 	public AbstractMethodCall(ObjectKind target, String name, List<AccessibleExpression> arguments) {
 		this.target = target;
 		this.name = name;
-		this.setArguments(arguments);
+		this.arguments = arguments;
 	}
 
 	public AbstractMethodCall(String name, List<AccessibleExpression> arguments) {
@@ -98,13 +98,6 @@ public abstract class AbstractMethodCall<ObjectKind extends Expression> implemen
 	 */
 	public List<AccessibleExpression> getArguments() {
 		return arguments;
-	}
-
-	/**
-	 * @param arguments the arguments to set
-	 */
-	public void setArguments(List<AccessibleExpression> arguments) {
-		this.arguments = arguments;
 	}
 
 }
