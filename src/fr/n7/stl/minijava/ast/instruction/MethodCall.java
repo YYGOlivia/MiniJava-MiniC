@@ -163,7 +163,7 @@ public class MethodCall implements Instruction {
 			fragMethAss.append(arg.getCode(factory));
 		}
 		if (this.target == null) {//Appel à une methode statique
-			fragMethAss.add(factory.createCall(this.method.getName(), Register.LB));
+			fragMethAss.add(factory.createCall(this.method.getSignature(), Register.LB));
 		} else {//Appel à une methode d'instance
 			fragMethAss.append(this.target.getCode(factory));
 			fragMethAss.add(factory.createLoadL(0));

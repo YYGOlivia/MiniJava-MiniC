@@ -26,7 +26,7 @@ public class MethodDeclaration extends ClassElement {
 
 	private Type type;
 
-	public int tamAdress;
+	//public int tamAdress;
 
 	public MethodDeclaration(String name, Type type, List<ParameterDeclaration> parameter, Block body) {
 		super(name);

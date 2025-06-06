@@ -11,6 +11,7 @@ import fr.n7.stl.minic.ast.instruction.declaration.VariableDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.Type;
+import fr.n7.stl.minijava.ast.expression.accessible.ClassAccess;
 import fr.n7.stl.minijava.ast.type.declaration.ClassDeclaration;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
@@ -114,7 +115,8 @@ public class IdentifierAccess extends AbstractIdentifier implements AccessibleEx
 			this.expression = new ParameterAccess((ParameterDeclaration) declaration);
 
 		} else if (declaration instanceof ClassDeclaration) {
-			// Rien a faire
+			//Accès à un attribut ou methode statique
+			this.expression = new ClassAccess((ClassDeclaration) declaration);
 		}else {
 			Logger.error("[IdentifierAccess] Declaration of " + this.getName()
 					+ " refers to neither variable, constant or parameter.");

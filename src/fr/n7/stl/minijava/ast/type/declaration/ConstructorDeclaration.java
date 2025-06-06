@@ -120,7 +120,6 @@ public class ConstructorDeclaration extends ClassElement {
 		//Pas de return dans le corps du constructor donc on ajoute à la main
 		frag.add(factory.createLoad(Register.LB, -1, 1));
 		frag.add(factory.createReturn(1, parameters.size() + 1)); // +1 pour l'adresse de l'objet
-		frag.addPrefix(getSignature());
 		return frag;
 	}
 }

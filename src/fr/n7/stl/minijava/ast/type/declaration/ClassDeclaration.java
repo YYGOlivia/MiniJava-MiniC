@@ -10,6 +10,7 @@ import fr.n7.stl.minic.ast.scope.SymbolTable;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.minijava.ast.type.ClassType;
 import fr.n7.stl.tam.ast.Fragment;
+import fr.n7.stl.tam.ast.Library;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.Logger;
@@ -246,7 +247,8 @@ public class ClassDeclaration implements Instruction, Declaration {
 
 	@Override
 	public int allocateMemory(Register register, int offset) {
-		int classOff = offset; // pour les elements statiques stockés directement dans SB
+		this.offset = offset; // pour les elements statiques stockés directement dans SB
+		int classOff = offset;
 		int objOff = 0; // pour les éléments dynamiques stockés dans les instances
 		// Instancie les offsets : ex class Chien{int poids, method grossir} -> poids
 		// offset 0, grossir offset 1
@@ -264,31 +266,54 @@ public class ClassDeclaration implements Instruction, Declaration {
 		// in ClassDeclaration.");
 	}
 
+	private int offset;
+	public int getOffset(){
+		return offset;
+	}
+
 	@Override
 	public Fragment getCode(TAMFactory factory) {
 		Fragment fragClass = factory.createFragment();
 		Fragment fragAux = factory.createFragment();
+		int classSize = (int) attributes.stream().filter(a -> a.getElementKind()==ElementKind.CLASS).count();
+		if (classSize>0){
+			fragClass.add(factory.createPush(1));
+			for (AttributeDeclaration att : attributes){
+			if(att.getElementKind()==ElementKind.CLASS){
+				if (att.getValue()!=null){
+					//On load la valeur initiale de l'attribut
+					fragClass.append(att.getValue().getCode(factory));
+				}else{
+					//Si pas de valeur on stocke 0 par defaut
+					fragClass.add(factory.createLoadL(0));
+				}
+			}
+			//On alloue la memoire nécessaire pour les attributs statiques
+			fragClass.add(factory.createLoadL(classSize));
+			fragClass.add(Library.MAlloc);
+			fragClass.add(factory.createLoad(Register.ST, -1, 1)); //On duplique l'adresse 
+			fragClass.add(factory.createStore(Register.SB, offset, 1)); //On stocke l'adresse de la classe dans le registre global
+			fragClass.add(factory.createStoreI(classSize)); // On stocke les attributs statiques à l'adresse de la classe
+		}
+		}
+		fragClass.add(factory.createJump("fin_" + getName()));
+		//On declare les methodes concretes 
 		for (MethodDeclaration meth : this.methods) {
-			if (meth.getElementKind() == ElementKind.OBJECT) {
-				//si la methode est statique
+			if (meth.isConcrete()) {
+				// meth.tamAdress = fragClass.getSize() + this.tamAddress;
+				// Logger.warning(meth.getName() + meth.tamAdress);
 				fragAux = meth.getFunction().getCode(factory);
-				fragAux.addPrefix(meth.getName());
-				fragAux.addComment("methode statique" + meth.getSignature());
-				fragClass.append(fragAux);
-			} else if (meth.isConcrete()) {
-				meth.tamAdress = fragClass.getSize() + this.tamAddress;
-				Logger.warning(meth.getName() + meth.tamAdress);
-				fragAux = meth.getFunction().getCode(factory);
-				fragAux.addComment("methode " + meth.getName());
+				fragAux.addPrefix(meth.getSignature());
 				fragClass.append(fragAux);
 			}
 		}
+		//On declare les constructeurs
 		for (ConstructorDeclaration con : this.constructors) {
 			fragAux = con.getCode(factory);
-//			fragAux.addPrefix(con.getSignature());
-			fragAux.addComment("constructeur" + con.getSignature());
+			fragAux.addPrefix(con.getSignature());
 			fragClass.append(fragAux);
 		}
+		fragClass.addSuffix("fin_" + getName());
 		return fragClass;
 	}
 	

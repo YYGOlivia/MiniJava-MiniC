@@ -142,12 +142,15 @@ public class MainDeclaration implements Instruction {
 		for (Declaration decl : this.declarations) {
 			if (decl instanceof MethodDeclaration) {
 				fragFunAux = ((MethodDeclaration) decl).getFunction().getCode(factory);
-				if (fragFunAux.getSize()==0){
+				if (fragFunAux.getSize()<=0){
 					fragFunAux.add(factory.createPush(0));
 				}
 				fragFunAux.addPrefix(((MethodDeclaration) decl).getFunction().getName());
 				fragMain.append(fragFunAux);
 			}
+		}
+		if (fragMain.getSize()<=0){
+			fragMain.add(factory.createPush(0));
 		}
 		fragMain.addComment("main_function");
 		Fragment fragMainBody = this.main.getCode(factory);
