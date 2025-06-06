@@ -16,7 +16,7 @@ public class ThisAccess extends AbstractThis<AccessibleExpression> implements Ac
 	@Override
 	public Fragment getCode(TAMFactory factory) {
 		Fragment fragThisAcc = factory.createFragment();
-		fragThisAcc.add(factory.createLoad(Register.SB, 0, 1));
+		fragThisAcc.add(factory.createLoad(Register.SB, -1, 1));
 		return fragThisAcc;
 	}
 

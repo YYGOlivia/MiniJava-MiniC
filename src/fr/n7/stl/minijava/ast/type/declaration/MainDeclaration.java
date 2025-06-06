@@ -115,7 +115,7 @@ public class MainDeclaration implements Instruction {
 
 	@Override
 	public int allocateMemory(Register register, int offset) {
-		int off = 0;
+		int off = offset;
 		for (Declaration d : declarations) {
 			if (d instanceof MethodDeclaration) {
 				MethodDeclaration fonct = (MethodDeclaration) d;
@@ -132,7 +132,7 @@ public class MainDeclaration implements Instruction {
 			}
 		}
 		main.allocateMemory(register, off);
-		return off; // Pas très utile puisque rien en du main
+		return off; // Pas très utile puisque rien apres main
 	}
 
 	@Override
@@ -147,6 +147,12 @@ public class MainDeclaration implements Instruction {
 				}
 				fragFunAux.addPrefix(((MethodDeclaration) decl).getFunction().getName());
 				fragMain.append(fragFunAux);
+			}else if (decl instanceof ConstantDeclaration) {
+				ConstantDeclaration cons = (ConstantDeclaration) decl;
+				fragMain.append(cons.getCode(factory));
+			} else if (decl instanceof VariableDeclaration) {
+				VariableDeclaration var = (VariableDeclaration) decl;
+				fragMain.append(var.getCode(factory));
 			}
 		}
 		if (fragMain.getSize()<=0){

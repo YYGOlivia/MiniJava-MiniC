@@ -24,11 +24,9 @@ public class Foo {
 
     public static void main(String[] args) {
         A a = new A();
-        A b = new B();
-        int c = a.b;
         a.setB(7);
         A.setV(3);
-        m();
+        print a.b;
 
     }
 }

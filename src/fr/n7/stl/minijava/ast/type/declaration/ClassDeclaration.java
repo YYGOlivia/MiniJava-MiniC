@@ -48,14 +48,6 @@ public class ClassDeclaration implements Instruction, Declaration {
 	private void constructionTransmission(){
 		if (ancestor!=null){
 			heritage.addAll(ancestorClass.getHeritage()); // On recupère l'héritage du parent (dans l'ordre)
-			attributes.addAll(ancestorClass.getHeritage()
-				.stream()
-				.filter(e -> e instanceof AttributeDeclaration)
-				.map(e-> (AttributeDeclaration) e).collect(Collectors.toList()));
-			methods.addAll(ancestorClass.getHeritage()
-				.stream()
-				.filter(e -> e instanceof MethodDeclaration)
-				.map(e-> (MethodDeclaration) e).collect(Collectors.toList()));
 		}
 		heritage.addAll(attributes.stream().filter(a -> a.getAccessRight()!=AccessRight.PRIVATE).collect(Collectors.toList()));
 		List<MethodDeclaration> toAdd = methods.stream().filter(m -> m.getAccessRight()!=AccessRight.PRIVATE).collect(Collectors.toList());
@@ -63,7 +55,7 @@ public class ClassDeclaration implements Instruction, Declaration {
 			ClassElement toReplace = heritage.stream()
 				.filter(elem -> 
 					(elem instanceof MethodDeclaration && 
-					((MethodDeclaration) elem).getSignature() == m.getSignature()))
+					((MethodDeclaration) elem).getSignature().equals(m.getSignature())))
 				.findAny().orElse(null);
 			if (toReplace ==null){
 				heritage.add(m); //si ne redéfinit pas une methode du parent on l'ajoute a la fin
@@ -72,9 +64,16 @@ public class ClassDeclaration implements Instruction, Declaration {
 			}
 		}
 		List<ClassElement> privates = elements.stream().filter(e -> e.getAccessRight()==AccessRight.PRIVATE).collect(Collectors.toList());
-		elements.clear();
+		this.elements = new ArrayList<>();
 		elements.addAll(heritage);
 		elements.addAll(privates);
+		attributes = elements.stream() //Mise a jour attributes
+			.filter(e -> e instanceof AttributeDeclaration)
+			.map(e-> (AttributeDeclaration) e).collect(Collectors.toList());
+		methods = elements.stream() //Mise a jour methods
+			.filter(e -> e instanceof MethodDeclaration)
+			.map(e-> (MethodDeclaration) e).collect(Collectors.toList());
+
 	}
 		
 
@@ -291,9 +290,7 @@ public class ClassDeclaration implements Instruction, Declaration {
 			}
 
 		}
-		return classOff - offset; // on retire le offset de base puisqu'en dehors on va additionner
-		// throw new SemanticsUndefinedException("Semantics allocatememory is undefined
-		// in ClassDeclaration.");
+		return 1; // la taille de l'adresse de la classe
 	}
 
 	private int offset;
@@ -309,29 +306,27 @@ public class ClassDeclaration implements Instruction, Declaration {
 		if (classSize>0){
 			fragClass.add(factory.createPush(1));
 			for (AttributeDeclaration att : attributes){
-			if(att.getElementKind()==ElementKind.CLASS){
-				if (att.getValue()!=null){
-					//On load la valeur initiale de l'attribut
-					fragClass.append(att.getValue().getCode(factory));
-				}else{
-					//Si pas de valeur on stocke 0 par defaut
-					fragClass.add(factory.createLoadL(0));
+				if(att.getElementKind()==ElementKind.CLASS){
+					if (att.getValue()!=null){
+						//On load la valeur initiale de l'attribut
+						fragClass.append(att.getValue().getCode(factory));
+					}else{
+						//Si pas de valeur on stocke 0 par defaut
+						fragClass.add(factory.createLoadL(0));
+					}
 				}
 			}
 			//On alloue la memoire nécessaire pour les attributs statiques
 			fragClass.add(factory.createLoadL(classSize));
 			fragClass.add(Library.MAlloc);
 			fragClass.add(factory.createLoad(Register.ST, -1, 1)); //On duplique l'adresse 
-			fragClass.add(factory.createStore(Register.SB, offset, 1)); //On stocke l'adresse de la classe dans le registre global
+			fragClass.add(factory.createStore(Register.SB, this.offset, 1)); //On stocke l'adresse de la classe dans le registre global
 			fragClass.add(factory.createStoreI(classSize)); // On stocke les attributs statiques à l'adresse de la classe
-		}
 		}
 		fragClass.add(factory.createJump("fin_" + getName()));
 		//On declare les methodes concretes 
 		for (MethodDeclaration meth : this.methods) {
 			if (meth.isConcrete()) {
-				// meth.tamAdress = fragClass.getSize() + this.tamAddress;
-				// Logger.warning(meth.getName() + meth.tamAdress);
 				fragAux = meth.getFunction().getCode(factory);
 				fragAux.addPrefix(this.name + "_" + meth.getSignature());
 				fragClass.append(fragAux);

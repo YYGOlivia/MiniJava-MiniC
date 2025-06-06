@@ -5,11 +5,6 @@ SUBR MAlloc
 LOAD (1) -1[ST]
 STORE (1) 0[SB]
 STOREI (1)
-LOADL 1
-SUBR MAlloc
-LOAD (1) -1[ST]
-STORE (1) 0[SB]
-STOREI (1)
 JUMP fin_A
 A_setV_int_
 LOADL 8
@@ -17,7 +12,7 @@ STORE (1) 1[SB]
 A_setB_int_
 LOAD (1) 2[LB]
 LOAD (1) -1[LB]
-LOADL 1
+LOADL 0
 SUBR IAdd
 STOREI (1)
 A__
@@ -29,12 +24,7 @@ LOADL 1
 LOADL 1
 SUBR MAlloc
 LOAD (1) -1[ST]
-STORE (1) 0[SB]
-STOREI (1)
-LOADL 1
-SUBR MAlloc
-LOAD (1) -1[ST]
-STORE (1) 0[SB]
+STORE (1) 1[SB]
 STOREI (1)
 JUMP fin_B
 B_setV_int_
@@ -43,7 +33,7 @@ STORE (1) 1[SB]
 B_setB_int_
 LOAD (1) 2[LB]
 LOAD (1) -1[LB]
-LOADL 1
+LOADL 0
 SUBR IAdd
 STOREI (1)
 B__
@@ -53,37 +43,37 @@ fin_B
 ;main_function
 m
 PUSH 0
+PUSH 1
+LOADL 6
+STORE (1) 2[SB]
 main_body
 PUSH 1
 LOADL 2
 SUBR MAlloc
 CALL (SB) A__
-STORE (1) 1[SB]
-PUSH 1
-LOADL 0
-SUBR MAlloc
-CALL (SB) B__
-STORE (1) 2[SB]
-PUSH 1
-LOAD (1) 1[SB]
-LOADL 1
-SUBR IAdd
-LOADI (1)
 STORE (1) 3[SB]
 LOADL 7
-LOAD (1) 1[SB]
+LOAD (1) 3[SB]
 LOADL 0
 LOAD (1) -2[ST]
-LOADL 2
+LOADL 1
 SUBR IAdd
 CALLI
 LOADL 3
-LOAD (1) 0[SB]
+LOAD (1) 0[LB]
 LOADL 0
 LOAD (1) -2[ST]
 LOADL 2
 SUBR IAdd
 CALLI
-CALL (LB) m__
+LOAD (1) 3[SB]
+LOADL 0
+SUBR IAdd
+LOADI (1)
+LOADL 1
+SUBR IAdd
+SUBR IOut
+LOADL 32
+SUBR COut
 HALT
 

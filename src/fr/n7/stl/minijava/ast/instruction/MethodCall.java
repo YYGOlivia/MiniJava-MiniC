@@ -121,7 +121,6 @@ public class MethodCall implements Instruction {
 		params.add(0, target);
 		this.function = new FunctionCall(fDecl.getName(), arguments);
 		function.collectAndPartialResolve(scope);
-		Logger.warning(scope.toString());
 
 		return okArgs;
 	}

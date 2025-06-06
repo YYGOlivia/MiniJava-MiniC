@@ -24,7 +24,7 @@ public class ClassAccess extends AbstractAccess{
     @Override
     public Fragment getCode(TAMFactory factory) {
         Fragment frag = factory.createFragment();
-        frag.add(factory.createLoad(Register.SB, declaration.getOffset(), 1));
+        frag.add(factory.createLoad(Register.LB, declaration.getOffset(), 1));
         return frag;
     }
 

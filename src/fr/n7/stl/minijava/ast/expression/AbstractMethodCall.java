@@ -121,7 +121,6 @@ public abstract class AbstractMethodCall<ObjectKind extends Expression> implemen
 		params.add(0, (AccessibleExpression) target);
 		this.function = new FunctionCall(fDecl.getName(), arguments);
 		function.collectAndPartialResolve(scope);
-		Logger.warning(scope.toString());
 
 		return okArgs;
 	}
