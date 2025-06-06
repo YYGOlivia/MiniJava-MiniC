@@ -1,0 +1,48 @@
+JUMP main_body
+;methode setV
+LOADL 8
+STORE (1) 0[SB]
+;methode statiquesetB_int_
+setB
+LOAD (1) 2[LB]
+LOAD (1) -1[LB]
+LOADL 0
+SUBR IAdd
+STOREI (1)
+;constructeurA__
+A__
+LOAD (1) -1[LB]
+RETURN (1) 1
+;constructeurB__
+B__
+LOAD (1) -1[LB]
+RETURN (1) 1
+;main_function
+m
+PUSH 0
+main_body
+PUSH 1
+LOADL 2
+SUBR MAlloc
+CALL (SB) A__
+STORE (1) 1[SB]
+PUSH 1
+LOADL 0
+SUBR MAlloc
+CALL (SB) B__
+STORE (1) 2[SB]
+PUSH 1
+LOAD (1) 1[SB]
+LOADL 0
+SUBR IAdd
+LOADI (1)
+STORE (1) 3[SB]
+LOAD (1) 3[SB]
+LOAD (1) 1[SB]
+LOADL 0
+LOAD (1) -2[ST]
+LOADL 1
+SUBR IAdd
+CALLI
+HALT
+

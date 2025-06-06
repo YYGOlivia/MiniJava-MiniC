@@ -12,7 +12,6 @@ import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.Logger;
-import fr.n7.stl.util.SemanticsUndefinedException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -45,8 +44,8 @@ public class ConstructorDeclaration extends ClassElement {
 	public String getSignature() {
 		String paramstring = this.parameters.stream()
 				.map(p -> p.getType().toString())
-				.collect(Collectors.joining(","));
-		return this.getName() + "(" + paramstring + ")";
+				.collect(Collectors.joining("_"));
+		return this.getName() + "_" + paramstring + "_";
 	}
 
 	@Override
@@ -70,7 +69,8 @@ public class ConstructorDeclaration extends ClassElement {
 
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
-		throw new SemanticsUndefinedException("Semantics resolve is undefined in ConstructorDeclaration.");
+		//throw new SemanticsUndefinedException("Semantics resolve is undefined in ConstructorDeclaration.");
+		return true;
 	}
 
 	@Override
@@ -117,9 +117,10 @@ public class ConstructorDeclaration extends ClassElement {
 		//this.tamAddress = factory.getOffset(); // on récupère l'adresse à laquelle on est -> Pas besoin car etiquette
 		Fragment frag = factory.createFragment();
 		frag.append(function.getCode(factory));
-		frag.addPrefix(getSignature());
 		//Pas de return dans le corps du constructor donc on ajoute à la main
+		frag.add(factory.createLoad(Register.LB, -1, 1));
 		frag.add(factory.createReturn(1, parameters.size() + 1)); // +1 pour l'adresse de l'objet
+		frag.addPrefix(getSignature());
 		return frag;
 	}
 }

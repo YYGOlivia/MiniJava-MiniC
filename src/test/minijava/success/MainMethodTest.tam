@@ -1,0 +1,11 @@
+JUMP main_body
+;main_function
+getOne
+LOADL 1
+RETURN (1) 0
+main_body
+PUSH 1
+CALL (LB) getOne
+STORE (1) 0[SB]
+HALT
+

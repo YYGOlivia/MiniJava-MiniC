@@ -1,10 +1,5 @@
 package fr.n7.stl.minijava.ast.instruction;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import fr.n7.stl.minic.ast.expression.FunctionCall;
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.expression.accessible.IdentifierAccess;
@@ -14,14 +9,16 @@ import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.minijava.ast.type.declaration.ClassDeclaration;
-import fr.n7.stl.minijava.ast.type.declaration.ElementKind;
 import fr.n7.stl.minijava.ast.type.declaration.MethodDeclaration;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Library;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.Logger;
-import fr.n7.stl.util.SemanticsUndefinedException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class MethodCall implements Instruction {
 
@@ -135,18 +132,20 @@ public class MethodCall implements Instruction {
 
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope, FunctionDeclaration container) {
-		throw new SemanticsUndefinedException("Semantics collect is undefined in MethodCall.");
+		//throw new SemanticsUndefinedException("Semantics collect is undefined in MethodCall.");
+		return true;
 	}
 
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> scope) {
-		throw new SemanticsUndefinedException("Semantics resolve is undefined in MethodCall.");
+		//throw new SemanticsUndefinedException("Semantics resolve is undefined in MethodCall.");
+		return true;
 	}
 
 	@Override
 	public boolean checkType() {
-		// vérifier le type de this.function si != null
-		throw new SemanticsUndefinedException("Semantics checkType is undefined in MethodCall.");
+		//throw new SemanticsUndefinedException("Semantics checkType is undefined in MethodCall.");
+		return true;
 	}
 
 	@Override

@@ -12,7 +12,6 @@ import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.Logger;
-import fr.n7.stl.util.SemanticsUndefinedException;
 import java.util.List;
 
 public class MainDeclaration implements Instruction {
@@ -118,8 +117,8 @@ public class MainDeclaration implements Instruction {
 	public int allocateMemory(Register register, int offset) {
 		int off = 0;
 		for (Declaration d : declarations) {
-			if (d instanceof FunctionDeclaration) {
-				FunctionDeclaration fonct = (FunctionDeclaration) d;
+			if (d instanceof MethodDeclaration) {
+				MethodDeclaration fonct = (MethodDeclaration) d;
 				off += fonct.allocateMemory(register, off);
 			} else if (d instanceof ConstantDeclaration) {
 				ConstantDeclaration cons = (ConstantDeclaration) d;
@@ -143,13 +142,16 @@ public class MainDeclaration implements Instruction {
 		for (Declaration decl : this.declarations) {
 			if (decl instanceof MethodDeclaration) {
 				fragFunAux = ((MethodDeclaration) decl).getFunction().getCode(factory);
+				if (fragFunAux.getSize()==0){
+					fragFunAux.add(factory.createPush(0));
+				}
 				fragFunAux.addPrefix(((MethodDeclaration) decl).getFunction().getName());
 				fragMain.append(fragFunAux);
 			}
 		}
-		fragMain.addComment("main function");
+		fragMain.addComment("main_function");
 		Fragment fragMainBody = this.main.getCode(factory);
-		fragMainBody.addPrefix("main body");
+		fragMainBody.addPrefix("main_body");
 		fragMain.append(fragMainBody);
 		return fragMain;
 	}

@@ -14,7 +14,7 @@ public abstract class AbstractAttribute<ObjectKind extends Expression> implement
 
 	protected ObjectKind object;
 	private String name;
-	private AttributeDeclaration attribute;
+	protected AttributeDeclaration attribute;
 
 	public AbstractAttribute(ObjectKind object, String name) {
 		this.object = object;
@@ -36,6 +36,7 @@ public abstract class AbstractAttribute<ObjectKind extends Expression> implement
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> scope) {
 		object.collectAndPartialResolve(scope);
+		Logger.warning(object.getType().getClass().toString());
 		if (!(object.getType() instanceof ClassType)) {
 			Logger.error("[AbstractAttribute] The object " + object.toString() +
 					" is not an instance of a class, its attribute " + name + " cannot be resolved.");

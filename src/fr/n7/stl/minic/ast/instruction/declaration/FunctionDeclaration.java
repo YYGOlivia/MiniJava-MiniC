@@ -219,7 +219,6 @@ public class FunctionDeclaration implements Instruction, Declaration {
 		
 		fragment.append(body.getCode(factory));
 //		fragment.addPrefix(name);
-		fragment.addComment(name);
 		return fragment;
 	}
 

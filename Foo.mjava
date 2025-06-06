@@ -4,7 +4,7 @@ class A {
     public int b;
 
     public static void setV(int a) {
-        int x = this.v;
+        v = 8;
     }
 
     public void setB(int b) {
@@ -27,8 +27,7 @@ public class Foo {
         A b = new B();
         int c = a.b;
         a.setB(c);
-        A.setV(3);
-        int x = A.v;
+        //A.setV(3);
         // m();
 
     }

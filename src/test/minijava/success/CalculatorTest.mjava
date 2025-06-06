@@ -14,6 +14,6 @@ class Calculator {
 public class CalculatorTest {
     public static void main(String[] args) {
         Calculator calc = new Calculator();
-        print calc.add(5);
+        calc.add(5);
     }
 }

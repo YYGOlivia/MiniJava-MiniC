@@ -89,6 +89,7 @@ public class ClassDeclaration implements Instruction, Declaration {
 			this.constructors.add(c);
 			c.setClassDeclaration(this);
 		}
+		this.objectSize = objSize;
 	}
 
 	public int getObjectSize() {
@@ -276,6 +277,7 @@ public class ClassDeclaration implements Instruction, Declaration {
 				fragClass.append(fragAux);
 			} else if (meth.isConcrete()) {
 				meth.tamAdress = fragClass.getSize() + this.tamAddress;
+				Logger.warning(meth.getName() + meth.tamAdress);
 				fragAux = meth.getFunction().getCode(factory);
 				fragAux.addComment("methode " + meth.getName());
 				fragClass.append(fragAux);

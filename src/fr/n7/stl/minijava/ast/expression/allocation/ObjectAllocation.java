@@ -1,9 +1,5 @@
 package fr.n7.stl.minijava.ast.expression.allocation;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.expression.assignable.AssignableExpression;
 import fr.n7.stl.minic.ast.scope.Declaration;
@@ -17,7 +13,9 @@ import fr.n7.stl.tam.ast.Library;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.Logger;
-import fr.n7.stl.util.SemanticsUndefinedException;
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ObjectAllocation implements AccessibleExpression, AssignableExpression {
 
@@ -28,8 +26,6 @@ public class ObjectAllocation implements AccessibleExpression, AssignableExpress
 	private ConstructorDeclaration constructor;
 
 	private ClassType type;
-
-	private ConstructorDeclaration constructor;
 
 	public ObjectAllocation(String name, List<AccessibleExpression> arguments) {
 		this.name = name;
@@ -112,6 +108,7 @@ public class ObjectAllocation implements AccessibleExpression, AssignableExpress
 		fragObjAll.add(factory.createLoadL(((ClassType) this.type).getDeclaration().getObjectSize()));
 		fragObjAll.add(Library.MAlloc);
 		fragObjAll.add(factory.createCall(this.getConstructorSignature(), Register.SB));
+		
 		return fragObjAll;
 //		throw new SemanticsUndefinedException("Semantics getCode is undefined in ObjectAllocation.");
 	}
@@ -120,8 +117,8 @@ public class ObjectAllocation implements AccessibleExpression, AssignableExpress
 		if (this.constructor == null) {
 		String paramstring = this.arguments.stream()
 				.map(p -> p.getType().toString())
-				.collect(Collectors.joining(","));
-		return this.name + "(" + paramstring + ")";
+				.collect(Collectors.joining("_"));
+		return this.name + "_" + paramstring + "_";
 		}
 		return this.constructor.getSignature();
 	}

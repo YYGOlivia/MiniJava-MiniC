@@ -34,8 +34,8 @@ public class SuperCall implements Instruction {
 	public String getSignature(String className) {
 		String paramstring = this.arguments.stream()
 				.map(p -> p.getType().toString())
-				.collect(Collectors.joining(","));
-		return className + "(" + paramstring + ")";
+				.collect(Collectors.joining("_"));
+		return className + "_" + paramstring + "_";
 	}
 
 	@Override
